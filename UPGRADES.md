@@ -1,8 +1,8 @@
 # 5iveArts — Planned Upgrades
 
 This document lists every planned upgrade for the site, grouped by priority tier.
-**Nothing below has been implemented yet.** Review this list, then tell Copilot which
-item(s) you want to work on and it will implement them.
+Items marked ✅ are **done**. The rest are pending — tell Copilot which item(s) you
+want to work on next and it will implement them.
 
 ---
 
@@ -22,26 +22,27 @@ These gaps mean the site **cannot operate as a real shop** right now.
 
 ---
 
-### 1. Database + order persistence
+### 1. ✅ Database + order persistence (Supabase)
 
-**What:** Replace the hardcoded product array in `src/lib/products.ts` with a real database.
-Persist completed orders when the Stripe webhook fires.
+**Status:** Infrastructure complete — follow `supabase/README.md` to connect your project.
 
-**Why:** Stock counts are currently fake integers in source code. Orders are never stored —
-the webhook logs a message and does nothing. Without a database you cannot:
-- Decrement stock after a sale
-- Show order history to customers
-- Manage products without a code deploy
+**What was done:**
+- `supabase/migrations/001_schema.sql` — creates `products`, `orders`, `order_items` tables with indexes, RLS policies, and a `decrement_stock()` function
+- `supabase/seed.sql` — seeds all 6 products; safe to re-run
+- `src/lib/supabase.ts` — server-side service-role client (`getSupabaseAdmin()`)
+- `src/types/supabase.ts` — TypeScript types mirroring the schema
+- `src/app/api/webhooks/stripe/route.ts` — `handleCheckoutCompleted` now:
+  - Guards against duplicate processing (idempotency check)
+  - Inserts an `Order` row with full Stripe session data
+  - Inserts `OrderItem` rows per product
+  - Decrements stock via `decrement_stock()` RPC
+- `.env.example` updated with `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+- `@supabase/supabase-js` added to `package.json` (run `npm install`)
 
-**Approach:**
-- Add **Prisma ORM** with a **PostgreSQL** database (or SQLite for local dev)
-- Schema: `Product`, `Order`, `OrderItem`, `ShippingAddress`
-- `products.ts` becomes a Prisma query instead of a static array
-- The webhook's `handleCheckoutCompleted` writes an `Order` row and decrements stock
+**Still to do (optional follow-up):**
+- Move product reads to Supabase instead of the static array (stock will then come from DB in real-time on product pages)
 
-**Packages:** `prisma`, `@prisma/client`, postgres (Neon/Supabase for hosted)
-
-**Effort:** 🔴 Large
+**Effort:** 🔴 Large — ✅ Done
 
 ---
 
