@@ -17,6 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased bg-gray-50 min-h-screen flex flex-col">
+        {/* Announcement bar */}
+        <div className="bg-indigo-700 text-white text-xs sm:text-sm text-center py-2 px-4 font-medium">
+          🇬🇧 Free shipping on all UK orders &nbsp;·&nbsp; Each figure handcrafted with passion &nbsp;·&nbsp; 30-day hassle-free returns
+        </div>
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

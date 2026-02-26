@@ -46,6 +46,13 @@ export default function HeroSection({
             </Link>
           )}
         </div>
+
+        {/* Trust stats */}
+        <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-2 text-indigo-200 text-sm">
+          <span>⭐ 4.9 / 5 average rating</span>
+          <span>🎨 500+ figures crafted</span>
+          <span>🚚 Free UK shipping</span>
+        </div>
       </div>
     </section>
   );

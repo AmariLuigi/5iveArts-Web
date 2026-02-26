@@ -9,6 +9,8 @@ export interface Product {
   category: ProductCategory;
   stock: number;
   details: string[];
+  rating?: number;     // e.g. 4.9
+  reviewCount?: number; // e.g. 24
 }
 
 export interface CartItem {

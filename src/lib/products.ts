@@ -17,6 +17,8 @@ export const products: Product[] = [
       "Protective UV-resistant varnish coating",
       "Ships in custom foam-padded box",
     ],
+    rating: 4.9,
+    reviewCount: 32,
   },
   {
     id: "hp-batman-002",
@@ -34,6 +36,8 @@ export const products: Product[] = [
       "Weathered cape effect",
       "Glow-in-the-dark eye lenses",
     ],
+    rating: 4.8,
+    reviewCount: 19,
   },
   {
     id: "hp-wonder-woman-003",
@@ -51,6 +55,8 @@ export const products: Product[] = [
       "Real fabric cape",
       "Custom display base included",
     ],
+    rating: 5.0,
+    reviewCount: 11,
   },
   {
     id: "3dp-mandalorian-004",
@@ -68,6 +74,8 @@ export const products: Product[] = [
       "Pre-sanded and primed",
       "Includes display stand",
     ],
+    rating: 4.7,
+    reviewCount: 28,
   },
   {
     id: "3dp-iron-man-005",
@@ -85,6 +93,8 @@ export const products: Product[] = [
       "LED holes pre-drilled in chest and eyes",
       "All panels individually printed for crisp lines",
     ],
+    rating: 4.8,
+    reviewCount: 41,
   },
   {
     id: "3dp-master-chief-006",
@@ -102,6 +112,8 @@ export const products: Product[] = [
       "Battle-worn surface details",
       "Includes MA5B Assault Rifle accessory",
     ],
+    rating: 4.9,
+    reviewCount: 23,
   },
 ];
 

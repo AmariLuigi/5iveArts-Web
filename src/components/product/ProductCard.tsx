@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Tag } from "lucide-react";
+import { ShoppingCart, Tag, Star } from "lucide-react";
 import { Product } from "@/types";
 import { formatPrice } from "@/lib/products";
 import { useCartStore } from "@/store/cart";
@@ -41,8 +41,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           {categoryLabel}
         </span>
         {product.stock <= 3 && product.stock > 0 && (
-          <span className="absolute top-3 right-3 bg-orange-100 text-orange-700 text-xs font-semibold px-2 py-1 rounded-full">
-            Only {product.stock} left
+          <span className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse">
+            Only {product.stock} left!
           </span>
         )}
         {product.stock === 0 && (
@@ -57,6 +57,24 @@ export default function ProductCard({ product }: ProductCardProps) {
         <Link href={`/products/${product.id}`} className="font-semibold text-gray-900 hover:text-indigo-600 transition-colors leading-snug mb-1">
           {product.name}
         </Link>
+        {/* Star rating */}
+        {product.rating && (
+          <div className="flex items-center gap-1 mb-1.5">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                className={`w-3 h-3 ${
+                  i < Math.round(product.rating!)
+                    ? "text-yellow-400 fill-yellow-400"
+                    : "text-gray-200 fill-gray-200"
+                }`}
+              />
+            ))}
+            {product.reviewCount && (
+              <span className="text-xs text-gray-400 ml-0.5">({product.reviewCount})</span>
+            )}
+          </div>
+        )}
         <p className="text-sm text-gray-500 line-clamp-2 flex-1">
           {product.description}
         </p>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, ShieldCheck, Truck, RotateCcw } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import CartItemRow from "@/components/cart/CartItemRow";
 import { formatPrice } from "@/lib/products";
@@ -33,7 +33,7 @@ export default function CartPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-extrabold text-gray-900">Your Cart</h1>
         <button
           onClick={clearCart}
@@ -41,6 +41,22 @@ export default function CartPage() {
         >
           Clear cart
         </button>
+      </div>
+
+      {/* Trust row */}
+      <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-8 bg-indigo-50 rounded-xl px-4 py-3 border border-indigo-100">
+        <span className="flex items-center gap-1.5">
+          <ShieldCheck className="w-4 h-4 text-indigo-500 flex-shrink-0" />
+          Secure Checkout
+        </span>
+        <span className="flex items-center gap-1.5">
+          <Truck className="w-4 h-4 text-green-500 flex-shrink-0" />
+          Free UK Shipping
+        </span>
+        <span className="flex items-center gap-1.5">
+          <RotateCcw className="w-4 h-4 text-blue-500 flex-shrink-0" />
+          30-Day Returns
+        </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -74,9 +90,9 @@ export default function CartPage() {
           </div>
           <Link
             href="/checkout"
-            className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center"
+            className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center text-lg shadow-lg shadow-indigo-200"
           >
-            Proceed to Checkout
+            Proceed to Checkout →
           </Link>
           <Link
             href="/products"

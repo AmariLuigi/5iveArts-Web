@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Truck, CreditCard, Loader2 } from "lucide-react";
+import { Truck, CreditCard, Loader2, Check } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/products";
 import { ShippingAddress, ShippingRate } from "@/types";
@@ -101,9 +101,53 @@ export default function CheckoutPage() {
 
   const total = subtotal + (selectedRate?.price ?? 0);
 
+  // Step 1: filling address; Step 2: rates visible; Step 3: ready to pay
+  const currentStep = checkingOut ? 3 : rates.length > 0 ? 2 : 1;
+
+  const STEPS = [
+    { n: 1, label: "Delivery" },
+    { n: 2, label: "Shipping" },
+    { n: 3, label: "Payment" },
+  ];
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-8">Checkout</h1>
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-6">Checkout</h1>
+
+      {/* Step progress indicator */}
+      <div className="flex items-start justify-center mb-10 max-w-xs mx-auto">
+        {STEPS.map(({ n, label }, i) => (
+          <div key={n} className="flex items-center">
+            {i > 0 && (
+              <div
+                className={`w-10 h-0.5 mb-6 transition-colors ${
+                  currentStep > i ? "bg-indigo-500" : "bg-gray-200"
+                }`}
+              />
+            )}
+            <div className="flex flex-col items-center gap-1">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
+                  currentStep > n
+                    ? "bg-green-500 text-white"
+                    : currentStep === n
+                    ? "bg-indigo-600 text-white ring-4 ring-indigo-100"
+                    : "bg-gray-100 text-gray-400"
+                }`}
+              >
+                {currentStep > n ? <Check className="w-4 h-4" /> : n}
+              </div>
+              <span
+                className={`text-xs font-medium ${
+                  currentStep === n ? "text-indigo-600" : "text-gray-400"
+                }`}
+              >
+                {label}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left — Address + Shipping */}
@@ -346,18 +390,25 @@ export default function CheckoutPage() {
           <button
             onClick={handleCheckout}
             disabled={checkingOut || !selectedRate}
-            className="mt-6 w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition-colors"
+            className="mt-6 w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-indigo-200 disabled:shadow-none text-lg"
           >
             {checkingOut ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
               <CreditCard className="w-5 h-5" />
             )}
-            {checkingOut ? "Redirecting…" : "Pay with Stripe"}
+            {checkingOut ? "Redirecting…" : "Pay Securely with Stripe"}
           </button>
-          <p className="text-xs text-gray-400 text-center mt-3">
-            Secure payment powered by Stripe
-          </p>
+          <div className="mt-3 flex flex-col items-center gap-1">
+            <p className="text-xs text-gray-400 text-center flex items-center gap-1">
+              🔒 256-bit SSL encryption · Stripe PCI-DSS compliant
+            </p>
+            {rates.length === 0 && (
+              <p className="text-xs text-gray-400">
+                Enter your address to get shipping rates
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
