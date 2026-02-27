@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import ConditionalLayout from "@/components/layout/ConditionalLayout";
 
 export const metadata: Metadata = {
   title: "5iveArts — Hand-Painted & 3D-Printed Action Figures",
@@ -15,15 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased bg-gray-50 min-h-screen flex flex-col">
-        {/* Announcement bar */}
-        <div className="bg-indigo-700 text-white text-xs sm:text-sm text-center py-2 px-4 font-medium">
-          🇬🇧 Free shipping on all UK orders &nbsp;·&nbsp; Each figure handcrafted with passion &nbsp;·&nbsp; 30-day hassle-free returns
-        </div>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased bg-black text-white min-h-screen flex flex-col">
+        <ConditionalLayout>
+          {children}
+        </ConditionalLayout>
       </body>
     </html>
   );

@@ -1,21 +1,29 @@
-export type ProductCategory = "hand-painted" | "home-printed";
+export type ProductCategory = "figures" | "busts" | "dioramas";
+
+export type ProductScale = "1/12" | "1/9" | "1/6" | "1/4";
+export type ProductFinish = "painted" | "raw";
 
 export interface Product {
   id: string;
   name: string;
   description: string;
-  price: number; // in cents
+  price: number; // base price in cents (1/12 painted)
   images: string[];
+  videos: string[];
   category: ProductCategory;
+  status: "draft" | "published";
   stock: number;
   details: string[];
-  rating?: number;     // e.g. 4.9
-  reviewCount?: number; // e.g. 24
+  rating?: number;
+  reviewCount?: number;
 }
 
 export interface CartItem {
   product: Product;
   quantity: number;
+  selectedScale: ProductScale;
+  selectedFinish: ProductFinish;
+  priceAtSelection: number; // the price calculated based on variants
 }
 
 export interface ShippingRate {

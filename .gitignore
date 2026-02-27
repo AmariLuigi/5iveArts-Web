@@ -40,3 +40,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# sensitive docs
+stripe custom payment page.md
+push_error.txt
+
+# Large media (if any)
+*.mp4
+*.MOV
+*.avi

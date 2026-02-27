@@ -1,116 +1,150 @@
-import { Product } from "@/types";
+import { Product, ProductScale, ProductFinish } from "@/types";
+
+export const SCALE_CONFIG: Record<ProductScale, { multiplier: number; size: string }> = {
+  "1/12": { multiplier: 1.0, size: "15cm" },
+  "1/9": { multiplier: 1.5, size: "20cm" },
+  "1/6": { multiplier: 2.5, size: "30cm" },
+  "1/4": { multiplier: 5.0, size: "45cm" },
+};
+
+export const FINISH_CONFIG: Record<ProductFinish, { multiplier: number }> = {
+  painted: { multiplier: 1.0 },
+  raw: { multiplier: 0.6 },
+};
+
+export function calculatePrice(basePrice: number, scale: ProductScale, finish: ProductFinish): number {
+  return Math.round(basePrice * SCALE_CONFIG[scale].multiplier * FINISH_CONFIG[finish].multiplier);
+}
 
 export const products: Product[] = [
   {
-    id: "hp-spider-man-001",
-    name: "Hand-Painted Spider-Man",
+    id: "spider-man-001",
+    name: "Spider-Man",
     description:
-      "A stunning hand-painted Spider-Man action figure, individually crafted with acrylic paints and sealed with a protective varnish. Each piece is unique with subtle variations in the brush strokes.",
+      "A stunning action figure, individually crafted with precision 3D-printing and hand-applied acrylic paints. Every piece is unique and museum-quality.",
     price: 8999,
     images: ["/images/products/hp-spider-man.jpg"],
-    category: "hand-painted",
+    videos: [],
+    category: "figures",
+    status: "published",
     stock: 5,
     details: [
-      "Scale: 1:12 (6 inches)",
-      "Material: PVC base with hand-applied acrylic paint",
-      "Articulation: 14 points",
-      "Protective UV-resistant varnish coating",
-      "Ships in custom foam-padded box",
+      "High-Resolution Industrial Resin",
+      "Professional Artisan Hand-Painting",
+      "Museum-Grade UV-Resistant Varnish",
+      "Precision Layer Height (0.025mm)",
+      "Custom Signature Display Base",
+      "Signature Foam-Padded Collector Box",
     ],
     rating: 4.9,
     reviewCount: 32,
   },
   {
-    id: "hp-batman-002",
-    name: "Hand-Painted Batman",
+    id: "batman-002",
+    name: "Batman",
     description:
-      "A dark and detailed hand-painted Batman figure featuring intricate cape weathering effects and glowing eye detail. Museum-quality paint work on every figure.",
+      "A dark and detailed figure featuring intricate weathering effects and museum-quality craftsmanship. Printed in premium resin for maximum detail.",
     price: 9499,
     images: ["/images/products/hp-batman.jpg"],
-    category: "hand-painted",
+    videos: [],
+    category: "figures",
+    status: "published",
     stock: 3,
     details: [
-      "Scale: 1:12 (6 inches)",
-      "Material: PVC base with hand-applied acrylic paint",
-      "Articulation: 16 points",
-      "Weathered cape effect",
-      "Glow-in-the-dark eye lenses",
+      "High-Resolution Industrial Resin",
+      "Professional Artisan Hand-Painting",
+      "Museum-Grade UV-Resistant Varnish",
+      "Precision Layer Height (0.025mm)",
+      "Custom Signature Display Base",
+      "Signature Foam-Padded Collector Box",
     ],
     rating: 4.8,
     reviewCount: 19,
   },
   {
-    id: "hp-wonder-woman-003",
-    name: "Hand-Painted Wonder Woman",
+    id: "wonder-woman-003",
+    name: "Wonder Woman",
     description:
-      "A breathtaking hand-painted Wonder Woman featuring gold leaf detail on her armour and a flowing fabric cape. Every figure is a wearable piece of art.",
+      "A breathtaking masterpiece featuring gold leaf detail and premium finishing. Every figure is a wearable piece of art from our workshop.",
     price: 9999,
     images: ["/images/products/hp-wonder-woman.jpg"],
-    category: "hand-painted",
+    videos: [],
+    category: "figures",
+    status: "published",
     stock: 4,
     details: [
-      "Scale: 1:12 (6 inches)",
-      "Material: PVC base with hand-applied acrylic paint + real gold leaf",
-      "Articulation: 14 points",
-      "Real fabric cape",
-      "Custom display base included",
+      "High-Resolution Industrial Resin",
+      "Professional Artisan Hand-Painting",
+      "Museum-Grade UV-Resistant Varnish",
+      "Precision Layer Height (0.025mm)",
+      "Custom Signature Display Base",
+      "Signature Foam-Padded Collector Box",
     ],
     rating: 5.0,
     reviewCount: 11,
   },
   {
-    id: "3dp-mandalorian-004",
-    name: "3D-Printed Mandalorian",
+    id: "mandalorian-004",
+    name: "The Mandalorian",
     description:
-      "A high-detail home 3D-printed Mandalorian figure printed in premium resin for crisp detail on every plate of beskar armour. Primed and ready for display or custom painting.",
-    price: 4999,
+      "High-detail action figure printed in premium resin for crisp detail on every plate of bounty hunter armour. Battle-worn and ready for the collection.",
+    price: 8499,
     images: ["/images/products/3dp-mandalorian.jpg"],
-    category: "home-printed",
+    videos: [],
+    category: "figures",
+    status: "published",
     stock: 10,
     details: [
-      "Scale: 1:12 (6 inches)",
-      "Material: Premium photopolymer resin",
-      "Layer resolution: 0.025mm",
-      "Pre-sanded and primed",
-      "Includes display stand",
+      "High-Resolution Industrial Resin",
+      "Professional Artisan Hand-Painting",
+      "Museum-Grade UV-Resistant Varnish",
+      "Precision Layer Height (0.025mm)",
+      "Custom Signature Display Base",
+      "Signature Foam-Padded Collector Box",
     ],
     rating: 4.7,
     reviewCount: 28,
   },
   {
-    id: "3dp-iron-man-005",
-    name: "3D-Printed Iron Man MK-IV",
+    id: "iron-man-005",
+    name: "Iron Man MK-IV",
     description:
-      "Precision 3D-printed Iron Man MK-IV armour with panel-line engraving and pre-drilled LED points. Perfect for collectors who want to add their own lighting effects.",
-    price: 5499,
+      "Precision-crafted Iron Man MK-IV armour with panel-line engraving and premium finish options. A centerpiece for any Marvel display.",
+    price: 9499,
     images: ["/images/products/3dp-iron-man.jpg"],
-    category: "home-printed",
+    videos: [],
+    category: "figures",
+    status: "published",
     stock: 8,
     details: [
-      "Scale: 1:12 (6 inches)",
-      "Material: Premium photopolymer resin",
-      "Layer resolution: 0.025mm",
-      "LED holes pre-drilled in chest and eyes",
-      "All panels individually printed for crisp lines",
+      "High-Resolution Industrial Resin",
+      "Professional Artisan Hand-Painting",
+      "Museum-Grade UV-Resistant Varnish",
+      "Precision Layer Height (0.025mm)",
+      "Custom Signature Display Base",
+      "Signature Foam-Padded Collector Box",
     ],
     rating: 4.8,
     reviewCount: 41,
   },
   {
-    id: "3dp-master-chief-006",
-    name: "3D-Printed Master Chief",
+    id: "master-chief-006",
+    name: "Master Chief",
     description:
-      "A faithful 3D-printed recreation of Master Chief's Mjolnir armour. Every surface detail from the games has been faithfully translated into this high-resolution resin print.",
-    price: 5999,
+      "A faithful recreation of Master Chief's Mjolnir armour. Every surface detail from the armor layers has been faithfully translated into this high-resolution print.",
+    price: 8999,
     images: ["/images/products/3dp-master-chief.jpg"],
-    category: "home-printed",
+    videos: [],
+    category: "figures",
+    status: "published",
     stock: 6,
     details: [
-      "Scale: 1:12 (6 inches)",
-      "Material: Premium photopolymer resin",
-      "Layer resolution: 0.025mm",
-      "Battle-worn surface details",
-      "Includes MA5B Assault Rifle accessory",
+      "High-Resolution Industrial Resin",
+      "Professional Artisan Hand-Painting",
+      "Museum-Grade UV-Resistant Varnish",
+      "Precision Layer Height (0.025mm)",
+      "Custom Signature Display Base",
+      "Signature Foam-Padded Collector Box",
     ],
     rating: 4.9,
     reviewCount: 23,
@@ -128,8 +162,27 @@ export function getProductsByCategory(
 }
 
 export function formatPrice(cents: number): string {
-  return new Intl.NumberFormat("en-GB", {
+  return new Intl.NumberFormat("it-IT", {
     style: "currency",
-    currency: "GBP",
+    currency: "EUR",
   }).format(cents / 100);
 }
+
+import { getSupabasePublic } from "./supabase";
+
+export async function fetchProductsFromDb(): Promise<Product[]> {
+  const supabase = getSupabasePublic();
+  const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("status", "published")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("[products] Error fetching products from Supabase:", error);
+    return [];
+  }
+
+  return (data as any) as Product[];
+}
+
