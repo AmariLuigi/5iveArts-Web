@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/auth";
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const supabase = getSupabaseAdmin();
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) return auth.response;
+
+    const supabase = getSupabaseAdmin() as any;
     const { id } = await params;
 
     const { data: order, error: orderError } = await supabase
@@ -18,7 +22,8 @@ export async function GET(
         .single();
 
     if (orderError) {
-        return NextResponse.json({ error: orderError.message }, { status: 404 });
+        console.error("[api/admin/orders] GET error:", orderError.message);
+        return NextResponse.json({ error: "Failed to fetch order" }, { status: 404 });
     }
 
     return NextResponse.json(order);
@@ -26,9 +31,12 @@ export async function GET(
 
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const supabase = getSupabaseAdmin();
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) return auth.response;
+
+    const supabase = getSupabaseAdmin() as any;
     const { id } = await params;
     const body = await req.json();
 
@@ -48,7 +56,8 @@ export async function PATCH(
         .single();
 
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 400 });
+        console.error("[api/admin/orders] PATCH error:", error.message);
+        return NextResponse.json({ error: "Failed to update order" }, { status: 400 });
     }
 
     return NextResponse.json(data);

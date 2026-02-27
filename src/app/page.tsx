@@ -1,5 +1,5 @@
 import { Brush, Printer, Truck, ShieldCheck } from "lucide-react";
-import { products } from "@/lib/products";
+import { fetchProductsFromDb } from "@/lib/products";
 import HeroSection from "@/components/marketing/HeroSection";
 import FeaturesSection, { Feature } from "@/components/marketing/FeaturesSection";
 import FeaturedProducts from "@/components/marketing/FeaturedProducts";
@@ -8,22 +8,22 @@ import CtaSection from "@/components/marketing/CtaSection";
 
 const FEATURES: Feature[] = [
   {
-    icon: <Brush className="w-7 h-7 text-purple-600" />,
+    icon: <Brush className="w-7 h-7 text-brand-yellow" />,
     title: "Hand-Painted",
     text: "Each figure painted by hand with premium acrylics",
   },
   {
-    icon: <Printer className="w-7 h-7 text-blue-600" />,
+    icon: <Printer className="w-7 h-7 text-brand-yellow" />,
     title: "3D-Printed",
     text: "High-resolution resin prints at 0.025 mm layer height",
   },
   {
-    icon: <Truck className="w-7 h-7 text-green-600" />,
+    icon: <Truck className="w-7 h-7 text-brand-yellow" />,
     title: "Fast Shipping",
-    text: "Packlink-powered shipping to the UK and Europe",
+    text: "Insured worldwide delivery with tracking",
   },
   {
-    icon: <ShieldCheck className="w-7 h-7 text-indigo-600" />,
+    icon: <ShieldCheck className="w-7 h-7 text-brand-yellow" />,
     title: "Secure Checkout",
     text: "Payments handled safely by Stripe",
   },
@@ -53,15 +53,13 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const products = await fetchProductsFromDb();
+
   return (
     <div>
       <HeroSection
-        headline="Art You Can"
-        headlineHighlight="Hold"
-        subtext="Hand-painted and home 3D-printed action figures — every piece individually crafted with passion. No two figures are exactly alike."
         primaryCta={{ label: "Shop Now", href: "/products" }}
-        secondaryCta={{ label: "Hand-Painted", href: "/products?category=hand-painted" }}
       />
 
       <FeaturesSection features={FEATURES} />

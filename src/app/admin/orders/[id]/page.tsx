@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase-server";
+import { getSupabaseAdmin } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 import OrderDetailClient from "./OrderDetailClient";
 
@@ -10,7 +10,7 @@ interface Props {
 
 export default async function OrderDetailPage({ params }: Props) {
     const { id } = await params;
-    const supabase = await createClient();
+    const supabase = getSupabaseAdmin() as any;
 
     // Fetch the order
     const { data: order, error: orderError } = await supabase

@@ -14,89 +14,96 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-24 text-center">
-        <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-        <h1 className="text-2xl font-bold text-gray-700 mb-2">
-          Your cart is empty
+        <ShoppingBag className="w-16 h-16 text-neutral-800 mx-auto mb-6" />
+        <h1 className="text-4xl font-black uppercase tracking-tighter text-white mb-4">
+          Empty Arsenal
         </h1>
-        <p className="text-gray-500 mb-8">
+        <p className="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-10">
           Looks like you haven&apos;t added any figures yet.
         </p>
         <Link
           href="/products"
-          className="bg-indigo-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-indigo-700 transition-colors inline-block"
+          className="hasbro-btn-primary px-10 py-4 font-black text-xs uppercase tracking-widest inline-block shadow-2xl shadow-brand-yellow/10"
         >
-          Browse the Shop
+          Return to Shop
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-extrabold text-gray-900">Your Cart</h1>
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 min-h-[70vh]">
+      <div className="flex items-end justify-between mb-8 pb-8 border-b border-white/5">
+        <div>
+          <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">Checkout flow</span>
+          <h1 className="text-5xl font-black uppercase tracking-tighter text-white leading-none">Your Cart</h1>
+        </div>
         <button
           onClick={clearCart}
-          className="text-sm text-gray-400 hover:text-red-500 transition-colors"
+          className="text-[10px] uppercase font-black tracking-widest text-neutral-600 hover:text-red-500 transition-colors"
         >
           Clear cart
         </button>
       </div>
 
       {/* Trust row */}
-      <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-8 bg-indigo-50 rounded-xl px-4 py-3 border border-indigo-100">
-        <span className="flex items-center gap-1.5">
-          <ShieldCheck className="w-4 h-4 text-indigo-500 flex-shrink-0" />
+      <div className="flex flex-wrap gap-x-8 gap-y-3 text-[10px] uppercase font-black tracking-[0.2em] text-white/40 mb-12 py-4 border-y border-white/5">
+        <span className="flex items-center gap-2">
+          <ShieldCheck className="w-4 h-4 text-brand-yellow" />
           Secure Checkout
         </span>
-        <span className="flex items-center gap-1.5">
-          <Truck className="w-4 h-4 text-green-500 flex-shrink-0" />
-          Free UK Shipping
+        <span className="flex items-center gap-2">
+          <Truck className="w-4 h-4 text-brand-yellow" />
+          Insured Global Shipping
         </span>
-        <span className="flex items-center gap-1.5">
-          <RotateCcw className="w-4 h-4 text-blue-500 flex-shrink-0" />
+        <span className="flex items-center gap-2">
+          <RotateCcw className="w-4 h-4 text-brand-yellow" />
           30-Day Returns
         </span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Items */}
-        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          {items.map((item) => (
-            <CartItemRow key={item.product.id} item={item} />
-          ))}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="hasbro-card p-0 overflow-hidden">
+            {items.map((item, idx) => (
+              <div key={`${item.product.id}-${item.selectedScale}-${item.selectedFinish}`} className={idx !== 0 ? "border-t border-white/5" : ""}>
+                <CartItemRow item={item} />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Summary */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 h-fit">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
+        <div className="hasbro-card p-8 h-fit sticky top-24">
+          <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white mb-8">
             Order Summary
           </h2>
-          <div className="space-y-3 text-sm text-gray-600">
+          <div className="space-y-6 text-[11px] font-bold uppercase tracking-widest text-neutral-500">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span className="font-semibold text-gray-900">
+              <span className="text-white">
                 {formatPrice(subtotal)}
               </span>
             </div>
             <div className="flex justify-between">
               <span>Shipping</span>
-              <span className="text-gray-500 italic">Calculated at checkout</span>
+              <span className="text-white/30 italic">Calculated at checkout</span>
             </div>
           </div>
-          <div className="border-t border-gray-100 mt-4 pt-4 flex justify-between font-bold text-gray-900">
-            <span>Estimated Total</span>
-            <span className="text-indigo-700">{formatPrice(subtotal)}</span>
+          <div className="border-t border-white/5 mt-8 pt-8 flex justify-between font-black text-white">
+            <span className="uppercase tracking-widest text-xs">Estimated Total</span>
+            <span className="text-brand-yellow text-xl tracking-tighter">{formatPrice(subtotal)}</span>
           </div>
           <Link
             href="/checkout"
-            className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center text-lg shadow-lg shadow-indigo-200"
+            className="hasbro-btn-primary mt-10 w-full py-5 text-sm flex items-center justify-center shadow-2xl shadow-brand-yellow/10"
           >
             Proceed to Checkout →
           </Link>
           <Link
             href="/products"
-            className="mt-3 w-full text-center text-sm text-indigo-600 hover:underline block"
+            className="mt-6 w-full text-center text-[10px] uppercase font-black tracking-widest text-white/40 hover:text-white transition-colors block"
           >
             Continue Shopping
           </Link>

@@ -41,11 +41,27 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# sensitive docs
-stripe custom payment page.md
-push_error.txt
+# supabase & migrations
+supabase/
 
-# Large media (if any)
+# scripts
+sync-products.ts
+test-email.ts
+
+# documentation & temp files
+UPGRADES.md
+build-output.txt
+push_error.txt
+stripe custom payment page.md
+*.md
+!README.md
+*.txt
+# env files
+.env*
+!.env.example
+
+# media
 *.mp4
 *.MOV
 *.avi
+*.webp

@@ -44,7 +44,6 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [name, setName] = useState(initialData?.name || "");
     const [description, setDescription] = useState(initialData?.description || "");
     const [price, setPrice] = useState(initialData?.price || 8999);
-    const [stock, setStock] = useState(initialData?.stock || 5);
     const [category, setCategory] = useState(initialData?.category || "figures");
     const [status, setStatus] = useState<"draft" | "published">(initialData?.status || "published");
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -144,7 +143,6 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             name,
             description,
             price: Number(price),
-            stock: Number(stock),
             category,
             status,
             images,
@@ -292,16 +290,6 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                 className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black text-brand-yellow focus:outline-none focus:border-brand-yellow/30"
                             />
                             <p className="text-[9px] font-black uppercase text-neutral-700">{formatPrice(price)} (1/12 Painted)</p>
-                        </div>
-                        <div className="space-y-3">
-                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Initial Stock</label>
-                            <input
-                                type="number"
-                                required
-                                value={stock}
-                                onChange={(e) => setStock(Number(e.target.value))}
-                                className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black text-white focus:outline-none focus:border-brand-yellow/30"
-                            />
                         </div>
                         <div className="space-y-3 relative">
                             <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Classification</label>

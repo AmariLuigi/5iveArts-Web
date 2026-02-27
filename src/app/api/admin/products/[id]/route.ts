@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/auth";
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const supabase = getSupabaseAdmin();
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) return auth.response;
+
+    const supabase = getSupabaseAdmin() as any;
     const { id } = await params;
 
     const { data, error } = await supabase
@@ -15,7 +19,8 @@ export async function GET(
         .single();
 
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 404 });
+        console.error("[api/admin/products] GET detail error:", error.message);
+        return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
     return NextResponse.json(data);
@@ -23,9 +28,12 @@ export async function GET(
 
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const supabase = getSupabaseAdmin();
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) return auth.response;
+
+    const supabase = getSupabaseAdmin() as any;
     const { id } = await params;
     const body = await req.json();
 
@@ -37,7 +45,8 @@ export async function PATCH(
         .single();
 
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 400 });
+        console.error("[api/admin/products] PATCH detail error:", error.message);
+        return NextResponse.json({ error: "Failed to update product" }, { status: 400 });
     }
 
     return NextResponse.json(data);
@@ -45,9 +54,12 @@ export async function PATCH(
 
 export async function DELETE(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const supabase = getSupabaseAdmin();
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) return auth.response;
+
+    const supabase = getSupabaseAdmin() as any;
     const { id } = await params;
 
     const { error } = await supabase
@@ -56,7 +68,8 @@ export async function DELETE(
         .eq("id", id);
 
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 400 });
+        console.error("[api/admin/products] DELETE detail error:", error.message);
+        return NextResponse.json({ error: "Failed to delete product" }, { status: 400 });
     }
 
     return NextResponse.json({ success: true });

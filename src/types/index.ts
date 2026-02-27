@@ -12,7 +12,6 @@ export interface Product {
   videos: string[];
   category: ProductCategory;
   status: "draft" | "published";
-  stock: number;
   details: string[];
   rating?: number;
   reviewCount?: number;

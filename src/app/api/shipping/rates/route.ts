@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getShippingRates } from "@/lib/packlink";
+import { getShippingRates } from "@/lib/shipping";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { validateShippingAddress, sanitizeNumber } from "@/lib/validate";
 
 // Rate limit: 20 rate-lookup requests per IP per minute
 const RATE_LIMIT = { limit: 20, windowMs: 60_000 };
 
-// Our warehouse postcode (sender)
-const FROM_ADDRESS = {
-  zip_code: process.env.WAREHOUSE_POSTCODE ?? "SW1A 1AA",
-  country: process.env.WAREHOUSE_COUNTRY ?? "GB",
-};
-
 export async function POST(req: NextRequest) {
   // ── Rate limiting ──────────────────────────────────────────────────────────
   const ip = getClientIp(req);
-  const rl = checkRateLimit(`packlink-rates:${ip}`, RATE_LIMIT);
+  const rl = checkRateLimit(`shipping-rates:${ip}`, RATE_LIMIT);
   if (!rl.success) {
     return NextResponse.json(
       { error: "Too many requests. Please wait a moment." },
@@ -41,27 +35,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: addressResult.error }, { status: 400 });
   }
 
-  const weightKg = sanitizeNumber(b.weightKg, 0.1, 30);
-  if (weightKg === null) {
-    return NextResponse.json(
-      { error: "weightKg must be a number between 0.1 and 30" },
-      { status: 400 }
-    );
-  }
+  const subtotalPence = sanitizeNumber(b.subtotalPence, 0, 1_000_000) ?? 0;
 
-  // ── Fetch rates from Packlink ──────────────────────────────────────────────
-  try {
-    const rates = await getShippingRates(
-      FROM_ADDRESS,
-      addressResult.data,
-      weightKg
-    );
-    return NextResponse.json(rates);
-  } catch (err) {
-    console.error("[packlink/rates] error:", err);
-    return NextResponse.json(
-      { error: "Could not fetch shipping rates. Please try again." },
-      { status: 502 }
-    );
-  }
+  // ── Return flat-rate shipping options ──────────────────────────────────────
+  const rates = getShippingRates(addressResult.data, subtotalPence);
+  return NextResponse.json(rates);
 }

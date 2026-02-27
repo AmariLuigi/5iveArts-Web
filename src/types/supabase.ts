@@ -15,13 +15,21 @@ export interface Database {
           description: string;
           price: number;
           images: string[];
-          category: "hand-painted" | "home-printed";
-          stock: number;
+          videos: string[];
+          category: "hand-painted" | "home-printed" | "figures" | "busts" | "dioramas";
+          status: "draft" | "published";
           details: string[];
           created_at: string;
           updated_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["products"]["Row"], "created_at" | "updated_at">;
+        Insert: Omit<Database["public"]["Tables"]["products"]["Row"], "created_at" | "updated_at"> & {
+          created_at?: string;
+          updated_at?: string;
+          images?: string[];
+          videos?: string[];
+          status?: "draft" | "published";
+          details?: string[];
+        };
         Update: Partial<Database["public"]["Tables"]["products"]["Insert"]>;
       };
 
@@ -33,13 +41,13 @@ export interface Database {
           customer_email: string;
           customer_name: string;
           status:
-            | "pending"
-            | "paid"
-            | "processing"
-            | "shipped"
-            | "delivered"
-            | "cancelled"
-            | "refunded";
+          | "pending"
+          | "paid"
+          | "processing"
+          | "shipped"
+          | "delivered"
+          | "cancelled"
+          | "refunded";
           subtotal_pence: number;
           shipping_pence: number;
           total_pence: number;
@@ -54,7 +62,18 @@ export interface Database {
         Insert: Omit<
           Database["public"]["Tables"]["orders"]["Row"],
           "id" | "created_at" | "updated_at"
-        >;
+        > & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+          stripe_payment_intent?: string | null;
+          status?: Database["public"]["Tables"]["orders"]["Row"]["status"];
+          packlink_service_id?: string | null;
+          packlink_shipment_id?: string | null;
+          tracking_number?: string | null;
+          label_url?: string | null;
+          shipping_address?: Record<string, unknown>;
+        };
         Update: Partial<Database["public"]["Tables"]["orders"]["Insert"]>;
       };
 
@@ -68,16 +87,14 @@ export interface Database {
           quantity: number;
           created_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["order_items"]["Row"], "id" | "created_at">;
+        Insert: Omit<Database["public"]["Tables"]["order_items"]["Row"], "id" | "created_at"> & {
+          id?: string;
+          created_at?: string;
+        };
         Update: Partial<Database["public"]["Tables"]["order_items"]["Insert"]>;
       };
     };
-    Functions: {
-      decrement_stock: {
-        Args: { p_product_id: string; p_qty: number };
-        Returns: number;
-      };
-    };
+    Functions: {};
   };
 }
 

@@ -1,10 +1,10 @@
-import { createClient } from "@/lib/supabase-server";
+import { getSupabaseAdmin } from "@/lib/supabase";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import OrdersListClient from "./OrdersListClient";
 
 export default async function OrdersAdminPage() {
-    const supabase = await createClient();
+    const supabase = getSupabaseAdmin() as any;
 
     const { data: orders, error } = await supabase
         .from("orders")

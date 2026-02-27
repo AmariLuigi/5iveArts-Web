@@ -4,7 +4,8 @@
  */
 
 import { ShippingAddress, CartItem } from "@/types";
-import { getProductById } from "@/lib/products";
+import { getProductById, calculatePrice } from "@/lib/products";
+import { ProductScale, ProductFinish } from "@/types";
 
 // ---------------------------------------------------------------------------
 // Primitives
@@ -28,16 +29,26 @@ export function sanitizeNumber(
   return Math.min(max, Math.max(min, n));
 }
 
+/** Escapes special HTML characters to prevent XSS. */
+export function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /** Returns true for a reasonable-looking email address. */
 export function isValidEmail(value: string): boolean {
   return EMAIL_RE.test(value) && value.length <= 254;
 }
 
+import { countries } from "@/lib/countries";
+
 // ISO 3166-1 alpha-2 allow-list for shipping destinations
-const ALLOWED_COUNTRIES = new Set([
-  "GB", "IE", "FR", "DE", "ES", "IT", "NL", "BE", "PT",
-]);
+const ALLOWED_COUNTRIES = new Set(countries.map(c => c.code));
 
 // ---------------------------------------------------------------------------
 // Shipping address
@@ -127,11 +138,31 @@ export function validateCartItems(raw: unknown): ValidationResult<CartItem[]> {
     if (!serverProduct) {
       return { data: null, error: `Unknown product id: ${productId}` };
     }
-    const quantity = sanitizeNumber(e.quantity, 1, serverProduct.stock);
+
+    const scale = e.selectedScale as ProductScale;
+    const finish = e.selectedFinish as ProductFinish;
+
+    if (!scale || !["1/12", "1/9", "1/6", "1/4"].includes(scale)) {
+      return { data: null, error: `Invalid scale for product ${productId}` };
+    }
+    if (!finish || !["painted", "raw"].includes(finish)) {
+      return { data: null, error: `Invalid finish for product ${productId}` };
+    }
+
+    const quantity = sanitizeNumber(e.quantity, 1, 999);
     if (quantity === null) {
       return { data: null, error: `Invalid quantity for product ${productId}` };
     }
-    items.push({ product: serverProduct, quantity });
+
+    const serverPrice = calculatePrice(serverProduct.price, scale, finish);
+
+    items.push({
+      product: serverProduct,
+      quantity,
+      selectedScale: scale,
+      selectedFinish: finish,
+      priceAtSelection: serverPrice,
+    });
   }
 
   return { data: items, error: null };

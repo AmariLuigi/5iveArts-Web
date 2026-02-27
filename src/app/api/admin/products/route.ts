@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/auth";
 
-export async function GET() {
-    const supabase = getSupabaseAdmin();
+export async function GET(req: NextRequest) {
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) return auth.response;
+
+    const supabase = getSupabaseAdmin() as any;
 
     const { data, error } = await supabase
         .from("products")
@@ -10,14 +14,18 @@ export async function GET() {
         .order("created_at", { ascending: false });
 
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 400 });
+        console.error("[api/admin/products] GET error:", error.message);
+        return NextResponse.json({ error: "Failed to fetch products" }, { status: 400 });
     }
 
     return NextResponse.json(data);
 }
 
 export async function POST(req: NextRequest) {
-    const supabase = getSupabaseAdmin();
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) return auth.response;
+
+    const supabase = getSupabaseAdmin() as any;
     const body = await req.json();
 
     const { data, error } = await supabase
@@ -27,7 +35,8 @@ export async function POST(req: NextRequest) {
         .single();
 
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 400 });
+        console.error("[api/admin/products] POST error:", error.message);
+        return NextResponse.json({ error: "Failed to create product" }, { status: 400 });
     }
 
     return NextResponse.json(data);

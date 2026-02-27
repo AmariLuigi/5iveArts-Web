@@ -20,20 +20,22 @@ export default function FeaturedProducts({
   viewAllLabel = "View all →",
 }: FeaturedProductsProps) {
   return (
-    <section className="py-16 px-4 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
-          <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-          {heading}
-        </h2>
+    <section className="py-24 px-4 max-w-7xl mx-auto">
+      <div className="flex items-end justify-between mb-12 border-b border-white/5 pb-8">
+        <div>
+          <span className="text-[10px] uppercase font-black tracking-[0.3em] text-brand-yellow mb-2 block">Collector's Choice</span>
+          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white">
+            {heading}
+          </h2>
+        </div>
         <Link
           href={viewAllHref}
-          className="text-indigo-600 font-semibold hover:underline text-sm"
+          className="text-white/40 hover:text-brand-yellow font-black uppercase tracking-widest text-[10px] transition-colors"
         >
           {viewAllLabel}
         </Link>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

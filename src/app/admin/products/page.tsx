@@ -1,10 +1,10 @@
-import { createClient } from "@/lib/supabase-server";
+import { getSupabaseAdmin } from "@/lib/supabase";
 import { Plus, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import ProductsListClient from "./ProductsListClient";
 
 export default async function ProductsAdminPage() {
-    const supabase = await createClient();
+    const supabase = getSupabaseAdmin() as any;
 
     const { data: products, error } = await supabase
         .from("products")

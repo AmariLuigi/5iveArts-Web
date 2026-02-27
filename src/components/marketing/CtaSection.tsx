@@ -11,15 +11,22 @@ export interface CtaSectionProps {
  */
 export default function CtaSection({ heading, subtext, cta }: CtaSectionProps) {
   return (
-    <section className="bg-indigo-50 border-t border-indigo-100 py-16 px-4 text-center">
-      <h2 className="text-3xl font-bold text-indigo-900 mb-4">{heading}</h2>
-      <p className="text-indigo-600 mb-8 max-w-xl mx-auto">{subtext}</p>
-      <Link
-        href={cta.href}
-        className="bg-indigo-600 text-white font-bold px-10 py-3 rounded-xl hover:bg-indigo-700 transition-colors inline-block"
-      >
-        {cta.label}
-      </Link>
+    <section className="bg-[#050505] py-32 px-4 text-center border-t border-white/5">
+      <div className="max-w-4xl mx-auto">
+        <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-4 block">Limited production</span>
+        <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mb-8">
+          {heading}
+        </h2>
+        <p className="text-neutral-500 mb-12 max-w-xl mx-auto font-bold uppercase tracking-widest text-[11px] leading-relaxed">
+          {subtext}
+        </p>
+        <Link
+          href={cta.href}
+          className="hasbro-btn-primary px-16 py-6 inline-block"
+        >
+          {cta.label}
+        </Link>
+      </div>
     </section>
   );
 }

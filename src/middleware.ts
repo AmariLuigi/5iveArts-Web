@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
 
         // Check if user is the admin (matches env var)
         const adminEmail = process.env.ADMIN_EMAIL;
-        if (adminEmail && user.email !== adminEmail) {
+        if (!adminEmail || user.email !== adminEmail) {
             // Sign out and redirect if not the admin
             await supabase.auth.signOut();
             return NextResponse.redirect(new URL("/admin/login?error=unauthorized", request.url));

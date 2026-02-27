@@ -19,12 +19,12 @@ const CSP = [
   "font-src 'self' https://fonts.gstatic.com",
   // Frames: only Stripe's payment iframes
   "frame-src https://js.stripe.com https://hooks.stripe.com",
-  // Images: self + data URIs + Supabase (if needed)
-  `img-src 'self' data: blob: ${supabaseUrl}`,
+  // Images: self + data URIs + Supabase + Flags
+  `img-src 'self' data: blob: ${supabaseUrl} https://purecatamphetamine.github.io https://raw.githubusercontent.com`,
   // Media: allow cinematic videos from Supabase
   `media-src 'self' blob: ${supabaseUrl} https://*.supabase.co`,
-  // Connections: self + Stripe + Packlink + Supabase
-  `connect-src 'self' https://api.stripe.com https://api.packlink.com ${supabaseUrl}`,
+  // Connections: self + Stripe + Packlink + Supabase + CountriesNow + RestCountries + ISO-DB + Zip-API
+  `connect-src 'self' https://api.stripe.com https://api.packlink.com https://countriesnow.space https://restcountries.com https://stefanocudini.github.io https://api.zippopotam.us ${supabaseUrl}`,
   // Block everything else
   "object-src 'none'",
   "base-uri 'self'",

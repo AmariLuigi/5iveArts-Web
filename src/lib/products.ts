@@ -18,7 +18,7 @@ export function calculatePrice(basePrice: number, scale: ProductScale, finish: P
 
 export const products: Product[] = [
   {
-    id: "spider-man-001",
+    id: "hp-spider-man-001",
     name: "Spider-Man",
     description:
       "A stunning action figure, individually crafted with precision 3D-printing and hand-applied acrylic paints. Every piece is unique and museum-quality.",
@@ -27,7 +27,6 @@ export const products: Product[] = [
     videos: [],
     category: "figures",
     status: "published",
-    stock: 5,
     details: [
       "High-Resolution Industrial Resin",
       "Professional Artisan Hand-Painting",
@@ -40,7 +39,7 @@ export const products: Product[] = [
     reviewCount: 32,
   },
   {
-    id: "batman-002",
+    id: "hp-batman-002",
     name: "Batman",
     description:
       "A dark and detailed figure featuring intricate weathering effects and museum-quality craftsmanship. Printed in premium resin for maximum detail.",
@@ -49,7 +48,6 @@ export const products: Product[] = [
     videos: [],
     category: "figures",
     status: "published",
-    stock: 3,
     details: [
       "High-Resolution Industrial Resin",
       "Professional Artisan Hand-Painting",
@@ -62,7 +60,7 @@ export const products: Product[] = [
     reviewCount: 19,
   },
   {
-    id: "wonder-woman-003",
+    id: "hp-wonder-woman-003",
     name: "Wonder Woman",
     description:
       "A breathtaking masterpiece featuring gold leaf detail and premium finishing. Every figure is a wearable piece of art from our workshop.",
@@ -71,7 +69,6 @@ export const products: Product[] = [
     videos: [],
     category: "figures",
     status: "published",
-    stock: 4,
     details: [
       "High-Resolution Industrial Resin",
       "Professional Artisan Hand-Painting",
@@ -84,7 +81,7 @@ export const products: Product[] = [
     reviewCount: 11,
   },
   {
-    id: "mandalorian-004",
+    id: "3dp-mandalorian-004",
     name: "The Mandalorian",
     description:
       "High-detail action figure printed in premium resin for crisp detail on every plate of bounty hunter armour. Battle-worn and ready for the collection.",
@@ -93,7 +90,6 @@ export const products: Product[] = [
     videos: [],
     category: "figures",
     status: "published",
-    stock: 10,
     details: [
       "High-Resolution Industrial Resin",
       "Professional Artisan Hand-Painting",
@@ -106,7 +102,7 @@ export const products: Product[] = [
     reviewCount: 28,
   },
   {
-    id: "iron-man-005",
+    id: "3dp-iron-man-005",
     name: "Iron Man MK-IV",
     description:
       "Precision-crafted Iron Man MK-IV armour with panel-line engraving and premium finish options. A centerpiece for any Marvel display.",
@@ -115,7 +111,6 @@ export const products: Product[] = [
     videos: [],
     category: "figures",
     status: "published",
-    stock: 8,
     details: [
       "High-Resolution Industrial Resin",
       "Professional Artisan Hand-Painting",
@@ -128,7 +123,7 @@ export const products: Product[] = [
     reviewCount: 41,
   },
   {
-    id: "master-chief-006",
+    id: "3dp-master-chief-006",
     name: "Master Chief",
     description:
       "A faithful recreation of Master Chief's Mjolnir armour. Every surface detail from the armor layers has been faithfully translated into this high-resolution print.",
@@ -137,7 +132,6 @@ export const products: Product[] = [
     videos: [],
     category: "figures",
     status: "published",
-    stock: 6,
     details: [
       "High-Resolution Industrial Resin",
       "Professional Artisan Hand-Painting",

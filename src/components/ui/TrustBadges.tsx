@@ -9,8 +9,8 @@ const BADGES = [
   },
   {
     icon: Truck,
-    label: "Free UK Shipping",
-    sub: "On all orders",
+    label: "Insured Global Shipping",
+    sub: "Worldwide delivery",
     color: "text-green-500",
   },
   {
@@ -44,13 +44,13 @@ export default function TrustBadges({
   if (variant === "row") {
     return (
       <div
-        className={`flex flex-wrap gap-x-5 gap-y-2 ${className}`}
+        className={`flex flex-wrap gap-x-8 gap-y-2 ${className}`}
         aria-label="Trust signals"
       >
-        {BADGES.map(({ icon: Icon, label, color }) => (
-          <span key={label} className="flex items-center gap-1.5 text-xs text-gray-600">
-            <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${color}`} />
-            <span className="font-medium">{label}</span>
+        {BADGES.map(({ icon: Icon, label }) => (
+          <span key={label} className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-neutral-500">
+            <Icon className="w-3.5 h-3.5 flex-shrink-0 text-brand-yellow" />
+            <span>{label}</span>
           </span>
         ))}
       </div>
@@ -59,16 +59,16 @@ export default function TrustBadges({
 
   return (
     <div
-      className={`grid grid-cols-2 sm:grid-cols-4 gap-4 ${className}`}
+      className={`grid grid-cols-2 sm:grid-cols-4 gap-8 ${className}`}
       aria-label="Trust signals"
     >
-      {BADGES.map(({ icon: Icon, label, sub, color }) => (
-        <div key={label} className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center">
-            <Icon className={`w-5 h-5 ${color}`} />
+      {BADGES.map(({ icon: Icon, label, sub }) => (
+        <div key={label} className="flex flex-col items-center text-center gap-3">
+          <div className="w-12 h-12 rounded bg-[#0a0a0a] border border-white/5 flex items-center justify-center shadow-2xl">
+            <Icon className="w-5 h-5 text-brand-yellow" />
           </div>
-          <p className="text-xs font-semibold text-gray-800">{label}</p>
-          <p className="text-xs text-gray-500">{sub}</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white leading-tight">{label}</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-600">{sub}</p>
         </div>
       ))}
     </div>

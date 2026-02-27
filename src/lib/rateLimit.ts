@@ -4,6 +4,10 @@
  * NOTE: This uses a module-level Map which works for single-process deployments
  * (local dev, single-instance serverless). For multi-instance production
  * deployments replace the store with Redis (e.g. @upstash/ratelimit).
+ * 
+ * VERCEL SECURITY NOTE: On the Vercel platform, the 'x-forwarded-for' header 
+ * is platform-controlled. Vercel strips client-supplied values and sets its own 
+ * correct IP, making this safe against header spoofing.
  */
 
 interface RequestRecord {

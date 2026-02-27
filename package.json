@@ -15,6 +15,8 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.49.2",
     "axios": "^1.13.5",
+    "iso-3166-2": "^1.0.0",
+    "libphonenumber-js": "^1.12.38",
     "lucide-react": "^0.575.0",
     "next": "16.1.6",
     "react": "19.2.3",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/iso-3166-2": "^1.0.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

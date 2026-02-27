@@ -1,13 +1,108 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-yellow: #ff9f00;
+  --color-brand-orange: #ff7000;
+  --color-surface: #0a0a0a;
+  --font-display: "Inter", "system-ui", sans-serif;
+}
+
 :root {
-  --background: #f9fafb;
-  --foreground: #111827;
+  --background: #000000;
+  --foreground: #ffffff;
+  --surface: #0a0a0a;
+  --accent: #ff9f00;
+  --accent-foreground: #000000;
+  --muted: #666666;
+  --border: #1a1a1a;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Utilities for Hasbro-style UI */
+.hasbro-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hasbro-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -10px rgba(255, 184, 0, 0.2);
+}
+
+.hasbro-btn-primary {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.75rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hasbro-btn-primary:hover {
+  background-color: #ffca40;
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 184, 0, 0.4);
+}
+
+.hasbro-tag {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #222 #000;
+}
+
+/* Global utility for custom scrollbar in containers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }

@@ -48,8 +48,6 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
 
     const stats = {
         total: products.length,
-        lowStock: products.filter(p => p.stock <= 3 && p.stock > 0).length,
-        outOfStock: products.filter(p => p.stock === 0).length
     };
 
     return (
@@ -60,13 +58,13 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
                     <p className="text-[10px] uppercase font-black tracking-widest text-neutral-600 mb-1">Total Pieces</p>
                     <p className="text-2xl font-black text-white">{stats.total}</p>
                 </div>
-                <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-sm">
-                    <p className="text-[10px] uppercase font-black tracking-widest text-neutral-600 mb-1">Low Stock Alerts</p>
-                    <p className="text-2xl font-black text-orange-500">{stats.lowStock}</p>
+                <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-sm opacity-20">
+                    <p className="text-[10px] uppercase font-black tracking-widest text-neutral-600 mb-1">Full Collection</p>
+                    <p className="text-2xl font-black text-white">Live</p>
                 </div>
-                <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-sm">
-                    <p className="text-[10px] uppercase font-black tracking-widest text-neutral-600 mb-1">Out of Stock</p>
-                    <p className="text-2xl font-black text-red-500">{stats.outOfStock}</p>
+                <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-sm opacity-20">
+                    <p className="text-[10px] uppercase font-black tracking-widest text-neutral-600 mb-1">Production</p>
+                    <p className="text-2xl font-black text-white">Active</p>
                 </div>
             </div>
 
@@ -120,12 +118,6 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
                                         ) : (
                                             <span className="flex items-center gap-1.5"><Eye className="w-3 h-3" /> Published</span>
                                         )}
-                                    </span>
-                                    <span className={`px-2 py-1 rounded-[2px] border text-[9px] font-black uppercase tracking-widest backdrop-blur-md ${product.stock === 0 ? "text-red-400 bg-red-500/20 border-red-500/30" :
-                                        product.stock <= 3 ? "text-orange-400 bg-orange-500/20 border-orange-500/30" :
-                                            "text-green-400 bg-green-500/20 border-green-500/30"
-                                        }`}>
-                                        Stock: {product.stock}
                                     </span>
                                 </div>
                             </div>
