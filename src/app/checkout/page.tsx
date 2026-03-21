@@ -12,6 +12,7 @@ import StripePaymentForm from "@/components/checkout/StripePaymentForm";
 import { countries } from "@/lib/countries";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { AsYouType, isValidPhoneNumber } from "libphonenumber-js";
+import { createClient } from "@/lib/supabase-browser";
 
 const EMPTY_ADDRESS: ShippingAddress = {
   full_name: "",
@@ -24,7 +25,6 @@ const EMPTY_ADDRESS: ShippingAddress = {
   phone: "",
   email: "",
 };
-
 
 
 export default function CheckoutPage() {
@@ -46,6 +46,51 @@ export default function CheckoutPage() {
   const [zipFetched, setZipFetched] = useState(false);
   const [zipLookupFailed, setZipLookupFailed] = useState(false);
   const [isZipLoading, setIsZipLoading] = useState(false);
+  const [hasHydrated, setHasHydrated] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  // Hydration and Persistence
+  useEffect(() => {
+    setHasHydrated(true);
+    
+    // Check for user session
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setUser(user);
+        // Only auto-fill if the user hasn't typed anything yet
+        setAddress(prev => ({ 
+          ...prev, 
+          email: prev.email || user.email || "" 
+        }));
+      }
+    });
+
+    const saved = sessionStorage.getItem("5ivearts-checkout-state");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.address) setAddress(parsed.address);
+        
+        // Safety: Never restore to Step 3 as it requires a fresh Stripe session/secret which isn't persisted
+        if (parsed.activeStep) {
+          const restoredStep = parsed.activeStep;
+          // Fallback to step 2 if they were at step 3, so they re-trigger the gateway
+          setActiveStep(restoredStep === 3 ? 2 : restoredStep);
+        }
+        
+        if (parsed.selectedRate) setSelectedRate(parsed.selectedRate);
+      } catch (e) {
+        console.warn("Failed to restore checkout state:", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+     if (!hasHydrated) return;
+     const stateToSave = { address, activeStep, selectedRate };
+     sessionStorage.setItem("5ivearts-checkout-state", JSON.stringify(stateToSave));
+  }, [address, activeStep, selectedRate, hasHydrated]);
 
   // Fetch localized countries on mount
   useEffect(() => {
@@ -175,6 +220,7 @@ export default function CheckoutPage() {
           setZipLookupFailed(true);
         }
       } catch (err) {
+        console.warn(`[ZIP] Look-up failed for ${country}/${zip}. This is normal for some regions.`);
         setZipFetched(false);
         setZipLookupFailed(true);
       } finally {
@@ -188,18 +234,45 @@ export default function CheckoutPage() {
       setZipLookupFailed(false);
     };
   }, [address.zip_code, address.country, regions]);
+  
+
+  // Use manual continue for safety
+  const canContinue = hasHydrated && items.length > 0;
+
+  // Auto-refetch rates if missing on step 2 (e.g. on page refresh/restore)
+  useEffect(() => {
+    // Only auto-trigger if we have an address, are on step 2, have no rates, and aren't fetching
+    if (
+      hasHydrated && 
+      activeStep === 2 && 
+      rates.length === 0 && 
+      !fetchingRates && 
+      address.zip_code && 
+      address.country
+    ) {
+      fetchShippingRates();
+    }
+  }, [hasHydrated, activeStep, rates.length, fetchingRates, address.zip_code, address.country]);
 
 
+
+  if (!hasHydrated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black">
+        <Loader2 className="w-8 h-8 animate-spin text-brand-yellow" />
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
       <div className="max-w-xl mx-auto px-4 py-24 text-center">
-        <p className="text-gray-500 mb-6">Your cart is empty.</p>
+        <p className="text-gray-500 mb-6 font-bold uppercase tracking-widest text-xs">Your collection is empty.</p>
         <Link
           href="/products"
-          className="bg-indigo-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-indigo-700 transition-colors inline-block"
+          className="hasbro-btn-primary px-8 py-3 rounded-xl inline-block"
         >
-          Browse the Shop
+          Explore the Collection
         </Link>
       </div>
     );
@@ -218,13 +291,17 @@ export default function CheckoutPage() {
 
     setAddress({ ...address, [name]: value });
 
-    // Reset rates when address changes
+    // Reset rates and step when address changes to ensure fresh calculation
     setRates([]);
     setSelectedRate(null);
     setRateError(null);
+    if (activeStep > 1) setActiveStep(1);
   };
 
   const fetchShippingRates = async () => {
+    const log = (m: string) => navigator.sendBeacon("/api/debug/log", JSON.stringify({ message: `[STATE] ${m}`, type: "info" }));
+    log("Starting fetchShippingRates...");
+
     if (!address.zip_code || !address.country) {
       setRateError("Please enter your postcode and country to get shipping rates.");
       return;
@@ -236,12 +313,15 @@ export default function CheckoutPage() {
         toAddress: address,
         subtotalPence: subtotal,
       });
+      log(`Rates received: ${res.data.length} services found.`);
       setRates(res.data);
       if (res.data.length > 0) {
+        log("Setting Step 2 and selecting first rate.");
         setSelectedRate(res.data[0]);
         setActiveStep(2);
       }
     } catch (err: any) {
+      log(`Rates fetch error: ${err.message}`);
       console.error("[checkout] Could not fetch rates:", err.response?.data || err.message);
       setRateError(err.response?.data?.error || "Could not fetch shipping rates. Please try again.");
     } finally {
@@ -250,6 +330,8 @@ export default function CheckoutPage() {
   };
 
   const handleCheckout = async () => {
+    const log = (m: string) => navigator.sendBeacon("/api/debug/log", JSON.stringify({ message: `[STATE] ${m}`, type: "info" }));
+    log("Starting handleCheckout...");
     if (!selectedRate) {
       setRateError("Please select a shipping option before continuing.");
       return;
@@ -274,9 +356,6 @@ export default function CheckoutPage() {
 
   const total = subtotal + (selectedRate?.price ?? 0);
 
-  // Step 1: filling address; Step 2: rates visible; Step 3: ready to pay
-  const currentStep = checkingOut ? 3 : rates.length > 0 ? 2 : 1;
-
   const STEPS = [
     { n: 1, label: "Delivery" },
     { n: 2, label: "Shipping" },
@@ -286,8 +365,14 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 min-h-screen text-white">
       <div className="mb-12 border-b border-white/5 pb-8">
-        <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">Secure gateway</span>
-        <h1 className="text-5xl font-black uppercase tracking-tighter text-white">Checkout</h1>
+        <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-4 block">Secure gateway</span>
+        <div className="flex items-end gap-6 mb-2">
+          <div className="flex flex-col -space-y-1 mb-1">
+            <span className="font-black text-2xl uppercase tracking-tighter text-white">5ive</span>
+            <span className="font-black text-[10px] uppercase tracking-[0.4em] text-brand-yellow">Arts</span>
+          </div>
+          <h1 className="text-5xl font-black uppercase tracking-tighter text-white border-l border-white/10 pl-6">Checkout</h1>
+        </div>
       </div>
 
       {/* Step progress indicator */}
@@ -301,6 +386,7 @@ export default function CheckoutPage() {
               />
             )}
             <button
+              type="button"
               onClick={() => n < activeStep && setActiveStep(n)}
               disabled={n >= activeStep}
               className={`flex flex-col items-center gap-2 group outline-none ${n < activeStep ? "cursor-pointer" : "cursor-default"}`}
@@ -361,9 +447,16 @@ export default function CheckoutPage() {
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
-                    Email Address *
-                  </label>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500">
+                      Email Address *
+                    </label>
+                    {user && (
+                      <span className="text-[8px] font-black uppercase tracking-widest text-brand-yellow">
+                        Vault: {user.email}
+                      </span>
+                    )}
+                  </div>
                   <input
                     type="email"
                     name="email"
@@ -373,6 +466,11 @@ export default function CheckoutPage() {
                     placeholder="email@example.com"
                     required
                   />
+                  {user && address.email !== user.email && (
+                    <p className="mt-2 text-[8px] font-black uppercase tracking-widest text-neutral-600">
+                      Note: Order will be managed by your "{user.email}" vault, but notifications will go to this address.
+                    </p>
+                  )}
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
@@ -479,13 +577,24 @@ export default function CheckoutPage() {
                           Phone Connection * {address.phone && !isValid ? "(Invalid Format)" : isValid ? "(Valid Number)" : "(Include + code)"}
                         </label>
                         <div className="relative">
-                          <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none border-r border-white/10 pr-3 h-5">
+                          <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2 border-r border-white/10 pr-3 h-5">
                             {detectedCountry ? (
-                              <img
-                                src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${detectedCountry.toUpperCase()}.svg`}
-                                alt={detectedCountry}
-                                className="w-5 h-auto rounded-sm shadow-sm"
-                              />
+                              <button
+                                type="button"
+                                title={`Switch to ${detectedCountry}`}
+                                onClick={() => {
+                                  if (detectedCountry !== address.country) {
+                                      setAddress(prev => ({ ...prev, country: detectedCountry }));
+                                  }
+                                }}
+                                className="hover:scale-110 transition-transform cursor-pointer"
+                              >
+                                <img
+                                  src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${detectedCountry.toUpperCase()}.svg`}
+                                  alt={detectedCountry}
+                                  className="w-5 h-auto rounded-sm shadow-sm"
+                                />
+                              </button>
                             ) : (
                               <div className="w-5 h-5 flex items-center justify-center text-neutral-600 text-[10px] font-bold">
                                 +
@@ -507,6 +616,15 @@ export default function CheckoutPage() {
                             required
                           />
                         </div>
+                        {detectedCountry && detectedCountry !== address.country && (
+                            <button 
+                                type="button"
+                                onClick={() => setAddress(prev => ({ ...prev, country: detectedCountry }))}
+                                className="mt-2 text-[8px] font-black uppercase tracking-widest text-brand-yellow hover:underline"
+                            >
+                                Switch delivery country to {detectedCountry}?
+                            </button>
+                        )}
                       </>
                     );
                   })()}
@@ -514,6 +632,7 @@ export default function CheckoutPage() {
               </div>
 
               <button
+                type="button"
                 onClick={fetchShippingRates}
                 disabled={fetchingRates}
                 className="mt-10 flex items-center justify-center gap-3 w-full border border-white/10 p-5 rounded font-black uppercase tracking-widest text-[10px] text-white hover:bg-white/5 transition-all disabled:opacity-30"
@@ -528,6 +647,7 @@ export default function CheckoutPage() {
           {activeStep === 2 && (
             <div className="hasbro-card p-10 animate-in fade-in slide-in-from-right-4 duration-500">
               <button
+                type="button"
                 onClick={() => setActiveStep(1)}
                 className="mb-8 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-neutral-500 hover:text-white transition-colors"
               >
@@ -542,6 +662,7 @@ export default function CheckoutPage() {
                 {rates.map((rate) => (
                   <label
                     key={rate.service_id}
+                    onClick={() => setSelectedRate(rate)}
                     className={`flex items-center justify-between p-6 rounded border cursor-pointer transition-all ${selectedRate?.service_id === rate.service_id
                       ? "border-brand-yellow bg-brand-yellow/5"
                       : "border-white/5 hover:border-white/20 bg-[#050505]"
@@ -569,6 +690,7 @@ export default function CheckoutPage() {
 
               {selectedRate && (
                 <button
+                  type="button"
                   onClick={handleCheckout}
                   disabled={checkingOut}
                   className="mt-10 flex items-center justify-center gap-3 w-full hasbro-btn-primary p-5 py-6 rounded font-black uppercase tracking-widest text-[11px] transition-all disabled:opacity-30"
@@ -584,6 +706,7 @@ export default function CheckoutPage() {
           {activeStep === 3 && (
             <div className="hasbro-card p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <button
+                type="button"
                 onClick={() => setActiveStep(2)}
                 className="mb-8 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-neutral-500 hover:text-white transition-colors"
               >
@@ -672,6 +795,7 @@ export default function CheckoutPage() {
 
           {activeStep < 3 && !clientSecret && (
             <button
+              type="button"
               onClick={activeStep === 1 ? fetchShippingRates : handleCheckout}
               disabled={checkingOut || fetchingRates || (activeStep === 2 && !selectedRate)}
               className="hasbro-btn-primary mt-12 w-full py-5 text-sm flex items-center justify-center gap-3 disabled:opacity-20 shadow-2xl shadow-brand-yellow/10"

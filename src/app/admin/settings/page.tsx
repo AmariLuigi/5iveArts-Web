@@ -1,23 +1,30 @@
-import { Settings as SettingsIcon, Truck, Scale, ShieldCheck, Database, Globe } from "lucide-react";
+import { Settings as SettingsIcon, Truck, Scale, ShieldCheck, Database, Globe, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { getSiteSettings } from "@/lib/settings";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+    const settings = await getSiteSettings();
+
     const configs = [
         {
             title: "Shipping Logistics",
-            description: "Configure flat-rate tiers and global delivery zones.",
+            description: settings.logistics 
+                ? `Free over ${settings.logistics.free_shipping_threshold_cents / 100}€ | ${settings.logistics.preparation_days_buffer} day buffer.`
+                : "Configure flat-rate tiers and global delivery zones.",
             icon: Truck,
-            badge: "In Code",
+            badge: settings.logistics ? "Database" : "In Code",
             href: "#",
-            active: false
+            active: !!settings.logistics
         },
         {
             title: "Pricing Algorithms",
-            description: "Manage scale multipliers (1/6, 1/4) and finish variants.",
+            description: settings.pricing 
+                ? `Active Multipliers: 1/6 (${settings.pricing.scales["1/6"]?.multiplier}x), 1/4 (${settings.pricing.scales["1/4"]?.multiplier}x).`
+                : "Manage scale multipliers (1/6, 1/4) and finish variants.",
             icon: Scale,
-            badge: "In Code",
+            badge: settings.pricing ? "Database" : "In Code",
             href: "#",
-            active: false
+            active: !!settings.pricing
         },
         {
             title: "System Security",
@@ -45,11 +52,18 @@ export default function SettingsPage() {
                     <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">System Configuration</span>
                     <h1 className="text-5xl font-black uppercase tracking-tighter text-white leading-none">Settings</h1>
                 </div>
+
+                {!settings.pricing && (
+                    <div className="bg-orange-500/10 border border-orange-500/20 px-4 py-2 rounded-sm flex items-center gap-3 text-orange-500">
+                        <AlertCircle className="w-4 h-4" />
+                        <span className="text-[9px] font-black uppercase tracking-widest">Pricing migration pending</span>
+                    </div>
+                )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {configs.map((config) => (
-                    <div key={config.title} className="hasbro-card p-10 group hover:border-white/10 transition-all flex flex-col gap-6">
+                    <div key={config.title} className="bg-[#0a0a0a] border border-white/5 p-10 group hover:border-white/10 transition-all flex flex-col gap-6 relative overflow-hidden">
                         <div className="flex items-start justify-between">
                             <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center group-hover:bg-brand-yellow/10 group-hover:border-brand-yellow/20 transition-all">
                                 <config.icon className="w-5 h-5 text-neutral-600 group-hover:text-brand-yellow transition-colors" />
@@ -66,7 +80,7 @@ export default function SettingsPage() {
 
                         <div className="mt-auto pt-6 border-t border-white/5">
                             {config.active ? (
-                                <span className="text-[9px] font-black uppercase tracking-widest text-neutral-700">Currently Managed Externally</span>
+                                <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500">Managed in site_settings</span>
                             ) : (
                                 <span className="text-[9px] font-black uppercase tracking-widest text-neutral-800">Migration to Database Pending</span>
                             )}

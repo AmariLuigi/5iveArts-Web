@@ -41,11 +41,11 @@ export function getSupabaseAdmin() {
 
 export function getSupabasePublic() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY;
 
   if (!url || !key) {
     throw new Error(
-      "Missing Supabase env vars: NEXT_PUBLIC_SUPABASE_URL and/or NEXT_PUBLIC_SUPABASE_ANON_KEY"
+      "Missing Supabase env vars: NEXT_PUBLIC_SUPABASE_URL and/or NEXT_PUBLIC_SUPABASE_PUBLIC_KEY"
     );
   }
 

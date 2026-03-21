@@ -56,6 +56,8 @@ export interface Database {
           tracking_number: string | null;
           label_url: string | null;
           shipping_address: Record<string, unknown>;
+          user_id: string | null;
+          shipping_service_name: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -73,6 +75,8 @@ export interface Database {
           tracking_number?: string | null;
           label_url?: string | null;
           shipping_address?: Record<string, unknown>;
+          user_id?: string | null;
+          shipping_service_name?: string | null;
         };
         Update: Partial<Database["public"]["Tables"]["orders"]["Insert"]>;
       };

@@ -22,7 +22,7 @@ const STANDARD_FEATURES = [
 ];
 
 export default function ProductDetailClient({ product }: Props) {
-    const [selectedScale, setSelectedScale] = useState<ProductScale>("1/12");
+    const [selectedScale, setSelectedScale] = useState<ProductScale>("1/9");
     const [selectedFinish, setSelectedFinish] = useState<ProductFinish>("painted");
     const [activeMedia, setActiveMedia] = useState(0);
 
@@ -33,7 +33,7 @@ export default function ProductDetailClient({ product }: Props) {
 
     const currentPrice = calculatePrice(product.price, selectedScale, selectedFinish);
 
-    const scales: ProductScale[] = ["1/12", "1/9", "1/6", "1/4"];
+    const scales: ProductScale[] = ["1/9", "1/6", "1/4"];
     const finishes: ProductFinish[] = ["painted", "raw"];
 
     const isVideo = (url: string) => product.videos?.includes(url);

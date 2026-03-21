@@ -3,11 +3,17 @@ import { getStripe } from "@/lib/stripe";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { validateCartItems, validateShippingAddress } from "@/lib/validate";
 import { ShippingRate } from "@/types";
+import { writeToPersistentLog } from "@/lib/logger";
+import { createClient } from "@/lib/supabase-server";
 
 // Rate limit: 10 checkout attempts per IP per minute
 const RATE_LIMIT = { limit: 10, windowMs: 60_000 };
 
 export async function POST(req: NextRequest) {
+  const timestamp = new Date().toLocaleTimeString();
+  const msg = `/api/checkout called at ${timestamp}`;
+  console.log(`[API-DEBUG] ${msg}`);
+  writeToPersistentLog(msg);
   // ── Rate limiting ──────────────────────────────────────────────────────────
   const ip = getClientIp(req);
   const rl = checkRateLimit(`checkout:${ip}`, RATE_LIMIT);
@@ -31,7 +37,7 @@ export async function POST(req: NextRequest) {
 
   const b = body as Record<string, unknown>;
 
-  const itemsResult = validateCartItems(b.items);
+  const itemsResult = await validateCartItems(b.items);
   if (itemsResult.error || !itemsResult.data) {
     console.warn("[api/checkout] Items validation failed:", itemsResult.error);
     return NextResponse.json({ error: itemsResult.error || "Invalid items" }, { status: 400 });
@@ -57,18 +63,22 @@ export async function POST(req: NextRequest) {
   const address = addressResult.data;
 
   // ── Calculate server-authoritative shipping price ─────────────────────────
-  const { getShippingRates } = await import("@/lib/shipping");
+  const { fetchPacklinkRates } = await import("@/lib/packlink");
+
   const subtotalCents = items.reduce(
     (acc, item) => acc + item.priceAtSelection * item.quantity,
     0
   );
-  const serverRates = getShippingRates(address, subtotalCents);
+
+  // We must re-fetch/calculate the rates server-side to prevent price tampering
+  const serverRates = await fetchPacklinkRates(address, subtotalCents);
+
   const matchedRate = serverRates.find((r) => r.service_id === rawRate.service_id);
 
   if (!matchedRate) {
-    console.warn("[api/checkout] Invalid shipping service_id:", rawRate.service_id);
+    console.warn("[api/checkout] Invalid shipping service_id:", rawRate.service_id, "Target Address:", address.country, address.zip_code);
     return NextResponse.json(
-      { error: "Invalid shipping service selected" },
+      { error: "Invalid shipping service selected or unavailable for this address." },
       { status: 400 }
     );
   }
@@ -113,6 +123,10 @@ export async function POST(req: NextRequest) {
 
   // ── Create Stripe Checkout Session with embedded UI ───────────────────────
   try {
+    // Check if user is logged in to link order automatically
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
     const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       ui_mode: "custom",
@@ -120,12 +134,17 @@ export async function POST(req: NextRequest) {
       customer_email: address.email,
       metadata: {
         shipping_service_id: rawRate.service_id,
+        shipping_service_name: `${matchedRate.carrier_name} — ${matchedRate.service_name}`,
+        shipping_pence: String(shippingPrice),
         ship_to_name: address.full_name,
         ship_to_street: address.street1,
         ship_to_city: address.city,
+        ship_to_state: address.state || "",
         ship_to_zip: address.zip_code,
         ship_to_country: address.country,
         ship_to_phone: address.phone,
+        user_id: user?.id || "",
+        user_email: user?.email || "",
       },
       return_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     });
@@ -149,6 +168,21 @@ export async function GET(req: NextRequest) {
 
   try {
     const session = await getStripe().checkout.sessions.retrieve(sessionId);
+
+    // ── Safe Reconciliation Fallback ──────────────────────────────────────────
+    // If the session is complete/paid, ensure it's recorded in the database.
+    // This acts as a fallback for when webhooks are slow OR missed (e.g. local dev).
+    if (session.status === "complete" || session.payment_status === "paid") {
+      const { processCompletedCheckout } = await import("@/lib/orders");
+      try {
+        await processCompletedCheckout(session);
+        console.log(`[api/checkout] Reconciled session: ${session.id}`);
+      } catch (err) {
+        // Log but don't fail the status check; let the UI show "paid" but maybe without order ID
+        console.error("[api/checkout] Reconciliation failed:", err);
+      }
+    }
+
     return NextResponse.json({
       status: session.status,
       payment_status: session.payment_status,

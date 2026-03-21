@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getShippingRates } from "@/lib/shipping";
+import { fetchPacklinkRates } from "@/lib/packlink";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { validateShippingAddress, sanitizeNumber } from "@/lib/validate";
 
@@ -7,7 +7,6 @@ import { validateShippingAddress, sanitizeNumber } from "@/lib/validate";
 const RATE_LIMIT = { limit: 20, windowMs: 60_000 };
 
 export async function POST(req: NextRequest) {
-  // ── Rate limiting ──────────────────────────────────────────────────────────
   const ip = getClientIp(req);
   const rl = checkRateLimit(`shipping-rates:${ip}`, RATE_LIMIT);
   if (!rl.success) {
@@ -20,7 +19,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // ── Parse & validate body ──────────────────────────────────────────────────
   let body: unknown;
   try {
     body = await req.json();
@@ -29,7 +27,6 @@ export async function POST(req: NextRequest) {
   }
 
   const b = body as Record<string, unknown>;
-
   const addressResult = validateShippingAddress(b.toAddress);
   if (addressResult.error || !addressResult.data) {
     return NextResponse.json({ error: addressResult.error }, { status: 400 });
@@ -37,7 +34,17 @@ export async function POST(req: NextRequest) {
 
   const subtotalPence = sanitizeNumber(b.subtotalPence, 0, 1_000_000) ?? 0;
 
-  // ── Return flat-rate shipping options ──────────────────────────────────────
-  const rates = getShippingRates(addressResult.data, subtotalPence);
+  // ── Fetch dynamic Packlink rates ──────────────────────────────────────────
+  const rates = await fetchPacklinkRates(addressResult.data, subtotalPence);
+
+  if (rates.length === 0) {
+    console.warn(`[shipping] No Packlink services found for ${addressResult.data.country}/${addressResult.data.zip_code}.`);
+    return NextResponse.json(
+      { error: "No shipping services available for this destination. Please verify your address." },
+      { status: 404 }
+    );
+  }
+
+  console.log(`[shipping] Packlink returned ${rates.length} services for ${addressResult.data.country}/${addressResult.data.zip_code}.`);
   return NextResponse.json(rates);
 }

@@ -16,20 +16,20 @@ const UK_COUNTRIES = new Set(["GB", "JE", "GG", "IM"]);
 
 const RATES = {
     IT: {
-        standard: { price: 499, label: "Poste Italiane — Standard", days: 3 },
-        express: { price: 899, label: "BRT / SDA — Express", days: 1 },
+        standard: { price: 499, label: "Standard Economy", days: 3 },
+        express: { price: 899, label: "Express Courier", days: 1 },
     },
     EU: {
-        standard: { price: 899, label: "EU Standard Shipping", days: 5 },
-        express: { price: 1499, label: "EU Express Tracked", days: 3 },
+        standard: { price: 899, label: "Economy Tracked", days: 5 },
+        express: { price: 1499, label: "Express Tracked", days: 3 },
     },
     UK: {
-        standard: { price: 1299, label: "UK Standard Shipping", days: 7 },
-        express: { price: 1999, label: "UK Express Tracked", days: 4 },
+        standard: { price: 1299, label: "Standard Tracked", days: 7 },
+        express: { price: 1999, label: "Express Tracked", days: 4 },
     },
     WORLD: {
-        standard: { price: 1499, label: "International Standard", days: 14 },
-        express: { price: 2499, label: "International Express Tracked", days: 7 },
+        standard: { price: 1499, label: "International economy", days: 14 },
+        express: { price: 2499, label: "Global Express Tracked", days: 7 },
     },
 } as const;
 
@@ -57,7 +57,7 @@ export function getShippingRates(
 
     // Standard (free over €50)
     const standardPrice =
-        subtotalCents >= FREE_SHIPPING_THRESHOLD ? 0 : tiers.standard.price;
+        (region === "IT" && subtotalCents >= FREE_SHIPPING_THRESHOLD) ? 0 : tiers.standard.price;
     results.push({
         service_id: `${region.toLowerCase()}-standard`,
         carrier_name: region === "IT" ? "Poste Italiane" : "International Post",

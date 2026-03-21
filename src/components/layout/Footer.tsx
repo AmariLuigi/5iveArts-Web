@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Palette } from "lucide-react";
+// Minimalist text-only branding
 
 export default function Footer() {
   return (
@@ -7,9 +7,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 text-white font-black text-2xl mb-6 uppercase tracking-tighter">
-              <Palette className="w-6 h-6 text-brand-yellow" />
-              5ive<span className="text-brand-yellow">Arts</span>
+            <div className="flex flex-col mb-6 -space-y-1">
+              <span className="font-black text-xl uppercase tracking-tighter text-white">5ive</span>
+              <span className="font-black text-[10px] uppercase tracking-[0.4em] text-brand-yellow/80">Arts</span>
             </div>
             <p className="text-xs font-medium leading-relaxed max-w-xs">
               Hand-painted and home 3D-printed masterpieces. Individually crafted with passion for serious collectors.

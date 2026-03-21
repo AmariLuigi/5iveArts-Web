@@ -65,3 +65,8 @@ stripe custom payment page.md
 *.MOV
 *.avi
 *.webp
+
+# tools & testing
+stripe.exe
+packlink_debug.json
+test_packlink.js

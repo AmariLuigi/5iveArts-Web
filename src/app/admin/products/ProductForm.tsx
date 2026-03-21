@@ -49,7 +49,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
     const categories = [
-        { value: "figures", label: "Collector Figure", icon: Shield, desc: "Standard 1/12 to 1/4 scales" },
+        { value: "figures", label: "Collector Figure", icon: Shield, desc: "Standard 1/9 to 1/4 scales" },
         { value: "busts", label: "Museum Bust", icon: Box, desc: "High-detail portrait sculpts" },
         { value: "dioramas", label: "Diorama Set", icon: Package, desc: "Complete environment scenes" }
     ];
@@ -67,69 +67,73 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const supabase = createClient();
 
     const handleMediaUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'images' | 'videos') => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
 
         setIsMediaUploading(true);
-        setUploadProgress(1); // Force show bar immediately
         setError(null);
-
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
-        const folder = type === 'images' ? 'products' : 'cinematics';
-        const filePath = `${folder}/${fileName}`;
+        
+        // Use a functional update to track URLs collected so far
+        const newUrls: string[] = [];
 
         try {
-            const uploadOptions = {
-                upsert: true,
-                contentType: file.type, // CRITICAL: Ensures browser knows it's a video/image
-                onUploadProgress: (progress: any) => {
-                    if (progress.total > 0) {
-                        const percent = (progress.loaded / progress.total) * 100;
-                        setUploadProgress(Math.max(1, Math.min(99, Math.round(percent))));
-                    }
-                },
-            };
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Math.random()}.${fileExt}`;
+                const folder = type === 'images' ? 'products' : 'cinematics';
+                const filePath = `${folder}/${fileName}`;
 
-            console.log(`[MediaUpload] Starting ${type} upload:`, filePath, file.type);
+                // Update progress for the current batch
+                const baseProgress = (i / files.length) * 100;
+                setUploadProgress(Math.max(1, Math.round(baseProgress)));
 
-            let { error: uploadError } = await supabase.storage
-                .from('product-media')
-                .upload(filePath, file, uploadOptions);
+                const uploadOptions = {
+                    upsert: true,
+                    contentType: file.type,
+                    onUploadProgress: (progress: any) => {
+                        if (progress.total > 0) {
+                            const currentFilePercent = (progress.loaded / progress.total) * (100 / files.length);
+                            setUploadProgress(Math.min(99, Math.round(baseProgress + currentFilePercent)));
+                        }
+                    },
+                };
 
-            let targetBucket = 'product-media';
-
-            if (uploadError) {
-                console.warn("[MediaUpload] Primary bucket failed, trying fallback:", uploadError.message);
-                const { error: fallbackError } = await supabase.storage
-                    .from('product-images')
+                const { error: uploadError } = await supabase.storage
+                    .from('product-media')
                     .upload(filePath, file, uploadOptions);
 
-                if (fallbackError) {
-                    throw new Error(`Upload failed on both buckets. Ref: ${uploadError.message}`);
+                let targetBucket = 'product-media';
+
+                if (uploadError) {
+                    const { error: fallbackError } = await supabase.storage
+                        .from('product-images')
+                        .upload(filePath, file, uploadOptions);
+
+                    if (fallbackError) {
+                        throw new Error(`Upload failed for ${file.name}. Ref: ${uploadError.message}`);
+                    }
+                    targetBucket = 'product-images';
                 }
-                targetBucket = 'product-images';
+
+                const { data: { publicUrl } } = supabase.storage
+                    .from(targetBucket)
+                    .getPublicUrl(filePath);
+
+                newUrls.push(publicUrl);
             }
 
-            const { data: { publicUrl } } = supabase.storage
-                .from(targetBucket)
-                .getPublicUrl(filePath);
-
-            console.log(`[MediaUpload] Success! Public URL:`, publicUrl);
-
             setUploadProgress(100);
-            if (type === 'images') setImages([...images, publicUrl]);
-            else setVideos([...videos, publicUrl]);
+            if (type === 'images') setImages([...images, ...newUrls]);
+            else setVideos([...videos, ...newUrls]);
+
         } catch (err: any) {
             console.error("[MediaUpload] Fatal error:", err);
             setError(err.message);
             setUploadProgress(0);
         } finally {
             setIsMediaUploading(false);
-            // Persistent completion feel
-            setTimeout(() => {
-                setUploadProgress(0);
-            }, 1500);
+            setTimeout(() => setUploadProgress(0), 1500);
         }
     };
 
@@ -289,7 +293,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                 onChange={(e) => setPrice(Number(e.target.value))}
                                 className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black text-brand-yellow focus:outline-none focus:border-brand-yellow/30"
                             />
-                            <p className="text-[9px] font-black uppercase text-neutral-700">{formatPrice(price)} (1/12 Painted)</p>
+                            <p className="text-[9px] font-black uppercase text-neutral-700">{formatPrice(price)} (Base 1/12 Ref Multiplier)</p>
                         </div>
                         <div className="space-y-3 relative">
                             <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Classification</label>
@@ -349,6 +353,40 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             </div>
                         </div>
                     </div>
+
+                    <div className="space-y-4 pt-4 border-t border-white/5">
+                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Technical Specifications</label>
+                        <div className="space-y-3">
+                            {details.map((detail, idx) => (
+                                <div key={idx} className="flex gap-2">
+                                    <input
+                                        value={detail}
+                                        onChange={(e) => {
+                                            const newDetails = [...details];
+                                            newDetails[idx] = e.target.value;
+                                            setDetails(newDetails);
+                                        }}
+                                        className="flex-1 bg-white/[0.01] border border-white/5 rounded-sm px-4 py-2 text-[11px] font-bold text-neutral-400 focus:border-brand-yellow/20 outline-none"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setDetails(details.filter((_, i) => i !== idx))}
+                                        className="p-2 text-neutral-800 hover:text-red-500 transition-colors"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            ))}
+                            <button
+                                type="button"
+                                onClick={() => setDetails([...details, ""])}
+                                className="text-[9px] uppercase font-black tracking-widest text-brand-yellow hover:text-white flex items-center gap-2 transition-colors mt-2"
+                            >
+                                <Plus className="w-3 h-3" />
+                                Add Specification
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Visual Assets (Images) */}
@@ -380,7 +418,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         <label className="aspect-square bg-white/[0.02] border border-white/5 border-dashed flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-white/[0.04] hover:border-brand-yellow/30 transition-all group rounded-sm">
                             <Plus className="w-8 h-8 text-neutral-800 group-hover:text-brand-yellow transition-colors" />
                             <span className="text-[9px] uppercase font-black tracking-widest text-neutral-600">Add Picture</span>
-                            <input type="file" accept="image/*" className="hidden" onChange={(e) => handleMediaUpload(e, 'images')} disabled={loading} />
+                            <input type="file" multiple accept="image/*" className="hidden" onChange={(e) => handleMediaUpload(e, 'images')} disabled={loading} />
                         </label>
                     </div>
                 </div>
@@ -418,7 +456,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         <label className="aspect-video bg-white/[0.02] border border-white/5 border-dashed flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-white/[0.04] hover:border-brand-yellow/30 transition-all group rounded-sm">
                             <Film className="w-8 h-8 text-neutral-800 group-hover:text-brand-yellow transition-colors" />
                             <span className="text-[9px] uppercase font-black tracking-widest text-neutral-600">Add Video Reel</span>
-                            <input type="file" accept="video/*" className="hidden" onChange={(e) => handleMediaUpload(e, 'videos')} disabled={loading} />
+                            <input type="file" multiple accept="video/*" className="hidden" onChange={(e) => handleMediaUpload(e, 'videos')} disabled={loading} />
                         </label>
                     </div>
                 </div>
@@ -430,7 +468,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         <span className="text-[9px] font-black uppercase text-neutral-600">Dynamic Multipliers Enabled</span>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {["1/12", "1/9", "1/6", "1/4"].map((s: any) => (
+                        {["1/9", "1/6", "1/4"].map((s: any) => (
                             <div key={s} className="bg-black/50 p-4 border border-white/5 flex flex-col gap-1">
                                 <span className="text-[10px] font-black text-neutral-500 uppercase">{s} Scale</span>
                                 <span className="text-sm font-black text-white">{formatPrice(calculatePrice(price, s, "painted"))}</span>

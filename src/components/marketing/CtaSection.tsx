@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export interface CtaSectionProps {
   heading: string;
@@ -6,13 +9,19 @@ export interface CtaSectionProps {
   cta: { label: string; href: string };
 }
 
-/**
- * Full-width call-to-action banner, reusable at the bottom of any marketing page.
- */
 export default function CtaSection({ heading, subtext, cta }: CtaSectionProps) {
   return (
-    <section className="bg-[#050505] py-32 px-4 text-center border-t border-white/5">
-      <div className="max-w-4xl mx-auto">
+    <section className="bg-[#050505] py-32 px-4 text-center border-t border-white/5 overflow-hidden">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ 
+          duration: 1, 
+          ease: [0.16, 1, 0.3, 1] 
+        }}
+        className="max-w-4xl mx-auto"
+      >
         <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-4 block">Limited production</span>
         <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mb-8">
           {heading}
@@ -22,11 +31,11 @@ export default function CtaSection({ heading, subtext, cta }: CtaSectionProps) {
         </p>
         <Link
           href={cta.href}
-          className="hasbro-btn-primary px-16 py-6 inline-block"
+          className="hasbro-btn-primary px-16 py-6 inline-block hover:scale-105 transition-transform"
         >
           {cta.label}
         </Link>
-      </div>
+      </motion.div>
     </section>
   );
 }

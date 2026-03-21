@@ -1,13 +1,13 @@
 export type ProductCategory = "figures" | "busts" | "dioramas";
 
-export type ProductScale = "1/12" | "1/9" | "1/6" | "1/4";
+export type ProductScale = "1/9" | "1/6" | "1/4";
 export type ProductFinish = "painted" | "raw";
 
 export interface Product {
   id: string;
   name: string;
   description: string;
-  price: number; // base price in cents (1/12 painted)
+  price: number; // base price in cents (relative to 1/12 multiplier)
   images: string[];
   videos: string[];
   category: ProductCategory;

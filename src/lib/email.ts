@@ -1,10 +1,10 @@
 import { Resend } from "resend";
 import { escapeHtml } from "./validate";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 interface OrderConfirmationParams {
-  to: string;
+  to: string | string[];
   orderId: string;
   customerName: string;
   total: string;
@@ -23,6 +23,7 @@ export async function sendOrderConfirmationEmail({
     return;
   }
 
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
   const fromName = process.env.RESEND_FROM_NAME || "5iveArts";
 

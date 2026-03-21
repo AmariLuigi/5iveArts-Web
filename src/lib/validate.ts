@@ -114,7 +114,7 @@ export function validateShippingAddress(
  * Cross-checks product IDs and prices against the server-side catalogue —
  * never trusting client-supplied prices.
  */
-export function validateCartItems(raw: unknown): ValidationResult<CartItem[]> {
+export async function validateCartItems(raw: unknown): Promise<ValidationResult<CartItem[]>> {
   if (!Array.isArray(raw) || raw.length === 0) {
     return { data: null, error: "items must be a non-empty array" };
   }
@@ -134,7 +134,8 @@ export function validateCartItems(raw: unknown): ValidationResult<CartItem[]> {
     if (!productId) {
       return { data: null, error: "Each item must have a product.id" };
     }
-    const serverProduct = getProductById(productId);
+    const serverProduct = await getProductById(productId);
+
     if (!serverProduct) {
       return { data: null, error: `Unknown product id: ${productId}` };
     }
@@ -142,7 +143,7 @@ export function validateCartItems(raw: unknown): ValidationResult<CartItem[]> {
     const scale = e.selectedScale as ProductScale;
     const finish = e.selectedFinish as ProductFinish;
 
-    if (!scale || !["1/12", "1/9", "1/6", "1/4"].includes(scale)) {
+    if (!scale || !["1/9", "1/6", "1/4"].includes(scale)) {
       return { data: null, error: `Invalid scale for product ${productId}` };
     }
     if (!finish || !["painted", "raw"].includes(finish)) {

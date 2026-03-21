@@ -58,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const videoUrl = product.videos?.[0];
   const categoryLabel = "Premium Figurine";
 
-  const scales: ProductScale[] = ["1/12", "1/9", "1/6", "1/4"];
+  const scales: ProductScale[] = ["1/9", "1/6", "1/4"];
 
   const handleAddItem = (scale: ProductScale, finish: ProductFinish) => {
     const price = calculatePrice(product.price, scale, finish);
@@ -155,7 +155,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="flex flex-col">
             <span className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1 leading-none uppercase">Starting from</span>
             <span className="text-2xl font-black text-white leading-none tracking-tighter">
-              {formatPrice(calculatePrice(product.price, "1/12", "raw"))}
+              {formatPrice(calculatePrice(product.price, "1/9", "raw"))}
             </span>
           </div>
 

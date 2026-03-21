@@ -1,4 +1,7 @@
+"use client";
+
 import { Star } from "lucide-react";
+import { motion, Variants } from "framer-motion";
 
 export interface Testimonial {
   name: string;
@@ -12,30 +15,62 @@ export interface TestimonialsSectionProps {
   testimonials: Testimonial[];
 }
 
-/**
- * Testimonials marketing section. Pass an array of customer quotes to render a
- * responsive card grid.
- */
 export default function TestimonialsSection({
   heading = "What collectors are saying",
   testimonials,
 }: TestimonialsSectionProps) {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 40, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
-    <section className="py-24 px-4 bg-[#000000] border-b border-[#111]">
+    <section className="py-24 px-4 bg-[#000000] border-b border-[#111] overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
           <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">Collector Reviews</span>
           <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
             {heading}
           </h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        </motion.div>
+        
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {testimonials.map((t) => (
-            <div
+            <motion.div
               key={t.name}
-              className="hasbro-card p-8 flex flex-col gap-6"
+              variants={itemVariants}
+              className="hasbro-card p-8 flex flex-col gap-6 group hover:translate-y-[-8px] transition-transform duration-500 shadow-2xl hover:shadow-brand-yellow/5"
             >
-              {/* Stars */}
               <div className="flex gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
@@ -47,13 +82,11 @@ export default function TestimonialsSection({
                   />
                 ))}
               </div>
-              {/* Quote */}
               <p className="text-white font-medium text-sm leading-[1.6]">
                 &ldquo;{t.quote}&rdquo;
               </p>
-              {/* Attribution */}
               <div className="mt-auto flex items-center gap-4 pt-6 border-t border-white/5">
-                <div className="w-10 h-10 bg-brand-yellow/10 rounded-full flex items-center justify-center text-brand-yellow font-black text-xs">
+                <div className="w-10 h-10 bg-brand-yellow/10 rounded-full flex items-center justify-center text-brand-yellow font-black text-xs group-hover:scale-110 transition-transform">
                   {t.name.charAt(0)}
                 </div>
                 <div>
@@ -63,9 +96,9 @@ export default function TestimonialsSection({
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -13,7 +13,7 @@ export async function requireAdmin(req: NextRequest) {
 
     const supabase = createServerClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY!,
         {
             cookies: {
                 getAll() {

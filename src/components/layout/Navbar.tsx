@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Menu, X, Palette, ChevronDown } from "lucide-react";
+import { ShoppingCart, Menu, X, Palette, ChevronDown, User } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { useState, useEffect, useRef } from "react";
 import MiniCart from "@/components/cart/MiniCart";
+import { createClient } from "@/lib/supabase-browser";
+import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 
 export default function Navbar() {
   const items = useCartStore((state) => state.items);
@@ -13,6 +15,24 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [isCartHovered, setIsCartHovered] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [user, setUser] = useState<any>(null);
+
+  const supabase = createClient();
+
+  useEffect(() => {
+    setMounted(true);
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase]);
 
   useEffect(() => {
     setMounted(true);
@@ -36,9 +56,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 font-black text-2xl uppercase tracking-tighter text-white">
-            <Palette className="w-6 h-6 text-brand-yellow" />
-            5ive<span className="text-brand-yellow">Arts</span>
+          <Link href="/" className="flex flex-col group -space-y-1">
+            <span className="font-black text-xl uppercase tracking-tighter text-white transition-colors group-hover:text-brand-yellow">5ive</span>
+            <span className="font-black text-[10px] uppercase tracking-[0.4em] text-brand-yellow/80">Arts</span>
           </Link>
 
           {/* Desktop nav */}
@@ -94,6 +114,15 @@ export default function Navbar() {
               )}
             </Link>
 
+            <Link
+              href={user ? "/account" : "/login"}
+              className="flex items-center gap-1 text-white hover:text-brand-yellow transition-all duration-200"
+              title={user ? "My Warehouse" : "Access Terminal"}
+            >
+              <User className={`w-6 h-6 ${user ? 'text-brand-yellow' : ''}`} />
+              {user && <span className="hidden lg:inline text-[9px] font-black uppercase tracking-widest ml-1">Active</span>}
+            </Link>
+
             <button
               className="md:hidden text-white"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -111,6 +140,10 @@ export default function Navbar() {
           <Link href="/" onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">Home</Link>
           <Link href="/products" onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">The Collection</Link>
           <Link href="/cart" onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">Cart ({totalItems})</Link>
+          <Link href={user ? "/account" : "/login"} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow flex items-center gap-2">
+            <User className="w-4 h-4" />
+            {user ? "My Warehouse" : "Log In / Register"}
+          </Link>
         </nav>
       )}
     </header>

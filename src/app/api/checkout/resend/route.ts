@@ -48,8 +48,8 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // 3. Process the checkout (idempotent)
-        const result = await processCompletedCheckout(session);
+        // 3. Process the checkout (idempotent, but force email trigger)
+        const result = await processCompletedCheckout(session, true);
 
         return NextResponse.json({
             success: true,

@@ -1,9 +1,8 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { products, getProductsByCategory } from "@/lib/products";
-import ProductCard from "@/components/product/ProductCard";
 import { Product } from "@/types";
+import ProductCard from "@/components/product/ProductCard";
 
 export default function ProductsClient({ initialProducts }: { initialProducts: Product[] }) {
   return (

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { formatPrice } from "@/lib/products";
 import { DbProduct } from "@/types/supabase";
-import { Search, Filter, Edit3, Trash2, Box, Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
+import { Search, Filter, Edit3, Trash2, Box, Eye, EyeOff, Loader2, AlertCircle, Copy } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
@@ -146,6 +146,13 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
                                                 <Trash2 className="w-4 h-4" />
                                             )}
                                         </button>
+                                        <Link
+                                            href={`/admin/products/new?duplicate=${product.id}`}
+                                            className="p-2 bg-white/5 border border-white/10 text-neutral-400 hover:text-brand-yellow hover:border-brand-yellow/30 transition-all rounded-sm flex items-center gap-2"
+                                            title="Duplicate this product"
+                                        >
+                                            <Copy className="w-4 h-4" />
+                                        </Link>
                                         <Link
                                             href={`/admin/products/${product.id}/edit`}
                                             className="p-2 bg-white/5 border border-white/10 text-neutral-400 hover:text-brand-yellow hover:border-brand-yellow/30 transition-all rounded-sm flex items-center gap-2"
