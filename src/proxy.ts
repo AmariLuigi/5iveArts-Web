@@ -35,17 +35,19 @@ export async function proxy(request: NextRequest) {
     // ── Route Protection ──
 
     const { pathname } = request.nextUrl;
-    const adminEmail = process.env.ADMIN_EMAIL || "luigi.de.la.vega@googlemail.com";
+    const adminEmails = (process.env.ADMIN_EMAIL || "luigi.de.la.vega@googlemail.com")
+        .split(",")
+        .map((e) => e.trim());
 
     // 1. Protect Admin Routes
     if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
         // Exempt login page
-        if (pathname === "/admin/login") {
+        if (pathname === "/admin/login" || pathname === "/admin/login/") {
             return supabaseResponse;
         }
 
-        if (!user || user.email !== adminEmail) {
-            console.warn(`[proxy] Unauthenticated or unauthorized admin access attempt at ${pathname}`);
+        if (!user || !adminEmails.includes(user.email || "")) {
+            console.warn(`[proxy] Unauthorized admin access attempt by ${user?.email || "anonymous"} at ${pathname}`);
             const url = request.nextUrl.clone();
             url.pathname = "/admin/login";
             return NextResponse.redirect(url);
