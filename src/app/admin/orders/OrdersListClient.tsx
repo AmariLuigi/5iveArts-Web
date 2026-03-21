@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { formatPrice } from "@/lib/products";
-import { ChevronRight, Filter, Search, Inbox } from "lucide-react";
+import { ChevronRight, Filter, Search, Inbox, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 interface OrdersListClientProps {
@@ -12,13 +12,18 @@ interface OrdersListClientProps {
 export default function OrdersListClient({ initialOrders }: OrdersListClientProps) {
     const [orders, setOrders] = useState(initialOrders);
     const [searchTerm, setSearchTerm] = useState("");
+    const [statusFilter, setStatusFilter] = useState("all");
 
-    const filteredOrders = orders.filter(o =>
-        o.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        o.customer_email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        o.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        o.status.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredOrders = orders.filter(o => {
+        const matchesSearch = 
+            o.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            o.customer_email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            o.id.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        const matchesStatus = statusFilter === "all" || o.status === statusFilter;
+
+        return matchesSearch && matchesStatus;
+    });
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -41,13 +46,27 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        placeholder="Search by name, email, ID or status..."
+                        placeholder="Search by name, email, ID..."
                         className="bg-white/5 border border-white/5 py-3 pl-12 pr-6 text-[10px] uppercase font-black tracking-widest text-white placeholder:text-neutral-700 focus:outline-none focus:border-brand-yellow/50 transition-all rounded-sm w-full"
                     />
                 </div>
-                <button className="p-3 bg-white/5 border border-white/5 text-neutral-500 hover:text-brand-yellow transition-colors rounded-sm">
-                    <Filter className="w-4 h-4" />
-                </button>
+                
+                <div className="relative group min-w-[160px]">
+                    <Filter className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${statusFilter !== 'all' ? 'text-brand-yellow' : 'text-neutral-600'}`} />
+                    <select
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                        className="bg-white/5 border border-white/5 py-3 pl-12 pr-10 text-[10px] uppercase font-black tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all rounded-sm w-full appearance-none cursor-pointer"
+                    >
+                        <option value="all" className="bg-[#0a0a0a]">All Protocols</option>
+                        <option value="paid" className="bg-[#0a0a0a]">Paid</option>
+                        <option value="processing" className="bg-[#0a0a0a]">Processing</option>
+                        <option value="shipped" className="bg-[#0a0a0a]">Shipped</option>
+                        <option value="delivered" className="bg-[#0a0a0a]">Delivered</option>
+                        <option value="cancelled" className="bg-[#0a0a0a]">Cancelled</option>
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 text-neutral-600 pointer-events-none" />
+                </div>
             </div>
 
             {/* Orders Table */}
