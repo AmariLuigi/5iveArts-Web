@@ -171,7 +171,7 @@ export default function FeaturesSection({ features, dict, stats: settingsStats }
           <motion.div
             key={f.title}
             variants={itemVariants}
-            className="flex flex-col items-center md:items-start text-center md:text-left group"
+            className="flex flex-col items-center text-center group"
           >
             <motion.div
               className="mb-6 p-4 bg-[#111] rounded-2xl border border-white/5 group-hover:border-brand-yellow/30 transition-all duration-500 group-hover:-translate-y-2 relative overflow-hidden"
