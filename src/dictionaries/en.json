@@ -7,7 +7,12 @@
     "login": "Login",
     "admin": "Admin",
     "discovery": "Discovery",
-    "terminal": "Terminal Access"
+    "terminal": "Terminal Access",
+    "regional": "Regional Projection",
+    "switchRegion": "Switch Region",
+    "vault": "Vault",
+    "warehouse": "Warehouse",
+    "access": "Access"
   },
   "home": {
     "title": "5iveArts - Artisan Precision",
@@ -22,11 +27,19 @@
     "viewAll": "View All",
     "testimonialsHeading": "Trusted by Collectors",
     "reviewsLabel": "Verified Reviews",
-    "collectorChoice": "Collector's Choice"
+    "collectorChoice": "Collector's Choice",
+    "premiumSeries": "Premium Series",
+    "collectorsVault": "Collector's Vault",
+    "satisfactionRate": "Satisfaction Rate",
+    "countriesServed": "Countries Served",
+    "yearsExperience": "Years Experience"
   },
   "products": {
     "title": "Model Arsenal",
     "subtitle": "Browse our collection of handcrafted figures.",
+    "all": "All Masterpieces",
+    "categories": "Categories",
+    "filter": "Filter",
     "viewDetails": "VIEW DETAILS",
     "addToCart": "Add to Cart",
     "scale": "Scale",
@@ -39,7 +52,12 @@
     "specifications": "Specifications",
     "returnPolicy": "Return Policy",
     "securePayment": "Secure Payment",
-    "insuredShipping": "Insured Shipping"
+    "insuredShipping": "Insured Shipping",
+    "price": "Price",
+    "details": "View Details",
+    "startingFrom": "Starting From",
+    "deploymentConfig": "Deployment Configuration",
+    "selectPrototype": "Select Prototype & Finish"
   },
   "cart": {
     "title": "Vault Cart",
@@ -61,7 +79,15 @@
     "estimatedTotal": "Estimated Total",
     "proceedToCheckout": "Proceed to Checkout",
     "continueShopping": "Continue Shopping",
-    "freeShipping": "Free shipping over {amount}"
+    "freeShipping": "Free shipping over {amount}",
+    "shipping": "Shipping",
+    "emptyArsenal": "Empty Arsenal",
+    "checkoutFlow": "Checkout Flow",
+    "yourCart": "Your Cart",
+    "clearCart": "Clear Cart",
+    "returnShop": "Return to Shop",
+    "grandTotal": "Grand Total",
+    "calculatingLogistics": "Calculating Logistics..."
   },
   "auth": {
     "verification": "Identity Verification",
@@ -76,7 +102,10 @@
     "tunnel": "End-to-End Encrypted Tunnel",
     "guidelines": "By accessing the terminal, you agree to our Protocol Guidelines",
     "backHome": "Back to Public HQ",
-    "emailPlaceholder": "COLLECTOR@5IVEARTS.COM"
+    "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
+    "title": "Warehouse Access",
+    "subtitle": "Access your assets and logistics reports.",
+    "loginBtn": "Establish Connection"
   },
   "faq": {
     "infoCenter": "Information Center",
@@ -212,10 +241,22 @@
     ]
   },
   "trust": [
-    { "label": "Secure Checkout", "sub": "Powered by Stripe" },
-    { "label": "Insured Global Shipping", "sub": "Worldwide delivery" },
-    { "label": "Handcrafted", "sub": "Every figure unique" },
-    { "label": "30-Day Returns", "sub": "Hassle-free" }
+    {
+      "label": "Secure Checkout",
+      "sub": "Powered by Stripe"
+    },
+    {
+      "label": "Insured Global Shipping",
+      "sub": "Worldwide delivery"
+    },
+    {
+      "label": "Handcrafted",
+      "sub": "Every figure unique"
+    },
+    {
+      "label": "30-Day Returns",
+      "sub": "Hassle-free"
+    }
   ],
   "account": {
     "portal": "Secure Warehouse Portal",
@@ -228,13 +269,35 @@
     "status": "Account Status",
     "verifiedCollector": "Verified Collector",
     "level1Encryption": "Level 1 Encryption",
-    "history": "Acquisition History"
+    "history": "Acquisition History",
+    "verificationRequired": "Verification Required",
+    "verificationDesc": "Please verify your identity to access all features",
+    "resendLink": "Resend Link",
+    "neuralLinkError": "Neural Link Error",
+    "syncFailed": "Sync failed with central order vault.",
+    "noAssets": "No assets registered in the vault yet.",
+    "browseCollection": "Browse Collection",
+    "recorded": "Recorded:",
+    "investment": "Investment",
+    "prepPhaseActive": "Prep Phase",
+    "inTransit": "In Transit:",
+    "fullLogistics": "Full Logistics Data",
+    "settings": {
+      "title": "Security Vault",
+      "subtitle": "Manage your collector identity and access protocols.",
+      "identityVerification": "Identity Verification",
+      "verified": "Verified",
+      "pending": "Verification Pending",
+      "guestProtected": "Your access is currently in a 'Guest-Protected' state. Some order fulfillment data requires a verified identity.",
+      "requestLink": "Request New Verification Link"
+    }
   },
   "orders": {
     "orderNum": "Order #",
     "recorded": "Recorded:",
     "investment": "Investment",
     "quantity": "Quantity:",
+    "qty": "Qty:",
     "prepPhase": "Prep Phase Active",
     "inTransit": "In Transit:",
     "logisticsData": "Full Logistics Data",
@@ -260,7 +323,21 @@
     "transactionSecure": "Transaction Secure",
     "discrepancy": "Logistics Discrepancy?",
     "contactHQ": "CONTACT DEPLOYMENT HQ",
-    "sku": "SKU:"
+    "sku": "SKU:",
+    "backToWarehouse": "My Warehouse",
+    "reportTitle": "Full Logistics Report",
+    "paid": "Paid",
+    "processing": "Processing",
+    "cancelled": "Cancelled",
+    "pConfirmed": "Payment Confirmed",
+    "pConfirmedDesc": "Acquisition funds verified and secured.",
+    "prepPhaseDesc": "Figure isolation and protective foam integration.",
+    "inTransitDesc": "Warehouse vault exit. Logistics handover.",
+    "manifest": "Asset Manifest",
+    "itemDetails": "Item Details",
+    "subtotal": "Acquisition Subtotal",
+    "shipping": "Logistics Surcharge",
+    "totalContribution": "Total Portfolio Contribution"
   },
   "footer": {
     "logistics": "Global Artisan Craftsmanship Logistics Enabled",
@@ -293,5 +370,50 @@
     "days3_5": "3-5 Days",
     "days4_7": "4-7 Days",
     "days7_14": "7-14 Days"
+  },
+  "hero": {
+    "slides": [
+      {
+        "tagline": "Resin Technology Precision",
+        "headline": "3D",
+        "headlineHighlight": "Printing",
+        "subtext": "High-resolution resin prints with 0.025mm layer thickness — every detail captured with industrial precision."
+      },
+      {
+        "tagline": "Handcrafted Artisan Finish",
+        "headline": "Hand",
+        "headlineHighlight": "Painted",
+        "subtext": "Professional airbrush techniques bring every figure to life — hand-finished by expert artists, one touch at a time."
+      }
+    ],
+    "cta": "Shop Now",
+    "trust": {
+      "quality": "Certified Quality",
+      "handFinished": "Hand Finished",
+      "logistics": "Global Logistics"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "Hand Painted",
+      "text": "Every figure is hand-painted with professional acrylics"
+    },
+    "threeDPrinted": {
+      "title": "3D Printed",
+      "text": "High-resolution 0.025mm layer heights"
+    },
+    "fastShipping": {
+      "title": "Fast Shipping",
+      "text": "Insured global delivery with tracking"
+    },
+    "secureCheckout": {
+      "title": "Secure Checkout",
+      "text": "Payments handled securely by Stripe"
+    }
+  },
+  "ctaSection": {
+    "heading": "Ready to own a piece of art?",
+    "subtext": "Explore the full collection of hand-painted and 3D printed action figures. Each is made-to-order with care.",
+    "button": "Explore the Shop"
   }
 }

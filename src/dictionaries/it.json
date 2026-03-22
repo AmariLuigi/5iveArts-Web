@@ -14,46 +14,13 @@
     "warehouse": "Magazzino",
     "access": "Accesso"
   },
-
-  "hero": {
-    "slides": [
-      {
-        "tagline": "Precisione Tecnologia Resina",
-        "headline": "Stampa",
-        "headlineHighlight": "3D",
-        "subtext": "Stampe in resina ad alta risoluzione con spessore dello strato di 0,025 mm: ogni dettaglio catturato con precisione industriale."
-      },
-      {
-        "tagline": "Finitura Artigianale a Mano",
-        "headline": "Dipinto",
-        "headlineHighlight": "a Mano",
-        "subtext": "Le tecniche professionali dell'aerografo danno vita ad ogni figura, rifinita a mano da artisti esperti, un tocco alla volta."
-      }
-    ],
-    "cta": "Acquista Ora",
-    "trust": {
-      "quality": "Qualità Certificata",
-      "handFinished": "Rifinito a Mano",
-      "logistics": "Logistica Globale"
-    }
-  },
-  "features": {
-    "handPainted": {
-      "title": "Dipinto a Mano",
-      "text": "Ogni figura dipinta a mano con acrilici di alta qualità"
-    },
-    "threeDPrinted": {
-      "title": "Stampa 3D",
-      "text": "Resina ad alta risoluzione con spessore dello strato di 0,025 mm"
-    },
-    "fastShipping": {
-      "title": "Spedizione Rapida",
-      "text": "Consegna mondiale assicurata con tracciabilità"
-    },
-    "secureCheckout": {
-      "title": "Check-out Sicuro",
-      "text": "Pagamenti gestiti in sicurezza da Stripe"
-    }
+  "home": {
+    "title": "5iveArts - Precisione Artigianale",
+    "hero_title": "PRECISIONE ARTIGIANALE",
+    "hero_subtitle": "Ogni figura è un pezzo unico, scolpito con passione e rifinito con cura meticolosa.",
+    "cta_button": "ESPLORA LA COLLEZIONE",
+    "featured_products": "PRODOTTI IN EVIDENZA",
+    "explore_all": "Esplora Tutto"
   },
   "homepage": {
     "featuredHeading": "Figure in Evidenza",
@@ -61,19 +28,11 @@
     "testimonialsHeading": "Voci dei Collezionisti",
     "reviewsLabel": "Recensioni dei Collezionisti",
     "collectorChoice": "Scelta del Collezionista",
-    "premiumSeries": "Serie Premium"
-  },
-  "footer": {
-    "logistics": "Logistica Artigianale Globale Abilitata",
-    "rights": "© 2026 5iveArts Collector Series. Tutti i diritti riservati.",
-    "privacy": "Privacy",
-    "terms": "Termini",
-    "description": "Stampa 3D professionale a livello artigianale e finitura a mano per collezionisti internazionali. Ogni pezzo è un capolavoro unico di resina e pigmento."
-  },
-  "ctaSection": {
-    "heading": "Pronto a possedere un pezzo d'arte?",
-    "subtext": "Sfoglia la collezione completa di action figure dipinte a mano e stampate in 3D. Ognuna è realizzata su ordinazione con cura.",
-    "button": "Sfoglia il Negozio"
+    "premiumSeries": "Serie Premium",
+    "collectorsVault": "Cassaforte del Collezionista",
+    "satisfactionRate": "Tasso di Soddisfazione",
+    "countriesServed": "Paesi Serviti",
+    "yearsExperience": "Anni di Esperienza"
   },
   "products": {
     "title": "Il Vault",
@@ -81,8 +40,7 @@
     "all": "Tutti i Capolavori",
     "categories": "Categorie",
     "filter": "Filtra",
-    "price": "Prezzo",
-    "details": "Visualizza Dettagli",
+    "viewDetails": "Visualizza Dettagli",
     "addToCart": "Aggiungi al Carrello",
     "scale": "Scala",
     "finish": "Finitura",
@@ -90,6 +48,13 @@
     "raw": "Resina Grezza",
     "description": "Descrizione",
     "shippingInfo": "Spedizione e Gestione",
+    "customerReviews": "Recensioni Clienti",
+    "specifications": "Specifiche",
+    "returnPolicy": "Politica di Reso",
+    "securePayment": "Pagamento Sicuro",
+    "insuredShipping": "Spedizione Assicurata",
+    "price": "Prezzo",
+    "details": "Visualizza Dettagli",
     "startingFrom": "A partire da",
     "deploymentConfig": "Configurazione Deployment",
     "selectPrototype": "Seleziona Prototipo & Finitura"
@@ -97,17 +62,15 @@
   "cart": {
     "title": "Carrello Vault",
     "empty": "Il tuo carrello è vuoto",
-    "checkout": "Procedi al Pagamento",
-    "subtotal": "Subtotale",
-    "total": "Totale",
-    "shipping": "Spedizione",
-    "remove": "Rimuovi",
-    "emptyArsenal": "Arsenale Vuoto",
     "emptyMessage": "Sembra che tu non abbia ancora aggiunto nessuna figura.",
     "returnToShop": "Torna allo Shop",
-    "checkoutFlow": "Flusso di checkout",
-    "yourCart": "Il tuo Carrello",
-    "clearCart": "Svuota carrello",
+    "subtotal": "Subtotale",
+    "shippingCost": "Costo di Spedizione",
+    "total": "Totale",
+    "checkout": "Procedi al Pagamento",
+    "remove": "Rimuovi",
+    "item": "articolo",
+    "items": "articoli",
     "secureCheckout": "Pagamento Sicuro",
     "insuredShipping": "Spedizione Globale Assicurata",
     "thirtyDayReturns": "Resi entro 30 giorni",
@@ -116,7 +79,15 @@
     "estimatedTotal": "Totale Stimato",
     "proceedToCheckout": "Procedi al Checkout",
     "continueShopping": "Continua lo Shopping",
-    "freeShipping": "Spedizione gratuita sopra {amount}"
+    "freeShipping": "Spedizione gratuita sopra {amount}",
+    "shipping": "Spedizione",
+    "emptyArsenal": "Arsenale Vuoto",
+    "checkoutFlow": "Flusso di checkout",
+    "yourCart": "Il tuo Carrello",
+    "clearCart": "Svuota carrello",
+    "returnShop": "return Shop",
+    "grandTotal": "grand Total",
+    "calculatingLogistics": "calculating Logistics"
   },
   "auth": {
     "verification": "Verifica dell'Identità",
@@ -130,7 +101,11 @@
     "registerBtn": "Stabilisci Collegamento",
     "tunnel": "Tunnel Crittografato End-to-End",
     "guidelines": "Accedendo al terminale, accetti i nostri protocolli e linee guida.",
-    "backHome": "Torna alla Centrale Pubblica"
+    "backHome": "Torna alla Centrale Pubblica",
+    "emailPlaceholder": "COLLEZIONISTA@5IVEARTS.COM",
+    "title": "title",
+    "subtitle": "subtitle",
+    "loginBtn": "login Btn"
   },
   "faq": {
     "infoCenter": "Centro Informazioni",
@@ -266,10 +241,22 @@
     ]
   },
   "trust": [
-    { "label": "Pagamento Sicuro", "sub": "Gestito da Stripe" },
-    { "label": "Spedizione Globale Assicurata", "sub": "Consegna in tutto il mondo" },
-    { "label": "Fatto a Mano", "sub": "Ogni pezzo è unico" },
-    { "label": "Reso in 30 Giorni", "sub": "Senza complicazioni" }
+    {
+      "label": "Pagamento Sicuro",
+      "sub": "Gestito da Stripe"
+    },
+    {
+      "label": "Spedizione Globale Assicurata",
+      "sub": "Consegna in tutto il mondo"
+    },
+    {
+      "label": "Fatto a Mano",
+      "sub": "Ogni pezzo è unico"
+    },
+    {
+      "label": "Reso in 30 Giorni",
+      "sub": "Senza complicazioni"
+    }
   ],
   "account": {
     "portal": "Portale Magazzino Sicuro",
@@ -283,18 +270,18 @@
     "verifiedCollector": "Collezionista Verificato",
     "level1Encryption": "Crittografia Livello 1",
     "history": "Cronologia Acquisizioni",
-    "investment": "Investimento",
-    "recorded": "Registrato:",
-    "fullLogistics": "Dati Logistici Completi",
-    "prepPhaseActive": "Fase di Preparazione Attiva",
-    "inTransit": "In Transito:",
-    "noAssets": "Nessun asset registrato nel vault.",
-    "browseCollection": "Sfoglia Collezione",
-    "neuralLinkError": "Errore Collegamento Neurale",
-    "syncFailed": "Sincronizzazione fallita con il vault centrale.",
     "verificationRequired": "Verifica Richiesta",
     "verificationDesc": "Identità non verificata. I dati di spedizione potrebbero essere limitati fino alla verifica.",
     "resendLink": "Reinvia Link di Verifica",
+    "neuralLinkError": "Errore Collegamento Neurale",
+    "syncFailed": "Sincronizzazione fallita con il vault centrale.",
+    "noAssets": "Nessun asset registrato nel vault.",
+    "browseCollection": "Sfoglia Collezione",
+    "recorded": "Registrato:",
+    "investment": "Investimento",
+    "prepPhaseActive": "Fase di Preparazione Attiva",
+    "inTransit": "In Transito:",
+    "fullLogistics": "Dati Logistici Completi",
     "settings": {
       "title": "Sicurezza Vault",
       "subtitle": "Gestisci la tua identità di collezionista e i protocolli di accesso.",
@@ -306,32 +293,29 @@
     }
   },
   "orders": {
-    "backToWarehouse": "Mio Magazzino",
-    "reportTitle": "Report Logistico Completo",
+    "orderNum": "Ordine #",
+    "recorded": "Registrato:",
+    "investment": "Investimento",
+    "quantity": "Quantità:",
+    "qty": "Qtà:",
+    "prepPhase": "Fase di Preparazione Activa",
+    "inTransit": "In Transito",
+    "logisticsData": "Dati Logistici Completi",
+    "warehouse": "Il Mio Magazzino",
     "operation": "Operazione #",
-    "paid": "Saldato",
-    "shipped": "Spedito",
-    "processing": "In Elaborazione",
-    "delivered": "Consegnato",
-    "cancelled": "Annullato",
     "logged": "Registrato:",
-
     "verifiedAcquisition": "Acquisizione Verificata",
     "trackShipment": "TRACCIA SPEDIZIONE",
     "exportInvoice": "ESPORTA FATTURA",
     "lifecycle": "Ciclo di Vita Deployment",
-    "pConfirmed": "Pagamento Confermato",
-    "pConfirmedDesc": "Fondi di acquisizione verificati e messi al sicuro.",
-    "prepPhase": "Fase Preparazione",
-    "prepPhaseDesc": "Isolamento figura e integrazione schiuma protettiva.",
-    "inTransit": "In Transito",
-    "inTransitDesc": "Uscita dal caveau magazzino. Passaggio alla logistica.",
-    "manifest": "Manifesto Asset",
-    "itemDetails": "Dettagli Articolo",
-    "qty": "Qtà",
-    "subtotal": "Subtotale Acquisizione",
-    "shipping": "Supplemento Logistica",
-    "totalContribution": "Contributo Totale Portfolio",
+    "paymentConfirmed": "Pagamento Confermato",
+    "fundsVerified": "Fondi di acquisizione verificati e protetti.",
+    "prepPhaseActive": "Fase di Preparazione",
+    "isolationNote": "Isolamento della figura e schiuma protettiva in posizione.",
+    "shipped": "Spedito",
+    "logisticsSuccess": "Logistica protetta e in transito verso la destinazione.",
+    "delivered": "Consegnato",
+    "acquired": "Il capolavoro è stato acquisito e messo al sicuro.",
     "deploymentZone": "Zona di Deployment",
     "carrierProtocol": "Protocollo Corriere",
     "class": "Classe: Tracciamento Registrato",
@@ -339,7 +323,28 @@
     "transactionSecure": "Transazione Sicura",
     "discrepancy": "Discrepanza Logistica?",
     "contactHQ": "CONTATTA HQ DEPLOYMENT",
-    "sku": "SKU:"
+    "sku": "SKU:",
+    "backToWarehouse": "Mio Magazzino",
+    "reportTitle": "Report Logistico Completo",
+    "paid": "Saldato",
+    "processing": "In Elaborazione",
+    "cancelled": "Annullato",
+    "pConfirmed": "Pagamento Confermato",
+    "pConfirmedDesc": "Fondi di acquisizione verificati e messi al sicuro.",
+    "prepPhaseDesc": "Isolamento figura e integrazione schiuma protettiva.",
+    "inTransitDesc": "Uscita dal caveau magazzino. Passaggio alla logistica.",
+    "manifest": "Manifesto Asset",
+    "itemDetails": "Dettagli Articolo",
+    "subtotal": "Subtotale Acquisizione",
+    "shipping": "Supplemento Logistica",
+    "totalContribution": "Contributo Totale Portfolio"
+  },
+  "footer": {
+    "logistics": "Logistica Artigianale Globale Abilitata",
+    "rights": "© 2026 5iveArts Collector Series. Tutti i diritti riservati.",
+    "privacy": "Privacy",
+    "terms": "Termini",
+    "description": "Stampa 3D professionale a livello artigianale e finitura a mano per collezionisti internazionali. Ogni pezzo è un capolavoro unico di resina e pigmento."
   },
   "shipping": {
     "protocol": "Protocollo Logistica",
@@ -365,8 +370,50 @@
     "days3_5": "3-5 Giorni",
     "days4_7": "4-7 Giorni",
     "days7_14": "7-14 Giorni"
+  },
+  "hero": {
+    "slides": [
+      {
+        "tagline": "Precisione Tecnologia Resina",
+        "headline": "Stampa",
+        "headlineHighlight": "3D",
+        "subtext": "Stampe in resina ad alta risoluzione con spessore dello strato di 0,025 mm: ogni dettaglio catturato con precisione industriale."
+      },
+      {
+        "tagline": "Finitura Artigianale a Mano",
+        "headline": "Dipinto",
+        "headlineHighlight": "a Mano",
+        "subtext": "Le tecniche professionali dell'aerografo danno vita ad ogni figura, rifinita a mano da artisti esperti, un tocco alla volta."
+      }
+    ],
+    "cta": "Acquista Ora",
+    "trust": {
+      "quality": "Qualità Certificata",
+      "handFinished": "Rifinito a Mano",
+      "logistics": "Logistica Globale"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "Dipinto a Mano",
+      "text": "Ogni figura dipinta a mano con acrilici di alta qualità"
+    },
+    "threeDPrinted": {
+      "title": "Stampa 3D",
+      "text": "Resina ad alta risoluzione con spessore dello strato di 0,025 mm"
+    },
+    "fastShipping": {
+      "title": "Spedizione Rapida",
+      "text": "Consegna mondiale assicurata con tracciabilità"
+    },
+    "secureCheckout": {
+      "title": "Check-out Sicuro",
+      "text": "Pagamenti gestiti in sicurezza da Stripe"
+    }
+  },
+  "ctaSection": {
+    "heading": "Pronto a possedere un pezzo d'arte?",
+    "subtext": "Sfoglia la collezione completa di action figure dipinte a mano e stampate in 3D. Ognuna è realizzata su ordinazione con cura.",
+    "button": "Sfoglia il Negozio"
   }
 }
-
-
-

@@ -8,6 +8,11 @@ export interface Testimonial {
     avatar?: string;
 }
 
+export interface StatItem {
+    value: number;
+    suffix: string;
+}
+
 export interface SiteSettings {
     pricing?: {
         scales: Record<string, { multiplier: number; size: string }>;
@@ -25,6 +30,12 @@ export interface SiteSettings {
         featured_product_ids: string[];
         hero_videos?: string[];
         testimonials?: Testimonial[];
+        stats?: {
+            collectorsVault?: StatItem;
+            satisfactionRate?: StatItem;
+            countriesServed?: StatItem;
+            yearsExperience?: StatItem;
+        };
     };
 }
 

@@ -10,7 +10,8 @@ import {
     ChevronRight,
     Settings,
     ShieldCheck,
-    User
+    User,
+    BarChart3
 } from "lucide-react";
 import { createClient } from "@/lib/supabase-browser";
 
@@ -29,6 +30,7 @@ export default function AdminSidebar() {
 
     const navItems = [
         { label: "Overview", href: "/admin", icon: LayoutDashboard },
+        { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
         { label: "Manage Orders", href: "/admin/orders", icon: ShoppingCart },
         { label: "Products", href: "/admin/products", icon: Tag },
         { label: "Settings", href: "/admin/settings", icon: Settings },
@@ -56,8 +58,8 @@ export default function AdminSidebar() {
                             key={item.href}
                             href={item.href}
                             className={`flex items-center gap-3 px-4 py-3.5 rounded-sm transition-all group ${isActive
-                                    ? "bg-brand-yellow/10 border border-brand-yellow/20 text-brand-yellow"
-                                    : "text-neutral-500 hover:text-white hover:bg-white/[0.02]"
+                                ? "bg-brand-yellow/10 border border-brand-yellow/20 text-brand-yellow"
+                                : "text-neutral-500 hover:text-white hover:bg-white/[0.02]"
                                 }`}
                         >
                             <item.icon className={`w-4 h-4 transition-colors ${isActive ? "text-brand-yellow" : "group-hover:text-brand-yellow"}`} />

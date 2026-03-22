@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
   const settings = await getSiteSettings();
 
   // We must re-fetch/calculate the rates server-side to prevent price tampering
-  const serverRates = await fetchPacklinkRates(address, subtotalCents, false, settings.logistics);
+  const serverRates = await fetchPacklinkRates(address, subtotalCents, settings.logistics);
 
   const matchedRate = serverRates.find((r) => r.service_id === rawRate.service_id);
 

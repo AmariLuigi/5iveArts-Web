@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import MultiLanguageEditor from "@/components/admin/MultiLanguageEditor";
 
 interface ProductFormProps {
     initialData?: any;
@@ -42,7 +43,13 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     // Form State
     const [id, setId] = useState(initialData?.id || "");
     const [name, setName] = useState(initialData?.name || "");
-    const [description, setDescription] = useState(initialData?.description || "");
+    const [descriptions, setDescriptions] = useState<Record<string, string | null>>({
+        en: initialData?.description_en || initialData?.description || null,
+        it: initialData?.description_it || null,
+        de: initialData?.description_de || null,
+        fr: initialData?.description_fr || null,
+        es: initialData?.description_es || null,
+    });
     const [price, setPrice] = useState(initialData?.price || 8999);
     const [category, setCategory] = useState(initialData?.category || "figures");
     const [status, setStatus] = useState<"draft" | "published">(initialData?.status || "published");
@@ -108,7 +115,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
         setIsMediaUploading(true);
         setError(null);
-        
+
         // Use a functional update to track URLs collected so far
         const newUrls: string[] = [];
 
@@ -178,10 +185,25 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         setLoading(true);
         setError(null);
 
+        // Validate at least one language has description
+        const hasAtLeastOneDescription = Object.values(descriptions).some(
+            (desc) => desc && desc.trim().length > 0
+        );
+        if (!hasAtLeastOneDescription) {
+            setError("At least one language description is required");
+            setLoading(false);
+            return;
+        }
+
         const productData = {
             id: id || name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, ''),
             name,
-            description,
+            description: descriptions.en || Object.values(descriptions).find(d => d) || "",
+            description_en: descriptions.en,
+            description_it: descriptions.it,
+            description_de: descriptions.de,
+            description_fr: descriptions.fr,
+            description_es: descriptions.es,
             price: Number(price),
             category,
             status,
@@ -310,13 +332,16 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
                     <div className="space-y-3">
                         <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Manifest Description</label>
-                        <textarea
-                            required
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            rows={4}
-                            placeholder="Describe the intricate details and craftsmanship..."
-                            className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-medium text-neutral-300 focus:outline-none focus:border-brand-yellow/30 leading-relaxed"
+                        <MultiLanguageEditor
+                            descriptions={descriptions}
+                            onChange={setDescriptions}
+                            labels={{
+                                title: "Multi-Language Description",
+                                placeholder: "Describe the intricate details and craftsmanship...",
+                                unsavedChanges: "You have unsaved changes in the current language tab. Do you want to discard them?",
+                                atLeastOneRequired: "At least one language description is required"
+                            }}
+                            required={true}
                         />
                     </div>
 
@@ -423,7 +448,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                 placeholder="Type anime, game or show name and press Enter..."
                                 className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-[11px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
                             />
-                            
+
                             {isTagSuggestionsOpen && suggestions.length > 0 && (
                                 <div className="absolute top-full left-0 w-full mt-2 bg-[#0c0c0c] border border-white/10 rounded-sm shadow-2xl z-[60] overflow-hidden backdrop-blur-xl">
                                     <div className="py-2 max-h-48 overflow-y-auto custom-scrollbar">

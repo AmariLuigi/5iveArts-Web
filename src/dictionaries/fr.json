@@ -7,7 +7,12 @@
     "login": "Connexion",
     "admin": "Admin",
     "discovery": "Découverte",
-    "terminal": "Accès Terminal"
+    "terminal": "Accès Terminal",
+    "regional": "Projection Régionale",
+    "switchRegion": "Changer de Région",
+    "vault": "Coffre",
+    "warehouse": "Entrepôt",
+    "access": "Accès"
   },
   "home": {
     "title": "5iveArts - Artisanat de Precision",
@@ -22,11 +27,19 @@
     "viewAll": "Voir Tout",
     "testimonialsHeading": "Approuvé par les Collectionneurs",
     "reviewsLabel": "Avis Vérifiés",
-    "collectorChoice": "Choix du Collectionneur"
+    "collectorChoice": "Choix du Collectionneur",
+    "premiumSeries": "Série Premium",
+    "collectorsVault": "Coffre du Collectionneur",
+    "satisfactionRate": "Taux de Satisfaction",
+    "countriesServed": "Pays Desservis",
+    "yearsExperience": "Années d'Expérience"
   },
   "products": {
     "title": "Arsenal de Modèles",
     "subtitle": "Explorez notre collection de figurines artisanales.",
+    "all": "Tous les Chefs-d'œuvre",
+    "categories": "Catégories",
+    "filter": "Filtre",
     "viewDetails": "VOIR LES DÉTAILS",
     "addToCart": "Ajouter au Panier",
     "scale": "Échelle",
@@ -39,35 +52,60 @@
     "specifications": "Spécifications",
     "returnPolicy": "Politique de Retour",
     "securePayment": "Paiement Sécurisé",
-    "insuredShipping": "Expédition Assurée"
+    "insuredShipping": "Expédition Assurée",
+    "price": "Prix",
+    "details": "Voir les Détails",
+    "startingFrom": "À partir de",
+    "deploymentConfig": "Configuration du Déploiement",
+    "selectPrototype": "Sélectionner Prototype & Finition"
   },
   "cart": {
     "title": "Votre Arsenal",
-    "emptyArsenal": "Votre arsenal est vide",
+    "empty": "Votre panier est vide",
     "emptyMessage": "On dirait que vous n'avez pas encore ajouté de figurines.",
-    "returnShop": "Retour à la Boutique",
+    "returnToShop": "Retour à la Boutique",
     "subtotal": "Sous-total",
     "shippingCost": "Expédition",
-    "grandTotal": "Total",
+    "total": "Total",
     "checkout": "Passer à la Caisse",
     "remove": "Supprimer",
     "item": "objet",
     "items": "objets",
     "secureCheckout": "Paiement Sécurisé",
     "insuredShipping": "Expédition Assurée",
+    "thirtyDayReturns": "Retours sous 30 jours",
+    "orderSummary": "Résumé de la Commande",
+    "calculatedAtCheckout": "Calculé au paiement",
+    "estimatedTotal": "Total Estimé",
+    "proceedToCheckout": "Passer à la Caisse",
+    "continueShopping": "Continuer les Achats",
     "freeShipping": "Livraison gratuite à partir de {amount}",
+    "shipping": "Livraison",
+    "emptyArsenal": "Arsenal Vide",
+    "checkoutFlow": "Flux de Paiement",
+    "yourCart": "Votre Panier",
+    "clearCart": "Vider le Panier",
+    "returnShop": "Retour à la Boutique",
+    "grandTotal": "Total",
     "calculatingLogistics": "Logistique en cours..."
   },
   "auth": {
-    "title": "Accès Warehouse",
-    "subtitle": "Accédez à vos actifs et rapports de logistique.",
+    "verification": "verification",
+    "terminal": "terminal",
+    "portal": "portal",
+    "login": "login",
+    "register": "register",
     "emailLabel": "Identifiant de Liaison (Email)",
-    "emailPlaceholder": "COLLECTIONNEUR@5IVEARTS.COM",
-    "loginBtn": "Établir Connexion",
+    "passwordLabel": "password Label",
+    "verifyBtn": "verify Btn",
     "registerBtn": "Établir la Liaison",
     "tunnel": "Tunnel Chiffré de Bout en Bout",
     "guidelines": "En accédant au terminal, vous acceptez nos protocoles et nos conditions.",
-    "backHome": "Retour au Siège Public"
+    "backHome": "Retour au Siège Public",
+    "emailPlaceholder": "COLLECTIONNEUR@5IVEARTS.COM",
+    "title": "Accès Warehouse",
+    "subtitle": "Accédez à vos actifs et rapports de logistique.",
+    "loginBtn": "Établir Connexion"
   },
   "faq": {
     "infoCenter": "Centre d'Information",
@@ -203,10 +241,22 @@
     ]
   },
   "trust": [
-    { "label": "Paiement Sécurisé", "sub": "Propulsé par Stripe" },
-    { "label": "Expédition Globale Assurée", "sub": "Livraison internationale" },
-    { "label": "Peint à la Main", "sub": "Chaque pièce est unique" },
-    { "label": "Retours sous 30 Jours", "sub": "Sans tracas" }
+    {
+      "label": "Paiement Sécurisé",
+      "sub": "Propulsé par Stripe"
+    },
+    {
+      "label": "Expédition Globale Assurée",
+      "sub": "Livraison internationale"
+    },
+    {
+      "label": "Peint à la Main",
+      "sub": "Chaque pièce est unique"
+    },
+    {
+      "label": "Retours sous 30 Jours",
+      "sub": "Sans tracas"
+    }
   ],
   "account": {
     "portal": "Portail d'Entrepôt Sécurisé",
@@ -219,13 +269,35 @@
     "status": "Statut du Compte",
     "verifiedCollector": "Collectionneur Vérifié",
     "level1Encryption": "Chiffrement de Niveau 1",
-    "history": "Historique des Acquisitions"
+    "history": "Historique des Acquisitions",
+    "verificationRequired": "Vérification Requise",
+    "verificationDesc": "Identité non vérifiée. Les données d'expédition peuvent être limitées jusqu'à la vérification.",
+    "resendLink": "Renvoyer le Lien de Vérification",
+    "neuralLinkError": "Erreur de Lien Neural",
+    "syncFailed": "Échec de la synchronisation avec le coffre central des commandes.",
+    "noAssets": "Aucun actif enregistré dans le coffre pour le moment.",
+    "browseCollection": "Parcourir la Collection",
+    "recorded": "Enregistré le",
+    "investment": "Investissement",
+    "prepPhaseActive": "Phase de Préparation",
+    "inTransit": "En Transit:",
+    "fullLogistics": "Données Logistiques Complètes",
+    "settings": {
+      "title": "Coffre de Sécurité",
+      "subtitle": "Gérez votre identité de collectionneur et vos protocoles d'accès.",
+      "identityVerification": "Vérification d'Identité",
+      "verified": "Vérifié",
+      "pending": "Vérification en Attente",
+      "guestProtected": "Votre accès est actuellement à l'état 'Protégé Invité'. Certaines données d'exécution de commande nécessitent une identité vérifiée.",
+      "requestLink": "Demander un Nouveau Lien de Vérification"
+    }
   },
   "orders": {
     "orderNum": "Commande #",
-    "recorded": "Enregistrée le",
+    "recorded": "Enregistrée le:",
     "investment": "Investissement",
     "quantity": "Quantité :",
+    "qty": "Qté :",
     "prepPhase": "Phase de Préparation Active",
     "inTransit": "En Transit :",
     "logisticsData": "Rapport Logistique Complet",
@@ -251,7 +323,21 @@
     "transactionSecure": "Transaction Sécurisée",
     "discrepancy": "Discrepance Logistique ?",
     "contactHQ": "CONTACTER LE HQ DE DÉPLOIEMENT",
-    "sku": "SKU:"
+    "sku": "SKU:",
+    "backToWarehouse": "Mon Entrepôt",
+    "reportTitle": "Rapport Logistique Complet",
+    "paid": "Payé",
+    "processing": "En cours",
+    "cancelled": "Annulé",
+    "pConfirmed": "Paiement Confirmé",
+    "pConfirmedDesc": "Fonds vérifiés et sécurisés.",
+    "prepPhaseDesc": "Isolation de la figurine et déploiement de la mousse.",
+    "inTransitDesc": "Départ de l'entrepôt. Remise à la logistique.",
+    "manifest": "Manifeste des Actifs",
+    "itemDetails": "Détails de l'Article",
+    "subtotal": "Sous-total de l'Acquisition",
+    "shipping": "Surcharge Logistique",
+    "totalContribution": "Contribution Totale au Portfolio"
   },
   "footer": {
     "logistics": "Logistique Artisanale Mondiale Activée",
@@ -284,5 +370,50 @@
     "days3_5": "3-5 Jours",
     "days4_7": "4-7 Jours",
     "days7_14": "7-14 Jours"
+  },
+  "hero": {
+    "slides": [
+      {
+        "tagline": "Précision de la Technologie Résine",
+        "headline": "Impression",
+        "headlineHighlight": "3D",
+        "subtext": "Impressions en résine haute résolution avec une épaisseur de couche de 0,025 mm — chaque détail capturé avec une précision industrielle."
+      },
+      {
+        "tagline": "Finition Artisanale Faite à la Main",
+        "headline": "Peint",
+        "headlineHighlight": "à la Main",
+        "subtext": "Des techniques d'aérographie professionnelles donnent vie à chaque figurine — finies à la main par des artistes experts."
+      }
+    ],
+    "cta": "Acheter Maintenant",
+    "trust": {
+      "quality": "Qualité Certifiée",
+      "handFinished": "Fini à la Main",
+      "logistics": "Logistique Globale"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "Peint à la Main",
+      "text": "Chaque figurine est peinte à la main avec des acryliques professionnels"
+    },
+    "threeDPrinted": {
+      "title": "Imprimé en 3D",
+      "text": "Impressions en résine haute résolution avec une couche de 0,025 mm"
+    },
+    "fastShipping": {
+      "title": "Expédition Rapide",
+      "text": "Livraison mondiale assurée avec suivi"
+    },
+    "secureCheckout": {
+      "title": "Paiement Sécurisé",
+      "text": "Les paiements sont gérés en toute sécurité par Stripe"
+    }
+  },
+  "ctaSection": {
+    "heading": "Prêt à posséder une œuvre d'art ?",
+    "subtext": "Explorez toute la collection de figurines peintes à la main et imprimées en 3D. Chacune est fabriquée sur commande.",
+    "button": "Explorer la Boutique"
   }
 }

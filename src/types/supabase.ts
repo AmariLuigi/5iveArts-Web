@@ -13,6 +13,11 @@ export interface Database {
           id: string;
           name: string;
           description: string;
+          description_en: string | null;
+          description_it: string | null;
+          description_de: string | null;
+          description_fr: string | null;
+          description_es: string | null;
           price: number;
           images: string[];
           videos: string[];
@@ -31,6 +36,11 @@ export interface Database {
           status?: "draft" | "published";
           tags?: string[];
           details?: string[];
+          description_en?: string | null;
+          description_it?: string | null;
+          description_de?: string | null;
+          description_fr?: string | null;
+          description_es?: string | null;
         };
         Update: Partial<Database["public"]["Tables"]["products"]["Insert"]>;
       };

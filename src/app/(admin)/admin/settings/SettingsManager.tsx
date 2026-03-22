@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { 
-    Truck, 
-    Scale, 
-    ShieldCheck, 
-    Database, 
-    Save, 
-    Loader2, 
-    AlertCircle, 
+import {
+    Truck,
+    Scale,
+    ShieldCheck,
+    Database,
+    Save,
+    Loader2,
+    AlertCircle,
     CheckCircle,
     Star,
     Search,
@@ -23,7 +23,8 @@ import {
     UserCircle,
     Trash2,
     Quote,
-    Image as LibraryIcon
+    Image as LibraryIcon,
+    TrendingUp
 } from "lucide-react";
 import { SiteSettings, Testimonial } from "@/lib/settings";
 import { Product } from "@/types";
@@ -99,7 +100,7 @@ export default function SettingsManager({ initialSettings }: Props) {
     const updatePricingMultiplier = (type: 'scales' | 'finishes', key: string, multiplier: number) => {
         const currentRef = (settings.pricing?.[type] || {}) as any;
         const newPricing = {
-            ...(settings.pricing || { 
+            ...(settings.pricing || {
                 scales: { "1/9": { multiplier: 1.5, size: "20cm" }, "1/6": { multiplier: 2.5, size: "30cm" }, "1/4": { multiplier: 5.0, size: "45cm" } },
                 finishes: { painted: { multiplier: 1.0 }, raw: { multiplier: 0.6 } }
             }),
@@ -180,12 +181,24 @@ export default function SettingsManager({ initialSettings }: Props) {
         handleSave("homepage", newHomepage);
     };
 
+    const updateStats = (statKey: string, value: number, suffix: string) => {
+        const currentStats = settings.homepage?.stats || {};
+        const newHomepage = {
+            ...(settings.homepage || { featured_product_ids: [], hero_videos: [], testimonials: [] }),
+            stats: {
+                ...currentStats,
+                [statKey]: { value, suffix }
+            }
+        };
+        handleSave("homepage", newHomepage);
+    };
+
     const selectedFeaturedIds = settings.homepage?.featured_product_ids || [];
     const selectedProducts = allProducts.filter(p => selectedFeaturedIds.includes(p.id));
-    const suggestedProducts = productSearch.length > 0 
+    const suggestedProducts = productSearch.length > 0
         ? allProducts.filter(p => p.name.toLowerCase().includes(productSearch.toLowerCase()) && !selectedFeaturedIds.includes(p.id)).slice(0, 5)
         : [];
-    
+
     const heroVideos = settings.homepage?.hero_videos || [];
     const testimonials = settings.homepage?.testimonials || [];
 
@@ -197,15 +210,15 @@ export default function SettingsManager({ initialSettings }: Props) {
                     <h2 className="text-3xl font-black uppercase tracking-tighter text-white">Vault Management</h2>
                     <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest leading-relaxed">System Configuration & Artisan Curation Suite</p>
                 </div>
-                
+
                 <div className="flex p-1 bg-white/[0.02] border border-white/5 rounded-sm">
-                    <button 
+                    <button
                         onClick={() => setActiveTab('visual')}
                         className={`px-8 py-3 text-[9px] font-black uppercase tracking-widest transition-all rounded-sm ${activeTab === 'visual' ? "bg-brand-yellow text-black" : "text-neutral-500 hover:text-white"}`}
                     >
                         Storefront Visuals
                     </button>
-                    <button 
+                    <button
                         onClick={() => setActiveTab('engine')}
                         className={`px-8 py-3 text-[9px] font-black uppercase tracking-widest transition-all rounded-sm ${activeTab === 'engine' ? "bg-brand-yellow text-black" : "text-neutral-500 hover:text-white"}`}
                     >
@@ -221,7 +234,7 @@ export default function SettingsManager({ initialSettings }: Props) {
                     <span className="text-[10px] font-black uppercase tracking-widest text-black">Uplink Successful — System Updated</span>
                 </div>
             )}
-            
+
             {error && (
                 <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-sm flex items-start gap-4 mb-4">
                     <AlertCircle className="w-6 h-6 text-red-500 flex-shrink-0" />
@@ -273,7 +286,7 @@ export default function SettingsManager({ initialSettings }: Props) {
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                                                 </div>
                                                 <div className="relative z-10">
-                                                    <span className="text-[7px] font-black uppercase tracking-[0.3em] text-brand-yellow mb-2 block">Slot 0{i+1}</span>
+                                                    <span className="text-[7px] font-black uppercase tracking-[0.3em] text-brand-yellow mb-2 block">Slot 0{i + 1}</span>
                                                     <h4 className="text-sm font-black uppercase text-white mb-1">{product.name}</h4>
                                                 </div>
                                                 <button onClick={() => updateHomepageFeatured(selectedFeaturedIds.filter(id => id !== product.id))} className="absolute top-4 right-4 z-20 w-8 h-8 bg-black/80 flex items-center justify-center text-white hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><X className="w-4 h-4" /></button>
@@ -334,6 +347,45 @@ export default function SettingsManager({ initialSettings }: Props) {
                                     <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[i].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-4 text-[10px] text-neutral-400 min-h-[80px] outline-none" placeholder="QUOTE" />
                                 </div>
                             ))}
+                        </div>
+                    </div>
+
+                    {/* Stats Card */}
+                    <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden md:col-span-2">
+                        <div className="flex items-start justify-between">
+                            <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center">
+                                <TrendingUp className="w-5 h-5 text-brand-yellow" />
+                            </div>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-black uppercase text-white mb-2">Public Stats</h3>
+                            <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest">Configure the animated statistics displayed on the homepage.</p>
+                        </div>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-6 border-t border-white/5">
+                            {[
+                                { key: "collectorsVault", label: "Collector's Vault", suffix: "+" },
+                                { key: "satisfactionRate", label: "Satisfaction Rate", suffix: "%" },
+                                { key: "countriesServed", label: "Countries Served", suffix: "+" },
+                                { key: "yearsExperience", label: "Years Experience", suffix: "+" },
+                            ].map((stat) => {
+                                const currentStat = settings.homepage?.stats?.[stat.key as keyof typeof settings.homepage.stats] || { value: 0, suffix: stat.suffix };
+                                return (
+                                    <div key={stat.key} className="space-y-3">
+                                        <label className="text-[9px] font-black uppercase text-neutral-600">{stat.label}</label>
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="number"
+                                                value={currentStat.value || 0}
+                                                onChange={(e) => updateStats(stat.key, Number(e.target.value), stat.suffix)}
+                                                className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-3 text-[11px] font-black text-brand-yellow"
+                                            />
+                                            <span className="bg-white/[0.02] border border-white/5 rounded-sm px-3 flex items-center text-[11px] font-black text-neutral-600">
+                                                {stat.suffix}
+                                            </span>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

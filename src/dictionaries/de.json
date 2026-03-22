@@ -14,46 +14,13 @@
     "warehouse": "Lagerhaus",
     "access": "Zugang"
   },
-
-  "hero": {
-    "slides": [
-      {
-        "tagline": "Präzisions-Harztechnologie",
-        "headline": "3D",
-        "headlineHighlight": "Druck",
-        "subtext": "Hochauflösende Harzdrucke mit einer Schichtdicke von 0,025 mm — jedes Detail wird mit industrieller Präzision erfasst."
-      },
-      {
-        "tagline": "Handgefertigtes Artisan-Finish",
-        "headline": "Hand",
-        "headlineHighlight": "Bemalt",
-        "subtext": "Professionelle Airbrush-Techniken erwecken jede Figur zum Leben — von erfahrenen Künstlern handveredelt, Strich für Strich."
-      }
-    ],
-    "cta": "Jetzt Einkaufen",
-    "trust": {
-      "quality": "Zertifizierte Qualität",
-      "handFinished": "Handveredelt",
-      "logistics": "Globale Logistik"
-    }
-  },
-  "features": {
-    "handPainted": {
-      "title": "Handbemalt",
-      "text": "Jede Figur wird mit hochwertigen Acrylfarben handbemalt"
-    },
-    "threeDPrinted": {
-      "title": "3D-Gedruckt",
-      "text": "Hochauflösende Harzdrucke mit einer Schichtdicke von 0,025 mm"
-    },
-    "fastShipping": {
-      "title": "Schneller Versand",
-      "text": "Versicherte weltweite Lieferung mit Sendungsverfolgung"
-    },
-    "secureCheckout": {
-      "title": "Sicherer Check-out",
-      "text": "Zahlungen werden sicher von Stripe abgewickelt"
-    }
+  "home": {
+    "title": "5iveArts - Artisan-Präzision",
+    "hero_title": "ARTISAN-PRÄZISION",
+    "hero_subtitle": "Jede Figur ist ein Unikat, mit Leidenschaft geformt und mit akribischer Sorgfalt veredelt.",
+    "cta_button": "KOLLEKTION ERKUNDEN",
+    "featured_products": "AUSGEWÄHLTE PRODUKTE",
+    "explore_all": "Alles Erkunden"
   },
   "homepage": {
     "featuredHeading": "Top Figuren",
@@ -61,19 +28,11 @@
     "testimonialsHeading": "Collector Stimmen",
     "reviewsLabel": "Kundenstimmen",
     "collectorChoice": "Wahl der Sammler",
-    "premiumSeries": "Premium-Serie"
-  },
-  "footer": {
-    "logistics": "Globale Kunsthandwerkslogistik Aktiviert",
-    "rights": "© 2026 5iveArts Collector Series. Alle Rechte vorbehalten.",
-    "privacy": "Datenschutz",
-    "terms": "Bedingungen",
-    "description": "Professioneller 3D-Druck und Handveredelung auf Kunsthandwerkerniveau für internationale Sammler. Jedes Stück ist ein einzigartiges Meisterwerk aus Harz und Pigment."
-  },
-  "ctaSection": {
-    "heading": "Bereit für ein echtes Kunstwerk?",
-    "subtext": "Durchstöbern Sie die komplette Kollektion handbemalter und 3D-gedruckter Actionfiguren. Jede wird sorgfältig auf Bestellung gefertigt.",
-    "button": "Zum Shop"
+    "premiumSeries": "Premium-Serie",
+    "collectorsVault": "Sammler Tresor",
+    "satisfactionRate": "Zufriedenheitsrate",
+    "countriesServed": "Länder Bedient",
+    "yearsExperience": "Jahre Erfahrung"
   },
   "products": {
     "title": "Il Vault",
@@ -81,8 +40,7 @@
     "all": "Alle Meisterwerke",
     "categories": "Kategorien",
     "filter": "Filter",
-    "price": "Preis",
-    "details": "Details Ansehen",
+    "viewDetails": "Details Ansehen",
     "addToCart": "In den Warenkorb",
     "scale": "Maßstab",
     "finish": "Finish",
@@ -90,6 +48,13 @@
     "raw": "Rohharz",
     "description": "Beschreibung",
     "shippingInfo": "Versand & Handhabung",
+    "customerReviews": "Kundenbewertungen",
+    "specifications": "Spezifikationen",
+    "returnPolicy": "Rückgaberecht",
+    "securePayment": "Sicheres Bezahlen",
+    "insuredShipping": "Versicherter Versand",
+    "price": "Preis",
+    "details": "Details Ansehen",
     "startingFrom": "Ab",
     "deploymentConfig": "Deployment-Konfiguration",
     "selectPrototype": "Prototyp & Finish auswählen"
@@ -97,17 +62,15 @@
   "cart": {
     "title": "Vault-Warenkorb",
     "empty": "Ihr Warenkorb ist leer",
-    "checkout": "Zur Kasse",
-    "subtotal": "Zwischensumme",
-    "total": "Gesamtbetrag",
-    "shipping": "Versand",
-    "remove": "Entfernen",
-    "emptyArsenal": "Arsenal Leer",
     "emptyMessage": "Sieht so aus, als hätten Sie noch keine Figuren hinzugefügt.",
     "returnToShop": "Zurück zum Shop",
-    "checkoutFlow": "Checkout-Flow",
-    "yourCart": "Ihr Warenkorb",
-    "clearCart": "Warenkorb leeren",
+    "subtotal": "Zwischensumme",
+    "shippingCost": "Versandkosten",
+    "total": "Gesamtbetrag",
+    "checkout": "Zur Kasse",
+    "remove": "Entfernen",
+    "item": "Artikel",
+    "items": "Artikel",
     "secureCheckout": "Sicheres Bezahlen",
     "insuredShipping": "Versicherter weltweiter Versand",
     "thirtyDayReturns": "30-Tage-Rückgaberecht",
@@ -116,7 +79,15 @@
     "estimatedTotal": "Voraussichtlicher Gesamtbetrag",
     "proceedToCheckout": "Zur Kasse gehen",
     "continueShopping": "Einkauf fortsetzen",
-    "freeShipping": "Kostenloser Versand ab {amount}"
+    "freeShipping": "Kostenloser Versand ab {amount}",
+    "shipping": "Versand",
+    "emptyArsenal": "Arsenal Leer",
+    "checkoutFlow": "Checkout-Flow",
+    "yourCart": "Ihr Warenkorb",
+    "clearCart": "Warenkorb leeren",
+    "returnShop": "return Shop",
+    "grandTotal": "grand Total",
+    "calculatingLogistics": "calculating Logistics"
   },
   "auth": {
     "verification": "Identitätsprüfung",
@@ -131,7 +102,10 @@
     "tunnel": "End-to-End Verschlüsselter Tunnel",
     "guidelines": "Mit dem Zugriff auf das Terminal akzeptieren Sie unsere Richtlinien und Protokolle.",
     "backHome": "Zurück zum Öffentlichen HQ",
-    "emailPlaceholder": "SAMMLER@5IVEARTS.COM"
+    "emailPlaceholder": "SAMMLER@5IVEARTS.COM",
+    "title": "title",
+    "subtitle": "subtitle",
+    "loginBtn": "login Btn"
   },
   "faq": {
     "infoCenter": "Informationszentrum",
@@ -190,6 +164,8 @@
     "returnHQ": "Zurück zum Hauptquartier"
   },
   "checkout": {
+    "gateway": "Sicheres Gateway",
+    "checkout": "Checkout",
     "verifying": "Sichere Transaktion wird verifiziert…",
     "loadingForm": "Zahlungsprotokolle werden geladen...",
     "processing": "Zahlung wird verarbeitet…",
@@ -199,8 +175,6 @@
     "deliveryStep": "1. Lieferung",
     "shippingStep": "2. Versand",
     "paymentStep": "3. Zahlung",
-    "gateway": "Sicheres Gateway",
-    "checkout": "Checkout",
     "recipientName": "Empfängername *",
     "collectorPlaceholder": "Name des Kollektors",
     "emailAddress": "E-Mail-Adresse *",
@@ -267,10 +241,22 @@
     ]
   },
   "trust": [
-    { "label": "Sicherer Checkout", "sub": "Unterstützt durch Stripe" },
-    { "label": "Versicherter Versand", "sub": "Weltweite Lieferung" },
-    { "label": "Handgefertigt", "sub": "Jedes Stück ein Unikat" },
-    { "label": "30 Tage Rückgaberecht", "sub": "Problemlose Rückgabe" }
+    {
+      "label": "Sicherer Checkout",
+      "sub": "Unterstützt durch Stripe"
+    },
+    {
+      "label": "Versicherter Versand",
+      "sub": "Weltweite Lieferung"
+    },
+    {
+      "label": "Handgefertigt",
+      "sub": "Jedes Stück ein Unikat"
+    },
+    {
+      "label": "30 Tage Rückgaberecht",
+      "sub": "Problemlose Rückgabe"
+    }
   ],
   "account": {
     "portal": "Sicheres Lagerportal",
@@ -284,18 +270,18 @@
     "verifiedCollector": "Verifizierter Sammler",
     "level1Encryption": "Level 1 Verschlüsselung",
     "history": "Akquisitionsverlauf",
-    "investment": "Investition",
-    "recorded": "Erfasst am:",
-    "fullLogistics": "Vollständige Logistikdaten",
-    "prepPhaseActive": "Vorbereitungsphase Aktiv",
-    "inTransit": "In Zustellung:",
-    "noAssets": "Bisher wurden keine Bestände im Tresor erfasst.",
-    "browseCollection": "Kollektion durchsuchen",
+    "verificationRequired": "Verifizierung Erforderlich",
+    "verificationDesc": "Identität nicht verifiziert. Versanddaten können bis zur Verifizierung eingeschränkt sein.",
+    "resendLink": "Verifizierungs-Link Erneut Senden",
     "neuralLinkError": "Neural Link Fehler",
     "syncFailed": "Synchronisierung mit dem zentralen Auftragstresor fehlgeschlagen.",
-    "verificationRequired": "Verifizierung Erforderlich",
-    "verificationDesc": "Identität noch nicht verifiziert. Erfüllungsdaten können eingeschränkt sein, bis der Link aktiv ist.",
-    "resendLink": "Verifizierungslink erneut senden",
+    "noAssets": "Bisher wurden keine Bestände im Tresor erfasst.",
+    "browseCollection": "Kollektion durchsuchen",
+    "recorded": "Erfasst am:",
+    "investment": "Investition",
+    "prepPhaseActive": "Vorbereitungsphase Aktiv",
+    "inTransit": "In Zustellung:",
+    "fullLogistics": "Vollständige Logistikdaten",
     "settings": {
       "title": "Tresorsicherheit",
       "subtitle": "Verwalten Sie Ihre Sammleridentität und Ihre Zugriffsprotokolle.",
@@ -307,32 +293,29 @@
     }
   },
   "orders": {
-    "backToWarehouse": "Mein Lagerhaus",
-    "reportTitle": "Vollständiger Logistikbericht",
+    "orderNum": "Bestellung #",
+    "recorded": "Erfasst am:",
+    "investment": "Investition",
+    "quantity": "Menge:",
+    "qty": "Menge:",
+    "prepPhase": "Vorbereitungsphase Aktiv",
+    "inTransit": "In Zustellung",
+    "logisticsData": "Vollständige Logistikdaten",
+    "warehouse": "Mein Lager",
     "operation": "Operation #",
-    "paid": "Bezahlt",
-    "shipped": "Versandt",
-    "processing": "In Bearbeitung",
-    "delivered": "Geliefert",
-    "cancelled": "Storniert",
     "logged": "Erfasst am:",
-
     "verifiedAcquisition": "Verifizierte Akquisition",
     "trackShipment": "SENDUNG VERFOLGEN",
     "exportInvoice": "RECHNUNG EXPORTIEREN",
     "lifecycle": "Bereitstellungslebenszyklus",
-    "pConfirmed": "Zahlung Bestätigt",
-    "pConfirmedDesc": "Akquisitionsmittel verifiziert und gesichert.",
-    "prepPhase": "Vorbereitungsphase",
-    "prepPhaseDesc": "Figurenisolierung und Integration von Schutzschaum.",
-    "inTransit": "In Zustellung",
-    "inTransitDesc": "Tresorausgang Lagerhaus. Logistikübergabe.",
-    "manifest": "Bestandsmanifest",
-    "itemDetails": "Artikeldetails",
-    "qty": "Menge",
-    "subtotal": "Akquisitions-Zwischensumme",
-    "shipping": "Logistikzuschlag",
-    "totalContribution": "Gesamtbeitrag zum Portfolio",
+    "paymentConfirmed": "Zahlung Bestätigt",
+    "fundsVerified": "Akquisitionsmittel verifiziert und gesichert.",
+    "prepPhaseActive": "Vorbereitungsphase",
+    "isolationNote": "Figurenisolierung und Schutzschaum vorhanden.",
+    "shipped": "Versandt",
+    "logisticsSuccess": "Logistik gesichert und auf dem Weg zum Ziel.",
+    "delivered": "Geliefert",
+    "acquired": "Meisterwerk wurde erworben und gesichert.",
     "deploymentZone": "Bereitstellungszone",
     "carrierProtocol": "Versandprotokoll",
     "class": "Klasse: Registrierte Verfolgung",
@@ -340,7 +323,28 @@
     "transactionSecure": "Transaktion Sicher",
     "discrepancy": "Logistik-Diskrepanz?",
     "contactHQ": "KONTAKTIEREN SIE DAS DEPLOYMENT HQ",
-    "sku": "SKU:"
+    "sku": "SKU:",
+    "backToWarehouse": "Mein Lagerhaus",
+    "reportTitle": "Vollständiger Logistikbericht",
+    "paid": "Bezahlt",
+    "processing": "In Bearbeitung",
+    "cancelled": "Storniert",
+    "pConfirmed": "Zahlung Bestätigt",
+    "pConfirmedDesc": "Akquisitionsmittel verifiziert und gesichert.",
+    "prepPhaseDesc": "Figurenisolierung und Integration von Schutzschaum.",
+    "inTransitDesc": "Tresorausgang Lagerhaus. Logistikübergabe.",
+    "manifest": "Bestandsmanifest",
+    "itemDetails": "Artikeldetails",
+    "subtotal": "Akquisitions-Zwischensumme",
+    "shipping": "Logistikzuschlag",
+    "totalContribution": "Gesamtbeitrag zum Portfolio"
+  },
+  "footer": {
+    "logistics": "Globale Kunsthandwerkslogistik Aktiviert",
+    "rights": "© 2026 5iveArts Collector Series. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "Bedingungen",
+    "description": "Professioneller 3D-Druck und Handveredelung auf Kunsthandwerkerniveau für internationale Sammler. Jedes Stück ist ein einzigartiges Meisterwerk aus Harz und Pigment."
   },
   "shipping": {
     "protocol": "Logistikprotokoll",
@@ -366,8 +370,50 @@
     "days3_5": "3-5 Tage",
     "days4_7": "4-7 Tage",
     "days7_14": "7-14 Tage"
+  },
+  "hero": {
+    "slides": [
+      {
+        "tagline": "Präzisions-Harztechnologie",
+        "headline": "3D",
+        "headlineHighlight": "Druck",
+        "subtext": "Hochauflösende Harzdrucke mit einer Schichtdicke von 0,025 mm — jedes Detail wird mit industrieller Präzision erfasst."
+      },
+      {
+        "tagline": "Handgefertigtes Artisan-Finish",
+        "headline": "Hand",
+        "headlineHighlight": "Bemalt",
+        "subtext": "Professionelle Airbrush-Techniken erwecken jede Figur zum Leben — von erfahrenen Künstlern handveredelt, Strich für Strich."
+      }
+    ],
+    "cta": "Jetzt Einkaufen",
+    "trust": {
+      "quality": "Zertifizierte Qualität",
+      "handFinished": "Handveredelt",
+      "logistics": "Globale Logistik"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "Handbemalt",
+      "text": "Jede Figur wird mit hochwertigen Acrylfarben handbemalt"
+    },
+    "threeDPrinted": {
+      "title": "3D-Gedruckt",
+      "text": "Hochauflösende Harzdrucke mit einer Schichtdicke von 0,025 mm"
+    },
+    "fastShipping": {
+      "title": "Schneller Versand",
+      "text": "Versicherte weltweite Lieferung mit Sendungsverfolgung"
+    },
+    "secureCheckout": {
+      "title": "Sicherer Check-out",
+      "text": "Zahlungen werden sicher von Stripe abgewickelt"
+    }
+  },
+  "ctaSection": {
+    "heading": "Bereit für ein echtes Kunstwerk?",
+    "subtext": "Durchstöbern Sie die komplette Kollektion handbemalter und 3D-gedruckter Actionfiguren. Jede wird sorgfältig auf Bestellung gefertigt.",
+    "button": "Zum Shop"
   }
 }
-
-
-

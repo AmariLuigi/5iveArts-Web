@@ -9,6 +9,7 @@ import { getSiteSettings } from "@/lib/settings";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 
 export default async function HomePage({
   params,
@@ -16,7 +17,7 @@ export default async function HomePage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  
+
   // Validate locale
   const dict = await getDictionary(lang as Locale).catch(() => null) as any;
   if (!dict) notFound();
@@ -27,7 +28,7 @@ export default async function HomePage({
   ]);
 
   const featuredIds = settings.homepage?.featured_product_ids || [];
-  const featuredProducts = featuredIds.length > 0 
+  const featuredProducts = featuredIds.length > 0
     ? products.filter(p => featuredIds.includes(p.id))
     : products.slice(0, 3);
 
@@ -59,7 +60,11 @@ export default async function HomePage({
   ];
 
   return (
-    <div>
+    <div className="relative">
+      {/* Ambient particle background */}
+      <AmbientBackground />
+
+      {/* Hero section */}
       <HeroSection
         primaryCta={{ label: dict?.hero?.cta || "Enter Vault", href: `/${lang}/products` }}
         heroVideos={settings.homepage?.hero_videos}
@@ -68,7 +73,7 @@ export default async function HomePage({
       />
 
       <ScrollReveal>
-        <FeaturesSection features={FEATURES} />
+        <FeaturesSection features={FEATURES} dict={dict} stats={settings.homepage?.stats} />
       </ScrollReveal>
 
       <ScrollReveal delay={0.2}>
@@ -83,10 +88,10 @@ export default async function HomePage({
       </ScrollReveal>
 
       <ScrollReveal>
-        <TestimonialsSection 
+        <TestimonialsSection
           heading={dict?.homepage?.testimonialsHeading || "Trusted by Collectors"}
           reviewsLabel={dict?.homepage?.reviewsLabel || "Verified Reviews"}
-          testimonials={activeTestimonials} 
+          testimonials={activeTestimonials}
         />
       </ScrollReveal>
 

@@ -33,21 +33,21 @@ export async function PATCH(req: NextRequest) {
         const body = await req.json();
         const supabase = await createClient();
 
-        // Expect body like { "pricing": { ... }, "logistics": { ... } }
+        // Expect body like { "pricing": { ... }, "logistics": { ... }, "homepage": { ... } }
         // To prevent arbitrary data injection in the db, only allow known keys.
-        const ALLOWED_KEYS = ["pricing", "logistics"];
-        
+        const ALLOWED_KEYS = ["pricing", "logistics", "homepage"];
+
         const entries = Object.entries(body).filter(([key]) => ALLOWED_KEYS.includes(key));
-        
+
         for (const [key, value] of entries) {
             const { error } = await (supabase as any)
                 .from("site_settings")
-                .upsert({ 
-                    key, 
-                    value, 
-                    updated_at: new Date().toISOString() 
-                }, { 
-                    onConflict: 'key' 
+                .upsert({
+                    key,
+                    value,
+                    updated_at: new Date().toISOString()
+                }, {
+                    onConflict: 'key'
                 });
 
             if (error) {
