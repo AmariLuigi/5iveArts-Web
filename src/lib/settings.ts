@@ -1,5 +1,13 @@
 import { getSupabasePublic } from "./supabase";
 
+export interface Testimonial {
+    name: string;
+    role: string;
+    quote: string;
+    rating: 1 | 2 | 3 | 4 | 5;
+    avatar?: string;
+}
+
 export interface SiteSettings {
     pricing?: {
         scales: Record<string, { multiplier: number; size: string }>;
@@ -16,6 +24,7 @@ export interface SiteSettings {
     homepage?: {
         featured_product_ids: string[];
         hero_videos?: string[];
+        testimonials?: Testimonial[];
     };
 }
 

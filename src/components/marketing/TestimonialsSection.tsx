@@ -8,6 +8,7 @@ export interface Testimonial {
   role?: string;
   quote: string;
   rating: 1 | 2 | 3 | 4 | 5;
+  avatar?: string;
 }
 
 export interface TestimonialsSectionProps {
@@ -86,8 +87,12 @@ export default function TestimonialsSection({
                 &ldquo;{t.quote}&rdquo;
               </p>
               <div className="mt-auto flex items-center gap-4 pt-6 border-t border-white/5">
-                <div className="w-10 h-10 bg-brand-yellow/10 rounded-full flex items-center justify-center text-brand-yellow font-black text-xs group-hover:scale-110 transition-transform">
-                  {t.name.charAt(0)}
+                <div className="w-10 h-10 bg-brand-yellow/10 rounded-full overflow-hidden flex items-center justify-center text-brand-yellow font-black text-xs group-hover:scale-110 transition-transform">
+                  {t.avatar ? (
+                    <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                  ) : (
+                    t.name.charAt(0)
+                  )}
                 </div>
                 <div>
                   <p className="font-black uppercase tracking-tight text-white text-sm">{t.name}</p>

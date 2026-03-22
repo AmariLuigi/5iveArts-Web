@@ -6,6 +6,7 @@ import FeaturedProducts from "@/components/marketing/FeaturedProducts";
 import TestimonialsSection, { Testimonial } from "@/components/marketing/TestimonialsSection";
 import CtaSection from "@/components/marketing/CtaSection";
 import { getSiteSettings } from "@/lib/settings";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const FEATURES: Feature[] = [
   {
@@ -65,6 +66,10 @@ export default async function HomePage() {
     ? products.filter(p => featuredIds.includes(p.id))
     : products.slice(0, 3);
 
+  const activeTestimonials = settings.homepage?.testimonials && settings.homepage.testimonials.length > 0
+    ? settings.homepage.testimonials
+    : TESTIMONIALS;
+
   return (
     <div>
       <HeroSection
@@ -72,21 +77,29 @@ export default async function HomePage() {
         heroVideos={settings.homepage?.hero_videos}
       />
 
-      <FeaturesSection features={FEATURES} />
+      <ScrollReveal>
+        <FeaturesSection features={FEATURES} />
+      </ScrollReveal>
 
-      <FeaturedProducts
-        heading="Featured Figures"
-        products={featuredProducts}
-        viewAllHref="/products"
-      />
+      <ScrollReveal delay={0.2}>
+        <FeaturedProducts
+          heading="Featured Figures"
+          products={featuredProducts}
+          viewAllHref="/products"
+        />
+      </ScrollReveal>
 
-      <TestimonialsSection testimonials={TESTIMONIALS} />
+      <ScrollReveal>
+        <TestimonialsSection testimonials={activeTestimonials} />
+      </ScrollReveal>
 
-      <CtaSection
-        heading="Ready to own a piece of art?"
-        subtext="Browse the full collection of hand-painted and 3D-printed action figures. Each one is made to order with care."
-        cta={{ label: "Browse the Shop", href: "/products" }}
-      />
+      <ScrollReveal direction="down">
+        <CtaSection
+          heading="Ready to own a piece of art?"
+          subtext="Browse the full collection of hand-painted and 3D-printed action figures. Each one is made to order with care."
+          cta={{ label: "Browse the Shop", href: "/products" }}
+        />
+      </ScrollReveal>
     </div>
   );
 }

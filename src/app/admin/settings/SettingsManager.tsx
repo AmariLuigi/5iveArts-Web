@@ -18,15 +18,31 @@ import {
     Video,
     MonitorPlay,
     Upload,
-    Film
+    Film,
+    MessageSquare,
+    UserCircle,
+    Trash2,
+    Quote,
+    Image as LibraryIcon
 } from "lucide-react";
-import { SiteSettings } from "@/lib/settings";
+import { SiteSettings, Testimonial } from "@/lib/settings";
 import { Product } from "@/types";
 import { createClient } from "@/lib/supabase-browser";
 
 interface Props {
     initialSettings: SiteSettings;
 }
+
+const AVATAR_LIBRARY = [
+    "https://api.dicebear.com/9.x/lorelei/svg?seed=Felix&backgroundColor=ff9f00&radius=50",
+    "https://api.dicebear.com/9.x/lorelei/svg?seed=Aneka&backgroundColor=ff9f00&radius=50",
+    "https://api.dicebear.com/9.x/lorelei/svg?seed=Leo&backgroundColor=ff9f00&radius=50",
+    "https://api.dicebear.com/9.x/lorelei/svg?seed=Maya&backgroundColor=ff9f00&radius=50",
+    "https://api.dicebear.com/9.x/lorelei/svg?seed=Zoe&backgroundColor=ff9f00&radius=50",
+    "https://api.dicebear.com/9.x/lorelei/svg?seed=Jasper&backgroundColor=ff9f00&radius=50",
+    "https://api.dicebear.com/9.x/lorelei/svg?seed=Luna&backgroundColor=ff9f00&radius=50",
+    "https://api.dicebear.com/9.x/lorelei/svg?seed=Finn&backgroundColor=ff9f00&radius=50"
+];
 
 export default function SettingsManager({ initialSettings }: Props) {
     const [settings, setSettings] = useState<SiteSettings>(initialSettings);
@@ -38,6 +54,7 @@ export default function SettingsManager({ initialSettings }: Props) {
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [productSearch, setProductSearch] = useState("");
     const [videoInput, setVideoInput] = useState("");
+    const [activeTab, setActiveTab] = useState<'visual' | 'engine'>('visual');
 
     const supabase = createClient();
 
@@ -60,7 +77,7 @@ export default function SettingsManager({ initialSettings }: Props) {
 
         try {
             await axios.patch("/api/admin/settings", { [key]: value });
-            setSettings(prev => ({ ...prev, [key]: value }));
+            setSettings(prev => ({ ...prev, [key]: value } as SiteSettings));
             setSuccess(true);
             setTimeout(() => setSuccess(false), 3000);
         } catch (err: any) {
@@ -155,6 +172,14 @@ export default function SettingsManager({ initialSettings }: Props) {
         }
     };
 
+    const updateTestimonials = (list: Testimonial[]) => {
+        const newHomepage = {
+            ...(settings.homepage || { featured_product_ids: [], hero_videos: [] }),
+            testimonials: list
+        };
+        handleSave("homepage", newHomepage);
+    };
+
     const selectedFeaturedIds = settings.homepage?.featured_product_ids || [];
     const selectedProducts = allProducts.filter(p => selectedFeaturedIds.includes(p.id));
     const suggestedProducts = productSearch.length > 0 
@@ -162,9 +187,33 @@ export default function SettingsManager({ initialSettings }: Props) {
         : [];
     
     const heroVideos = settings.homepage?.hero_videos || [];
+    const testimonials = settings.homepage?.testimonials || [];
 
     return (
         <div className="space-y-12 pb-20">
+            {/* Header & Tabs */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 py-10 border-b border-white/5">
+                <div className="space-y-2">
+                    <h2 className="text-3xl font-black uppercase tracking-tighter text-white">Vault Management</h2>
+                    <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest leading-relaxed">System Configuration & Artisan Curation Suite</p>
+                </div>
+                
+                <div className="flex p-1 bg-white/[0.02] border border-white/5 rounded-sm">
+                    <button 
+                        onClick={() => setActiveTab('visual')}
+                        className={`px-8 py-3 text-[9px] font-black uppercase tracking-widest transition-all rounded-sm ${activeTab === 'visual' ? "bg-brand-yellow text-black" : "text-neutral-500 hover:text-white"}`}
+                    >
+                        Storefront Visuals
+                    </button>
+                    <button 
+                        onClick={() => setActiveTab('engine')}
+                        className={`px-8 py-3 text-[9px] font-black uppercase tracking-widest transition-all rounded-sm ${activeTab === 'engine' ? "bg-brand-yellow text-black" : "text-neutral-500 hover:text-white"}`}
+                    >
+                        Commerce Engine
+                    </button>
+                </div>
+            </div>
+
             {/* Notifications */}
             {success && (
                 <div className="fixed bottom-10 right-10 bg-brand-yellow px-6 py-4 rounded-sm shadow-2xl flex items-center gap-3 animate-in slide-in-from-right-10 duration-500 z-[100]">
@@ -180,313 +229,181 @@ export default function SettingsManager({ initialSettings }: Props) {
                 </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Home Gallery Curation Card */}
-                <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden md:col-span-2">
-                    <div className="flex items-start justify-between">
-                        <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center">
-                            <Star className="w-5 h-5 text-brand-yellow" />
+            {activeTab === 'visual' ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-in fade-in duration-700 slide-in-from-bottom-4">
+                    {/* Home Gallery Card */}
+                    <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden md:col-span-2">
+                        <div className="flex items-start justify-between">
+                            <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center">
+                                <Star className="w-5 h-5 text-brand-yellow" />
+                            </div>
                         </div>
-                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-[2px] border ${settings.homepage?.featured_product_ids?.length ? "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5" : "text-neutral-700 border-neutral-800 bg-black"}`}>
-                            {settings.homepage?.featured_product_ids?.length ? `${settings.homepage.featured_product_ids.length}/3 Featured` : "Default (Auto)"}
-                        </span>
+
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                            <div className="max-w-xl">
+                                <h3 className="text-xl font-black uppercase text-white mb-2">Home Gallery Curation</h3>
+                                <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest">Select three masterpieces to define the visual entrance to the vault.</p>
+                            </div>
+                            <div className="relative w-full md:w-80">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-neutral-600" />
+                                <input type="text" placeholder="SEARCH VAULT..." value={productSearch} onChange={(e) => setProductSearch(e.target.value)} className="w-full bg-white/[0.02] border border-white/5 rounded-sm py-4 pl-12 pr-4 text-[10px] font-black text-white focus:border-brand-yellow/20 outline-none" />
+                                {suggestedProducts.length > 0 && (
+                                    <div className="absolute top-full left-0 right-0 mt-2 bg-black border border-white/10 z-50 shadow-2xl rounded-sm">
+                                        {suggestedProducts.map(product => (
+                                            <button key={product.id} onClick={() => { if (selectedFeaturedIds.length >= 3) { setError("Max 3 allowed."); return; } updateHomepageFeatured([...selectedFeaturedIds, product.id]); setProductSearch(""); }} className="w-full text-left p-4 hover:bg-white/5 flex items-center gap-4">
+                                                <div className="w-10 h-10 bg-white/5 rounded-sm overflow-hidden">{product.images?.[0] && <img src={product.images[0]} alt="" className="w-full h-full object-cover grayscale" />}</div>
+                                                <p className="text-[10px] font-black text-white uppercase">{product.name}</p>
+                                                <Plus className="ml-auto w-4 h-4 text-neutral-800" />
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 border-t border-white/5">
+                            {[0, 1, 2].map((i) => {
+                                const product = selectedProducts[i];
+                                return (
+                                    <div key={i} className="group relative aspect-[3/4] bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden flex flex-col items-center justify-center p-8">
+                                        {product ? (
+                                            <>
+                                                <div className="absolute inset-0">
+                                                    {product.images?.[0] && <img src={product.images[0]} alt="" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 transition-all duration-700" />}
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                                                </div>
+                                                <div className="relative z-10">
+                                                    <span className="text-[7px] font-black uppercase tracking-[0.3em] text-brand-yellow mb-2 block">Slot 0{i+1}</span>
+                                                    <h4 className="text-sm font-black uppercase text-white mb-1">{product.name}</h4>
+                                                </div>
+                                                <button onClick={() => updateHomepageFeatured(selectedFeaturedIds.filter(id => id !== product.id))} className="absolute top-4 right-4 z-20 w-8 h-8 bg-black/80 flex items-center justify-center text-white hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><X className="w-4 h-4" /></button>
+                                            </>
+                                        ) : (
+                                            <div className="text-center">
+                                                <Plus className="w-5 h-5 text-neutral-800 mx-auto mb-4" />
+                                                <p className="text-[9px] font-black uppercase text-neutral-800">Pending</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
 
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                        <div className="max-w-xl">
-                            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-2">Home Gallery Curation</h3>
-                            <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest leading-relaxed">Select exactly three masterpieces to be showcased in the primary homepage gallery. These define the visual entrance to the 5iveArts vault.</p>
+                    {/* Hero Media Card */}
+                    <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden md:col-span-2">
+                        <div className="flex items-start justify-between">
+                            <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center"><MonitorPlay className="w-5 h-5 text-brand-yellow" /></div>
                         </div>
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                            <h3 className="text-xl font-black uppercase text-white mb-2">Hero Media</h3>
+                            <label className="flex items-center gap-3 px-6 py-4 bg-white/[0.03] border border-white/5 rounded-sm cursor-pointer hover:bg-white/[0.05]">
+                                <Upload className="w-4 h-4 text-brand-yellow" /><span className="text-[10px] font-black uppercase text-white">Upload Cinema</span>
+                                <input type="file" accept="video/*" className="hidden" onChange={handleHeroVideoUpload} disabled={uploading} />
+                            </label>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-8 border-t border-white/5">
+                            {heroVideos.map((url, i) => (
+                                <div key={i} className="group relative aspect-video bg-black rounded-sm border border-white/5 overflow-hidden">
+                                    <video src={url} className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity" muted loop playsInline />
+                                    <button onClick={() => updateHeroVideos(heroVideos.filter((_, idx) => idx !== i))} className="absolute top-2 right-2 z-20 w-6 h-6 bg-black/80 text-white rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><X className="w-3 h-3" /></button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
-                        {/* Search Input */}
-                        <div className="relative w-full md:w-80">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-neutral-600" />
-                            <input 
-                                type="text"
-                                placeholder="SEARCH VAULT FOR FEATURED..."
-                                value={productSearch}
-                                onChange={(e) => setProductSearch(e.target.value)}
-                                className="w-full bg-white/[0.02] border border-white/5 rounded-sm py-4 pl-12 pr-4 text-[10px] font-black text-white focus:border-brand-yellow/20 outline-none placeholder:text-neutral-800"
-                            />
-                            {suggestedProducts.length > 0 && (
-                                <div className="absolute top-full left-0 right-0 mt-2 bg-black border border-white/10 z-50 shadow-2xl rounded-sm overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                                    {suggestedProducts.map(product => (
-                                        <button 
-                                            key={product.id}
-                                            onClick={() => {
-                                                if (selectedFeaturedIds.length >= 3) {
-                                                    setError("Maximum 3 featured products allowed.");
-                                                    return;
-                                                }
-                                                updateHomepageFeatured([...selectedFeaturedIds, product.id]);
-                                                setProductSearch("");
-                                            }}
-                                            className="w-full text-left p-4 hover:bg-white/5 flex items-center gap-4 transition-colors group border-b border-white/5 last:border-0"
-                                        >
-                                            <div className="w-10 h-10 bg-white/5 rounded-sm overflow-hidden">
-                                                {product.images?.[0] && <img src={product.images[0]} alt="" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />}
-                                            </div>
-                                            <div>
-                                                <p className="text-[10px] font-black text-white uppercase tracking-tight">{product.name}</p>
-                                                <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest">{product.category}</p>
-                                            </div>
-                                            <Plus className="ml-auto w-4 h-4 text-neutral-800 group-hover:text-brand-yellow" />
-                                        </button>
+                    {/* Testimonials Card */}
+                    <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden md:col-span-2">
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-xl font-black uppercase text-white">Collector Voices</h3>
+                            <button onClick={() => updateTestimonials([...testimonials, { name: "NEW COLLECTOR", role: "Collector", quote: "...", rating: 5, avatar: AVATAR_LIBRARY[0] }])} className="px-6 py-3 bg-white/[0.03] border border-white/5 text-[10px] font-black uppercase text-white hover:bg-white/[0.05]">ADD STORY</button>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-10 border-t border-white/5">
+                            {testimonials.map((testi, i) => (
+                                <div key={i} className="bg-white/[0.01] border border-white/5 p-8 rounded-sm space-y-6">
+                                    <div className="flex justify-between items-start">
+                                        <div className="flex gap-4 items-center">
+                                            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-brand-yellow/20"><img src={testi.avatar} alt="" className="w-full h-full object-cover" /></div>
+                                            <div className="flex gap-1">{AVATAR_LIBRARY.map((img, idx) => (
+                                                <button key={idx} onClick={() => { const nl = [...testimonials]; nl[i].avatar = img; updateTestimonials(nl); }} className={`w-5 h-5 rounded-full border ${testi.avatar === img ? "border-brand-yellow" : "border-white/5 opacity-40"}`}><img src={img} className="w-full h-full object-cover rounded-full" /></button>
+                                            ))}</div>
+                                        </div>
+                                        <button onClick={() => updateTestimonials(testimonials.filter((_, idx) => idx !== i))} className="text-neutral-800 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                                    </div>
+                                    <input value={testi.name} onChange={(e) => { const nl = [...testimonials]; nl[i].name = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-3 text-[10px] font-black text-white uppercase outline-none" placeholder="NAME" />
+                                    <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[i].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-4 text-[10px] text-neutral-400 min-h-[80px] outline-none" placeholder="QUOTE" />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-in fade-in duration-700 slide-in-from-bottom-4">
+                    {/* Logistics Card */}
+                    <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden">
+                        <div className="flex items-start justify-between">
+                            <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center"><Truck className="w-5 h-5 text-brand-yellow" /></div>
+                        </div>
+                        <h3 className="text-xl font-black uppercase text-white">Shipping Logistics</h3>
+                        <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/5">
+                            <div className="space-y-4">
+                                <label className="text-[9px] font-black uppercase text-neutral-600">Threshold (€)</label>
+                                <input type="number" defaultValue={(settings.logistics?.free_shipping_threshold_cents || 15000) / 100} onBlur={(e) => updateLogistics("free_shipping_threshold_cents", Number(e.target.value) * 100)} className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-[11px] font-black text-brand-yellow" />
+                            </div>
+                            <div className="space-y-4">
+                                <label className="text-[9px] font-black uppercase text-neutral-600">Buffer (Days)</label>
+                                <input type="number" defaultValue={settings.logistics?.preparation_days_buffer || 2} onBlur={(e) => updateLogistics("preparation_days_buffer", Number(e.target.value))} className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-[11px] font-black text-brand-yellow" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Pricing Card */}
+                    <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden md:col-span-2">
+                        <div className="flex items-start justify-between">
+                            <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center"><Scale className="w-5 h-5 text-brand-yellow" /></div>
+                        </div>
+                        <h3 className="text-xl font-black uppercase text-white">Pricing Algorithms</h3>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6 border-t border-white/5">
+                            <div className="space-y-4">
+                                <h4 className="text-[8px] font-black text-white/30 uppercase tracking-widest">Scales</h4>
+                                <div className="grid grid-cols-3 gap-3">
+                                    {["1/9", "1/6", "1/4"].map(s => (
+                                        <div key={s} className="bg-white/[0.01] border border-white/5 p-4 rounded-sm">
+                                            <label className="text-[7px] font-black text-neutral-700 block mb-2">{s}</label>
+                                            <input type="number" step="0.1" defaultValue={(settings.pricing?.scales as any)?.[s]?.multiplier} onBlur={(e) => updatePricingMultiplier("scales", s, Number(e.target.value))} className="w-full bg-transparent text-center text-[11px] font-black text-brand-yellow outline-none" />
+                                        </div>
                                     ))}
                                 </div>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 border-t border-white/5">
-                        {[0, 1, 2].map((i) => {
-                            const product = selectedProducts[i];
-                            return (
-                                <div key={i} className="group relative aspect-[3/4] bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden flex flex-col items-center justify-center text-center p-8 transition-all hover:border-white/10">
-                                    {product ? (
-                                        <>
-                                            <div className="absolute inset-0">
-                                                {product.images?.[0] && <img src={product.images[0]} alt="" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                                            </div>
-                                            <div className="relative z-10">
-                                                <span className="text-[7px] font-black uppercase tracking-[0.3em] text-brand-yellow mb-2 block">Slot 0{i+1}</span>
-                                                <h4 className="text-sm font-black uppercase tracking-tight text-white mb-1">{product.name}</h4>
-                                                <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-widest">{product.category}</p>
-                                            </div>
-                                            <button 
-                                                onClick={() => updateHomepageFeatured(selectedFeaturedIds.filter(id => id !== product.id))}
-                                                className="absolute top-4 right-4 z-20 w-8 h-8 bg-black/80 backdrop-blur-md flex items-center justify-center text-white hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
-                                            >
-                                                <X className="w-4 h-4" />
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mb-4 border border-white/5 group-hover:bg-brand-yellow/10 group-hover:border-brand-yellow/20 transition-all">
-                                                <Plus className="w-5 h-5 text-neutral-800 group-hover:text-brand-yellow" />
-                                            </div>
-                                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-800 group-hover:text-neutral-600">Pending Assignment</p>
-                                        </>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* Hero Media Card */}
-                <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden md:col-span-2">
-                    <div className="flex items-start justify-between">
-                        <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center">
-                            <MonitorPlay className="w-5 h-5 text-brand-yellow" />
-                        </div>
-                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-[2px] border ${heroVideos.length ? "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5" : "text-neutral-700 border-neutral-800 bg-black"}`}>
-                            {heroVideos.length ? `${heroVideos.length} Cinematic Assets` : "Default (Static)"}
-                        </span>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                        <div className="max-w-xl">
-                            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-2">Hero Media Configuration</h3>
-                            <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest leading-relaxed">Manage the 4K cinematic background sequences that define the first impression of the shop. Provide absolute or relative URLs to your high-impact marketing videos.</p>
-                        </div>
-
-                        <div className="flex w-full md:w-auto gap-4">
-                            <label className={`flex items-center gap-3 px-6 py-4 bg-white/[0.03] border border-white/5 rounded-sm cursor-pointer hover:bg-white/[0.05] hover:border-brand-yellow/30 transition-all ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
-                                <Upload className="w-4 h-4 text-brand-yellow" />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white">Transmit Cinema Asset</span>
-                                <input 
-                                    type="file" 
-                                    accept="video/*" 
-                                    className="hidden" 
-                                    onChange={handleHeroVideoUpload} 
-                                    disabled={uploading} 
-                                />
-                            </label>
-
-                            <div className="flex bg-black/40 border border-white/5 rounded-sm p-1">
-                                <input 
-                                    type="text"
-                                    placeholder="OR PASTE URL..."
-                                    value={videoInput}
-                                    onChange={(e) => setVideoInput(e.target.value)}
-                                    className="bg-transparent px-4 py-2 text-[10px] font-black text-white focus:outline-none w-40 placeholder:text-neutral-700"
-                                />
-                                <button 
-                                    onClick={() => {
-                                        if (!videoInput) return;
-                                        updateHeroVideos([...heroVideos, videoInput]);
-                                        setVideoInput("");
-                                    }}
-                                    className="px-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-[0.2em] rounded-sm hover:brightness-110 transition-all"
-                                >
-                                    ADD
-                                </button>
                             </div>
-                        </div>
-                    </div>
-
-                    {uploading && (
-                        <div className="pt-4 border-t border-white/5 animate-in fade-in slide-in-from-top-2 duration-300">
-                            <div className="flex items-center justify-between mb-2">
-                                <div className="flex items-center gap-2">
-                                    <Loader2 className="w-3 h-3 text-brand-yellow animate-spin" />
-                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white">Transmitting Asset Sequence — {uploadProgress}%</span>
+                            <div className="space-y-4">
+                                <h4 className="text-[8px] font-black text-white/30 uppercase tracking-widest">Finishes</h4>
+                                <div className="grid grid-cols-2 gap-3">
+                                    {["painted", "raw"].map(f => (
+                                        <div key={f} className="bg-white/[0.01] border border-white/5 p-4 rounded-sm">
+                                            <label className="text-[7px] font-black text-neutral-700 block mb-2">{f}</label>
+                                            <input type="number" step="0.1" defaultValue={(settings.pricing?.finishes as any)?.[f]?.multiplier} onBlur={(e) => updatePricingMultiplier("finishes", f, Number(e.target.value))} className="w-full bg-transparent text-center text-[11px] font-black text-brand-yellow outline-none" />
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                            <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-                                <div 
-                                    className="h-full bg-brand-yellow shadow-[0_0_10px_#ff9f00]" 
-                                    style={{ width: `${uploadProgress}%` }}
-                                />
-                            </div>
-                        </div>
-                    )}
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-8 border-t border-white/5">
-                        {heroVideos.map((url, i) => (
-                            <div key={i} className="group relative aspect-video bg-black rounded-sm border border-white/5 overflow-hidden flex flex-col justify-end p-4">
-                                <video 
-                                    src={url} 
-                                    className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity" 
-                                    muted 
-                                    loop 
-                                    playsInline 
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
-                                <div className="relative z-10 flex items-center justify-between">
-                                    <span className="text-[8px] font-black text-white/40 uppercase tracking-widest">Cinema Asset {i + 1}</span>
-                                    <button 
-                                        onClick={() => updateHeroVideos(heroVideos.filter((_, idx) => idx !== i))}
-                                        className="w-6 h-6 bg-black/80 rounded-sm flex items-center justify-center text-white hover:text-red-500 transition-colors"
-                                    >
-                                        <X className="w-3 h-3" />
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Logistics Card */}
-                <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden">
-                    <div className="flex items-start justify-between">
-                        <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center">
-                            <Truck className="w-5 h-5 text-brand-yellow" />
-                        </div>
-                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-[2px] border ${settings.logistics ? "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5" : "text-neutral-700 border-neutral-800 bg-black"}`}>
-                            {settings.logistics ? "Database Master" : "Default / Local"}
-                        </span>
-                    </div>
-
-                    <div>
-                        <h3 className="text-xl font-black uppercase tracking-tight text-white mb-2">Shipping Logistics</h3>
-                        <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest leading-relaxed">Control global delivery rules and preparation buffers.</p>
-                    </div>
-
-                    <div className="space-y-6 pt-6 border-t border-white/5">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <label className="text-[9px] uppercase font-black text-white/30 tracking-widest">Free Shipping Over (€)</label>
-                                <input 
-                                    type="number" 
-                                    defaultValue={(settings.logistics?.free_shipping_threshold_cents || 15000) / 100}
-                                    onBlur={(e) => updateLogistics("free_shipping_threshold_cents", Number(e.target.value) * 100)}
-                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-3 text-[11px] font-black text-white focus:border-brand-yellow/20 outline-none"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-[9px] uppercase font-black text-white/30 tracking-widest">Prep Buffer (Days)</label>
-                                <input 
-                                    type="number"
-                                    defaultValue={settings.logistics?.preparation_days_buffer || 2}
-                                    onBlur={(e) => updateLogistics("preparation_days_buffer", Number(e.target.value))}
-                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-3 text-[11px] font-black text-white focus:border-brand-yellow/20 outline-none"
-                                />
-                            </div>
                         </div>
                     </div>
                 </div>
+            )}
 
-                {/* Pricing Algorithms Card */}
-                <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden">
-                    <div className="flex items-start justify-between">
-                        <div className="w-12 h-12 bg-white/5 border border-white/5 rounded-sm flex items-center justify-center">
-                            <Scale className="w-5 h-5 text-brand-yellow" />
-                        </div>
-                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-[2px] border ${settings.pricing ? "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5" : "text-neutral-700 border-neutral-800 bg-black"}`}>
-                            {settings.pricing ? "Database Master" : "Default / Local"}
-                        </span>
-                    </div>
-
-                    <div>
-                        <h3 className="text-xl font-black uppercase tracking-tight text-white mb-2">Pricing Algorithms</h3>
-                        <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest leading-relaxed">Manage dynamic multipliers for scale and finishing variants.</p>
-                    </div>
-
-                    <div className="space-y-6 pt-6 border-t border-white/5">
-                        <div className="space-y-4">
-                            <label className="text-[9px] uppercase font-black text-white/30 tracking-widest block">Scale Multipliers (Base Ref: 1/12)</label>
-                            <div className="grid grid-cols-3 gap-2">
-                                {["1/9", "1/6", "1/4"].map((scale) => (
-                                    <div key={scale} className="bg-white/[0.02] border border-white/5 p-2 rounded-sm text-center">
-                                        <p className="text-[8px] font-black text-neutral-700 uppercase mb-1">{scale}</p>
-                                        <input 
-                                            type="number" 
-                                            step="0.1"
-                                            defaultValue={(settings.pricing?.scales as any)?.[scale]?.multiplier || (scale === "1/9" ? 1.5 : scale === "1/6" ? 2.5 : 5.0)}
-                                            onBlur={(e) => updatePricingMultiplier("scales", scale, Number(e.target.value))}
-                                            className="w-full bg-transparent text-center text-[10px] font-black text-brand-yellow outline-none"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="space-y-4">
-                            <label className="text-[9px] uppercase font-black text-white/30 tracking-widest block">Finish Multipliers</label>
-                            <div className="grid grid-cols-2 gap-2">
-                                {["painted", "raw"].map((finish) => (
-                                    <div key={finish} className="bg-white/[0.02] border border-white/5 p-2 rounded-sm text-center">
-                                        <p className="text-[8px] font-black text-neutral-700 uppercase mb-1">{finish}</p>
-                                        <input 
-                                            type="number" 
-                                            step="0.1"
-                                            defaultValue={(settings.pricing?.finishes as any)?.[finish]?.multiplier || (finish === "painted" ? 1.0 : 0.6)}
-                                            onBlur={(e) => updatePricingMultiplier("finishes", finish, Number(e.target.value))}
-                                            className="w-full bg-transparent text-center text-[10px] font-black text-white outline-none"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+            {/* Operational Status */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 opacity-40">
+                <div className="bg-[#0a0a0a] border border-white/5 p-10 border-dashed rounded-sm">
+                    <p className="text-[8px] font-black uppercase text-neutral-700">System Monitoring — Credentials Secured</p>
                 </div>
-            </div>
-
-            {/* Operational Cards (System Info) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 opacity-60">
-                <div className="bg-[#0a0a0a] border border-white/5 p-10 border-dashed">
-                    <div className="flex items-center gap-4 mb-4">
-                        <ShieldCheck className="w-5 h-5 text-neutral-700" />
-                        <h3 className="text-xs font-black uppercase text-neutral-500 tracking-widest">System Security</h3>
-                    </div>
-                    <p className="text-[9px] font-bold text-neutral-800 uppercase tracking-widest">Verify Stripe webhooks and Supabase connectivity status.</p>
-                </div>
-                <div className="bg-[#0a0a0a] border border-white/5 p-10 border-dashed">
-                    <div className="flex items-center gap-4 mb-4">
-                        <Database className="w-5 h-5 text-neutral-700" />
-                        <h3 className="text-xs font-black uppercase text-neutral-500 tracking-widest">Database Sync</h3>
-                    </div>
-                    <p className="text-[9px] font-bold text-neutral-800 uppercase tracking-widest">Manual snapshot of product catalog and order history uplink.</p>
+                <div className="bg-[#0a0a0a] border border-white/5 p-10 border-dashed rounded-sm">
+                    <p className="text-[8px] font-black uppercase text-neutral-700">Vault Database — Connection Stable</p>
                 </div>
             </div>
 
             {loading && (
-                <div className="fixed top-8 right-8 bg-black/80 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-sm flex items-center gap-3 z-[100] animate-in fade-in duration-300">
-                    <Loader2 className="w-4 h-4 text-brand-yellow animate-spin" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white">Projecting to Database...</span>
+                <div className="fixed top-8 right-8 bg-black/80 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-sm flex items-center gap-3 z-[100] animate-in slide-in-from-top-4">
+                    <Loader2 className="w-3 h-3 text-brand-yellow animate-spin" /><span className="text-[8px] font-black uppercase tracking-widest text-white">Projecting...</span>
                 </div>
             )}
         </div>

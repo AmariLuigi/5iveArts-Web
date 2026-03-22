@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useSiteSettings } from "@/components/providers/SettingsProvider";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 
 export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -22,7 +23,8 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
                 Free standard shipping on all orders over €{threshold} &nbsp;·&nbsp; Each figure handcrafted with passion &nbsp;·&nbsp; 30-day returns
             </div>
             <Navbar />
-            <main className="flex-1">
+            <AmbientBackground />
+            <main className="flex-1 relative z-10">
                 {children}
             </main>
             <Footer />
