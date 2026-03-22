@@ -18,7 +18,7 @@ export default async function HomePage({
   const { lang } = await params;
   
   // Validate locale
-  const dict = await getDictionary(lang as Locale).catch(() => null);
+  const dict = await getDictionary(lang as Locale).catch(() => null) as any;
   if (!dict) notFound();
 
   const [products, settings] = await Promise.all([
@@ -38,33 +38,33 @@ export default async function HomePage({
   const FEATURES: Feature[] = [
     {
       icon: <Brush className="w-7 h-7 text-brand-yellow" />,
-      title: dict.features.handPainted.title,
-      text: dict.features.handPainted.text,
+      title: dict?.features?.handPainted?.title || "Hand Painted",
+      text: dict?.features?.handPainted?.text || "Mastercraft finishes",
     },
     {
       icon: <Printer className="w-7 h-7 text-brand-yellow" />,
-      title: dict.features.threeDPrinted.title,
-      text: dict.features.threeDPrinted.text,
+      title: dict?.features?.threeDPrinted?.title || "3D Printed",
+      text: dict?.features?.threeDPrinted?.text || "Industry standard precision",
     },
     {
       icon: <Truck className="w-7 h-7 text-brand-yellow" />,
-      title: dict.features.fastShipping.title,
-      text: dict.features.fastShipping.text,
+      title: dict?.features?.fastShipping?.title || "Fast Shipping",
+      text: dict?.features?.fastShipping?.text || "Worldwide delivery",
     },
     {
       icon: <ShieldCheck className="w-7 h-7 text-brand-yellow" />,
-      title: dict.features.secureCheckout.title,
-      text: dict.features.secureCheckout.text,
+      title: dict?.features?.secureCheckout?.title || "Secure Checkout",
+      text: dict?.features?.secureCheckout?.text || "Encrypted payments",
     },
   ];
 
   return (
     <div>
       <HeroSection
-        primaryCta={{ label: dict.hero.cta, href: `/${lang}/products` }}
+        primaryCta={{ label: dict?.hero?.cta || "Enter Vault", href: `/${lang}/products` }}
         heroVideos={settings.homepage?.hero_videos}
-        translatedSlides={dict.hero.slides}
-        trustLabels={dict.hero.trust}
+        translatedSlides={dict?.hero?.slides || []}
+        trustLabels={dict?.hero?.trust || []}
       />
 
       <ScrollReveal>
@@ -73,10 +73,10 @@ export default async function HomePage({
 
       <ScrollReveal delay={0.2}>
         <FeaturedProducts
-          heading={dict.homepage.featuredHeading}
+          heading={dict?.homepage?.featuredHeading || "Featured Collections"}
           products={featuredProducts}
           viewAllHref={`/${lang}/products`}
-          viewAllLabel={dict.homepage.viewAll}
+          viewAllLabel={dict?.homepage?.viewAll || "View All"}
           lang={lang}
           dict={dict}
         />
@@ -84,17 +84,17 @@ export default async function HomePage({
 
       <ScrollReveal>
         <TestimonialsSection 
-          heading={dict.homepage.testimonialsHeading}
-          reviewsLabel={dict.homepage.reviewsLabel}
+          heading={dict?.homepage?.testimonialsHeading || "Trusted by Collectors"}
+          reviewsLabel={dict?.homepage?.reviewsLabel || "Verified Reviews"}
           testimonials={activeTestimonials} 
         />
       </ScrollReveal>
 
       <ScrollReveal direction="down">
         <CtaSection
-          heading={dict.ctaSection.heading}
-          subtext={dict.ctaSection.subtext}
-          cta={{ label: dict.ctaSection.button, href: `/${lang}/products` }}
+          heading={dict?.ctaSection?.heading || "Ready to upgrade your collection?"}
+          subtext={dict?.ctaSection?.subtext || "Join thousands of collectors worldwide."}
+          cta={{ label: dict?.ctaSection?.button || "Shop Now", href: `/${lang}/products` }}
         />
       </ScrollReveal>
     </div>

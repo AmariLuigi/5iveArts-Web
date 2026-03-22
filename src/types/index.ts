@@ -47,11 +47,3 @@ export interface ShippingAddress {
   phone: string;
   email: string;
 }
-
-export interface OrderSummary {
-  items: CartItem[];
-  subtotal: number;
-  shipping: number;
-  total: number;
-  shippingRate?: ShippingRate;
-}

@@ -12,7 +12,7 @@ import { ProductScale, ProductFinish } from "@/types";
 // ---------------------------------------------------------------------------
 
 /** Trims a string and returns null if it is empty after trimming. */
-export function sanitizeString(value: unknown): string | null {
+function sanitizeString(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
   return trimmed.length > 0 ? trimmed : null;
@@ -41,7 +41,7 @@ export function escapeHtml(str: string): string {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /** Returns true for a reasonable-looking email address. */
-export function isValidEmail(value: string): boolean {
+function isValidEmail(value: string): boolean {
   return EMAIL_RE.test(value) && value.length <= 254;
 }
 

@@ -17,6 +17,13 @@
     "featured_products": "PRODUITS PHARE",
     "explore_all": "Tout explorer"
   },
+  "homepage": {
+    "featuredHeading": "Collections en Vedette",
+    "viewAll": "Voir Tout",
+    "testimonialsHeading": "Approuvé par les Collectionneurs",
+    "reviewsLabel": "Avis Vérifiés",
+    "collectorChoice": "Choix du Collectionneur"
+  },
   "products": {
     "title": "Arsenal de Modèles",
     "subtitle": "Explorez notre collection de figurines artisanales.",
@@ -245,6 +252,13 @@
     "discrepancy": "Discrepance Logistique ?",
     "contactHQ": "CONTACTER LE HQ DE DÉPLOIEMENT",
     "sku": "SKU:"
+  },
+  "footer": {
+    "logistics": "Logistique Artisanale Mondiale Activée",
+    "rights": "© 2026 5iveArts Collector Series. Tous droits réservés.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "description": "Impression 3D professionnelle et finition artisanale pour collectionneurs internationaux. Chaque pièce est un chef-d'œuvre unique en résine et pigment."
   },
   "shipping": {
     "protocol": "Protocole de Logistique",

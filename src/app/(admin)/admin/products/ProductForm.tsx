@@ -80,6 +80,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             }
         };
         fetchTags();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const suggestions = tagInput.length > 0

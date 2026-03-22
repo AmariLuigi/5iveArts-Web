@@ -147,11 +147,5 @@ export interface Database {
   };
 }
 
-/** Convenience alias for the orders Row type */
-export type DbOrder = Database["public"]["Tables"]["orders"]["Row"];
-
-/** Convenience alias for the order_items Row type */
-export type DbOrderItem = Database["public"]["Tables"]["order_items"]["Row"];
-
 /** Convenience alias for the products Row type */
 export type DbProduct = Database["public"]["Tables"]["products"]["Row"];

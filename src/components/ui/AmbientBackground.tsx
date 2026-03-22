@@ -2,6 +2,48 @@
 
 import { useEffect, useRef } from "react";
 
+class Particle {
+  x: number = 0;
+  y: number = 0;
+  vx: number = 0;
+  vy: number = 0;
+  size: number = 0;
+  opacity: number = 0;
+
+  constructor(canvasWidth: number, canvasHeight: number) {
+    this.x = Math.random() * canvasWidth;
+    this.y = Math.random() * canvasHeight;
+    this.vx = (Math.random() - 0.5) * 0.25;
+    this.vy = (Math.random() - 0.5) * 0.25;
+    this.size = Math.random() * 4 + 1;
+    this.opacity = Math.random() * 0.4 + 0.1;
+  }
+
+  update(canvasWidth: number, canvasHeight: number) {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    if (this.x < 0) this.x = canvasWidth;
+    if (this.x > canvasWidth) this.x = 0;
+    if (this.y < 0) this.y = canvasHeight;
+    if (this.y > canvasHeight) this.y = 0;
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    const gradient = ctx.createRadialGradient(
+      this.x, this.y, 0, 
+      this.x, this.y, this.size * 2
+    );
+    gradient.addColorStop(0, `rgba(255, 159, 0, ${this.opacity})`);
+    gradient.addColorStop(1, "rgba(255, 159, 0, 0)");
+    
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+  }
+}
+
 export default function AmbientBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -18,56 +60,12 @@ export default function AmbientBackground() {
     const connectionDistance = 180;
     let animationFrameId: number;
 
-    class Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
-
-      constructor() {
-        this.x = Math.random() * (canvas?.width || 0);
-        this.y = Math.random() * (canvas?.height || 0);
-        this.vx = (Math.random() - 0.5) * 0.25;
-        this.vy = (Math.random() - 0.5) * 0.25;
-        this.size = Math.random() * 4 + 1;
-        this.opacity = Math.random() * 0.4 + 0.1;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0) this.x = canvas?.width || 0;
-        if (this.x > (canvas?.width || 0)) this.x = 0;
-        if (this.y < 0) this.y = canvas?.height || 0;
-        if (this.y > (canvas?.height || 0)) this.y = 0;
-      }
-
-      draw() {
-        if (!ctx) return;
-        // Artisan Glowing Ember effect (radial gradient for soft bokeh)
-        const gradient = ctx.createRadialGradient(
-          this.x, this.y, 0, 
-          this.x, this.y, this.size * 2
-        );
-        gradient.addColorStop(0, `rgba(255, 159, 0, ${this.opacity})`);
-        gradient.addColorStop(1, "rgba(255, 159, 0, 0)");
-        
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
-        ctx.fillStyle = gradient;
-        ctx.fill();
-      }
-    }
-
     const init = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       particles = [];
       for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
+        particles.push(new Particle(canvas.width, canvas.height));
       }
     };
 
@@ -75,8 +73,8 @@ export default function AmbientBackground() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
+        particles[i].update(canvas.width, canvas.height);
+        particles[i].draw(ctx);
 
         // Very sparse and faint connection lines (only for premium depth on desk)
         if (!isMobile) {

@@ -6,7 +6,7 @@ export const SCALE_CONFIG: Record<ProductScale, { multiplier: number; size: stri
   "1/4": { multiplier: 5.0, size: "45cm" },
 };
 
-export const FINISH_CONFIG: Record<ProductFinish, { multiplier: number }> = {
+const FINISH_CONFIG: Record<ProductFinish, { multiplier: number }> = {
   painted: { multiplier: 1.0 },
   raw: { multiplier: 0.6 },
 };

@@ -46,7 +46,7 @@ export default function FeaturedProducts({
   };
 
   return (
-    <motion.section 
+    <motion.section
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-10%" }}
@@ -56,7 +56,7 @@ export default function FeaturedProducts({
       <div className="flex items-end justify-between mb-12 border-b border-white/5 pb-8">
         <div>
           <span className="text-[10px] uppercase font-black tracking-[0.3em] text-brand-yellow mb-2 block">
-            {dict.homepage.collectorChoice}
+            {dict?.homepage?.collectorChoice}
           </span>
           <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white">
             {heading}

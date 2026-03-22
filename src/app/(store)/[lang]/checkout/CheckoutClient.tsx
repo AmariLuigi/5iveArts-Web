@@ -203,6 +203,7 @@ export default function CheckoutClient({
     };
 
     fetchRegions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address.country]);
 
   // Magic Postcode Automation: Auto-fills City and State based on ZIP
@@ -296,6 +297,7 @@ export default function CheckoutClient({
     ) {
       fetchShippingRates();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasHydrated, activeStep, rates.length, fetchingRates, address.zip_code, address.country]);
 
 

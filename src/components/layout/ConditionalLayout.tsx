@@ -31,7 +31,7 @@ export default function ConditionalLayout({ children, dict }: ConditionalLayoutP
             {/* Announcement bar */}
             {!isLoginPage && (
                 <div className="bg-brand-yellow text-black text-[10px] uppercase font-black tracking-[0.2em] text-center py-2 px-4 whitespace-nowrap overflow-hidden">
-                    {dict.features.fastShipping.title} — {dict.features.fastShipping.text} &nbsp;·&nbsp; {dict.features.secureCheckout.title} &nbsp;·&nbsp; 5iveArts Global
+                    {dict?.features?.fastShipping?.title || "FAST SHIPPING"} — {dict?.features?.fastShipping?.text || "Worldwide"} &nbsp;·&nbsp; {dict?.features?.secureCheckout?.title || "SECURE CHECKOUT"} &nbsp;·&nbsp; 5iveArts Global
                 </div>
             )}
             <Navbar dict={dict} lang={lang} />

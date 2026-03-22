@@ -124,7 +124,7 @@ export async function processCompletedCheckout(
     return { orderId, alreadyProcessed };
 }
 
-export async function triggerOrderEmail(
+async function triggerOrderEmail(
     session: Stripe.Checkout.Session,
     orderId: string,
     customerName: string,

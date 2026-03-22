@@ -17,6 +17,13 @@
     "featured_products": "FEATURED PRODUCTS",
     "explore_all": "Explore All"
   },
+  "homepage": {
+    "featuredHeading": "Featured Collections",
+    "viewAll": "View All",
+    "testimonialsHeading": "Trusted by Collectors",
+    "reviewsLabel": "Verified Reviews",
+    "collectorChoice": "Collector's Choice"
+  },
   "products": {
     "title": "Model Arsenal",
     "subtitle": "Browse our collection of handcrafted figures.",
@@ -254,6 +261,13 @@
     "discrepancy": "Logistics Discrepancy?",
     "contactHQ": "CONTACT DEPLOYMENT HQ",
     "sku": "SKU:"
+  },
+  "footer": {
+    "logistics": "Global Artisan Craftsmanship Logistics Enabled",
+    "rights": "© 2026 5iveArts Collector Series. All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "description": "Professional 3D printing and artisan hand-finishing for international collectors. Every piece is a unique masterpiece of resin and pigment."
   },
   "shipping": {
     "protocol": "Logistics Protocol",
