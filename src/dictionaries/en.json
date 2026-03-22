@@ -415,5 +415,61 @@
     "heading": "Ready to own a piece of art?",
     "subtext": "Explore the full collection of hand-painted and 3D printed action figures. Each is made-to-order with care.",
     "button": "Explore the Shop"
+  },
+  "privacy_policy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: March 2026",
+    "sections": [
+      {
+        "title": "1. Information We Collect",
+        "content": "We collect information you provide directly to us, including your name, email address, shipping address, and payment information when you make a purchase."
+      },
+      {
+        "title": "2. How We Use Your Information",
+        "content": "We use the information we collect to process transactions, send you order confirmations, and communicate with you about your orders."
+      },
+      {
+        "title": "3. Information Sharing",
+        "content": "We do not sell or share your personal information with third parties except as necessary to fulfill your orders and process payments."
+      },
+      {
+        "title": "4. Data Security",
+        "content": "We implement appropriate security measures to protect your personal information from unauthorized access or disclosure."
+      },
+      {
+        "title": "5. Contact Us",
+        "content": "If you have any questions about this Privacy Policy, please contact us at privacy@5ivearts.com"
+      }
+    ]
+  },
+  "terms_of_service": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: March 2026",
+    "sections": [
+      {
+        "title": "1. Acceptance of Terms",
+        "content": "By accessing and using this website, you accept and agree to be bound by the terms and provisions of this agreement."
+      },
+      {
+        "title": "2. Products and Services",
+        "content": "All products displayed on this website are 3D printed collectibles. Please note that slight variations in color and finish may occur due to the nature of 3D printing processes."
+      },
+      {
+        "title": "3. Pricing and Payment",
+        "content": "Prices are subject to change without notice. We reserve the right to refuse or cancel any orders placed for products listed at an incorrect price."
+      },
+      {
+        "title": "4. Shipping and Delivery",
+        "content": "Shipping costs and delivery times vary by location. We are not responsible for delays caused by customs or carrier issues."
+      },
+      {
+        "title": "5. Intellectual Property",
+        "content": "All content on this website, including designs and images of products, is protected by intellectual property rights."
+      },
+      {
+        "title": "6. Contact Us",
+        "content": "If you have any questions about these Terms, please contact us at legal@5ivearts.com"
+      }
+    ]
   }
 }

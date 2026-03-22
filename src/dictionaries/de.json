@@ -414,6 +414,62 @@
   "ctaSection": {
     "heading": "Bereit für ein echtes Kunstwerk?",
     "subtext": "Durchstöbern Sie die komplette Kollektion handbemalter und 3D-gedruckter Actionfiguren. Jede wird sorgfältig auf Bestellung gefertigt.",
-    "button": "Zum Shop"
+    "button": "Shop erkunden"
+  },
+  "privacy_policy": {
+    "title": "Datenschutzerklärung",
+    "lastUpdated": "Letzte Aktualisierung: März 2026",
+    "sections": [
+      {
+        "title": "1. Informationen, die wir sammeln",
+        "content": "Wir sammeln Informationen, die Sie uns direkt zur Verfügung stellen, einschließlich Ihres Namens, Ihrer E-Mail-Adresse, Ihrer Lieferadresse und Ihrer Zahlungsinformationen, wenn Sie einen Kauf tätigen."
+      },
+      {
+        "title": "2. Wie wir Ihre Informationen verwenden",
+        "content": "Wir verwenden die von uns gesammelten Informationen zur Abwicklung von Transaktionen, zum Versenden von Bestellbestätigungen und zur Kommunikation mit Ihnen über Ihre Bestellungen."
+      },
+      {
+        "title": "3. Weitergabe von Informationen",
+        "content": "Wir verkaufen oder teilen Ihre personenbezogenen Daten nicht mit Dritten, außer wenn dies zur Erfüllung Ihrer Bestellungen und zur Abwicklung von Zahlungen erforderlich ist."
+      },
+      {
+        "title": "4. Datensicherheit",
+        "content": "Wir implementieren angemessene Sicherheitsmaßnahmen, um Ihre personenbezogenen Daten vor unbefugtem Zugriff oder unbefugter Offenlegung zu schützen."
+      },
+      {
+        "title": "5. Kontaktieren Sie uns",
+        "content": "Wenn Sie Fragen zu dieser Datenschutzerklärung haben, kontaktieren Sie uns bitte unter privacy@5ivearts.com"
+      }
+    ]
+  },
+  "terms_of_service": {
+    "title": "Nutzungsbedingungen",
+    "lastUpdated": "Letzte Aktualisierung: März 2026",
+    "sections": [
+      {
+        "title": "1. Annahme der Bedingungen",
+        "content": "Durch den Zugriff auf und die Nutzung dieser Website akzeptieren Sie die Bedingungen und Bestimmungen dieser Vereinbarung und erklären sich damit einverstanden, an diese gebunden zu sein."
+      },
+      {
+        "title": "2. Produkte und Dienstleistungen",
+        "content": "Alle auf dieser Website angezeigten Produkte sind 3D-gedruckte Sammlerstücke. Bitte beachten Sie, dass aufgrund der Natur der 3D-Druckverfahren geringfügige Abweichungen in Farbe und Ausführung auftreten können."
+      },
+      {
+        "title": "3. Preise und Zahlung",
+        "content": "Preise können ohne vorherige Ankündigung geändert werden. Wir behalten uns das Recht vor, Bestellungen für Produkte, die zu einem falschen Preis aufgeführt sind, abzulehnen oder zu stornieren."
+      },
+      {
+        "title": "4. Versand und Lieferung",
+        "content": "Versandkosten und Lieferzeiten variieren je nach Standort. Wir sind nicht verantwortlich für Verzögerungen durch den Zoll oder Probleme des Versandunternehmens."
+      },
+      {
+        "title": "5. Geistiges Eigentum",
+        "content": "Alle Inhalte auf dieser Website, einschließlich Designs und Bilder von Produkten, sind durch geistige Eigentumsrechte geschützt."
+      },
+      {
+        "title": "6. Kontaktieren Sie uns",
+        "content": "Wenn Sie Fragen zu diesen Bedingungen haben, kontaktieren Sie uns bitte unter legal@5ivearts.com"
+      }
+    ]
   }
 }

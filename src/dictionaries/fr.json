@@ -415,5 +415,61 @@
     "heading": "Prêt à posséder une œuvre d'art ?",
     "subtext": "Explorez toute la collection de figurines peintes à la main et imprimées en 3D. Chacune est fabriquée sur commande.",
     "button": "Explorer la Boutique"
+  },
+  "privacy_policy": {
+    "title": "Politique de Confidentialité",
+    "lastUpdated": "Dernière mise à jour : Mars 2026",
+    "sections": [
+      {
+        "title": "1. Informations que nous collectons",
+        "content": "Nous collectons les informations que vous nous fournissez direttamente, notamment votre nom, votre adresse e-mail, votre adresse de livraison et vos informations de paiement lorsque vous effectuez un achat."
+      },
+      {
+        "title": "2. Utilisation de vos informations",
+        "content": "Nous utilisons les informations que nous collectons pour traiter les transactions, vous envoyer des confirmations de commande et communiquer avec vous concernant vos commandes."
+      },
+      {
+        "title": "3. Partage d'informations",
+        "content": "Nous ne vendons ni ne partageons vos informations personnelles avec des tiers, sauf si cela est nécessaire pour satisfaire vos commandes et traiter les paiements."
+      },
+      {
+        "title": "4. Sécurité des données",
+        "content": "Nous mettons en œuvre des mesures de sécurité appropriées pour protéger vos informations personnelles contre tout accès o divulgation non autorisé."
+      },
+      {
+        "title": "5. Contactez-nous",
+        "content": "Se vous avez des questions sur cette Politique de Confidentialité, veuillez nous contacter à l'adresse privacy@5ivearts.com"
+      }
+    ]
+  },
+  "terms_of_service": {
+    "title": "Conditions d'Utilisation",
+    "lastUpdated": "Dernière mise à jour : Mars 2026",
+    "sections": [
+      {
+        "title": "1. Acceptation des conditions",
+        "content": "En accédant et en utilisant ce site Web, vous acceptez d'être lié par les modalités et dispositions du présent accord."
+      },
+      {
+        "title": "2. Produits et services",
+        "content": "Tous les produits affichés sur ce site Web sont des objets de collection imprimés en 3D. Veuillez noter que de légères variations de couleur et de finition peuvent survenir en raison de la nature des processus d'impression 3D."
+      },
+      {
+        "title": "3. Prix et paiement",
+        "content": "Les prix sont sujets à changement sans préavis. Nous nous réservons le droit de refuser ou d'annuler toute commande passée pour des produits listés à un prix incorrect."
+      },
+      {
+        "title": "4. Expédition et livraison",
+        "content": "Les frais d'expédition et les délais de livraison varient selon l'emplacement. Nous ne sommes pas responsables des retards causés par les douanes ou les problèmes de transporteur."
+      },
+      {
+        "title": "5. Propriété intellectuelle",
+        "content": "Tout le contenu de ce site Web, y compris les conceptions et les images de produits, est protégé par des droits de propriété intellectuelle."
+      },
+      {
+        "title": "6. Contactez-nous",
+        "content": "Si vous avez des questions sur ces conditions, veuillez nous contacter à l'adresse legal@5ivearts.com"
+      }
+    ]
   }
 }

@@ -136,13 +136,8 @@ export default function FeaturesSection({ features, dict, stats: settingsStats }
     },
   };
 
-  // Parallax transforms for each feature card
-  const card1Y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const card2Y = useTransform(scrollYProgress, [0, 1], [20, -30]);
-  const card3Y = useTransform(scrollYProgress, [0, 1], [-10, -40]);
-  const card4Y = useTransform(scrollYProgress, [0, 1], [-40, -60]);
-
-  const cardTransforms = [card1Y, card2Y, card3Y, card4Y];
+  // Parallax transform for the entire features grid
+  const featuresY = useTransform(scrollYProgress, [0, 1], [0, -30]);
 
   return (
     <section ref={sectionRef} className="relative py-24 px-4 bg-[#050505] border-b border-[#111] overflow-hidden">
@@ -169,13 +164,13 @@ export default function FeaturesSection({ features, dict, stats: settingsStats }
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
+        style={{ y: featuresY }}
         className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12"
       >
         {features.map((f, index) => (
           <motion.div
             key={f.title}
             variants={itemVariants}
-            style={{ y: cardTransforms[index] }}
             className="flex flex-col items-center md:items-start text-center md:text-left group"
           >
             <motion.div

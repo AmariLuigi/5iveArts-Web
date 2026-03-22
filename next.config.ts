@@ -5,7 +5,7 @@ const isDev = process.env.NODE_ENV === "development";
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   reactStrictMode: false,
-  
+
   // Keep whitelists clean for development stability
   allowedDevOrigins: [
     "localhost:3000",
@@ -23,7 +23,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "*.supabase.co" },
       { protocol: "https", hostname: "purecatamphetamine.github.io" },
-      { protocol: "https", hostname: "raw.githubusercontent.com" }
+      { protocol: "https", hostname: "raw.githubusercontent.com" },
+      { protocol: "https", hostname: "api.dicebear.com" }
     ],
   },
 
@@ -37,7 +38,8 @@ const nextConfig: NextConfig = {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "frame-src https://js.stripe.com https://hooks.stripe.com",
-      `img-src 'self' data: blob: ${supabaseUrl} https://purecatamphetamine.github.io`,
+      `img-src 'self' data: blob: ${supabaseUrl} https://purecatamphetamine.github.io https://api.dicebear.com`,
+      `media-src 'self' ${supabaseUrl}`,
       `connect-src 'self' https://api.stripe.com https://api.packlink.com https://restcountries.com ${supabaseUrl}`,
       "upgrade-insecure-requests",
     ].join("; ");

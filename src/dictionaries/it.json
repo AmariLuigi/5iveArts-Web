@@ -415,5 +415,61 @@
     "heading": "Pronto a possedere un pezzo d'arte?",
     "subtext": "Sfoglia la collezione completa di action figure dipinte a mano e stampate in 3D. Ognuna è realizzata su ordinazione con cura.",
     "button": "Sfoglia il Negozio"
+  },
+  "privacy_policy": {
+    "title": "Informativa sulla Privacy",
+    "lastUpdated": "Ultimo aggiornamento: Marzo 2026",
+    "sections": [
+      {
+        "title": "1. Informazioni Raccolte",
+        "content": "Raccogliamo informazioni fornite direttamente da te, inclusi nome, indirizzo email, indirizzo di spedizione e informazioni di pagamento quando effettui un acquisto."
+      },
+      {
+        "title": "2. Come Utilizziamo le Tue Informazioni",
+        "content": "Utilizziamo le informazioni che raccogliamo per elaborare le transazioni, inviarti conferme d'ordine e comunicare con te riguardo ai tuoi ordini."
+      },
+      {
+        "title": "3. Condivisione delle Informazioni",
+        "content": "Non vendiamo né condividiamo le tue informazioni personali con terze parti, salvo quanto necessario per completare i tuoi ordini ed elaborare i pagamenti."
+      },
+      {
+        "title": "4. Sicurezza dei Dati",
+        "content": "Implementiamo misure di sicurezza appropriate per proteggere le tue informazioni personali da accessi o divulgazioni non autorizzate."
+      },
+      {
+        "title": "5. Contattaci",
+        "content": "Se hai domande su questa Informativa sulla Privacy, contattaci all'indirizzo privacy@5ivearts.com"
+      }
+    ]
+  },
+  "terms_of_service": {
+    "title": "Termini di Servizio",
+    "lastUpdated": "Ultimo aggiornamento: Marzo 2026",
+    "sections": [
+      {
+        "title": "1. Accettazione dei Termini",
+        "content": "Accedendo e utilizzando questo sito web, accetti di essere vincolato dai termini e dalle disposizioni del presente accordo."
+      },
+      {
+        "title": "2. Prodotti e Servizi",
+        "content": "Tutti i prodotti visualizzati su questo sito web sono oggetti da collezione stampati in 3D. Si prega di notare che potrebbero verificarsi lievi variazioni di colore e finitura dovute alla natura dei processi di stampa 3D."
+      },
+      {
+        "title": "3. Prezzi e Pagamento",
+        "content": "I prezzi sono soggetti a modifiche senza preavviso. Ci riserviamo il diritto di rifiutare o annullare qualsiasi ordine effettuato per prodotti elencati a un prezzo errato."
+      },
+      {
+        "title": "4. Spedizione e Consegna",
+        "content": "I costi di spedizione e i tempi di consegna variano in base alla località. Non siamo responsabili per ritardi causati da problemi doganali o del corriere."
+      },
+      {
+        "title": "5. Proprietà Intellettuale",
+        "content": "Tutti i contenuti di questo sito web, inclusi i design e le immagini dei prodotti, sono protetti da diritti di proprietà intellettuale."
+      },
+      {
+        "title": "6. Contattaci",
+        "content": "Se hai domande su questi Termini, contattaci all'indirizzo legal@5ivearts.com"
+      }
+    ]
   }
 }

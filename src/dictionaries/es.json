@@ -415,5 +415,61 @@
     "heading": "¿Listo para tener una pieza de arte?",
     "subtext": "Explora la colección completa de figuras de acción pintadas a mano e impresas en 3D. Cada una está hecha bajo pedido con cuidado.",
     "button": "Explora la Tienda"
+  },
+  "privacy_policy": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última actualización: Marzo 2026",
+    "sections": [
+      {
+        "title": "1. Información que Recopilamos",
+        "content": "Recopilamos información que nos proporcionas directamente, incluyendo tu nombre, correo electrónico, dirección de envío e información de pago cuando realizas una compra."
+      },
+      {
+        "title": "2. Cómo Utilizamos tu Información",
+        "content": "Utilizamos la información que recopilamos para procesar transacciones, enviarte confirmaciones de pedidos y comunicarnos contigo sobre tus pedidos."
+      },
+      {
+        "title": "3. Intercambio de Información",
+        "content": "No vendemos ni compartimos tu información personal con terceros, excepto cuando sea necesario para cumplir con tus pedidos y procesar pagos."
+      },
+      {
+        "title": "4. Seguridad de los Datos",
+        "content": "Implementamos medidas de seguridad adecuadas para proteger tu información personal contra el acceso o la divulgación no autorizados."
+      },
+      {
+        "title": "5. Contáctanos",
+        "content": "Si tienes alguna pregunta sobre esta Política de Privacidad, contáctanos en privacy@5ivearts.com"
+      }
+    ]
+  },
+  "terms_of_service": {
+    "title": "Términos de Servicio",
+    "lastUpdated": "Última actualización: Marzo 2026",
+    "sections": [
+      {
+        "title": "1. Aceptación de los Términos",
+        "content": "Al acceder y utilizar este sitio web, aceptas y acuerdas estar sujeto a los términos y disposiciones de este acuerdo."
+      },
+      {
+        "title": "2. Productos y Servicios",
+        "content": "Todos los productos mostrados en este sitio web sono objetos de colección impresos en 3D. Ten en cuenta che pueden ocurrir ligeras variaciones en el color y el acabado debido a la naturaleza de los procesos de impresión 3D."
+      },
+      {
+        "title": "3. Precios y Pago",
+        "content": "Los precios están sujetos a cambios sin previo aviso. Nos reservamos el derecho de rechazar o cancelar cualquier pedido realizado para productos enumerados a un precio incorrecto."
+      },
+      {
+        "title": "4. Envío y Entrega",
+        "content": "Los costos de envío y los tiempos de entrega varían según la ubicación. No somos responsables de los retrasos causados por problemas de aduanas o transportistas."
+      },
+      {
+        "title": "5. Propiedad Intelectual",
+        "content": "Todo el contenido de este sitio web, incluidos los diseños y las imágenes de los productos, está protegido por derechos de propiedad intelectual."
+      },
+      {
+        "title": "6. Contáctanos",
+        "content": "Si tienes alguna pregunta sobre estos Términos, contáctanos en legal@5ivearts.com"
+      }
+    ]
   }
 }
