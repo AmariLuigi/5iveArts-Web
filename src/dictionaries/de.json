@@ -1,0 +1,373 @@
+{
+  "nav": {
+    "products": "Produkte",
+    "faq": "F.A.Q.",
+    "shipping": "Versand",
+    "cart": "Warenkorb",
+    "login": "Anmelden",
+    "admin": "Admin",
+    "discovery": "Entdeckung",
+    "terminal": "Terminale Zugriff",
+    "regional": "Regionale Projektion",
+    "switchRegion": "Region wechseln",
+    "vault": "Tresor",
+    "warehouse": "Lagerhaus",
+    "access": "Zugang"
+  },
+
+  "hero": {
+    "slides": [
+      {
+        "tagline": "Präzisions-Harztechnologie",
+        "headline": "3D",
+        "headlineHighlight": "Druck",
+        "subtext": "Hochauflösende Harzdrucke mit einer Schichtdicke von 0,025 mm — jedes Detail wird mit industrieller Präzision erfasst."
+      },
+      {
+        "tagline": "Handgefertigtes Artisan-Finish",
+        "headline": "Hand",
+        "headlineHighlight": "Bemalt",
+        "subtext": "Professionelle Airbrush-Techniken erwecken jede Figur zum Leben — von erfahrenen Künstlern handveredelt, Strich für Strich."
+      }
+    ],
+    "cta": "Jetzt Einkaufen",
+    "trust": {
+      "quality": "Zertifizierte Qualität",
+      "handFinished": "Handveredelt",
+      "logistics": "Globale Logistik"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "Handbemalt",
+      "text": "Jede Figur wird mit hochwertigen Acrylfarben handbemalt"
+    },
+    "threeDPrinted": {
+      "title": "3D-Gedruckt",
+      "text": "Hochauflösende Harzdrucke mit einer Schichtdicke von 0,025 mm"
+    },
+    "fastShipping": {
+      "title": "Schneller Versand",
+      "text": "Versicherte weltweite Lieferung mit Sendungsverfolgung"
+    },
+    "secureCheckout": {
+      "title": "Sicherer Check-out",
+      "text": "Zahlungen werden sicher von Stripe abgewickelt"
+    }
+  },
+  "homepage": {
+    "featuredHeading": "Top Figuren",
+    "viewAll": "Gesamte Kollektion Ansehen",
+    "testimonialsHeading": "Collector Stimmen",
+    "reviewsLabel": "Kundenstimmen",
+    "collectorChoice": "Wahl der Sammler",
+    "premiumSeries": "Premium-Serie"
+  },
+  "footer": {
+    "logistics": "Globale Kunsthandwerkslogistik Aktiviert",
+    "rights": "© 2026 5iveArts Collector Series. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "Bedingungen",
+    "description": "Professioneller 3D-Druck und Handveredelung auf Kunsthandwerkerniveau für internationale Sammler. Jedes Stück ist ein einzigartiges Meisterwerk aus Harz und Pigment."
+  },
+  "ctaSection": {
+    "heading": "Bereit für ein echtes Kunstwerk?",
+    "subtext": "Durchstöbern Sie die komplette Kollektion handbemalter und 3D-gedruckter Actionfiguren. Jede wird sorgfältig auf Bestellung gefertigt.",
+    "button": "Zum Shop"
+  },
+  "products": {
+    "title": "Il Vault",
+    "subtitle": "Artisan Figuren & Sammlerstücke",
+    "all": "Alle Meisterwerke",
+    "categories": "Kategorien",
+    "filter": "Filter",
+    "price": "Preis",
+    "details": "Details Ansehen",
+    "addToCart": "In den Warenkorb",
+    "scale": "Maßstab",
+    "finish": "Finish",
+    "painted": "Handbemalt",
+    "raw": "Rohharz",
+    "description": "Beschreibung",
+    "shippingInfo": "Versand & Handhabung",
+    "startingFrom": "Ab",
+    "deploymentConfig": "Deployment-Konfiguration",
+    "selectPrototype": "Prototyp & Finish auswählen"
+  },
+  "cart": {
+    "title": "Vault-Warenkorb",
+    "empty": "Ihr Warenkorb ist leer",
+    "checkout": "Zur Kasse",
+    "subtotal": "Zwischensumme",
+    "total": "Gesamtbetrag",
+    "shipping": "Versand",
+    "remove": "Entfernen",
+    "emptyArsenal": "Arsenal Leer",
+    "emptyMessage": "Sieht so aus, als hätten Sie noch keine Figuren hinzugefügt.",
+    "returnToShop": "Zurück zum Shop",
+    "checkoutFlow": "Checkout-Flow",
+    "yourCart": "Ihr Warenkorb",
+    "clearCart": "Warenkorb leeren",
+    "secureCheckout": "Sicheres Bezahlen",
+    "insuredShipping": "Versicherter weltweiter Versand",
+    "thirtyDayReturns": "30-Tage-Rückgaberecht",
+    "orderSummary": "Bestellübersicht",
+    "calculatedAtCheckout": "Wird an der Kasse berechnet",
+    "estimatedTotal": "Voraussichtlicher Gesamtbetrag",
+    "proceedToCheckout": "Zur Kasse gehen",
+    "continueShopping": "Einkauf fortsetzen",
+    "freeShipping": "Kostenloser Versand ab {amount}"
+  },
+  "auth": {
+    "verification": "Identitätsprüfung",
+    "terminal": "Zugangsterminal",
+    "portal": "Sicheres Portal für 5iveArts Collectors",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "emailLabel": "Neural Link (E-Mail)",
+    "passwordLabel": "Security Key (Passwort)",
+    "verifyBtn": "Sitzung Überprüfen",
+    "registerBtn": "Verbindung Herstellen",
+    "tunnel": "End-to-End Verschlüsselter Tunnel",
+    "guidelines": "Mit dem Zugriff auf das Terminal akzeptieren Sie unsere Richtlinien und Protokolle.",
+    "backHome": "Zurück zum Öffentlichen HQ",
+    "emailPlaceholder": "SAMMLER@5IVEARTS.COM"
+  },
+  "faq": {
+    "infoCenter": "Informationszentrum",
+    "title": "F.A.Q. & Kontakt",
+    "subtitle": "Alles, was Sie über unseren handwerklichen Prozess, die Logistik und die Sammlerprotokolle wissen müssen.",
+    "questions": [
+      {
+        "q": "Wie werden die Figuren hergestellt?",
+        "a": "Jede Figur beginnt als hochauflösender 3D-Druck (0,025 mm Schichthöhe) mit industrietauglichem Harz. Nach dem Aushärten verbringen unsere Künstler Stunden damit, jedes Stück mit professionellen Acrylfarben und Airbrush-Techniken von Hand zu bemalen, und schließen mit einem UV-beständigen Lack in Museumsqualität ab."
+      },
+      {
+        "q": "Versenden Sie international?",
+        "a": "Ja! Wir versenden von unserem Studio in Italien an Sammler weltweit. Wir nutzen versicherte globale Kuriere, um sicherzustellen, dass Ihr Meisterwerk sicher ankommt."
+      },
+      {
+        "q": "Wie lange dauert die Produktion?",
+        "a": "Da jedes Stück auf Bestellung gefertigt oder von Hand veredelt wird, planen Sie bitte 7-14 Tage für die Produktion vor dem Versand ein. Wir überstürzen die Kunst nicht."
+      },
+      {
+        "q": "Wie sieht Ihre Rückgabepolitik aus?",
+        "a": "Wir bieten eine 30-tägige Rückgabegarantie für Artikel an, die beschädigt ankommen oder erheblich von der Beschreibung abweichen. Da es sich um handgefertigte Kunstwerke handelt, können wir Rücksendungen aus Gründen des Nichtgefallens nicht akzeptieren."
+      }
+    ],
+    "stillHaveQuestions": "Haben Sie noch Fragen?",
+    "curatorsMessage": "Unsere Kuratoren stehen bereit, um Sie bei individuellen Bestellungen und beim Support zu unterstützen.",
+    "emailUs": "E-Mail Senden",
+    "liveChat": "Live-Chat",
+    "offline": "Offline"
+  },
+  "errors": {
+    "invalidLogin": "Zugriff Verweigert. Stellen Sie sicher, dass Ihr Sicherheitsschlüssel korrekt ist und Ihr Identitätslink verifiziert wurde.",
+    "confirmationSent": "Bestätigungs-E-Mail gesendet. Bitte überprüfen Sie Ihren Posteingang, um Ihr Terminal zu aktivieren.",
+    "stripeLoadError": "Zahlungsformular konnte nicht geladen werden. Bitte aktualisieren und erneut versuchen.",
+    "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "signupFailed": "Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "genericError": "Etwas ist schief gelaufen",
+    "verifyStatusError": "Wir konnten Ihren Zahlungsstatus nicht überprüfen. Wenn Sie eine Bestätigungs-E-Mail erhalten haben, wird Ihre Bestellung bearbeitet.",
+    "maxFeatured": "Maximal 3 erlaubt."
+  },
+  "success": {
+    "orderConfirmed": "Bestellung Bestätigt",
+    "thankYou": "Vielen Dank für Ihren Einkauf bei 5iveArts",
+    "confEmailSent": "Eine Bestätigungs-E-Mail wurde gesendet an",
+    "shippingNote": "Ihre Figur wird sorgfältig verpackt und mit Sendungsverfolgung versendet.",
+    "logisticsLog": "Sicherheits- & Logistikprotokoll",
+    "syncComplete": "Synchronisation Abgeschlossen & E-Mail Gesendet",
+    "resendEmail": "E-Mail nicht erhalten? Erneut senden",
+    "paymentVerified": "Zahlung verifiziert.",
+    "fulfillmentNote": "Ihre Figur wird jetzt mit individueller Schaumstoffpolsterung vorbereitet.",
+    "vaultEstablished": "Vault Etabliert",
+    "orderLinked": "Ihre Bestellung ist nun dauerhaft mit Ihrem sicheren Konto verknüpft.",
+    "goWarehouse": "Gehe zu Meinem Lager",
+    "secureCollection": "Sichern Sie Ihre Sammlung",
+    "createAccount": "KONTO ERSTELLEN",
+    "securing": "Sichern...",
+    "returnHQ": "Zurück zum Hauptquartier"
+  },
+  "checkout": {
+    "verifying": "Sichere Transaktion wird verifiziert…",
+    "loadingForm": "Zahlungsprotokolle werden geladen...",
+    "processing": "Zahlung wird verarbeitet…",
+    "payNow": "Zahlung Autorisieren",
+    "securedBy": "Gesichert durch Stripe Intelligence",
+    "encryptionNote": "Ihre Verbindung ist mit RSA-4096 und AES-256 Standards verschlüsselt. Wir speichern niemals rohe Zahlungsdaten auf unseren Servern.",
+    "deliveryStep": "1. Lieferung",
+    "shippingStep": "2. Versand",
+    "paymentStep": "3. Zahlung",
+    "gateway": "Sicheres Gateway",
+    "checkout": "Checkout",
+    "recipientName": "Empfängername *",
+    "collectorPlaceholder": "Name des Kollektors",
+    "emailAddress": "E-Mail-Adresse *",
+    "vault": "Tresor",
+    "streetAddress": "Straße und Hausnummer *",
+    "addressLine1": "Adresse (Zeile 1)",
+    "suite": "Wohnung / Einheit / Etage",
+    "optional": "Optional",
+    "postcode": "Postleitzahl *",
+    "zipPlaceholder": "PLZ / Postleitzahl",
+    "selectCountryFirst": "(Wählen Sie zuerst das Land aus)",
+    "city": "Stadt *",
+    "detecting": "(Wird erkannt…)",
+    "autoFilled": "(Automatisch ausgefüllt)",
+    "enterManually": "(Manuell eingeben)",
+    "state": "Bundesland / Kanton *",
+    "phoneLabel": "Telefonverbindung *",
+    "invalidFormat": "(Ungültiges Format)",
+    "validNumber": "(Gültige Nummer)",
+    "includeCode": "(Vorwahl + einschließen)",
+    "continueBtn": "Weiter zu den Versandoptionen",
+    "recalculating": "Globale Logistik wird neu berechnet…",
+    "backBtn": "Zurück zur Lieferung",
+    "changeShipping": "Versandoption ändern",
+    "connecting": "Verbindung zum sicheren Zahlungs-Gateway wird hergestellt. Handshake mit PCI-DSS-Protokollen…",
+    "syncing": "Transaktionsschicht wird synchronisiert",
+    "orderReview": "Bestellübersicht",
+    "subtotal": "Warenzwischensumme",
+    "logistics": "Logistik & Abwicklung",
+    "tbd": "Berechnung erfolgt",
+    "grandTotal": "Gesamtsumme",
+    "initGateway": "Gateway wird initialisiert…",
+    "proceedBtn": "Weiter zur Zahlung",
+    "emptyArsenalTitle": "Leeres Arsenal",
+    "emptyArsenalDesc": "Es sieht so aus, als hätten Sie Ihrer Sammlung noch keine Figuren hinzugefügt.",
+    "returnShop": "Zurück zum Shop",
+    "deliveryEstimate": "Lieferzeit:",
+    "businessDay": "Werktag",
+    "businessDays": "Werktage"
+  },
+  "product_detail": {
+    "handPaintedTag": "Handbemalt & 3D-Gedruckt",
+    "customerReviews": "Kundenbewertungen",
+    "selectScale": "Maßstab auswählen (Ca. Höhe)",
+    "selectFinish": "Ausführung auswählen",
+    "handPainted": "Handbemalt",
+    "rawKit": "Basis-Bausatz (Graues Resin)",
+    "museumGrade": "Museumsqualität Finish",
+    "primed": "Bereit zur Individualisierung",
+    "description": "Beschreibung",
+    "specifications": "Merkmale & Spezifikationen",
+    "encryptedCheckout": "Verschlüsselte Zahlung via Stripe",
+    "insuredShipping": "Versicherter Weltweiter Versand",
+    "confirmed": "Bestätigt",
+    "addToCollection": "Zum Arsenal hinzufügen",
+    "instantCheckout": "Direkt-Checkout",
+    "features": [
+      "Hochauflösendes Industrieresin",
+      "Professionelle Kunstmalerei",
+      "Museums-UV-Schutzlack",
+      "Präzisionsdetail-Erfassung (0.025mm)",
+      "Signatur-Display-Basis",
+      "Gepolsterte Sammlerbox"
+    ]
+  },
+  "trust": [
+    { "label": "Sicherer Checkout", "sub": "Unterstützt durch Stripe" },
+    { "label": "Versicherter Versand", "sub": "Weltweite Lieferung" },
+    { "label": "Handgefertigt", "sub": "Jedes Stück ein Unikat" },
+    { "label": "30 Tage Rückgaberecht", "sub": "Problemlose Rückgabe" }
+  ],
+  "account": {
+    "portal": "Sicheres Lagerportal",
+    "title": "Mein Konto",
+    "databaseFor": "Datenbankzugriff für:",
+    "security": "Sicherheit",
+    "decommission": "Sitzung beenden",
+    "activeAssets": "Aktive Bestände",
+    "totalAcquisitions": "Erfasste Akquisitionen insgesamt",
+    "status": "Kontostatus",
+    "verifiedCollector": "Verifizierter Sammler",
+    "level1Encryption": "Level 1 Verschlüsselung",
+    "history": "Akquisitionsverlauf",
+    "investment": "Investition",
+    "recorded": "Erfasst am:",
+    "fullLogistics": "Vollständige Logistikdaten",
+    "prepPhaseActive": "Vorbereitungsphase Aktiv",
+    "inTransit": "In Zustellung:",
+    "noAssets": "Bisher wurden keine Bestände im Tresor erfasst.",
+    "browseCollection": "Kollektion durchsuchen",
+    "neuralLinkError": "Neural Link Fehler",
+    "syncFailed": "Synchronisierung mit dem zentralen Auftragstresor fehlgeschlagen.",
+    "verificationRequired": "Verifizierung Erforderlich",
+    "verificationDesc": "Identität noch nicht verifiziert. Erfüllungsdaten können eingeschränkt sein, bis der Link aktiv ist.",
+    "resendLink": "Verifizierungslink erneut senden",
+    "settings": {
+      "title": "Tresorsicherheit",
+      "subtitle": "Verwalten Sie Ihre Sammleridentität und Ihre Zugriffsprotokolle.",
+      "identityVerification": "Identitätsprüfung",
+      "verified": "Verifiziert",
+      "pending": "Verifizierung Ausstehend",
+      "guestProtected": "Ihr Zugriff befindet sich derzeit in einem 'Gast-geschützten' Zustand. Einige administrative Protokolle erfordern eine verifizierte Identität.",
+      "requestLink": "Neuen Verifizierungslink anfordern"
+    }
+  },
+  "orders": {
+    "backToWarehouse": "Mein Lagerhaus",
+    "reportTitle": "Vollständiger Logistikbericht",
+    "operation": "Operation #",
+    "paid": "Bezahlt",
+    "shipped": "Versandt",
+    "processing": "In Bearbeitung",
+    "delivered": "Geliefert",
+    "cancelled": "Storniert",
+    "logged": "Erfasst am:",
+
+    "verifiedAcquisition": "Verifizierte Akquisition",
+    "trackShipment": "SENDUNG VERFOLGEN",
+    "exportInvoice": "RECHNUNG EXPORTIEREN",
+    "lifecycle": "Bereitstellungslebenszyklus",
+    "pConfirmed": "Zahlung Bestätigt",
+    "pConfirmedDesc": "Akquisitionsmittel verifiziert und gesichert.",
+    "prepPhase": "Vorbereitungsphase",
+    "prepPhaseDesc": "Figurenisolierung und Integration von Schutzschaum.",
+    "inTransit": "In Zustellung",
+    "inTransitDesc": "Tresorausgang Lagerhaus. Logistikübergabe.",
+    "manifest": "Bestandsmanifest",
+    "itemDetails": "Artikeldetails",
+    "qty": "Menge",
+    "subtotal": "Akquisitions-Zwischensumme",
+    "shipping": "Logistikzuschlag",
+    "totalContribution": "Gesamtbeitrag zum Portfolio",
+    "deploymentZone": "Bereitstellungszone",
+    "carrierProtocol": "Versandprotokoll",
+    "class": "Klasse: Registrierte Verfolgung",
+    "settlement": "Abrechnung",
+    "transactionSecure": "Transaktion Sicher",
+    "discrepancy": "Logistik-Diskrepanz?",
+    "contactHQ": "KONTAKTIEREN SIE DAS DEPLOYMENT HQ",
+    "sku": "SKU:"
+  },
+  "shipping": {
+    "protocol": "Logistikprotokoll",
+    "title": "Weltweiter Versand",
+    "subtitle": "Sicherer, versicherter und verfolgter Versand für jedes Meisterwerk in der Sammlung.",
+    "insuredTitle": "Versicherte Abwicklung",
+    "insuredText": "Jede Figur wird mit maßgeschneidertem hochdichtem Schaumstoff und doppelwandigen Sammlerboxen verpackt. Wir versichern jede Sendung gegen Verlust oder Beschädigung während des Transports.",
+    "freeTierTitle": "Kostenloser Versand",
+    "freeTierText": "Wir belohnen ernsthafte Sammler. Alle Bestellungen über {amount} qualifizieren sich automatisch für KOSTENLOSEN STANDARDVERSAND, unabhängig von Ihrem Standort.",
+    "dynamicTitle": "Dynamische Logistik",
+    "dynamicText": "Wir nutzen Packlink PRO, um versicherte Versandtarife in Echtzeit von Premium-Versanddienstleistern wie UPS, DHL und FedEx anzubieten. Ihr spezifischer Tarif wird während des Checkouts basierend auf Ihrem genauen Standort und den Paketabmessungen berechnet.",
+    "zonesTitle": "Voraussichtliche Transitzeiten",
+    "region": "Region",
+    "standard": "Standard",
+    "express": "Express",
+    "estTime": "Voraussichtliche Zeit",
+    "trackingInfo": "Globales Live-Tracking für alle Bestellungen",
+    "italy": "Italien",
+    "eu": "Europäische Union",
+    "uk": "Vereinigtes Königreich",
+    "global": "Global / Rest der Welt",
+    "days1_3": "1-3 Tage",
+    "days3_5": "3-5 Tage",
+    "days4_7": "4-7 Tage",
+    "days7_14": "7-14 Tage"
+  }
+}
+
+
+

@@ -6,18 +6,34 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import { CartItem } from "@/types";
 import { formatPrice } from "@/lib/products";
 import { useCartStore } from "@/store/cart";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 interface CartItemRowProps {
   item: CartItem;
+  lang: string;
+  dict: any;
 }
 
-export default function CartItemRow({ item }: CartItemRowProps) {
+export default function CartItemRow({ item, lang, dict }: CartItemRowProps) {
   const { updateQuantity, removeItem } = useCartStore();
+  const { track } = useAnalytics();
+
+  const handleRemove = () => {
+    track("remove_from_cart", {
+      product_id: item.product.id,
+      product_name: item.product.name,
+      variant_scale: item.selectedScale,
+      variant_finish: item.selectedFinish,
+      price: item.priceAtSelection,
+      quantity: item.quantity,
+    });
+    removeItem(item.product.id, item.selectedScale, item.selectedFinish);
+  };
 
   return (
     <div className="flex gap-6 p-6 items-start">
       {/* Image */}
-      <Link href={`/products/${item.product.id}`} className="relative w-24 h-24 flex-shrink-0 border border-white/5 overflow-hidden bg-neutral-900 shadow-xl group">
+      <Link href={`/${lang}/products/${item.product.id}`} className="relative w-24 h-24 flex-shrink-0 border border-white/5 overflow-hidden bg-neutral-900 shadow-xl group">
         <Image
           src={item.product.images[0]}
           alt={item.product.name}
@@ -32,15 +48,15 @@ export default function CartItemRow({ item }: CartItemRowProps) {
 
       {/* Details */}
       <div className="flex-1 min-w-0 py-1">
-        <Link href={`/products/${item.product.id}`} className="font-black uppercase tracking-tight text-white hover:text-brand-yellow transition-colors leading-none block text-lg">
+        <Link href={`/${lang}/products/${item.product.id}`} className="font-black uppercase tracking-tight text-white hover:text-brand-yellow transition-colors leading-none block text-lg">
           {item.product.name}
         </Link>
         <div className="flex flex-wrap gap-2 mt-2">
           <span className="text-[9px] uppercase font-black bg-white/5 text-neutral-400 px-2 py-0.5 border border-white/5 rounded-sm tracking-widest">
-            Scale: {item.selectedScale}
+            {dict.products.scale}: {item.selectedScale}
           </span>
           <span className="text-[9px] uppercase font-black bg-white/5 text-neutral-400 px-2 py-0.5 border border-white/5 rounded-sm tracking-widest uppercase">
-            {item.selectedFinish}
+            {item.selectedFinish === 'painted' ? dict.products.painted : dict.products.raw}
           </span>
         </div>
         <p className="text-sm font-black text-brand-yellow mt-3 tracking-tighter">
@@ -51,9 +67,9 @@ export default function CartItemRow({ item }: CartItemRowProps) {
       {/* Quantity + remove */}
       <div className="flex flex-col items-end justify-between self-stretch flex-shrink-0 py-1">
         <button
-          onClick={() => removeItem(item.product.id, item.selectedScale, item.selectedFinish)}
+          onClick={handleRemove}
           className="text-neutral-600 hover:text-red-500 transition-colors"
-          aria-label="Remove item"
+          aria-label={dict.cart.remove}
         >
           <Trash2 className="w-5 h-5" />
         </button>

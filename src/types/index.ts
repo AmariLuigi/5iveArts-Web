@@ -31,6 +31,7 @@ export interface ShippingRate {
   carrier_name: string;
   service_name: string;
   price: number; // in cents
+  original_price?: number; // original price before subsidies (to show discount)
   currency: string;
   estimated_days: number;
 }

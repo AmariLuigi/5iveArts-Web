@@ -115,6 +115,33 @@ export interface Database {
         };
         Update: Partial<Database["public"]["Tables"]["site_settings"]["Insert"]>;
       };
+
+      analytics_events: {
+        Row: {
+          id: string;
+          session_id: string;
+          user_id: string | null;
+          event_type: string;
+          event_data: any;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          session_id: string;
+          user_id?: string | null;
+          event_type: string;
+          event_data?: any;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          session_id?: string;
+          user_id?: string | null;
+          event_type?: string;
+          event_data?: any;
+          created_at?: string;
+        };
+      };
     };
     Functions: {};
   };

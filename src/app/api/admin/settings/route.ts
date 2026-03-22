@@ -34,7 +34,10 @@ export async function PATCH(req: NextRequest) {
         const supabase = await createClient();
 
         // Expect body like { "pricing": { ... }, "logistics": { ... } }
-        const entries = Object.entries(body);
+        // To prevent arbitrary data injection in the db, only allow known keys.
+        const ALLOWED_KEYS = ["pricing", "logistics"];
+        
+        const entries = Object.entries(body).filter(([key]) => ALLOWED_KEYS.includes(key));
         
         for (const [key, value] of entries) {
             const { error } = await (supabase as any)

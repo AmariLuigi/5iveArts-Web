@@ -13,11 +13,13 @@ export interface Testimonial {
 
 export interface TestimonialsSectionProps {
   heading?: string;
+  reviewsLabel?: string;
   testimonials: Testimonial[];
 }
 
 export default function TestimonialsSection({
   heading = "What collectors are saying",
+  reviewsLabel = "Collector Reviews",
   testimonials,
 }: TestimonialsSectionProps) {
   const containerVariants: Variants = {
@@ -53,7 +55,7 @@ export default function TestimonialsSection({
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">Collector Reviews</span>
+          <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">{reviewsLabel}</span>
           <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
             {heading}
           </h2>

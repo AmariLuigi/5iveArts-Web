@@ -31,6 +31,7 @@ interface TrustBadgesProps {
   /** "row" renders a compact horizontal strip; "grid" renders a 2×2 or 4-col grid */
   variant?: "row" | "grid";
   className?: string;
+  dict?: any;
 }
 
 /**
@@ -40,19 +41,25 @@ interface TrustBadgesProps {
 export default function TrustBadges({
   variant = "grid",
   className = "",
+  dict,
 }: TrustBadgesProps) {
+  const trustItems = dict?.trust || BADGES;
+
   if (variant === "row") {
     return (
       <div
         className={`flex flex-wrap gap-x-8 gap-y-2 ${className}`}
         aria-label="Trust signals"
       >
-        {BADGES.map(({ icon: Icon, label }) => (
-          <span key={label} className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-neutral-500">
-            <Icon className="w-3.5 h-3.5 flex-shrink-0 text-brand-yellow" />
-            <span>{label}</span>
-          </span>
-        ))}
+        {trustItems.map((item: any, i: number) => {
+          const Icon = BADGES[i]?.icon || ShieldCheck;
+          return (
+            <span key={item.label} className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-neutral-500">
+              <Icon className="w-3.5 h-3.5 flex-shrink-0 text-brand-yellow" />
+              <span>{item.label}</span>
+            </span>
+          );
+        })}
       </div>
     );
   }
@@ -62,15 +69,19 @@ export default function TrustBadges({
       className={`grid grid-cols-2 sm:grid-cols-4 gap-8 ${className}`}
       aria-label="Trust signals"
     >
-      {BADGES.map(({ icon: Icon, label, sub }) => (
-        <div key={label} className="flex flex-col items-center text-center gap-3">
-          <div className="w-12 h-12 rounded bg-[#0a0a0a] border border-white/5 flex items-center justify-center shadow-2xl">
-            <Icon className="w-5 h-5 text-brand-yellow" />
+      {trustItems.map((item: any, i: number) => {
+        const Icon = BADGES[i]?.icon || ShieldCheck;
+        return (
+          <div key={item.label} className="flex flex-col items-center text-center gap-3">
+            <div className="w-12 h-12 rounded bg-[#0a0a0a] border border-white/5 flex items-center justify-center shadow-2xl">
+              <Icon className="w-5 h-5 text-brand-yellow" />
+            </div>
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white leading-tight">{item.label}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-600">{item.sub}</p>
           </div>
-          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white leading-tight">{label}</p>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-600">{sub}</p>
-        </div>
-      ))}
+        )
+      })}
     </div>
   );
 }
+

@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { fetchPacklinkRates } from "@/lib/packlink";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { validateShippingAddress, sanitizeNumber } from "@/lib/validate";
+import { getSiteSettings } from "@/lib/settings";
 
-// Rate limit: 20 rate-lookup requests per IP per minute
-const RATE_LIMIT = { limit: 20, windowMs: 60_000 };
+// Rate limit: 60 rate-lookup requests per IP per minute
+const RATE_LIMIT = { limit: 60, windowMs: 60_000 };
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
@@ -35,7 +36,8 @@ export async function POST(req: NextRequest) {
   const subtotalPence = sanitizeNumber(b.subtotalPence, 0, 1_000_000) ?? 0;
 
   // ── Fetch dynamic Packlink rates ──────────────────────────────────────────
-  const rates = await fetchPacklinkRates(addressResult.data, subtotalPence);
+  const settings = await getSiteSettings();
+  const rates = await fetchPacklinkRates(addressResult.data, subtotalPence, settings.logistics);
 
   if (rates.length === 0) {
     console.warn(`[shipping] No Packlink services found for ${addressResult.data.country}/${addressResult.data.zip_code}.`);

@@ -10,6 +10,8 @@ export interface FeaturedProductsProps {
   products: Product[];
   viewAllHref: string;
   viewAllLabel?: string;
+  lang: string;
+  dict: any;
 }
 
 export default function FeaturedProducts({
@@ -17,6 +19,8 @@ export default function FeaturedProducts({
   products,
   viewAllHref,
   viewAllLabel = "View all →",
+  lang,
+  dict,
 }: FeaturedProductsProps) {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -51,7 +55,9 @@ export default function FeaturedProducts({
     >
       <div className="flex items-end justify-between mb-12 border-b border-white/5 pb-8">
         <div>
-          <span className="text-[10px] uppercase font-black tracking-[0.3em] text-brand-yellow mb-2 block">Collector's Choice</span>
+          <span className="text-[10px] uppercase font-black tracking-[0.3em] text-brand-yellow mb-2 block">
+            {dict.homepage.collectorChoice}
+          </span>
           <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white">
             {heading}
           </h2>
@@ -66,7 +72,7 @@ export default function FeaturedProducts({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
           <motion.div key={product.id} variants={itemVariants}>
-            <ProductCard product={product} />
+            <ProductCard product={product} lang={lang} dict={dict} />
           </motion.div>
         ))}
       </div>

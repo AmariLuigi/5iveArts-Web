@@ -38,7 +38,7 @@ const nextConfig: NextConfig = {
       "font-src 'self' https://fonts.gstatic.com",
       "frame-src https://js.stripe.com https://hooks.stripe.com",
       `img-src 'self' data: blob: ${supabaseUrl} https://purecatamphetamine.github.io`,
-      `connect-src 'self' https://api.stripe.com https://api.packlink.com ${supabaseUrl}`,
+      `connect-src 'self' https://api.stripe.com https://api.packlink.com https://restcountries.com ${supabaseUrl}`,
       "upgrade-insecure-requests",
     ].join("; ");
 
@@ -50,6 +50,7 @@ const nextConfig: NextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" }
         ],
       },
     ];

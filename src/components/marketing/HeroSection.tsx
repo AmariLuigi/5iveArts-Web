@@ -11,7 +11,7 @@ interface Slide {
   subtext: string;
 }
 
-const SLIDES: Slide[] = [
+const DEFAULT_SLIDES: Slide[] = [
   {
     video: "/video/Yellow_resin_3d_printer_model_delpmaspu_ (3).mp4",
     tagline: "Precision Resin Technology",
@@ -34,24 +34,31 @@ export interface HeroSectionProps {
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   heroVideos?: string[];
+  translatedSlides?: any[];
+  trustLabels?: {
+    quality: string;
+    handFinished: string;
+    logistics: string;
+  };
 }
 
-/**
- * Full-width hero banner with dual-video crossfade carousel.
- * Dynamic videos from admin settings preferred, falls back to defaults.
- */
 export default function HeroSection({
   primaryCta,
   secondaryCta,
   heroVideos = [],
+  translatedSlides,
+  trustLabels
 }: HeroSectionProps) {
-  // Use dynamic videos if available, otherwise use defaults from SLIDES
+  // Use translated slides if provided, otherwise use defaults
+  const slidesToUse = translatedSlides && translatedSlides.length > 0 ? translatedSlides : DEFAULT_SLIDES;
+
+  // Use dynamic videos if available, otherwise use defaults from slidesToUse
   const activeSlides = heroVideos.length > 0 
     ? heroVideos.map((url, i) => ({
-        ...SLIDES[i % SLIDES.length],
+        ...slidesToUse[i % slidesToUse.length],
         video: url
       }))
-    : SLIDES;
+    : slidesToUse;
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
@@ -63,7 +70,6 @@ export default function HeroSection({
     setTransitioning(true);
     const next = (activeIndex + 1) % activeSlides.length;
 
-    // Start playing the NEXT video in the background
     const nextVideo = videoRefs.current[next];
     if (nextVideo) {
       nextVideo.currentTime = 0;
@@ -84,7 +90,6 @@ export default function HeroSection({
   useEffect(() => {
     const activeListeners: (() => void)[] = [];
 
-    // Initial setup for all videos
     videoRefs.current.forEach((v, i) => {
       if (v) {
         v.playbackRate = 1.2;
@@ -106,7 +111,6 @@ export default function HeroSection({
     };
   }, [goToNext, activeIndex]);
 
-  // Ensure first video is playing if it's the active one and not yet playing
   useEffect(() => {
     const currentVideo = videoRefs.current[activeIndex];
     if (currentVideo && !transitioning) {
@@ -118,7 +122,6 @@ export default function HeroSection({
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-black text-white px-4 border-b border-white/5">
-      {/* Dual Video Backgrounds */}
       {activeSlides.map((s, i) => (
         <div
           key={s.video}
@@ -134,16 +137,13 @@ export default function HeroSection({
             preload="auto"
             className="w-full h-full object-cover opacity-90 contrast-110 brightness-110 saturate-[1.1]"
           />
-          {/* Per-video overlay — stronger on the painter video */}
           <div className={`absolute inset-0 ${i === 1 ? "bg-black/40" : ""}`} />
         </div>
       ))}
 
-      {/* Cinematic Overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30 z-10" />
       <div className="absolute inset-0 bg-black/20 z-10" />
 
-      {/* Text Content — crossfades with the video */}
       <div
         className={`relative z-20 max-w-7xl mx-auto text-center py-20 w-full transition-all duration-700 ease-in-out ${transitioning ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
           }`}
@@ -151,7 +151,7 @@ export default function HeroSection({
         <span className="text-[10px] uppercase font-black tracking-[0.5em] text-brand-yellow mb-6 block">
           {slide.tagline}
         </span>
-        <h1 className="text-7xl md:text-[10rem] font-black leading-[0.85] mb-10 uppercase tracking-tighter">
+        <h1 className="text-6xl md:text-[10rem] font-black leading-[0.85] mb-10 uppercase tracking-tighter">
           {slide.headline}{" "}
           <span className="text-brand-yellow inline-block drop-shadow-[0_10px_40px_rgba(255,159,0,0.4)]">
             {slide.headlineHighlight}
@@ -177,7 +177,6 @@ export default function HeroSection({
           )}
         </div>
 
-        {/* Slide Indicator Dots */}
         <div className="flex justify-center gap-4 mt-16">
           {activeSlides.map((_, i) => (
             <button
@@ -191,7 +190,6 @@ export default function HeroSection({
                       nextVideo.currentTime = 0;
                       nextVideo.play();
                     }
-                    // Pause the current one
                     const currentVideo = videoRefs.current[activeIndex];
                     if (currentVideo) currentVideo.pause();
                     setActiveIndex(i);
@@ -208,19 +206,18 @@ export default function HeroSection({
           ))}
         </div>
 
-        {/* Dynamic Trust Indicators */}
         <div className="mt-28 pt-10 border-t border-white/10 flex flex-wrap justify-center gap-x-20 gap-y-6 text-white/50 text-[11px] uppercase font-black tracking-[0.4em]">
           <span className="flex items-center gap-4">
             <span className="w-2.5 h-2.5 rounded-full bg-brand-yellow shadow-[0_0_10px_#ff9f00]" />{" "}
-            Certified Quality
+            {trustLabels?.quality || "Certified Quality"}
           </span>
           <span className="flex items-center gap-4">
             <span className="w-2.5 h-2.5 rounded-full bg-brand-yellow shadow-[0_0_10px_#ff9f00]" />{" "}
-            Hand-Finished
+            {trustLabels?.handFinished || "Hand-Finished"}
           </span>
           <span className="flex items-center gap-4">
             <span className="w-2.5 h-2.5 rounded-full bg-brand-yellow shadow-[0_0_10px_#ff9f00]" />{" "}
-            Global Logistics
+            {trustLabels?.logistics || "Global Logistics"}
           </span>
         </div>
       </div>

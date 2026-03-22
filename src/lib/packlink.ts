@@ -17,36 +17,23 @@ interface PacklinkServiceResponse {
 }
 
 /**
- * Fetches real-time shipping rates from Packlink API (Direct/Individual).
- * @param toAddress Destination address
- * @param subtotalCents Order subtotal to determine if free shipping applies
- * @param allowMocks If true, returns fallback mock data on API failure (debug only)
- * @returns Array of mapped ShippingRate objects
+ * Fetches real-time shipping rates from Packlink API using the PUBLIC consumer-flow.
+ * No API KEY is required, as we mimic the official frontend request structure.
  */
 export async function fetchPacklinkRates(
   toAddress: ShippingAddress, 
   subtotalCents: number = 0,
-  allowMocks: boolean = false,
   logisticsSettings?: any
 ): Promise<ShippingRate[]> {
-  const apiKey = process.env.PACKLINK_API_KEY;
   const fromZip = process.env.WAREHOUSE_POSTCODE || "90138"; 
   const fromCountry = process.env.WAREHOUSE_COUNTRY || "IT";
 
-  // ... (packages setup)
-  const packageDimensions = {
-    height: 15,
-    length: 25,
-    width: 20,
-    weight: 0.5, 
-  };
-
   let toZip = toAddress.zip_code.trim();
-  // ... (BR zip formatting)
   if (toAddress.country === "BR" && toZip.length === 8 && !toZip.includes("-")) {
     toZip = `${toZip.slice(0, 5)}-${toZip.slice(5)}`;
   }
 
+  // Exact parameters from the working browser request
   const params = {
     platform: "COM",
     platform_country: fromCountry,
@@ -54,28 +41,33 @@ export async function fetchPacklinkRates(
     "from[zip]": fromZip,
     "to[country]": toAddress.country,
     "to[zip]": toZip,
-    "packages[0][height]": packageDimensions.height,
-    "packages[0][length]": packageDimensions.length,
-    "packages[0][width]": packageDimensions.width,
-    "packages[0][weight]": packageDimensions.weight,
+    "packages[0][height]": 20,
+    "packages[0][length]": 15,
+    "packages[0][width]": 25,
+    "packages[0][weight]": 0.4,
     sort_by: "taggedServices",
     source: "DEFAULT",
   };
 
   try {
-    const isPlaceholder = !apiKey || apiKey.includes("your_packlink_api_key");
-    const activeApiKey = isPlaceholder ? null : apiKey;
-
     const response = await axios.get<PacklinkServiceResponse[]>(
       `${PACKLINK_API_URL}/services`,
       {
         params,
         timeout: 10000, 
         headers: {
-          ...(activeApiKey ? { Authorization: activeApiKey } : {}),
+          // Public Consumer Flow Headers (NO Authorization)
           "x-packlink-application-id": "consumer-flow",
           "x-packlink-tenant-id": "PACKLINKIT",
+          "x-request-context": JSON.stringify({ platform: "COM", platform_country: fromCountry }),
+          "x-packlink-application-version": "2.147.0",
+          "x-packlink-application-init-time": new Date().toISOString(),
           "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+          "Accept": "application/json, text/plain, */*",
+          "Referer": "https://www.packlink.it/",
+          "Origin": "https://www.packlink.it",
+          "Pragma": "no-cache",
+          "Cache-Control": "no-cache"
         },
       }
     );
@@ -86,11 +78,37 @@ export async function fetchPacklinkRates(
     }
 
     const FREE_SHIPPING_THRESHOLD = logisticsSettings?.free_shipping_threshold_cents ?? 5000;
-    const isFreeShipping = toAddress.country === "IT" && subtotalCents >= FREE_SHIPPING_THRESHOLD;
+    const isFreeShipping = subtotalCents >= FREE_SHIPPING_THRESHOLD;
+
+    const EU_COUNTRIES = [
+        "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", 
+        "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"
+    ];
+    const isEU = EU_COUNTRIES.includes(toAddress.country);
+
+    let minStandardId: string | null = null;
+    let minStandardPrice = Infinity;
+
+    response.data.forEach(s => {
+        const isExp = s.name.toLowerCase().includes("express") || 
+                      s.category === "express" ||
+                      s.transit_time.toLowerCase().includes("1 day") ||
+                      s.transit_time.toLowerCase().includes("2 days");
+        
+        if (!isExp && !s.dropoff) {
+            const price = Math.round(s.price.total_price * 100);
+            if (price < minStandardPrice) {
+                minStandardPrice = price;
+                minStandardId = String(s.id);
+            }
+        }
+    });
 
     const filtered = response.data
       .filter((service: PacklinkServiceResponse) => {
         const name = service.name.toLowerCase();
+        const priceCents = Math.round(service.price.total_price * 100);
+        if (priceCents > 10000) return false;
         if (service.dropoff) return false;
         if (name.includes("shop2shop") || name.includes("shop2home")) return false;
         if (name.includes("access point") || name.includes("accesspoint")) return false;
@@ -118,70 +136,39 @@ export async function fetchPacklinkRates(
           service.transit_time.toLowerCase().includes("1 day") ||
           service.transit_time.toLowerCase().includes("2 days");
 
-        const finalPrice = (isFreeShipping && !isExpress) ? 0 : priceCents;
+        const isCheapestStandard = String(service.id) === minStandardId;
+
+        let finalPrice = priceCents;
+        if (isFreeShipping && isCheapestStandard) {
+           const subsidyLimit = isEU ? 2500 : 3500;
+           if (priceCents <= subsidyLimit) {
+               finalPrice = 0;
+           } else {
+               finalPrice = priceCents - subsidyLimit;
+           }
+        }
 
         return {
           service_id: String(service.id),
           carrier_name: carrier,
-          service_name: cleanServiceName + " (Home Delivery)",
+          service_name: cleanServiceName + (finalPrice === 0 ? " (Free Shipping)" : " (Home Delivery)"),
           price: finalPrice,
+          original_price: finalPrice < priceCents ? priceCents : undefined,
           currency: service.price.currency,
           estimated_days: parseInt(service.transit_time.split(" ")[0]) || 5,
         };
       })
       .sort((a, b) => a.price - b.price);
 
-    // If no real services found, only return mocks IF explicitly allowed
-    if (filtered.length === 0 && allowMocks) {
-      console.warn(`[shipping] No real services for ${toAddress.country}/${toAddress.zip_code}. Returning mocks.`);
-      return getMockServices(toAddress, subtotalCents, logisticsSettings);
-    }
-
     return filtered;
+
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
-      console.error("[packlink] API Error:", error.response?.status, error.response?.data || error.message);
+      console.error("[packlink] API Error Status:", error.response?.status);
+      console.error("[packlink] API Error Body:", JSON.stringify(error.response?.data || {}, null, 2));
     } else {
       console.error("[packlink] Unknown error:", error);
     }
-    
-    // Only return mocks on failure IF explicitly allowed
-    if (allowMocks) {
-      return getMockServices(toAddress, subtotalCents, logisticsSettings);
-    }
     return [];
   }
-}
-
-function getMockServices(toAddress: ShippingAddress, subtotalCents: number, logisticsSettings?: any): ShippingRate[] {
-  // Free shipping threshold: dynamic or fallback 50€
-  const threshold = logisticsSettings?.free_shipping_threshold_cents ?? 5000;
-  const isFreeShipping = toAddress.country === "IT" && subtotalCents >= threshold;
-
-  return [
-    {
-      service_id: "mock-ups-std",
-      carrier_name: "UPS",
-      service_name: "Standard — Ground (Home Delivery)",
-      price: isFreeShipping ? 0 : 890,
-      currency: "EUR",
-      estimated_days: 2,
-    },
-    {
-      service_id: "mock-brt-exp",
-      carrier_name: "BRT",
-      service_name: "Express — Next Day (Home Delivery)",
-      price: 1250,
-      currency: "EUR",
-      estimated_days: 1,
-    },
-    {
-      service_id: "mock-poste-std",
-      carrier_name: "Poste",
-      service_name: "PDB Standard (Home Delivery)",
-      price: isFreeShipping ? 0 : 650,
-      currency: "EUR",
-      estimated_days: 4,
-    }
-  ];
 }

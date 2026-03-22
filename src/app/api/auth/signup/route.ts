@@ -1,12 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase-server";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
 /**
  * API route to create a new user account and link the current order to it.
  * This is triggered from the checkout success page.
  */
 export async function POST(req: NextRequest) {
+    const ip = getClientIp(req);
+    const rl = checkRateLimit(`signup:${ip}`, { limit: 3, windowMs: 60_000 });
+    
+    if (!rl.success) {
+        return NextResponse.json(
+            { error: "Too many sign-up attempts. Please wait a moment." },
+            { 
+                status: 429, 
+                headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) }
+            }
+        );
+    }
+
     try {
         const { email, password, sessionId } = await req.json();
 

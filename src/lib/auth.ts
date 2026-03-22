@@ -36,11 +36,11 @@ export async function requireAdmin(req: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser();
 
-    const adminEmails = (process.env.ADMIN_EMAIL || "luigi.de.la.vega@googlemail.com")
+    const adminEmails = (process.env.ADMIN_EMAIL || "")
         .split(",")
         .map((e) => e.trim());
 
-    if (!user || !adminEmails.includes(user.email || "")) {
+    if (!user || !user.email || !adminEmails.includes(user.email)) {
         return {
             authorized: false,
             response: NextResponse.json({ error: "Unauthorized" }, { status: 401 }),

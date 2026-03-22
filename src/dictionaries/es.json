@@ -1,0 +1,369 @@
+{
+  "nav": {
+    "products": "Productos",
+    "faq": "F.A.Q.",
+    "shipping": "Envío",
+    "cart": "Carrito",
+    "login": "Acceder",
+    "admin": "Admin",
+    "discovery": "Descubrimiento",
+    "terminal": "Acceso Terminal",
+    "regional": "Proyección Regional",
+    "switchRegion": "Cambiar Región",
+    "vault": "Bóveda",
+    "warehouse": "Almacén",
+    "access": "Acceso"
+  },
+
+  "hero": {
+    "slides": [
+      {
+        "tagline": "Precisión en Tecnología de Resina",
+        "headline": "Impresión",
+        "headlineHighlight": "3D",
+        "subtext": "Impresiones de resina de alta resolución con un espesor de capa de 0,025 mm: cada detalle capturado con precisión industrial."
+      },
+      {
+        "tagline": "Acabado Artesanal a Mano",
+        "headline": "Pintado",
+        "headlineHighlight": "a Mano",
+        "subtext": "Técnicas de aerografía profesionales dan vida a cada figura, acabadas a mano por artistas expertos, un toque a la vez."
+      }
+    ],
+    "cta": "Comprar Ahora",
+    "trust": {
+      "quality": "Calidad Certificada",
+      "handFinished": "Acabado a Mano",
+      "logistics": "Logística Global"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "Pintado a Mano",
+      "text": "Cada figura pintada a mano con acrílicos de alta calidad"
+    },
+    "threeDPrinted": {
+      "title": "Impresión 3D",
+      "text": "Resina de alta resolución con un espesor de capa de 0,025 mm"
+    },
+    "fastShipping": {
+      "title": "Envío Rápido",
+      "text": "Entrega mundial asegurada con seguimiento"
+    },
+    "secureCheckout": {
+      "title": "Pago Seguro",
+      "text": "Pagos gestionados de forma segura por Stripe"
+    }
+  },
+  "homepage": {
+    "featuredHeading": "Figuras Destacadas",
+    "viewAll": "Ver toda la colección",
+    "testimonialsHeading": "Voces de los Coleccionistas",
+    "reviewsLabel": "Reseñas de Coleccionistas",
+    "collectorChoice": "Opción del Coleccionista",
+    "premiumSeries": "Serie Premium"
+  },
+  "footer": {
+    "logistics": "Logística Artesanal Global Habilitada",
+    "rights": "© 2026 5iveArts Collector Series. Todos los derechos reservados.",
+    "privacy": "Privacidad",
+    "terms": "Condiciones",
+    "description": "Impresión 3D profesional y acabado a mano a nivel artesanal para coleccionistas internacionales. Cada pieza es una obra maestra única de resina y pigmento."
+  },
+  "ctaSection": {
+    "heading": "¿Listo para tener una pieza de arte?",
+    "subtext": "Explora la colección completa de figuras de acción pintadas a mano e impresas en 3D. Cada una está hecha bajo pedido con cuidado.",
+    "button": "Explora la Tienda"
+  },
+  "products": {
+    "title": "El Vault",
+    "subtitle": "Figuras Artesanales y Objetos de Colección",
+    "all": "Todas las Obras Maestras",
+    "categories": "Categorías",
+    "filter": "Filtro",
+    "price": "Precio",
+    "details": "Ver Detalles",
+    "addToCart": "Añadir al Carrito",
+    "scale": "Escala",
+    "finish": "Acabado",
+    "painted": "Pintado a Mano",
+    "raw": "Resina Bruta",
+    "description": "Descripción",
+    "shippingInfo": "Envío y Manejo",
+    "startingFrom": "Desde",
+    "deploymentConfig": "Configuración de Despliegue",
+    "selectPrototype": "Seleccionar Prototipo y Acabado"
+  },
+  "cart": {
+    "title": "Carrito Vault",
+    "empty": "Tu carrito está vacío",
+    "checkout": "Tramitar Pedido",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "shipping": "Envío",
+    "remove": "Eliminar",
+    "emptyArsenal": "Arsenal Vacío",
+    "emptyMessage": "Parece que aún no has añadido ninguna figura.",
+    "returnToShop": "Volver a la Tienda",
+    "checkoutFlow": "Flujo de pago",
+    "yourCart": "Tu Carrito",
+    "clearCart": "Vaciar carrito",
+    "secureCheckout": "Pago Seguro",
+    "insuredShipping": "Envío Global Asegurado",
+    "thirtyDayReturns": "Devoluciones en 30 días",
+    "orderSummary": "Resumen del Pedido",
+    "calculatedAtCheckout": "Calculado al pagar",
+    "estimatedTotal": "Total Estimado",
+    "proceedToCheckout": "Proceder al Pago",
+    "continueShopping": "Continuar Comprando",
+    "freeShipping": "Envío gratis a partir de {amount}"
+  },
+  "auth": {
+    "verification": "Verificación de Identidad",
+    "terminal": "Terminal de Acceso",
+    "portal": "Portal seguro para los coleccionistas de 5iveArts",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "emailLabel": "Vínculo Neural (Correo Electrónico)",
+    "passwordLabel": "Clave de Seguridad (Contraseña)",
+    "verifyBtn": "Verificar Sesión",
+    "registerBtn": "Establecer Vínculo",
+    "tunnel": "Túnel Encriptado de Extremo a Extremo",
+    "guidelines": "Al acceder al terminal, aceptas nuestros protocolos y directrices.",
+    "backHome": "Volver a la Central Pública",
+    "emailPlaceholder": "COLECCIONISTA@5IVEARTS.COM"
+  },
+  "faq": {
+    "infoCenter": "Centro de Información",
+    "title": "P.F. & Contacto",
+    "subtitle": "Todo lo que necesitas saber sobre nuestro proceso artesanal, logística y protocolos para coleccionistas.",
+    "questions": [
+      {
+        "q": "¿Cómo se fabrican las figuras?",
+        "a": "Cada figura comienza como una impresión 3D de alta resolución (grosor de capa de 0,025 mm) utilizando resina de grado industrial. Una vez curada, nuestros artistas pasan horas pintando a mano cada pieza con acrílicos profesionales y técnicas de aerógrafo, finalizando con un barniz resistente a los rayos UV de calidad museística."
+      },
+      {
+        "q": "¿Envían internacionalmente?",
+        "a": "¡Sí! Enviamos desde nuestro estudio en Italia a coleccionistas de todo el mundo. Utilizamos servicios de mensajería global asegurados para garantizar que tu obra maestra llegue de forma segura."
+      },
+      {
+        "q": "¿Cuánto tarda la producción?",
+        "a": "Como cada pieza se fabrica bajo pedido o se termina a mano, por favor permite de 7 a 14 días para la producción antes del envío. No apresuramos el arte."
+      },
+      {
+        "q": "¿Cuál es su política de devoluciones?",
+        "a": "Ofrecemos una política de devolución de 30 días para artículos que lleguen dañados o sean significativamente diferentes a la descripción. Al tratarse de piezas de arte hechas a mano, no podemos aceptar devoluciones por 'cambio de opinión'."
+      }
+    ],
+    "stillHaveQuestions": "¿Aún tienes preguntas?",
+    "curatorsMessage": "Nuestros curadores están listos para asistirte con pedidos personalizados y soporte.",
+    "emailUs": "Envíanos un Correo",
+    "liveChat": "Chat en Vivo",
+    "offline": "Desconectado"
+  },
+  "errors": {
+    "invalidLogin": "Acceso Denegado. Asegúrese de que su clave de seguridad es correcta y su enlace de identidad está verificado.",
+    "confirmationSent": "Correo de confirmación enviado. Por favor, revise su bandeja de entrada para activar su terminal.",
+    "stripeLoadError": "Error al cargar el formulario de pago. Por favor, actualice e intente de nuevo.",
+    "unexpectedError": "Ocurrió un error inesperado. Por favor, inténtelo de nuevo.",
+    "signupFailed": "Error en el registro. Por favor, inténtelo de nuevo.",
+    "genericError": "Algo salió mal",
+    "verifyStatusError": "No pudimos verificar el estado de su pago. Si recibió un correo de confirmación, su pedido se está procesando.",
+    "maxFeatured": "Máximo 3 permitidos."
+  },
+  "success": {
+    "orderConfirmed": "Pedido Confirmado",
+    "thankYou": "Gracias por tu compra en 5iveArts",
+    "confEmailSent": "Se ha enviado un correo electrónico de confirmación a",
+    "shippingNote": "Tu figura será cuidadosamente empaquetada y enviada con seguimiento.",
+    "logisticsLog": "Registro de Seguridad y Logística",
+    "syncComplete": "Sincronización Completada y Correo Enviado",
+    "resendEmail": "¿No recibiste el correo? Reenviar",
+    "paymentVerified": "Pago verificado.",
+    "fulfillmentNote": "Tu figura se está preparando con un acolchado de espuma personalizado.",
+    "vaultEstablished": "Bóveda Establecida",
+    "orderLinked": "Tu pedido ahora está permanentemente vinculado a tu cuenta segura.",
+    "goWarehouse": "Ir a mi Almacén",
+    "secureCollection": "Asegura tu Colección"
+  },
+    "checkout": {
+      "gateway": "Pasarela Segura",
+      "checkout": "Pago",
+      "verifying": "Verificando Transacción Segura…",
+      "loadingForm": "Cargando protocolos de pago...",
+      "processing": "Procesando pago…",
+      "payNow": "Autorizar Pago",
+      "securedBy": "Protegido por Stripe Intelligence",
+      "encryptionNote": "Su conexión está encriptada con los estándares RSA-4096 y AES-256. Nunca almacenamos datos de pago sin procesar en nuestros servidores.",
+      "deliveryStep": "1. Entrega",
+      "shippingStep": "2. Envío",
+      "paymentStep": "3. Pago",
+      "recipientName": "Nombre del Destinatario *",
+      "collectorPlaceholder": "Nombre del Coleccionista",
+      "emailAddress": "Correo Electrónico *",
+      "vault": "Bóveda",
+      "streetAddress": "Dirección *",
+      "addressLine1": "Dirección (Línea 1)",
+      "suite": "Suite / Unidad / Piso",
+      "optional": "Opcional",
+      "postcode": "Código Postal *",
+      "zipPlaceholder": "CP / Código Postal",
+      "selectCountryFirst": "(Seleccione primero el país)",
+      "city": "Ciudad *",
+      "detecting": "(Detectando…)",
+      "autoFilled": "(Completado automáticamente)",
+      "enterManually": "(Ingresar manualmente)",
+      "state": "Estado / Provincia *",
+      "phoneLabel": "Conexión Telefónica *",
+      "invalidFormat": "(Formato no válido)",
+      "validNumber": "(Número válido)",
+      "includeCode": "(Incluye prefijo +)",
+      "continueBtn": "Continuar con las opciones de envío",
+      "recalculating": "Recalculando Logística Global…",
+      "backBtn": "Volver a la Entrega",
+      "changeShipping": "Cambiar Opción de Envío",
+      "connecting": "Conectando con la pasarela de pago segura. Handshake con protocolos PCI-DSS…",
+      "syncing": "Sincronizando Capa de Transacción",
+      "orderReview": "Resumen del Pedido",
+      "subtotal": "Subtotal de Mercancía",
+      "logistics": "Logística y Gestión",
+      "tbd": "En fase de cálculo",
+      "grandTotal": "Total General",
+      "initGateway": "Inicializando Pasarela…",
+      "proceedBtn": "Proceder al Pago",
+      "emptyArsenalTitle": "Arsenal Vacío",
+      "emptyArsenalDesc": "Parece que aún no has añadido ninguna figura a tu colección.",
+      "returnShop": "Volver a la Tienda",
+      "deliveryEstimate": "Entrega:",
+      "businessDays": "días hábiles"
+    },
+  "product_detail": {
+    "handPaintedTag": "Pintado a Mano & Impreso en 3D",
+    "customerReviews": "reseñas de clientes",
+    "selectScale": "Selecciona Escala (Altura Aprox.)",
+    "selectFinish": "Selecciona Acabado",
+    "handPainted": "Pintado a Mano",
+    "rawKit": "Kit Base (Resina Gris)",
+    "museumGrade": "Acabado de calidad de museo",
+    "primed": "Listo para personalización",
+    "description": "Descripción",
+    "specifications": "Características & Especificaciones",
+    "encryptedCheckout": "Pago Encriptado vía Stripe",
+    "insuredShipping": "Envío Global Asegurado",
+    "confirmed": "Confirmado",
+    "addToCollection": "Añadir al Arsenal",
+    "instantCheckout": "Compra Rápida",
+    "features": [
+      "Resina Industrial de Alta Resolución",
+      "Pintura Profesional Artesanal",
+      "Barniz Resistente UV Calidad Museo",
+      "Detalle de Alta Precisión (0.025mm)",
+      "Base de Exhibición Autoría",
+      "Caja de Coleccionista Acolchada"
+    ]
+  },
+  "trust": [
+    { "label": "Pago Seguro", "sub": "Powered by Stripe" },
+    { "label": "Envío Global Asegurado", "sub": "Entrega mundial" },
+    { "label": "Hecho a Mano", "sub": "Cada pieza es única" },
+    { "label": "Devoluciones en 30 Días", "sub": "Sin complicaciones" }
+  ],
+  "account": {
+    "portal": "Portal de Almacén Seguro",
+    "title": "Mi Cuenta",
+    "databaseFor": "Accediendo a la base de datos para:",
+    "security": "Seguridad",
+    "decommission": "Terminar Sesión",
+    "activeAssets": "Activos Activos",
+    "totalAcquisitions": "Total de adquisiciones registradas",
+    "status": "Estado de la Cuenta",
+    "verifiedCollector": "Coleccionista Verificado",
+    "level1Encryption": "Cifrado Nivel 1",
+    "history": "Historial de Adquisiciones",
+    "investment": "Inversión",
+    "recorded": "Registrado:",
+    "fullLogistics": "Datos Logísticos Completos",
+    "prepPhaseActive": "Fase de Preparación Activa",
+    "inTransit": "En Tránsito:",
+    "noAssets": "No hay activos registrados en la bóveda todavía.",
+    "browseCollection": "Explorar Colección",
+    "neuralLinkError": "Error de Enlace Neural",
+    "syncFailed": "Error al sincronizar con la bóveda central de pedidos.",
+    "verificationRequired": "Verificación Requerida",
+    "verificationDesc": "Identidad aún no verificada. Los datos de cumplimiento pueden estar restringidos hasta que el enlace esté activo.",
+    "resendLink": "Reenviar Enlace de Verificación",
+    "settings": {
+      "title": "Seguridad de la Bóveda",
+      "subtitle": "Gestione su identidad de coleccionista y protocolos de acceso.",
+      "identityVerification": "Verificación de Identidad",
+      "verified": "Verificado",
+      "pending": "Verificación Pendiente",
+      "guestProtected": "Su acceso se encuentra actualmente en un estado de 'Invitado Protegido'. Algunos registros administrativos requieren una identidad verificada.",
+      "requestLink": "Solicitar Nuevo Enlace de Verificación"
+    }
+  },
+  "orders": {
+    "backToWarehouse": "Mi Almacén",
+    "reportTitle": "Informe Logístico Completo",
+    "operation": "Operación #",
+    "paid": "Pagado",
+    "shipped": "Enviado",
+    "processing": "En Proceso",
+    "delivered": "Entregado",
+    "cancelled": "Cancelado",
+    "logged": "Registrado:",
+
+    "verifiedAcquisition": "Adquisición Verificada",
+    "trackShipment": "RASTREAR ENVÍO",
+    "exportInvoice": "EXPORTAR FACTURA",
+    "lifecycle": "Ciclo de Vida de Despliegue",
+    "pConfirmed": "Pago Confirmado",
+    "pConfirmedDesc": "Fondos de adquisición verificados y asegurados.",
+    "prepPhase": "Fase de Preparación",
+    "prepPhaseDesc": "Aislamiento de la figura e integración de espuma protectora.",
+    "inTransit": "En Tránsito",
+    "inTransitDesc": "Saliendo de la bóveda del almacén. Entrega logística.",
+    "manifest": "Manifiesto de Activos",
+    "itemDetails": "Detalles del Artículo",
+    "qty": "Cant",
+    "subtotal": "Subtotal de Adquisición",
+    "shipping": "Recargo Logístico",
+    "totalContribution": "Contribución Total del Portafolio",
+    "deploymentZone": "Zona de Despliegue",
+    "carrierProtocol": "Protocolo del Transportista",
+    "class": "Clase: Rastreo Registrado",
+    "settlement": "Liquidación",
+    "transactionSecure": "Transacción Segura",
+    "discrepancy": "¿Discrepancia Logística?",
+    "contactHQ": "CONTACTAR HQ DE DESPLIEGUE",
+    "sku": "SKU:"
+  },
+  "shipping": {
+    "protocol": "Protocolo de Logística",
+    "title": "Envío Global",
+    "subtitle": "Entrega segura, asegurada y rastreada para cada obra maestra de la colección.",
+    "insuredTitle": "Cumplimiento Asegurado",
+    "insuredText": "Cada figura se embala utilizando espuma de alta densidad a medida y cajas de coleccionista de doble pared. Aseguramos cada envío contra pérdida o daño durante el tránsito.",
+    "freeTierTitle": "Nivel de Envío Gratuito",
+    "freeTierText": "Premiamos a los coleccionistas serios. Todos los pedidos superiores a {amount} califican automáticamente para ENVÍO ESTÁNDAR GRATUITO, independientemente de su ubicación.",
+    "dynamicTitle": "Logística Dinámica",
+    "dynamicText": "Utilizamos Packlink PRO para ofrecer tarifas de envío aseguradas en tiempo real de transportistas premium como UPS, DHL y FedEx. Su tarifa específica se calcula durante el pago en función de su ubicación exacta y las dimensiones del paquete.",
+    "zonesTitle": "Tiempos de Tránsito Estimados",
+    "region": "Región",
+    "standard": "Estándar",
+    "express": "Exprés",
+    "estTime": "Tiempo Estimado",
+    "trackingInfo": "Seguimiento Global en Vivo Proporcionado en Todos los Pedidos",
+    "italy": "Italia",
+    "eu": "Unión Europea",
+    "uk": "Reino Unido",
+    "global": "Global / Resto del Mundo",
+    "days1_3": "1-3 Días",
+    "days3_5": "3-5 Días",
+    "days4_7": "4-7 Días",
+    "days7_14": "7-14 Días"
+  }
+}
+
+
+

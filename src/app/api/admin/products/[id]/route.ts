@@ -35,11 +35,28 @@ export async function PATCH(
 
     const supabase = getSupabaseAdmin() as any;
     const { id } = await params;
-    const body = await req.json();
+    const body = await req.json() as Record<string, any>;
+
+    const ALLOWED_FIELDS = [
+        "name", "description", "price", "images", "videos",
+        "category", "status", "tags", "details", "rating", "reviewCount"
+    ];
+
+    const safePayload: Record<string, any> = {};
+    for (const field of ALLOWED_FIELDS) {
+        if (body[field] !== undefined) {
+             safePayload[field] = body[field];
+        }
+    }
+
+    // Safety: don't call update with empty obj
+    if (Object.keys(safePayload).length === 0) {
+         return NextResponse.json({ error: "No valid fields provided to update" }, { status: 400 });
+    }
 
     const { data, error } = await supabase
         .from("products")
-        .update(body)
+        .update(safePayload)
         .eq("id", id)
         .select()
         .single();

@@ -12,11 +12,13 @@ const stripePromise = loadStripe(
 interface StripePaymentFormProps {
     clientSecret: string;
     total: number;
+    dict: any;
 }
 
 export default function StripePaymentForm({
     clientSecret,
     total,
+    dict,
 }: StripePaymentFormProps) {
     const [checkout, setCheckout] = useState<StripeCheckout | null>(null);
     const [confirmFn, setConfirmFn] = useState<((...args: any[]) => Promise<any>) | null>(null);
@@ -101,10 +103,10 @@ export default function StripePaymentForm({
             setLoading(false);
         } catch (err) {
             console.error("Stripe init error:", err);
-            setError("Failed to load payment form. Please refresh and try again.");
+            setError(dict.errors?.stripeLoadError || "Failed to load payment form. Please refresh and try again.");
             setLoading(false);
         }
-    }, [clientSecret]);
+    }, [clientSecret, dict.errors]);
 
     useEffect(() => {
         initCheckout();
@@ -132,7 +134,7 @@ export default function StripePaymentForm({
             }
             // If no error, Stripe redirects to return_url automatically
         } catch {
-            setError("An unexpected error occurred. Please try again.");
+            setError(dict.errors?.unexpectedError || "An unexpected error occurred. Please try again.");
             setPaying(false);
         }
     };
@@ -146,7 +148,7 @@ export default function StripePaymentForm({
                         <div className="flex flex-col items-center gap-4">
                             <Loader2 className="w-8 h-8 animate-spin text-brand-yellow" />
                             <p className="text-[10px] uppercase font-black tracking-widest text-neutral-500">
-                                Loading secure payment form…
+                                {dict.checkout.loadingForm}
                             </p>
                         </div>
                     </div>
@@ -173,7 +175,7 @@ export default function StripePaymentForm({
                 ) : (
                     <Lock className="w-4 h-4" />
                 )}
-                {paying ? "Processing payment…" : `Pay ${formatPrice(total)} now`}
+                {paying ? dict.checkout.processing : `${dict.checkout.payNow} ${formatPrice(total)}`}
             </button>
 
             {/* Trust Indicators — Stripe best practice */}
@@ -181,11 +183,11 @@ export default function StripePaymentForm({
                 <div className="flex items-center gap-2 text-neutral-500">
                     <ShieldCheck className="w-4 h-4 text-brand-yellow" />
                     <span className="text-[10px] font-black uppercase tracking-widest">
-                        Secured by Stripe — PCI DSS Level 1
+                        {dict.checkout.securedBy}
                     </span>
                 </div>
                 <p className="text-[9px] text-neutral-600 font-bold uppercase tracking-wider text-center leading-relaxed max-w-md">
-                    Your payment information is encrypted end-to-end. 5iveArts never stores your card details.
+                    {dict.checkout.encryptionNote}
                 </p>
             </div>
         </form>
