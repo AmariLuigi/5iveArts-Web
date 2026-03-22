@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import { requireAdmin } from "@/lib/auth";
 import type {
     AnalyticsEvent,
     FunnelStage,
@@ -14,6 +15,7 @@ import type {
 } from "@/types/analytics";
 
 const RATE_LIMIT = { limit: 100, windowMs: 60_000 };
+
 
 function getDateRange(days: number = 30) {
     const end = new Date();
@@ -602,6 +604,9 @@ async function getTimePatterns(startDate: string, endDate: string): Promise<Time
 
 // ── Main Handler ────────────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) return auth.response!;
+
     const ip = getClientIp(req);
     const rl = checkRateLimit(`analytics-dashboard:${ip}`, RATE_LIMIT);
 
@@ -611,6 +616,7 @@ export async function GET(req: NextRequest) {
             { status: 429 }
         );
     }
+
 
     const { searchParams } = new URL(req.url);
     const type = searchParams.get('type') || 'overview';
