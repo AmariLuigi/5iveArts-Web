@@ -64,14 +64,17 @@ export async function POST(req: NextRequest) {
 
   // ── Calculate server-authoritative shipping price ─────────────────────────
   const { fetchPacklinkRates } = await import("@/lib/packlink");
+  const { getSiteSettings } = await import("@/lib/settings");
 
   const subtotalCents = items.reduce(
     (acc, item) => acc + item.priceAtSelection * item.quantity,
     0
   );
 
+  const settings = await getSiteSettings();
+
   // We must re-fetch/calculate the rates server-side to prevent price tampering
-  const serverRates = await fetchPacklinkRates(address, subtotalCents);
+  const serverRates = await fetchPacklinkRates(address, subtotalCents, false, settings.logistics);
 
   const matchedRate = serverRates.find((r) => r.service_id === rawRate.service_id);
 

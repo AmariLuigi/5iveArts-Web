@@ -11,8 +11,15 @@ export const FINISH_CONFIG: Record<ProductFinish, { multiplier: number }> = {
   raw: { multiplier: 0.6 },
 };
 
-export function calculatePrice(basePrice: number, scale: ProductScale, finish: ProductFinish): number {
-  return Math.round(basePrice * SCALE_CONFIG[scale].multiplier * FINISH_CONFIG[finish].multiplier);
+export function calculatePrice(
+  basePrice: number, 
+  scale: ProductScale, 
+  finish: ProductFinish, 
+  pricingSettings?: any
+): number {
+  const scaleMult = pricingSettings?.scales?.[scale]?.multiplier ?? SCALE_CONFIG[scale].multiplier;
+  const finishMult = pricingSettings?.finishes?.[finish]?.multiplier ?? FINISH_CONFIG[finish].multiplier;
+  return Math.round(basePrice * scaleMult * finishMult);
 }
 
 import { getSupabasePublic } from "./supabase";

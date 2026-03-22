@@ -7,6 +7,7 @@ import { Product, ProductScale, ProductFinish } from "@/types";
 import { formatPrice, calculatePrice, SCALE_CONFIG, FINISH_CONFIG } from "@/lib/products";
 import AddToCartButton from "./AddToCartButton";
 import TrustBadges from "@/components/ui/TrustBadges";
+import { useSiteSettings } from "@/components/providers/SettingsProvider";
 
 interface Props {
     product: Product;
@@ -22,6 +23,7 @@ const STANDARD_FEATURES = [
 ];
 
 export default function ProductDetailClient({ product }: Props) {
+    const { pricing } = useSiteSettings();
     const [selectedScale, setSelectedScale] = useState<ProductScale>("1/9");
     const [selectedFinish, setSelectedFinish] = useState<ProductFinish>("painted");
     const [activeMedia, setActiveMedia] = useState(0);
@@ -31,7 +33,7 @@ export default function ProductDetailClient({ product }: Props) {
         ...(product.videos || [])
     ];
 
-    const currentPrice = calculatePrice(product.price, selectedScale, selectedFinish);
+    const currentPrice = calculatePrice(product.price, selectedScale, selectedFinish, pricing);
 
     const scales: ProductScale[] = ["1/9", "1/6", "1/4"];
     const finishes: ProductFinish[] = ["painted", "raw"];

@@ -5,6 +5,7 @@ import FeaturesSection, { Feature } from "@/components/marketing/FeaturesSection
 import FeaturedProducts from "@/components/marketing/FeaturedProducts";
 import TestimonialsSection, { Testimonial } from "@/components/marketing/TestimonialsSection";
 import CtaSection from "@/components/marketing/CtaSection";
+import { getSiteSettings } from "@/lib/settings";
 
 const FEATURES: Feature[] = [
   {
@@ -54,19 +55,28 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 export default async function HomePage() {
-  const products = await fetchProductsFromDb();
+  const [products, settings] = await Promise.all([
+    fetchProductsFromDb(),
+    getSiteSettings()
+  ]);
+
+  const featuredIds = settings.homepage?.featured_product_ids || [];
+  const featuredProducts = featuredIds.length > 0 
+    ? products.filter(p => featuredIds.includes(p.id))
+    : products.slice(0, 3);
 
   return (
     <div>
       <HeroSection
         primaryCta={{ label: "Shop Now", href: "/products" }}
+        heroVideos={settings.homepage?.hero_videos}
       />
 
       <FeaturesSection features={FEATURES} />
 
       <FeaturedProducts
         heading="Featured Figures"
-        products={products.slice(0, 3)}
+        products={featuredProducts}
         viewAllHref="/products"
       />
 

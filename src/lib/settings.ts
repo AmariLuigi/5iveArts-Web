@@ -13,6 +13,10 @@ export interface SiteSettings {
         preparation_days_buffer: number;
         free_shipping_threshold_cents: number;
     };
+    homepage?: {
+        featured_product_ids: string[];
+        hero_videos?: string[];
+    };
 }
 
 /**

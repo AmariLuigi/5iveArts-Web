@@ -33,48 +33,53 @@ const SLIDES: Slide[] = [
 export interface HeroSectionProps {
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
+  heroVideos?: string[];
 }
 
 /**
  * Full-width hero banner with dual-video crossfade carousel.
- * Video 1: 3D printing process → Video 2: Hand-painting process → loops.
+ * Dynamic videos from admin settings preferred, falls back to defaults.
  */
 export default function HeroSection({
   primaryCta,
   secondaryCta,
+  heroVideos = [],
 }: HeroSectionProps) {
+  // Use dynamic videos if available, otherwise use defaults from SLIDES
+  const activeSlides = heroVideos.length > 0 
+    ? heroVideos.map((url, i) => ({
+        ...SLIDES[i % SLIDES.length],
+        video: url
+      }))
+    : SLIDES;
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([null, null]);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const goToNext = useCallback(() => {
     if (transitioning) return;
 
     setTransitioning(true);
-    const next = (activeIndex + 1) % SLIDES.length;
+    const next = (activeIndex + 1) % activeSlides.length;
 
-    // Start playing the NEXT video in the background so it's ready
+    // Start playing the NEXT video in the background
     const nextVideo = videoRefs.current[next];
     if (nextVideo) {
       nextVideo.currentTime = 0;
-      const playPromise = nextVideo.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => { /* Handle auto-play block if any */ });
-      }
+      nextVideo.play().catch(() => {});
     }
 
-    // After the CSS fade-out finishes, swap the active index
     setTimeout(() => {
       setActiveIndex(next);
       setTransitioning(false);
-
-      // Pause the old video to save resources
+      
       const prevVideo = videoRefs.current[activeIndex];
       if (prevVideo && activeIndex !== next) {
         prevVideo.pause();
       }
-    }, 800); // match the CSS transition duration
-  }, [activeIndex, transitioning]);
+    }, 800);
+  }, [activeIndex, transitioning, activeSlides.length]);
 
   useEffect(() => {
     const activeListeners: (() => void)[] = [];
@@ -109,12 +114,12 @@ export default function HeroSection({
     }
   }, [activeIndex, transitioning]);
 
-  const slide = SLIDES[activeIndex];
+  const slide = activeSlides[activeIndex];
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-black text-white px-4 border-b border-white/5">
       {/* Dual Video Backgrounds */}
-      {SLIDES.map((s, i) => (
+      {activeSlides.map((s, i) => (
         <div
           key={s.video}
           className="absolute inset-0 z-0 transition-opacity duration-[800ms] ease-in-out"
@@ -174,7 +179,7 @@ export default function HeroSection({
 
         {/* Slide Indicator Dots */}
         <div className="flex justify-center gap-4 mt-16">
-          {SLIDES.map((_, i) => (
+          {activeSlides.map((_, i) => (
             <button
               key={i}
               onClick={() => {

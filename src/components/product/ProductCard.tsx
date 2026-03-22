@@ -7,6 +7,7 @@ import { ShoppingCart, Tag, Star, Play, ChevronUp, Check } from "lucide-react";
 import { Product, ProductScale, ProductFinish } from "@/types";
 import { formatPrice, calculatePrice, SCALE_CONFIG } from "@/lib/products";
 import { useCartStore } from "@/store/cart";
+import { useSiteSettings } from "@/components/providers/SettingsProvider";
 
 interface ProductCardProps {
   product: Product;
@@ -14,6 +15,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
+  const { pricing } = useSiteSettings();
   const [isHovered, setIsHovered] = useState(false);
   const [mediaIndex, setMediaIndex] = useState(0);
   const [showScaleSelector, setShowScaleSelector] = useState(false);
@@ -164,7 +166,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="flex flex-col">
             <span className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1 leading-none uppercase">Starting from</span>
             <span className="text-2xl font-black text-white leading-none tracking-tighter">
-              {formatPrice(calculatePrice(product.price, "1/9", "raw"))}
+              {formatPrice(calculatePrice(product.price, "1/9", "raw", pricing))}
             </span>
           </div>
 
@@ -189,14 +191,14 @@ export default function ProductCard({ product }: ProductCardProps) {
                           className="flex flex-col p-2 bg-white/[0.03] border border-white/5 hover:border-brand-yellow/30 hover:bg-brand-yellow/[0.02] transition-all rounded-sm group/btn"
                         >
                           <span className="text-[7px] uppercase font-black text-neutral-600 group-hover/btn:text-brand-yellow transition-colors mb-1">Painted</span>
-                          <span className="text-[10px] font-black text-white">{formatPrice(calculatePrice(product.price, scale, "painted"))}</span>
+                          <span className="text-[10px] font-black text-white">{formatPrice(calculatePrice(product.price, scale, "painted", pricing))}</span>
                         </button>
                         <button
                           onClick={() => handleAddItem(scale, "raw")}
                           className="flex flex-col p-2 bg-white/[0.03] border border-white/5 hover:border-white/20 hover:bg-white/[0.05] transition-all rounded-sm group/btn"
                         >
                           <span className="text-[7px] uppercase font-black text-neutral-600 group-hover/btn:text-white transition-colors mb-1">Raw Resin</span>
-                          <span className="text-[10px] font-black text-white">{formatPrice(calculatePrice(product.price, scale, "raw"))}</span>
+                          <span className="text-[10px] font-black text-white">{formatPrice(calculatePrice(product.price, scale, "raw", pricing))}</span>
                         </button>
                       </div>
                     </div>

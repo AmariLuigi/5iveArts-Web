@@ -26,7 +26,8 @@ interface PacklinkServiceResponse {
 export async function fetchPacklinkRates(
   toAddress: ShippingAddress, 
   subtotalCents: number = 0,
-  allowMocks: boolean = false
+  allowMocks: boolean = false,
+  logisticsSettings?: any
 ): Promise<ShippingRate[]> {
   const apiKey = process.env.PACKLINK_API_KEY;
   const fromZip = process.env.WAREHOUSE_POSTCODE || "90138"; 
@@ -84,7 +85,7 @@ export async function fetchPacklinkRates(
       return [];
     }
 
-    const FREE_SHIPPING_THRESHOLD = 5000;
+    const FREE_SHIPPING_THRESHOLD = logisticsSettings?.free_shipping_threshold_cents ?? 5000;
     const isFreeShipping = toAddress.country === "IT" && subtotalCents >= FREE_SHIPPING_THRESHOLD;
 
     const filtered = response.data
@@ -133,7 +134,7 @@ export async function fetchPacklinkRates(
     // If no real services found, only return mocks IF explicitly allowed
     if (filtered.length === 0 && allowMocks) {
       console.warn(`[shipping] No real services for ${toAddress.country}/${toAddress.zip_code}. Returning mocks.`);
-      return getMockServices(toAddress, subtotalCents);
+      return getMockServices(toAddress, subtotalCents, logisticsSettings);
     }
 
     return filtered;
@@ -146,15 +147,16 @@ export async function fetchPacklinkRates(
     
     // Only return mocks on failure IF explicitly allowed
     if (allowMocks) {
-      return getMockServices(toAddress, subtotalCents);
+      return getMockServices(toAddress, subtotalCents, logisticsSettings);
     }
     return [];
   }
 }
 
-function getMockServices(toAddress: ShippingAddress, subtotalCents: number): ShippingRate[] {
-  // Free shipping threshold: €50.00 (Italy only) matches FREE_SHIPPING_THRESHOLD in main function
-  const isFreeShipping = toAddress.country === "IT" && subtotalCents >= 5000;
+function getMockServices(toAddress: ShippingAddress, subtotalCents: number, logisticsSettings?: any): ShippingRate[] {
+  // Free shipping threshold: dynamic or fallback 50€
+  const threshold = logisticsSettings?.free_shipping_threshold_cents ?? 5000;
+  const isFreeShipping = toAddress.country === "IT" && subtotalCents >= threshold;
 
   return [
     {

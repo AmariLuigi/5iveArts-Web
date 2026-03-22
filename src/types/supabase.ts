@@ -99,6 +99,22 @@ export interface Database {
         };
         Update: Partial<Database["public"]["Tables"]["order_items"]["Insert"]>;
       };
+
+      site_settings: {
+        Row: {
+          id: string;
+          key: string;
+          value: any;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["site_settings"]["Row"], "id" | "created_at" | "updated_at"> & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["site_settings"]["Insert"]>;
+      };
     };
     Functions: {};
   };
