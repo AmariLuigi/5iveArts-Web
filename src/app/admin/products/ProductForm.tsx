@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { createClient } from "@/lib/supabase-browser";
@@ -46,7 +46,11 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [price, setPrice] = useState(initialData?.price || 8999);
     const [category, setCategory] = useState(initialData?.category || "figures");
     const [status, setStatus] = useState<"draft" | "published">(initialData?.status || "published");
+    const [tags, setTags] = useState<string[]>(initialData?.tags || []);
+    const [tagInput, setTagInput] = useState("");
+    const [allExistingTags, setAllExistingTags] = useState<string[]>([]);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+    const [isTagSuggestionsOpen, setIsTagSuggestionsOpen] = useState(false);
 
     const categories = [
         { value: "figures", label: "Collector Figure", icon: Shield, desc: "Standard 1/9 to 1/4 scales" },
@@ -65,6 +69,37 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     ]);
 
     const supabase = createClient();
+
+    useEffect(() => {
+        // Fetch all unique tags on mount
+        const fetchTags = async () => {
+            const { data } = await supabase.from("products").select("tags") as { data: { tags: string[] }[] | null };
+            if (data) {
+                const uniqueTags = Array.from(new Set(data.flatMap(p => p.tags || []))).sort();
+                setAllExistingTags(uniqueTags);
+            }
+        };
+        fetchTags();
+    }, []);
+
+    const suggestions = tagInput.length > 0
+        ? allExistingTags.filter(t => t.toLowerCase().includes(tagInput.toLowerCase()) && !tags.includes(t))
+        : [];
+
+    const handleAddTag = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            const val = tagInput.trim().toLowerCase();
+            if (val && !tags.includes(val)) {
+                setTags([...tags, val]);
+                setTagInput("");
+            }
+        }
+    };
+
+    const removeTag = (tagToRemove: string) => {
+        setTags(tags.filter(t => t !== tagToRemove));
+    };
 
     const handleMediaUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'images' | 'videos') => {
         const files = Array.from(e.target.files || []);
@@ -149,6 +184,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             price: Number(price),
             category,
             status,
+            tags,
             images,
             videos,
             details,
@@ -352,6 +388,66 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                 )}
                             </div>
                         </div>
+                    </div>
+
+                    <div className="space-y-4 pt-6 mt-4 border-t border-white/5">
+                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 flex items-center gap-2">
+                            <Tag className="w-3.5 h-3.5" />
+                            Franchise & Origins (Tags)
+                        </label>
+                        <div className="flex flex-wrap gap-2 mb-3">
+                            {tags.map((tag) => (
+                                <span key={tag} className="flex items-center gap-2 bg-brand-yellow/10 border border-brand-yellow/30 px-3 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest text-brand-yellow group animate-in fade-in zoom-in duration-300">
+                                    {tag}
+                                    <button
+                                        type="button"
+                                        onClick={() => removeTag(tag)}
+                                        className="hover:text-white transition-colors p-0.5"
+                                    >
+                                        <X className="w-3 h-3" />
+                                    </button>
+                                </span>
+                            ))}
+                        </div>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={tagInput}
+                                onChange={(e) => {
+                                    setTagInput(e.target.value);
+                                    setIsTagSuggestionsOpen(true);
+                                }}
+                                onKeyDown={handleAddTag}
+                                onBlur={() => setTimeout(() => setIsTagSuggestionsOpen(false), 200)}
+                                placeholder="Type anime, game or show name and press Enter..."
+                                className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-[11px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
+                            />
+                            
+                            {isTagSuggestionsOpen && suggestions.length > 0 && (
+                                <div className="absolute top-full left-0 w-full mt-2 bg-[#0c0c0c] border border-white/10 rounded-sm shadow-2xl z-[60] overflow-hidden backdrop-blur-xl">
+                                    <div className="py-2 max-h-48 overflow-y-auto custom-scrollbar">
+                                        {suggestions.map((suggestion) => (
+                                            <button
+                                                key={suggestion}
+                                                type="button"
+                                                onClick={() => {
+                                                    if (!tags.includes(suggestion)) {
+                                                        setTags([...tags, suggestion]);
+                                                        setTagInput("");
+                                                        setIsTagSuggestionsOpen(false);
+                                                    }
+                                                }}
+                                                className="w-full text-left px-5 py-3 text-[10px] uppercase font-black tracking-widest text-neutral-400 hover:text-brand-yellow hover:bg-white/[0.03] transition-colors flex items-center justify-between group"
+                                            >
+                                                {suggestion}
+                                                <Plus className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <p className="text-[8px] uppercase font-black text-neutral-700 tracking-widest">Add series names like: "Batman", "Naruto", "Star Wars"</p>
                     </div>
 
                     <div className="space-y-4 pt-4 border-t border-white/5">

@@ -18,6 +18,7 @@ export interface Database {
           videos: string[];
           category: "hand-painted" | "home-printed" | "figures" | "busts" | "dioramas";
           status: "draft" | "published";
+          tags: string[];
           details: string[];
           created_at: string;
           updated_at: string;
@@ -28,6 +29,7 @@ export interface Database {
           images?: string[];
           videos?: string[];
           status?: "draft" | "published";
+          tags?: string[];
           details?: string[];
         };
         Update: Partial<Database["public"]["Tables"]["products"]["Insert"]>;

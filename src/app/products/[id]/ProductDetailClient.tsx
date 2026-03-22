@@ -114,7 +114,14 @@ export default function ProductDetailClient({ product }: Props) {
                 {/* Right: Details */}
                 <div className="flex flex-col pt-4">
                     <div className="mb-8">
-                        <span className="text-[11px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">Premium Collector Series</span>
+                        <div className="flex flex-wrap gap-3 mb-6 animate-in fade-in slide-in-from-left-4 duration-1000">
+                            <span className="text-[11px] uppercase font-black tracking-[0.4em] text-brand-yellow">{product.category}</span>
+                            {product.tags?.map(tag => (
+                                <span key={tag} className="text-[10px] uppercase font-black tracking-[0.2em] text-white/30 border border-white/10 px-3 py-1 rounded-sm backdrop-blur-md">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
                         <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-[0.9] mb-6">
                             {product.name}
                         </h1>

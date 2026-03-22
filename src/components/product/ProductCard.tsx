@@ -142,6 +142,15 @@ export default function ProductCard({ product }: ProductCardProps) {
               ))}
             </div>
           )}
+          
+          <div className="flex flex-wrap gap-2 mb-2 animate-in fade-in slide-in-from-left-2 duration-700">
+            {product.tags?.slice(0, 3).map(tag => (
+              <span key={tag} className="text-[8px] uppercase font-bold text-neutral-600 tracking-widest bg-white/[0.03] px-2 py-0.5 rounded-sm border border-white/[0.02]">
+                {tag}
+              </span>
+            ))}
+          </div>
+
           <Link href={`/products/${product.id}`} className="text-xl font-black uppercase tracking-tight text-white hover:text-brand-yellow transition-colors leading-none block">
             {product.name}
           </Link>

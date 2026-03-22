@@ -12,6 +12,7 @@ export interface Product {
   videos: string[];
   category: ProductCategory;
   status: "draft" | "published";
+  tags: string[];
   details: string[];
   rating?: number;
   reviewCount?: number;
