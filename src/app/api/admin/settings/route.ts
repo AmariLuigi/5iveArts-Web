@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase-server";
 import { requireAdmin } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 import type { Database } from "@/types/supabase";
 
 export async function GET(req: NextRequest) {
@@ -55,6 +56,9 @@ export async function PATCH(req: NextRequest) {
                 return NextResponse.json({ error: `Failed to update ${key}: ${error.message}` }, { status: 500 });
             }
         }
+        
+        // Ensure changes are reflected on the frontend immediately
+        revalidatePath("/", "layout");
 
         return NextResponse.json({ success: true });
     } catch (err: any) {
