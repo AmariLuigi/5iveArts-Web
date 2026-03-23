@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 
 import OrganizationSchema from "@/components/seo/OrganizationSchema";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ 
@@ -89,6 +90,7 @@ export default async function StoreLayout({
           </ConditionalLayout>
         </SettingsProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

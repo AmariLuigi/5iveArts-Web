@@ -14,6 +14,7 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.49.2",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "axios": "^1.13.5",
     "framer-motion": "^12.38.0",
     "iso-3166-2": "^1.0.0",
