@@ -11,8 +11,10 @@ const BRAND_STATIC_PARTS = {
 export async function POST(req: Request) {
   try {
     const { prompt, image, model = "qwen/qwen3.5-397b-a17b" } = await req.json();
+    const rawKey = process.env.NVIDIA_API_KEY;
+    const apiKey = rawKey?.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
 
-    if (!process.env.NVIDIA_API_KEY) {
+    if (!apiKey) {
       return NextResponse.json({ error: "NVIDIA_API_KEY not configured" }, { status: 500 });
     }
 
@@ -57,7 +59,7 @@ STRICT REQUIREMENTS:
         const response = await fetch(NVIDIA_INVOKE_URL, {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${process.env.NVIDIA_API_KEY}`,
+            "Authorization": `Bearer ${apiKey}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
           },

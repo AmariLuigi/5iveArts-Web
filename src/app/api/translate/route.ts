@@ -21,7 +21,8 @@ export async function POST(request: NextRequest) {
     try {
         const body: TranslateRequest = await request.json();
         const { text, targetLang, sourceLang = "auto" } = body;
-        const apiKey = process.env.NVIDIA_API_KEY;
+        const rawKey = process.env.NVIDIA_API_KEY;
+        const apiKey = rawKey?.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
         const model = "qwen/qwen3.5-397b-a17b";
 
         if (!text || !targetLang) {
