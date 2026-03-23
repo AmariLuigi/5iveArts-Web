@@ -344,7 +344,7 @@
     "rights": "© 2026 5iveArts Collector Series. Tous droits réservés.",
     "privacy": "Confidentialité",
     "terms": "Conditions",
-    "description": "Impression 3D professionnelle et finition artisanale pour collectionneurs internationaux. Chaque pièce est un chef-d'œuvre unique en résine et pigment."
+    "description": "Studio boutique pour figurines en résine premium peintes à la main et imprimées en 3D. Nous expédions des pièces de collection de qualité musée dans le monde entier depuis notre atelier de Palerme."
   },
   "shipping": {
     "protocol": "Protocole de Logistique",
@@ -374,16 +374,16 @@
   "hero": {
     "slides": [
       {
-        "tagline": "Précision de la Technologie Résine",
-        "headline": "Impression",
-        "headlineHighlight": "3D",
-        "subtext": "Impressions en résine haute résolution avec une épaisseur de couche de 0,025 mm — chaque détail capturé avec une précision industrielle."
+        "tagline": "Précision Résine Premium",
+        "headline": "Chefs-d'œuvre",
+        "headlineHighlight": "Imprimés en 3D",
+        "subtext": "Impressions en résine haute résolution (0,025 mm) — chaque détail capturé avec une précision de musée dans chaque pièce artisanale."
       },
       {
-        "tagline": "Finition Artisanale Faite à la Main",
-        "headline": "Peint",
-        "headlineHighlight": "à la Main",
-        "subtext": "Des techniques d'aérographie professionnelles donnent vie à chaque figurine — finies à la main par des artistes experts."
+        "tagline": "Finition Artisanale à la Main",
+        "headline": "Peinture",
+        "headlineHighlight": "Artisanale",
+        "subtext": "Des nuances uniques et des techniques d'aérographie professionnelles donnent vie à vos personnages préférés, une œuvre à la fois."
       }
     ],
     "cta": "Acheter Maintenant",

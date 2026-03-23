@@ -344,7 +344,7 @@
     "rights": "© 2026 5iveArts Collector Series. Tutti i diritti riservati.",
     "privacy": "Privacy",
     "terms": "Termini",
-    "description": "Stampa 3D professionale a livello artigianale e finitura a mano per collezionisti internazionali. Ogni pezzo è un capolavoro unico di resina e pigmento."
+    "description": "Studio boutique per figure in resina premium dipinte a mano e stampate in 3D. Spediamo oggetti da collezione di qualità museale in tutto il mondo dal nostro laboratorio di Palermo."
   },
   "shipping": {
     "protocol": "Protocollo Logistica",
@@ -374,16 +374,16 @@
   "hero": {
     "slides": [
       {
-        "tagline": "Precisione Tecnologia Resina",
-        "headline": "Stampa",
-        "headlineHighlight": "3D",
-        "subtext": "Stampe in resina ad alta risoluzione con spessore dello strato di 0,025 mm: ogni dettaglio catturato con precisione industriale."
+        "tagline": "Precisione in Resina Premium",
+        "headline": "Capolavori",
+        "headlineHighlight": "Stampa 3D",
+        "subtext": "Stampe in resina ad alta risoluzione con spessore 0,025 mm: ogni dettaglio catturato con precisione museale in ogni pezzo artigianale."
       },
       {
-        "tagline": "Finitura Artigianale a Mano",
+        "tagline": "Dettaglio Artigianale a Mano",
         "headline": "Dipinto",
         "headlineHighlight": "a Mano",
-        "subtext": "Le tecniche professionali dell'aerografo danno vita ad ogni figura, rifinita a mano da artisti esperti, un tocco alla volta."
+        "subtext": "Sfumature uniche e tecniche professionali di aerografia danno vita ai tuoi personaggi preferiti, un pezzo unico alla volta."
       }
     ],
     "cta": "Acquista Ora",

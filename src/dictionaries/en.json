@@ -344,7 +344,7 @@
     "rights": "© 2026 5iveArts Collector Series. All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms",
-    "description": "Professional 3D printing and artisan hand-finishing for international collectors. Every piece is a unique masterpiece of resin and pigment."
+    "description": "Boutique studio for premium hand-painted and 3D-printed resin figures. We ship museum-grade collectibles to enthusiasts worldwide from our Palermo workshop."
   },
   "shipping": {
     "protocol": "Logistics Protocol",
@@ -374,16 +374,16 @@
   "hero": {
     "slides": [
       {
-        "tagline": "Resin Technology Precision",
-        "headline": "3D",
-        "headlineHighlight": "Printing",
-        "subtext": "High-resolution resin prints with 0.025mm layer thickness — every detail captured with industrial precision."
+        "tagline": "Premium Resin Precision",
+        "headline": "3D-Printed",
+        "headlineHighlight": "Masterpieces",
+        "subtext": "High-resolution resin figures at 0.025 mm layer height — museum-grade detail in every artisan-crafted piece."
       },
       {
-        "tagline": "Handcrafted Artisan Finish",
-        "headline": "Hand",
-        "headlineHighlight": "Painted",
-        "subtext": "Professional airbrush techniques bring every figure to life — hand-finished by expert artists, one touch at a time."
+        "tagline": "Handcrafted Artisan Detail",
+        "headline": "Expertly",
+        "headlineHighlight": "Hand-Painted",
+        "subtext": "Unique shading and professional airbrush techniques bring your favorite characters to life, one unique creation at a time."
       }
     ],
     "cta": "Shop Now",

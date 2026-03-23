@@ -6,10 +6,47 @@ import { getSiteSettings } from "@/lib/settings";
 import { locales, Locale, getDictionary } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
 
+import OrganizationSchema from "@/components/seo/OrganizationSchema";
+
 export const metadata: Metadata = {
-  title: "5iveArts — Hand-Painted & 3D-Printed Action Figures",
+  metadataBase: new URL('https://5ivearts.com'),
+  title: {
+    default: "5iveArts — Hand-Painted & 3D-Printed Action Figures",
+    template: "%s | 5iveArts"
+  },
   description:
     "Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art. Shop online with fast shipping.",
+  openGraph: {
+    type: 'website',
+    siteName: '5iveArts',
+    title: '5iveArts — Hand-Painted & 3D-Printed Action Figures',
+    description: 'Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art.',
+    url: 'https://5ivearts.com',
+    images: [
+      {
+        url: '/logo.svg', // Use logo since we don't have a large OG image yet
+        width: 1200,
+        height: 630,
+        alt: '5iveArts',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '5iveArts — Hand-Painted & 3D-Printed Action Figures',
+    description: 'Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art.',
+    images: ['/logo.svg'],
+  },
+  alternates: {
+    canonical: './',
+    languages: {
+      'en': '/en',
+      'it': '/it',
+      'es': '/es',
+      'fr': '/fr',
+      'de': '/de',
+    },
+  },
 };
 
 export async function generateStaticParams() {
@@ -38,6 +75,7 @@ export default async function StoreLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <body className="antialiased bg-black text-white min-h-screen flex flex-col">
+        <OrganizationSchema />
         <SettingsProvider initialSettings={initialSettings}>
           <ConditionalLayout dict={dict}>
             {children}

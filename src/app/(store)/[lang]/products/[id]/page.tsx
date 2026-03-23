@@ -21,18 +21,38 @@ export async function generateStaticParams() {
   return paths;
 }
 
+import { getDictionary, Locale } from "@/lib/get-dictionary";
+import ProductSchema from "@/components/seo/ProductSchema";
+
 export async function generateMetadata({ params }: Props) {
-  const { id } = await params;
+  const { id, lang } = await params;
   const products = await fetchProductsFromDb();
   const product = products.find(p => p.id === id);
   if (!product) return {};
+  
   return {
     title: `${product.name} — 5iveArts`,
     description: product.description,
+    openGraph: {
+      type: 'website', // Use website since it's a detail page
+      title: `${product.name} | 5iveArts`,
+      description: product.description,
+      url: `https://5ivearts.com/${lang}/products/${product.id}`,
+      images: [
+        {
+          url: product.images?.[0] || '/logo.svg',
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} | 5iveArts`,
+      description: product.description,
+      images: [product.images?.[0] || '/logo.svg'],
+    },
   };
 }
-
-import { getDictionary, Locale } from "@/lib/get-dictionary";
 
 export default async function ProductDetailPage({ params }: Props) {
   const { id, lang } = await params;
@@ -44,6 +64,11 @@ export default async function ProductDetailPage({ params }: Props) {
   const product = products.find(p => p.id === id);
   if (!product) notFound();
 
-  return <ProductDetailClient product={product} lang={lang} dict={dict} />;
+  return (
+    <>
+      <ProductSchema product={product} lang={lang} />
+      <ProductDetailClient product={product} lang={lang} dict={dict} />
+    </>
+  );
 }
 

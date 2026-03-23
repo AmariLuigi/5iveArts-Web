@@ -344,7 +344,7 @@
     "rights": "© 2026 5iveArts Collector Series. Alle Rechte vorbehalten.",
     "privacy": "Datenschutz",
     "terms": "Bedingungen",
-    "description": "Professioneller 3D-Druck und Handveredelung auf Kunsthandwerkerniveau für internationale Sammler. Jedes Stück ist ein einzigartiges Meisterwerk aus Harz und Pigment."
+    "description": "Boutique-Studio für handbemalte und 3D-gedruckte Premium-Resinfiguren. Wir versenden Sammlerstücke in Museumsqualität weltweit aus unserer Werkstatt in Palermo."
   },
   "shipping": {
     "protocol": "Logistikprotokoll",
@@ -374,16 +374,16 @@
   "hero": {
     "slides": [
       {
-        "tagline": "Präzisions-Harztechnologie",
-        "headline": "3D",
-        "headlineHighlight": "Druck",
-        "subtext": "Hochauflösende Harzdrucke mit einer Schichtdicke von 0,025 mm — jedes Detail wird mit industrieller Präzision erfasst."
+        "tagline": "Premium-Harz-Präzision",
+        "headline": "3D-Gedruckte",
+        "headlineHighlight": "Meisterwerke",
+        "subtext": "Hochauflösende Harzfiguren mit 0,025 mm Schichthöhe — Museumsqualität in jedem handgefertigten Sammlerstück."
       },
       {
         "tagline": "Handgefertigtes Artisan-Finish",
-        "headline": "Hand",
-        "headlineHighlight": "Bemalt",
-        "subtext": "Professionelle Airbrush-Techniken erwecken jede Figur zum Leben — von erfahrenen Künstlern handveredelt, Strich für Strich."
+        "headline": "Kunstvolle",
+        "headlineHighlight": "Handbemalung",
+        "subtext": "Einzigartige Schattierungen und professionelle Airbrush-Techniken erwecken Ihre Lieblingscharaktere zum Leben."
       }
     ],
     "cta": "Jetzt Einkaufen",

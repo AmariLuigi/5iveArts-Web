@@ -344,7 +344,7 @@
     "rights": "© 2026 5iveArts Collector Series. Todos los derechos reservados.",
     "privacy": "Privacidad",
     "terms": "Condiciones",
-    "description": "Impresión 3D profesional y acabado a mano a nivel artesanal para coleccionistas internacionales. Cada pieza es una obra maestra única de resina y pigmento."
+    "description": "Estudio boutique de figuras de resina premium pintadas a mano e impresas en 3D. Enviamos piezas de colección de calidad de museo a todo el mundo desde nuestro taller en Palermo."
   },
   "shipping": {
     "protocol": "Protocolo de Logística",
@@ -374,16 +374,16 @@
   "hero": {
     "slides": [
       {
-        "tagline": "Precisión en Tecnología de Resina",
-        "headline": "Impresión",
-        "headlineHighlight": "3D",
-        "subtext": "Impresiones de resina de alta resolución con un espesor de capa de 0,025 mm: cada detalle capturado con precisión industrial."
+        "tagline": "Precisión en Tecnología de Resina Premium",
+        "headline": "Obras Maestras",
+        "headlineHighlight": "Impresas en 3D",
+        "subtext": "Impresiones de resina de alta resolución con espesor de 0,025 mm: cada detalle capturado con precisión de museo en cada pieza artesanal."
       },
       {
         "tagline": "Acabado Artesanal a Mano",
         "headline": "Pintado",
         "headlineHighlight": "a Mano",
-        "subtext": "Técnicas de aerografía profesionales dan vida a cada figura, acabadas a mano por artistas expertos, un toque a la vez."
+        "subtext": "Técnicas de aerografía profesionales y sombreados únicos dan vida a tus personajes favoritos, una pieza exclusiva a la vez."
       }
     ],
     "cta": "Comprar Ahora",

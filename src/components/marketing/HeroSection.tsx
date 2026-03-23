@@ -214,7 +214,7 @@ export default function HeroSection({
                 muted
                 playsInline
                 loop={false}
-                preload="auto"
+                preload={i === 0 ? "auto" : "metadata"}
                 className="w-full h-full object-cover opacity-90 contrast-110 brightness-110 saturate-[1.1]"
               />
             </motion.div>
