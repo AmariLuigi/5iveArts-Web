@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await fetchProductsFromDb();
 
   // 2. Define static routes
-  const staticRoutes = ['', '/products', '/faq', '/shipping'];
+  const staticRoutes = ['', '/products', '/faq', '/shipping', '/privacy', '/terms'];
 
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
