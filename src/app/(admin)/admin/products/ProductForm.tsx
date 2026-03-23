@@ -23,7 +23,9 @@ import {
     Film,
     Play,
     Eye,
-    EyeOff
+    EyeOff,
+    Sparkles,
+    Zap
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -58,6 +60,11 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [allExistingTags, setAllExistingTags] = useState<string[]>([]);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isTagSuggestionsOpen, setIsTagSuggestionsOpen] = useState(false);
+
+    // AI Generator State
+    const [isForging, setIsForging] = useState(false);
+    const [aiPrompt, setAiPrompt] = useState("");
+    const [autoTranslate, setAutoTranslate] = useState(true);
 
     const categories = [
         { value: "figures", label: "Collector Figure", icon: Shield, desc: "Standard 1/9 to 1/4 scales" },
@@ -177,6 +184,80 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         } finally {
             setIsMediaUploading(false);
             setTimeout(() => setUploadProgress(0), 1500);
+        }
+    };
+
+    const handleForge = async () => {
+        if (!aiPrompt && images.length === 0) {
+            setError("Please provide an image or a prompt for the AI Forge");
+            return;
+        }
+
+        setIsForging(true);
+        setError(null);
+
+        try {
+            // If we have images, use the first one as a base64 reference for vision
+            let base64Image = null;
+            if (images.length > 0) {
+                try {
+                    const imgResponse = await fetch(images[0]);
+                    const blob = await imgResponse.blob();
+                    const reader = new FileReader();
+                    base64Image = await new Promise((resolve) => {
+                        reader.onloadend = () => {
+                            const result = reader.result as string;
+                            resolve(result.split(',')[1]); // remove data:image/jpeg;base64,
+                        };
+                        reader.readAsDataURL(blob);
+                    });
+                } catch (e) {
+                    console.warn("Failed to convert image to base64 for vision, falling back to text only", e);
+                }
+            }
+
+            const response = await axios.post("/api/admin/ai/generate", {
+                prompt: aiPrompt,
+                image: base64Image
+            });
+
+            const { title, description, tags: suggestedTags } = response.data;
+
+            if (title) setName(title);
+            if (description) {
+                const newDescriptions: Record<string, string | null> = { ...descriptions, en: description };
+
+                if (autoTranslate) {
+                    const languages = ["it", "es", "fr", "de"];
+                    for (const lang of languages) {
+                        try {
+                            const transRes = await axios.post("/api/translate", {
+                                text: description,
+                                targetLang: lang,
+                                sourceLang: "en"
+                            });
+                            if (transRes.data.translatedText) {
+                                newDescriptions[lang] = transRes.data.translatedText;
+                            }
+                        } catch (e) {
+                            console.error(`Translation fail for ${lang}, skipping...`, e);
+                        }
+                    }
+                }
+
+                setDescriptions(newDescriptions);
+            }
+            if (suggestedTags && Array.isArray(suggestedTags)) {
+                // Merge tags, avoid duplicates
+                const uniqueTags = Array.from(new Set([...tags, ...suggestedTags.map(t => t.toLowerCase())]));
+                setTags(uniqueTags);
+            }
+
+        } catch (err: any) {
+            console.error("[AI Forge] Fatal Error:", err);
+            setError(`Forging system failed: ${err.response?.data?.error || err.message}`);
+        } finally {
+            setIsForging(false);
         }
     };
 
@@ -306,6 +387,84 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                 Published
                             </button>
                         </div>
+                    </div>
+
+                    {/* AI FORGE SYSTEM */}
+                    <div className="bg-brand-yellow/5 border border-brand-yellow/10 rounded-sm p-8 space-y-6 relative overflow-hidden group/forge">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover/forge:opacity-20 transition-opacity">
+                            <Sparkles className="w-16 h-16 text-brand-yellow" />
+                        </div>
+
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 bg-brand-yellow text-black rounded-sm shadow-[0_0_15px_rgba(255,159,0,0.3)]">
+                                <Zap className="w-4 h-4" />
+                            </div>
+                            <div>
+                                <h4 className="text-[10px] uppercase font-black tracking-widest text-brand-yellow">AI Forge Unit</h4>
+                                <p className="text-[8px] uppercase font-bold text-neutral-500 tracking-tighter">Automated master crafting protocol enabled</p>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="relative">
+                                <textarea
+                                    value={aiPrompt}
+                                    onChange={(e) => setAiPrompt(e.target.value)}
+                                    placeholder="Enter subject details (e.g. 'Cyberpunk female assassin with metallic wings') or leave empty to forge from uploaded images..."
+                                    className="w-full bg-black/40 border border-white/5 rounded-sm p-4 text-[11px] font-bold text-white focus:outline-none focus:border-brand-yellow/30 min-h-[80px] resize-none pr-20"
+                                />
+                                <div className="absolute bottom-4 right-4 text-[8px] uppercase font-black text-neutral-700 tracking-widest">
+                                    NVIDIA QWEN V2
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <label className="flex items-center gap-3 cursor-pointer group/toggle">
+                                    <div className={`w-8 h-4 rounded-full p-0.5 transition-all ${autoTranslate ? 'bg-brand-yellow/20' : 'bg-white/5'}`}>
+                                        <div className={`w-3 h-3 rounded-full transition-all ${autoTranslate ? 'bg-brand-yellow translate-x-4 shadow-[0_0_8px_rgba(255,159,0,0.5)]' : 'bg-neutral-700 translate-x-0'}`} />
+                                    </div>
+                                    <input
+                                        type="checkbox"
+                                        className="hidden"
+                                        checked={autoTranslate}
+                                        onChange={(e) => setAutoTranslate(e.target.checked)}
+                                    />
+                                    <span className="text-[9px] uppercase font-black tracking-widest text-neutral-500 group-hover/toggle:text-neutral-300 transition-colors">
+                                        Auto-Generate Global Translations
+                                    </span>
+                                </label>
+
+                                <button
+                                    type="button"
+                                    disabled={isForging || (!aiPrompt && images.length === 0)}
+                                    onClick={handleForge}
+                                    className="px-8 py-3 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-[#ffaa22] active:scale-95 transition-all disabled:opacity-50 disabled:grayscale flex items-center gap-3 shadow-[0_4px_15px_rgba(255,159,0,0.2)]"
+                                >
+                                    {isForging ? (
+                                        <>
+                                            <Loader2 className="w-3 h-3 animate-spin" />
+                                            Forging...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Sparkles className="w-3 h-3" />
+                                            Forge Masterpiece
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        {images.length > 0 && (
+                            <div className="pt-4 border-t border-white/5 flex items-center gap-3">
+                                <div className="w-10 h-10 border border-brand-yellow/30 rounded-sm overflow-hidden relative">
+                                    <Image src={images[0]} alt="Ref" fill className="object-cover opacity-50" />
+                                </div>
+                                <span className="text-[8px] uppercase font-black text-brand-yellow/60 tracking-widest animate-pulse">
+                                    VISION PROTOCOL: 01 ASSET DETECTED
+                                </span>
+                            </div>
+                        )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
