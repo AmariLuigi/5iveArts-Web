@@ -7,7 +7,13 @@ import { locales, Locale, getDictionary } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
 
 import OrganizationSchema from "@/components/seo/OrganizationSchema";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://5ivearts.com'),
@@ -75,7 +81,7 @@ export default async function StoreLayout({
 
   return (
     <html lang={lang} suppressHydrationWarning>
-      <body className="antialiased bg-black text-white min-h-screen flex flex-col">
+      <body className={`${inter.className} antialiased bg-black text-white min-h-screen flex flex-col`}>
         <OrganizationSchema />
         <SettingsProvider initialSettings={initialSettings}>
           <ConditionalLayout dict={dict}>

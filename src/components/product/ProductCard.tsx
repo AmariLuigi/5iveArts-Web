@@ -110,8 +110,11 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
             playsInline
             crossOrigin="anonymous"
             preload="auto"
+            aria-hidden="true"
             className="w-full h-full object-cover transition-opacity duration-500"
-          />
+          >
+            <track kind="captions" />
+          </video>
         ) : (
           <Image
             src={currentImage}
@@ -224,6 +227,7 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
                             className="flex flex-col p-2 bg-white/[0.03] border border-white/5 hover:border-brand-yellow/30 hover:bg-brand-yellow/[0.02] transition-all rounded-sm group/btn"
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
+                            aria-label={`${dict?.products?.painted || "Painted"} ${scale}`}
                           >
                             <span className="text-[7px] uppercase font-black text-neutral-600 group-hover/btn:text-brand-yellow transition-colors mb-1">{dict?.products?.painted || "Painted"}</span>
                             <span className="text-[10px] font-black text-white">{formatPrice(calculatePrice(product.price, scale, "painted", pricing))}</span>
@@ -233,6 +237,7 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
                             className="flex flex-col p-2 bg-white/[0.03] border border-white/5 hover:border-white/20 hover:bg-white/[0.05] transition-all rounded-sm group/btn"
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
+                            aria-label={`${dict?.products?.raw || "Raw Resin"} ${scale}`}
                           >
                             <span className="text-[7px] uppercase font-black text-neutral-600 group-hover/btn:text-white transition-colors mb-1">{dict?.products?.raw || "Raw Resin"}</span>
                             <span className="text-[10px] font-black text-white">{formatPrice(calculatePrice(product.price, scale, "raw", pricing))}</span>
@@ -261,6 +266,7 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
                   onClick={() => setShowScaleSelector(!showScaleSelector)}
                   className={`hasbro-btn-primary p-3 shadow-lg shadow-brand-yellow/10 transition-all ${showScaleSelector ? 'bg-white text-black' : ''}`}
                   whileTap={{ scale: 0.95 }}
+                  aria-label={dict?.nav?.cart || "Add to cart"}
                 >
                   {isAdding ? (
                     <motion.div

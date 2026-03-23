@@ -193,8 +193,13 @@ export default function HeroSection({
                 playsInline
                 loop={false}
                 preload={i === 0 ? "auto" : "metadata"}
+                // @ts-ignore - fetchpriority is valid in some browsers for video/img
+                fetchpriority={i === 0 ? "high" : "auto"}
+                aria-hidden="true"
                 className="w-full h-full object-cover opacity-90 contrast-110 brightness-110 saturate-[1.1]"
-              />
+              >
+                <track kind="captions" />
+              </video>
             </motion.div>
             <div className={`absolute inset-0 ${i === 1 ? "bg-black/40" : ""}`} />
           </motion.div>

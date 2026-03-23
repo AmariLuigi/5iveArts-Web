@@ -106,7 +106,12 @@ export default function Navbar({ dict, lang }: NavbarProps) {
               onMouseEnter={() => { if (langTimeoutRef.current) clearTimeout(langTimeoutRef.current); setIsLangHovered(true); }}
               onMouseLeave={() => { langTimeoutRef.current = setTimeout(() => setIsLangHovered(false), 300); }}
             >
-              <button className="flex items-center gap-2 py-4 px-2 hover:text-brand-yellow transition-all">
+              <button 
+                className="flex items-center gap-2 py-4 px-2 hover:text-brand-yellow transition-all"
+                aria-label={dict.nav.switchRegion}
+                aria-haspopup="listbox"
+                aria-expanded={isLangHovered}
+              >
                 <span className="text-lg">{currentLang.flag}</span>
                 <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isLangHovered ? 'rotate-180' : ''}`} />
               </button>
@@ -122,6 +127,7 @@ export default function Navbar({ dict, lang }: NavbarProps) {
                         key={l.code}
                         href={redirectedPathname(l.code)}
                         className={`flex items-center justify-between px-3 py-2 text-[10px] uppercase font-black tracking-widest hover:bg-white/5 transition-all w-full text-left ${lang === l.code ? 'text-brand-yellow' : 'text-neutral-400'}`}
+                        aria-label={`${dict.nav.switchRegion} to ${l.label}`}
                       >
                         <span className="flex items-center gap-3">
                           <span className="text-base">{l.flag}</span>
@@ -143,6 +149,7 @@ export default function Navbar({ dict, lang }: NavbarProps) {
               <Link
                 href={`/${lang}/cart`}
                 className="flex items-center gap-3 text-white hover:text-brand-yellow transition-all py-4"
+                aria-label={`${dict.nav.cart} (${totalItems} items)`}
               >
                 <div className="relative">
                   <ShoppingCart className="w-6 h-6" />
@@ -177,6 +184,7 @@ export default function Navbar({ dict, lang }: NavbarProps) {
               className="md:hidden text-white"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
             >
               {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>

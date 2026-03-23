@@ -141,6 +141,9 @@ export default function FeaturesSection({ features, dict, stats: settingsStats }
 
   return (
     <section ref={sectionRef} className="relative py-24 px-4 bg-[#050505] border-b border-[#111] overflow-hidden">
+      {/* Accessibility: Sequential heading hierarchy */}
+      <h2 className="sr-only">Our Core Features and Global Statistics</h2>
+      
       {/* Animated stats section */}
       <div className="max-w-7xl mx-auto mb-20 pb-10 border-b border-white/5">
         <motion.div

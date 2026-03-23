@@ -68,6 +68,7 @@ export default async function HomePage({
       <HeroSection
         primaryCta={{ label: dict?.hero?.cta || "Enter Vault", href: `/${lang}/products` }}
         heroVideos={settings.homepage?.hero_videos}
+        heroPosters={settings.homepage ? (settings.homepage as any).hero_posters : []}
         translatedSlides={dict?.hero?.slides || []}
         trustLabels={dict?.hero?.trust || []}
       />
