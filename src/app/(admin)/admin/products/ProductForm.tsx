@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import MultiLanguageEditor from "@/components/admin/MultiLanguageEditor";
 
 interface ProductFormProps {
@@ -65,6 +66,14 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [isForging, setIsForging] = useState(false);
     const [aiPrompt, setAiPrompt] = useState("");
     const [autoTranslate, setAutoTranslate] = useState(true);
+
+    // Toast State
+    const [toast, setToast] = useState<{ message: string; type: 'error' | 'success' } | null>(null);
+
+    const showToast = (message: string, type: 'error' | 'success' = 'error') => {
+        setToast({ message, type });
+        setTimeout(() => setToast(null), 5000);
+    };
 
     const categories = [
         { value: "figures", label: "Collector Figure", icon: Shield, desc: "Standard 1/9 to 1/4 scales" },
@@ -132,7 +141,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
                 // 10MB Size Guard
                 if (file.size > 10 * 1024 * 1024) {
-                    throw new Error(`File ${file.name} exceeds the 10MB limit. Please compress and retry.`);
+                    showToast(`File ${file.name} exceeds the 10MB limit.`, 'error');
+                    continue; // Skip this large file and process others
                 }
 
                 const fileExt = file.name.split('.').pop();
@@ -195,7 +205,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
     const handleForge = async () => {
         if (!aiPrompt && images.length === 0) {
-            setError("Please provide an image or a prompt for the AI Forge");
+            showToast("Provide an image or prompt for the Forge", 'error');
             return;
         }
 
@@ -269,7 +279,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
         } catch (err: any) {
             console.error("[AI Forge] Fatal Error:", err);
-            setError(`Forging system failed: ${err.response?.data?.error || err.message}`);
+            showToast(`Forging failed: ${err.response?.data?.error || err.message}`, 'error');
         } finally {
             setIsForging(false);
         }
@@ -285,7 +295,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             (desc) => desc && desc.trim().length > 0
         );
         if (!hasAtLeastOneDescription) {
-            setError("At least one language description is required");
+            showToast("One language description is required", 'error');
             setLoading(false);
             return;
         }
@@ -319,7 +329,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             router.refresh();
         } catch (err: any) {
             console.error("[handleSubmit] Error:", err);
-            setError(`Save Error: ${err.response?.data?.error || err.message}`);
+            showToast(`Save Error: ${err.response?.data?.error || err.message}`, 'error');
             setLoading(false);
         }
     };
@@ -772,6 +782,71 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     </div>
                 </div>
             </form>
+
+            <AnimatePresence>
+                {toast && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8, y: 50, x: 50 }}
+                        animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.8, y: 20, transition: { duration: 0.2 } }}
+                        className="fixed bottom-8 right-8 z-[100] min-w-[320px] pointer-events-none"
+                    >
+                        <div className={`
+                            relative overflow-hidden p-6 rounded-sm border backdrop-blur-xl shadow-2xl
+                            ${toast.type === 'error' 
+                                ? 'bg-red-500/10 border-red-500/20' 
+                                : 'bg-brand-yellow/10 border-brand-yellow/20'}
+                        `}>
+                            {/* Blop Background Glow */}
+                            <div className={`
+                                absolute -inset-20 opacity-20 blur-3xl rounded-full
+                                ${toast.type === 'error' ? 'bg-red-500' : 'bg-brand-yellow'}
+                            `} />
+
+                            <div className="relative flex items-center gap-4">
+                                <div className={`
+                                    p-3 rounded-sm
+                                    ${toast.type === 'error' ? 'bg-red-500' : 'bg-brand-yellow'}
+                                `}>
+                                    {toast.type === 'error' ? (
+                                        <AlertCircle className="w-4 h-4 text-black" />
+                                    ) : (
+                                        <Zap className="w-4 h-4 text-black" />
+                                    )}
+                                </div>
+                                <div>
+                                    <h5 className={`
+                                        text-[10px] uppercase font-black tracking-widest mb-1
+                                        ${toast.type === 'error' ? 'text-red-400' : 'text-brand-yellow'}
+                                    `}>
+                                        System Alert
+                                    </h5>
+                                    <p className="text-[11px] font-bold text-white tracking-tight leading-relaxed">
+                                        {toast.message}
+                                    </p>
+                                </div>
+                                <button 
+                                    onClick={() => setToast(null)}
+                                    className="ml-auto p-2 hover:bg-white/5 rounded-full pointer-events-auto transition-colors"
+                                >
+                                    <X className="w-3 h-3 text-neutral-500" />
+                                </button>
+                            </div>
+
+                            {/* Self-Destruct Progress Bar */}
+                            <motion.div 
+                                initial={{ width: "100%" }}
+                                animate={{ width: "0%" }}
+                                transition={{ duration: 5, ease: "linear" }}
+                                className={`
+                                    absolute bottom-0 left-0 h-0.5
+                                    ${toast.type === 'error' ? 'bg-red-500' : 'bg-brand-yellow'}
+                                `}
+                            />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
