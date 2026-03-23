@@ -200,12 +200,12 @@ export default function HeroSection({
               )}
               <video
                 ref={(el) => { videoRefs.current[i] = el; }}
-                src={s.video}
+                src={activeIndex === i ? s.video : ""}
                 poster={s.poster}
                 muted
                 playsInline
                 loop={false}
-                preload={i === 0 ? "auto" : "metadata"}
+                preload={i === 0 ? "auto" : "none"}
                 aria-hidden="true"
                 className="w-full h-full object-cover opacity-90 contrast-110 brightness-110 saturate-[1.1]"
               >
@@ -225,7 +225,7 @@ export default function HeroSection({
       >
         <motion.span
           className="text-[10px] uppercase font-black tracking-[0.5em] text-brand-yellow mb-6 block"
-          initial="hidden"
+          initial={false}
           animate="visible"
           variants={textContainerVariants}
         >
@@ -241,7 +241,7 @@ export default function HeroSection({
 
         <motion.h1
           className="text-6xl md:text-[10rem] font-black leading-[0.85] mb-10 uppercase tracking-tighter"
-          initial="hidden"
+          initial={false}
           animate="visible"
           variants={textContainerVariants}
         >
@@ -263,7 +263,7 @@ export default function HeroSection({
 
         <motion.p
           className="max-w-3xl mx-auto text-lg md:text-2xl text-white mb-14 leading-relaxed font-bold uppercase tracking-[0.3em] text-[13px] opacity-80"
-          initial="hidden"
+          initial={false}
           animate="visible"
           variants={fadeUpVariants}
           style={{ x: subtextX, y: subtextY }}
@@ -273,7 +273,7 @@ export default function HeroSection({
 
         <motion.div
           className="flex flex-wrap justify-center gap-8"
-          initial="hidden"
+          initial={false}
           animate="visible"
           variants={fadeUpVariants}
           style={{ x: ctaX, y: ctaY }}
@@ -296,7 +296,7 @@ export default function HeroSection({
 
         <motion.div
           className="flex justify-center gap-4 mt-16"
-          initial="hidden"
+          initial={false}
           animate="visible"
           variants={fadeUpVariants}
         >
@@ -330,7 +330,7 @@ export default function HeroSection({
 
         <motion.div
           className="mt-28 pt-10 border-t border-white/10 flex flex-wrap justify-center gap-x-20 gap-y-6 text-white/50 text-[11px] uppercase font-black tracking-[0.4em]"
-          initial="hidden"
+          initial={false}
           animate="visible"
           variants={textContainerVariants}
           style={{ x: trustX, y: trustY }}
