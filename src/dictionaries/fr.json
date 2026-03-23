@@ -472,5 +472,12 @@
         "content": "Si vous avez des questions sur ces conditions, veuillez nous contacter à l'adresse legal@5ivearts.com"
       }
     ]
+  },
+  "cookie_banner": {
+    "tag": "Unité Photopolymère",
+    "title": "Nous polymérisons les cookies locaux.",
+    "description": "Notre système utilise des cookies essentiels pour stabiliser les performances du site et analyser les modèles de trafic couche par couche.",
+    "accept": "Accepter le Lot",
+    "preferences": "Préférences Système"
   }
 }

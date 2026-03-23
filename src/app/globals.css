@@ -15,6 +15,9 @@
   --accent-foreground: #000000;
   --muted: #666666;
   --border: #1a1a1a;
+  --dough: #df9e55;
+  --chip: #3a1d0e;
+  --resin-liquid: rgba(255, 159, 0, 0.15);
 }
 
 /* Smooth scroll behavior */
@@ -251,4 +254,196 @@ body {
 ::selection {
   background: rgba(255, 159, 0, 0.3);
   color: white;
+}
+
+/* --- SLA PRINTER ANIMATION SYSTEM --- */
+
+.printer-container {
+    position: relative;
+    width: 180px;
+    height: 110px;
+    background: #0f0f11;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.z-rail {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: #141417;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    border-right: 1px solid rgba(0, 0, 0, 0.8);
+    z-index: 1;
+}
+
+.vat {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 35px;
+    background: var(--resin-liquid);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    backdrop-filter: blur(4px);
+    z-index: 5;
+    box-shadow: 0 4px 20px rgba(255, 159, 0, 0.05);
+}
+
+.vat-surface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 159, 0, 0.8);
+    box-shadow: 0 0 12px rgba(255, 159, 0, 0.6);
+}
+
+.uv-screen-wrapper {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 1px;
+    z-index: 4;
+    animation: uvCycle 8s infinite;
+}
+
+.uv-glow {
+    width: 100%;
+    height: 100%;
+    background: var(--color-brand-orange);
+    box-shadow: 
+        0 0 10px 2px var(--color-brand-orange), 
+        0 0 25px 5px rgba(255, 159, 0, 0.5),
+        0 0 50px rgba(255, 159, 0, 0.3);
+    animation: rapidPulse 0.1s infinite alternate;
+}
+
+.build-arm {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    animation: printLift 8s infinite ease-in-out;
+}
+
+.plate-mount {
+    width: 16px;
+    height: 12px;
+    background: #222225;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+}
+
+.plate {
+    width: 64px;
+    height: 5px;
+    background: #1a1a1d;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid #000;
+    border-radius: 2px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+}
+
+.cookie-wrapper {
+    position: absolute;
+    top: 100%;
+    width: 40px;
+    height: 0px;
+    overflow: hidden;
+    animation: printGrow 8s infinite ease-in-out;
+}
+
+.cookie-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    background-color: var(--dough);
+    background-image: 
+        radial-gradient(circle at 25% 30%, var(--chip) 15%, transparent 16%),
+        radial-gradient(circle at 75% 35%, var(--chip) 12%, transparent 13%),
+        radial-gradient(circle at 45% 70%, var(--chip) 18%, transparent 19%),
+        radial-gradient(circle at 80% 75%, var(--chip) 14%, transparent 15%),
+        radial-gradient(circle at 15% 65%, var(--chip) 10%, transparent 11%);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.resin-drip {
+    position: absolute;
+    background: var(--color-brand-yellow);
+    z-index: 6;
+    box-shadow: 0 0 8px rgba(255, 159, 0, 0.8);
+    opacity: 0;
+}
+
+.drip-1 { left: 50%; transform: translateX(-50%); animation: viscousDrip1 8s infinite; }
+.drip-2 { left: 38%; transform: translateX(-50%); animation: viscousDrip2 8s infinite; }
+.drip-3 { left: 60%; transform: translateX(-50%); animation: viscousDrip3 8s infinite; }
+
+@keyframes printLift {
+    0%, 10% { transform: translate(-50%, 0px); }
+    35% { transform: translate(-50%, -40px); } 
+    45%, 70% { transform: translate(-50%, -55px); } 
+    80% { transform: translate(-50%, -40px); } 
+    95%, 100% { transform: translate(-50%, 0px); } 
+}
+
+@keyframes printGrow {
+    0%, 10% { height: 0px; }
+    35%, 80% { height: 40px; } 
+    95%, 100% { height: 0px; } 
+}
+
+@keyframes uvCycle {
+    0%, 9% { opacity: 0; }
+    10%, 35% { opacity: 1; }
+    36%, 100% { opacity: 0; }
+}
+
+@keyframes rapidPulse {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+@keyframes viscousDrip1 {
+    0%, 45% { opacity: 0; bottom: 50px; height: 2px; width: 6px; border-radius: 50%; }
+    48% { opacity: 1; bottom: 45px; height: 10px; width: 5px; border-radius: 5px; } 
+    55% { opacity: 1; bottom: 35px; height: 20px; width: 2px; border-radius: 2px; } 
+    58% { opacity: 1; bottom: 30px; height: 6px; width: 4px; border-radius: 50%; } 
+    60%, 100% { opacity: 0; bottom: 28px; height: 2px; width: 14px; border-radius: 50%; } 
+}
+
+@keyframes viscousDrip2 {
+    0%, 48% { opacity: 0; bottom: 50px; height: 2px; width: 4px; border-radius: 50%; }
+    52% { opacity: 1; bottom: 46px; height: 8px; width: 3px; border-radius: 4px; }
+    58% { opacity: 1; bottom: 35px; height: 15px; width: 1.5px; border-radius: 2px; }
+    61% { opacity: 1; bottom: 30px; height: 4px; width: 3px; border-radius: 50%; }
+    63%, 100% { opacity: 0; bottom: 29px; height: 1px; width: 10px; border-radius: 50%; }
+}
+
+@keyframes viscousDrip3 {
+    0%, 52% { opacity: 0; bottom: 50px; height: 2px; width: 5px; border-radius: 50%; }
+    56% { opacity: 1; bottom: 44px; height: 12px; width: 4px; border-radius: 5px; }
+    62% { opacity: 1; bottom: 35px; height: 18px; width: 2px; border-radius: 2px; }
+    65% { opacity: 1; bottom: 30px; height: 5px; width: 4px; border-radius: 50%; }
+    67%, 100% { opacity: 0; bottom: 28px; height: 2px; width: 12px; border-radius: 50%; }
 }

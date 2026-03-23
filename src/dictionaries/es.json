@@ -472,5 +472,12 @@
         "content": "Si tienes alguna pregunta sobre estos Términos, contáctanos en legal@5ivearts.com"
       }
     ]
+  },
+  "cookie_banner": {
+    "tag": "Unidad Fotopolimérica",
+    "title": "Estamos curando las cookies locales.",
+    "description": "Nuestro sistema utiliza cookies esenciales para estabilizar el rendimiento del sitio y analizar los patrones de tráfico capa por capa.",
+    "accept": "Aceptar Lote",
+    "preferences": "Preferencias del Sistema"
   }
 }

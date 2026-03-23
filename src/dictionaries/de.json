@@ -472,5 +472,12 @@
         "content": "Wenn Sie Fragen zu diesen Bedingungen haben, kontaktieren Sie uns bitte unter legal@5ivearts.com"
       }
     ]
+  },
+  "cookie_banner": {
+    "tag": "Photopolymereinheit",
+    "title": "Wir härten lokale Cookies aus.",
+    "description": "Unser System verwendet essentielle Cookies, um die Website-Leistung zu stabilisieren und Verkehrsmuster Schicht für Schicht zu analysieren.",
+    "accept": "Charge Akzeptieren",
+    "preferences": "Systemeinstellungen"
   }
 }

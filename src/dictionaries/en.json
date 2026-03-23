@@ -472,5 +472,12 @@
         "content": "If you have any questions about these Terms, please contact us at legal@5ivearts.com"
       }
     ]
+  },
+  "cookie_banner": {
+    "tag": "Photopolymer Unit",
+    "title": "We're curing local cookies.",
+    "description": "Our system uses essential cookies to stabilize site performance and analyze traffic patterns layer by layer.",
+    "accept": "Accept Batch",
+    "preferences": "System Preferences"
   }
 }
