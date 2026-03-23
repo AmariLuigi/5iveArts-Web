@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { X } from "lucide-react";
 
 interface CookieBannerProps {
   dict: any;
@@ -37,7 +38,15 @@ export default function CookieBanner({ dict, lang }: CookieBannerProps) {
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
           className="fixed bottom-0 left-0 right-0 z-[100] p-4 md:p-6"
         >
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-7xl mx-auto relative group">
+            {/* Close Button */}
+            <button
+              onClick={() => setIsVisible(false)}
+              className="absolute top-4 right-4 z-[110] p-2 text-neutral-600 hover:text-white transition-colors"
+              aria-label="Dismiss"
+            >
+              <X className="w-4 h-4" />
+            </button>
             <div className="bg-[#09090b] border border-white/5 rounded-lg shadow-[0_-20px_40px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col md:flex-row items-center gap-6 md:gap-10 p-6 md:px-10 md:py-8">
               
               {/* SLA Printer Micro-Scene */}
