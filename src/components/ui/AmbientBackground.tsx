@@ -55,8 +55,8 @@ export default function AmbientBackground() {
     if (!ctx) return;
 
     let particles: Particle[] = [];
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 30 : 60;
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+    const particleCount = isMobile ? 10 : 60;
     const connectionDistance = 180;
     let animationFrameId: number;
 

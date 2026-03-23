@@ -1,10 +1,12 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { usePathname, useParams } from "next/navigation";
 import Navbar from "./Navbar";
-import Footer from "./Footer";
 import { useSiteSettings } from "@/components/providers/SettingsProvider";
-import AmbientBackground from "@/components/ui/AmbientBackground";
+
+const Footer = dynamic(() => import("./Footer"), { ssr: true });
+const AmbientBackground = dynamic(() => import("@/components/ui/AmbientBackground"), { ssr: false });
 
 export interface ConditionalLayoutProps {
     children: React.ReactNode;

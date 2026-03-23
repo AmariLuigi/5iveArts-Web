@@ -1,15 +1,20 @@
+import dynamic from "next/dynamic";
 import { Brush, Printer, Truck, ShieldCheck } from "lucide-react";
 import { fetchProductsFromDb } from "@/lib/products";
 import HeroSection from "@/components/marketing/HeroSection";
-import FeaturesSection, { Feature } from "@/components/marketing/FeaturesSection";
-import FeaturedProducts from "@/components/marketing/FeaturedProducts";
-import TestimonialsSection, { Testimonial } from "@/components/marketing/TestimonialsSection";
-import CtaSection from "@/components/marketing/CtaSection";
 import { getSiteSettings } from "@/lib/settings";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
-import AmbientBackground from "@/components/ui/AmbientBackground";
+
+// Dynamic imports for performance optimization
+const FeaturesSection = dynamic(() => import("@/components/marketing/FeaturesSection"), { ssr: true });
+const FeaturedProducts = dynamic(() => import("@/components/marketing/FeaturedProducts"), { ssr: true });
+const TestimonialsSection = dynamic(() => import("@/components/marketing/TestimonialsSection"), { ssr: true });
+const CtaSection = dynamic(() => import("@/components/marketing/CtaSection"), { ssr: true });
+
+import { type Feature } from "@/components/marketing/FeaturesSection";
+import { type Testimonial } from "@/components/marketing/TestimonialsSection";
 
 export default async function HomePage({
   params,
@@ -61,8 +66,7 @@ export default async function HomePage({
 
   return (
     <div className="relative">
-      {/* Ambient particle background */}
-      <AmbientBackground />
+      {/* Ambient background is provided globally in ConditionalLayout */}
 
       {/* Hero section */}
       <HeroSection

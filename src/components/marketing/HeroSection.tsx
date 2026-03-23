@@ -193,8 +193,6 @@ export default function HeroSection({
                 playsInline
                 loop={false}
                 preload={i === 0 ? "auto" : "metadata"}
-                // @ts-ignore - fetchpriority is valid in some browsers for video/img
-                fetchpriority={i === 0 ? "high" : "auto"}
                 aria-hidden="true"
                 className="w-full h-full object-cover opacity-90 contrast-110 brightness-110 saturate-[1.1]"
               >
