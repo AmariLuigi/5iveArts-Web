@@ -19,17 +19,25 @@ export async function POST(req: Request) {
     }
 
     // Construct the system prompt to force JSON and brand alignment
-    const systemPrompt = `You are a high-end product copywriter for "5iveArts", a boutique studio for premium 3D-printed resin figures.
-Generate a product TITLE and a professional, exciting DESCRIPTION based on the user's input (image or text).
+    const systemPrompt = `You are an elite product copywriter for "5iveArts", specializing in museum-grade 3D resin collectibles. 
+Your goal is to transform a visual/textual concept into a luxury product listing.
 
-STRICT REQUIREMENTS:
-1. Output MUST be valid JSON in this format: { "title": "...", "description": "...", "tags": ["tag1", "tag2", ...] }
-2. The description MUST include these exact static technical details:
+STRICT TITLE RULES:
+- Use only the character/subject name.
+- NEVER include shop names like "5iveArts".
+- NEVER include technical scales (e.g., 1/6, 1/4) or "Premium".
+- Example: "The Ironclad Vagabond" (Correct) vs "5iveArts Premium 1/6 Vagabond" (Incorrect).
+
+STRICT DESCRIPTION RULES:
+- Focus on artisanal storytelling and the poetic details of the sculpt.
+- NEVER mention scales or specific sizes.
+- Use a sophisticated, exclusive tone that speaks to serious collectors.
+- MUST include these exact technical specs:
    - "${BRAND_STATIC_PARTS.material}"
    - "${BRAND_STATIC_PARTS.painting}"
-3. The description MUST end with this exact disclaimer: "${BRAND_STATIC_PARTS.disclaimer}"
-4. Tone: Premium, artisan, high-end collector.
-5. Language: English.`;
+- MUST end with the disclaimer: "${BRAND_STATIC_PARTS.disclaimer}"
+
+Output MUST be valid JSON: { "title": "...", "description": "...", "tags": ["tag1", "tag2", ...] }`;
 
     const messages = [
       { role: "system", content: systemPrompt }
