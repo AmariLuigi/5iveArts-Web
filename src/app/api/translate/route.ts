@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
 const INVOKE_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
-const MODEL = "qwen/qwen3.5-122b-a10b";
-const API_KEY = process.env.NVIDIA_API_KEY;
 
 interface TranslateRequest {
     text: string;
@@ -23,6 +21,8 @@ export async function POST(request: NextRequest) {
     try {
         const body: TranslateRequest = await request.json();
         const { text, targetLang, sourceLang = "auto" } = body;
+        const apiKey = process.env.NVIDIA_API_KEY;
+        const model = "qwen/qwen3.5-397b-a17b";
 
         if (!text || !targetLang) {
             return NextResponse.json(
@@ -31,9 +31,9 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        if (!API_KEY) {
+        if (!apiKey) {
             return NextResponse.json(
-                { error: "NVIDIA_API_KEY not configured" },
+                { error: "NVIDIA_API_KEY not configured on server" },
                 { status: 500 }
             );
         }
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
         const langInstruction = LANGUAGE_PROMPTS[targetLang] || `Translate to ${targetLang}. Only provide the translation, no explanations.`;
 
         const payload = {
-            model: MODEL,
+            model: model,
             messages: [
                 {
                     role: "user",
@@ -49,15 +49,14 @@ export async function POST(request: NextRequest) {
                 },
             ],
             max_tokens: 4096,
-            temperature: 0.6,
-            top_p: 0.95,
+            temperature: 0.1, // Lower temperature for more accurate translation
+            top_p: 1,
             stream: false,
-            chat_template_kwargs: { enable_thinking: false },
         };
 
         const response = await axios.post(INVOKE_URL, payload, {
             headers: {
-                Authorization: `Bearer ${API_KEY}`,
+                Authorization: `Bearer ${apiKey}`,
                 "Content-Type": "application/json",
             },
             timeout: 60000,
