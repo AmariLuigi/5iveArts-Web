@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRef, useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
@@ -185,6 +186,18 @@ export default function HeroSection({
               }}
               transition={{ type: "tween", duration: 0.5 }}
             >
+              {i === 0 && s.poster && (
+                <div className="absolute inset-0 z-[-1]">
+                  <Image
+                    src={s.poster}
+                    alt=""
+                    fill
+                    priority
+                    fetchPriority="high"
+                    className="object-cover opacity-90 contrast-110 brightness-110 saturate-[1.1]"
+                  />
+                </div>
+              )}
               <video
                 ref={(el) => { videoRefs.current[i] = el; }}
                 src={s.video}

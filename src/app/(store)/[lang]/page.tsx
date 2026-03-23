@@ -7,11 +7,23 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
 
-// Dynamic imports for performance optimization
-const FeaturesSection = dynamic(() => import("@/components/marketing/FeaturesSection"), { ssr: true });
-const FeaturedProducts = dynamic(() => import("@/components/marketing/FeaturedProducts"), { ssr: true });
-const TestimonialsSection = dynamic(() => import("@/components/marketing/TestimonialsSection"), { ssr: true });
-const CtaSection = dynamic(() => import("@/components/marketing/CtaSection"), { ssr: true });
+// Dynamic imports for performance optimization with skeletons
+const FeaturesSection = dynamic(() => import("@/components/marketing/FeaturesSection"), { 
+  ssr: true,
+  loading: () => <div className="h-96 bg-black/20 animate-pulse rounded-2xl m-4" /> 
+});
+const FeaturedProducts = dynamic(() => import("@/components/marketing/FeaturedProducts"), { 
+  ssr: true,
+  loading: () => <div className="h-[600px] bg-black/20 animate-pulse rounded-2xl m-4" />
+});
+const TestimonialsSection = dynamic(() => import("@/components/marketing/TestimonialsSection"), { 
+  ssr: true,
+  loading: () => <div className="h-80 bg-black/20 animate-pulse rounded-2xl m-4" />
+});
+const CtaSection = dynamic(() => import("@/components/marketing/CtaSection"), { 
+  ssr: true,
+  loading: () => <div className="h-64 bg-black/20 animate-pulse rounded-2xl m-4" />
+});
 
 import { type Feature } from "@/components/marketing/FeaturesSection";
 import { type Testimonial } from "@/components/marketing/TestimonialsSection";

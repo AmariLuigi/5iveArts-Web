@@ -69,7 +69,17 @@ export default function AmbientBackground() {
       }
     };
 
-    const animate = () => {
+    let lastTime = 0;
+    const fps = isMobile ? 30 : 60;
+    const interval = 1000 / fps;
+
+    const animate = (time: number) => {
+      animationFrameId = requestAnimationFrame(animate);
+
+      const delta = time - lastTime;
+      if (delta < interval) return;
+      lastTime = time - (delta % interval);
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < particles.length; i++) {
@@ -104,7 +114,7 @@ export default function AmbientBackground() {
     };
 
     init();
-    animate();
+    animate(0);
     window.addEventListener("resize", handleResize);
 
     return () => {
