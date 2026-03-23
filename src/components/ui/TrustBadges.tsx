@@ -54,7 +54,7 @@ export default function TrustBadges({
         {trustItems.map((item: any, i: number) => {
           const Icon = BADGES[i]?.icon || ShieldCheck;
           return (
-            <span key={item.label} className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-neutral-500">
+            <span key={item.label} className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-neutral-400">
               <Icon className="w-3.5 h-3.5 flex-shrink-0 text-brand-yellow" />
               <span>{item.label}</span>
             </span>
@@ -77,7 +77,7 @@ export default function TrustBadges({
               <Icon className="w-5 h-5 text-brand-yellow" />
             </div>
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white leading-tight">{item.label}</p>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-600">{item.sub}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">{item.sub}</p>
           </div>
         )
       })}

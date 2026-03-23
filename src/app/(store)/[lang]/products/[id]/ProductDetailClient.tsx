@@ -101,6 +101,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                 className="object-cover transition-transform duration-[4s] group-hover:scale-110"
                                 sizes="(max-width: 1024px) 100vw, 50vw"
                                 priority
+                                fetchPriority="high"
                             />
                         )}
                         <span className="absolute top-6 left-6 hasbro-tag flex items-center gap-1.5 shadow-2xl z-10">
@@ -196,7 +197,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                     <div className="space-y-10 mb-12">
                         {/* Scale Selection */}
                         <div>
-                            <h3 className="text-[10px] uppercase font-black tracking-[0.2em] text-white/30 mb-6">{dict.product_detail.selectScale}</h3>
+                            <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-6">{dict.product_detail.selectScale}</h2>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                 {scales.map((scale) => (
                                     <button
@@ -210,7 +211,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                         <div className={`text-xs font-black uppercase tracking-widest ${selectedScale === scale ? "text-brand-yellow" : "text-white"}`}>
                                             {scale}
                                         </div>
-                                        <div className="text-[10px] font-bold text-neutral-500 uppercase mt-1">
+                                        <div className="text-[10px] font-bold text-neutral-400 uppercase mt-1">
                                             ~{SCALE_CONFIG[scale].size}
                                         </div>
                                     </button>
@@ -220,7 +221,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
 
                         {/* Finish Selection */}
                         <div>
-                            <h3 className="text-[10px] uppercase font-black tracking-[0.2em] text-white/30 mb-6">{dict.product_detail.selectFinish}</h3>
+                            <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-6">{dict.product_detail.selectFinish}</h2>
                             <div className="grid grid-cols-2 gap-3">
                                 {finishes.map((finish) => (
                                     <button
@@ -234,7 +235,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                         <div className={`text-xs font-black uppercase tracking-widest ${selectedFinish === finish ? "text-brand-yellow" : "text-white"}`}>
                                             {finish === "painted" ? dict.product_detail.handPainted : dict.product_detail.rawKit}
                                         </div>
-                                        <div className="text-[10px] font-bold text-neutral-500 uppercase mt-1">
+                                        <div className="text-[10px] font-bold text-neutral-400 uppercase mt-1">
                                             {finish === "painted" ? dict.product_detail.museumGrade : dict.product_detail.primed}
                                         </div>
                                     </button>
@@ -244,7 +245,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                     </div>
 
                     <div className="mb-10">
-                        <h3 className="text-[10px] uppercase font-black tracking-[0.2em] text-white/30 mb-4">{dict.product_detail.description}</h3>
+                        <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-4">{dict.product_detail.description}</h2>
                         <p className="text-neutral-400 font-medium leading-[1.8] text-base">
                             {product.description}
                         </p>
@@ -252,7 +253,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
 
                     {/* Details list */}
                     <div className="mb-12">
-                        <h3 className="text-[10px] uppercase font-black tracking-[0.2em] text-white/30 mb-6">{dict.product_detail.specifications}</h3>
+                        <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-6">{dict.product_detail.specifications}</h2>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
                             {(dict.product_detail.features || STANDARD_FEATURES).map((detail: string) => (
                                 <li key={detail} className="flex items-start gap-3 text-xs uppercase font-bold tracking-wider text-white">
@@ -278,11 +279,11 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
 
                         {/* Minor trust badges */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-10 border-t border-white/5">
-                            <div className="flex items-start gap-3 text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                            <div className="flex items-start gap-3 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
                                 <ShieldCheck className="w-5 h-5 text-brand-yellow flex-shrink-0" />
                                 <span>{dict.product_detail.encryptedCheckout}</span>
                             </div>
-                            <div className="flex items-start gap-3 text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                            <div className="flex items-start gap-3 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
                                 <Truck className="w-5 h-5 text-brand-yellow flex-shrink-0" />
                                 <span>{dict.product_detail.insuredShipping}</span>
                             </div>
