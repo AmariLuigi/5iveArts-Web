@@ -49,11 +49,12 @@ export async function POST(request: NextRequest) {
                     content: `You are a professional translator. ${langInstruction}\n\nText to translate:\n"${text}"`,
                 },
             ],
-            max_tokens: 16384,
-            temperature: 0.3, 
+            max_tokens: 4096,
+            temperature: 0.1, 
             top_p: 1,
             stream: false,
-            chat_template_kwargs: { thinking: true },
+            // Moonshot AI: disabling thinking for rapid translations to prevent Vercel 10s timeouts
+            chat_template_kwargs: { thinking: false },
         };
 
         const response = await axios.post(INVOKE_URL, payload, {
@@ -61,7 +62,7 @@ export async function POST(request: NextRequest) {
                 Authorization: `Bearer ${apiKey}`,
                 "Content-Type": "application/json",
             },
-            timeout: 60000,
+            timeout: 9000, // 9 second timeout to be safe within Vercel's 10s hobby window
         });
 
         const translatedText = response.data.choices?.[0]?.message?.content?.trim();
@@ -81,6 +82,13 @@ export async function POST(request: NextRequest) {
     } catch (error: any) {
         console.error("[Translate API] Error:", error.message);
 
+        if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+            return NextResponse.json(
+                { error: "Translation timed out (Vercel hobby limit)" },
+                { status: 504 }
+            );
+        }
+
         if (error.response) {
             return NextResponse.json(
                 { error: `Translation API error: ${error.response.status}` },
@@ -89,7 +97,7 @@ export async function POST(request: NextRequest) {
         }
 
         return NextResponse.json(
-            { error: "Translation service unavailable" },
+            { error: "Translation service unavailable or throttled" },
             { status: 500 }
         );
     }

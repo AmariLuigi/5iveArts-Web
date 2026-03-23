@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { createClient } from "@/lib/supabase-browser";
@@ -64,6 +64,9 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
     // AI Generator State
     const [isForging, setIsForging] = useState(false);
+    const [isTranslating, setIsTranslating] = useState(false);
+    const [translationProgress, setTranslationProgress] = useState(0);
+    const abortTranslationRef = useRef(false);
     const [aiPrompt, setAiPrompt] = useState("");
     const [autoTranslate, setAutoTranslate] = useState(true);
 
@@ -260,24 +263,44 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 const newDescriptions: Record<string, string | null> = { ...descriptions, en: description };
 
                 if (autoTranslate) {
+                    setIsTranslating(true);
+                    setTranslationProgress(0);
+                    abortTranslationRef.current = false;
+                    
                     const languages = ["it", "es", "fr", "de"];
-                    for (const lang of languages) {
-                        try {
-                            const transRes = await axios.post("/api/translate", {
-                                text: description,
-                                targetLang: lang,
-                                sourceLang: "en"
-                            });
-                            if (transRes.data.translatedText) {
-                                newDescriptions[lang] = transRes.data.translatedText;
-                            }
-                        } catch (e) {
-                            console.error(`Translation fail for ${lang}, skipping...`, e);
+                    for (let i = 0; i < languages.length; i++) {
+                        if (abortTranslationRef.current) {
+                            showToast("Translation protocol interrupted", 'error');
+                            break;
                         }
+
+                        const lang = languages[i];
+                        let retries = 0;
+                        let success = false;
+
+                        while (retries < 2 && !success) { // AUTO-RETRY LOGIC
+                            try {
+                                const transRes = await axios.post("/api/translate", {
+                                    text: description,
+                                    targetLang: lang,
+                                    sourceLang: "en"
+                                });
+                                if (transRes.data.translatedText) {
+                                    newDescriptions[lang] = transRes.data.translatedText;
+                                    success = true;
+                                }
+                            } catch (e) {
+                                retries++;
+                                if (retries < 2) await new Promise(r => setTimeout(r, 1000));
+                            }
+                        }
+
+                        setTranslationProgress(((i + 1) / languages.length) * 100);
                     }
                 }
 
                 setDescriptions(newDescriptions);
+                setIsTranslating(false);
             }
             if (suggestedTags && Array.isArray(suggestedTags)) {
                 // Merge tags, avoid duplicates
@@ -466,24 +489,52 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                     </span>
                                 </label>
 
-                                <button
-                                    type="button"
-                                    disabled={isForging || (!aiPrompt && images.length === 0)}
-                                    onClick={handleForge}
-                                    className="px-8 py-3 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-[#ffaa22] active:scale-95 transition-all disabled:opacity-50 disabled:grayscale flex items-center gap-3 shadow-[0_4px_15px_rgba(255,159,0,0.2)]"
-                                >
-                                    {isForging ? (
-                                        <>
-                                            <Loader2 className="w-3 h-3 animate-spin" />
-                                            Forging...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Sparkles className="w-3 h-3" />
-                                            Forge Masterpiece
-                                        </>
+                                <div className="flex items-center gap-6">
+                                    {isTranslating && (
+                                        <div className="flex flex-col gap-2 min-w-[200px]">
+                                            <div className="flex items-center justify-between text-[8px] uppercase font-black tracking-widest text-[#df9e55]">
+                                                <span>Syncing Global Markets</span>
+                                                <span className="font-bold">{Math.round(translationProgress)}%</span>
+                                            </div>
+                                            <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                                                <motion.div 
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: `${translationProgress}%` }}
+                                                    className="h-full bg-[#df9e55] shadow-[0_0_8px_rgba(223,158,85,0.4)]"
+                                                />
+                                            </div>
+                                            <button 
+                                                type="button"
+                                                onClick={() => {
+                                                    abortTranslationRef.current = true;
+                                                    setIsTranslating(false);
+                                                }}
+                                                className="text-[7px] uppercase font-black text-neutral-600 hover:text-red-500 transition-colors self-end"
+                                            >
+                                                Protocol Interrupt [X]
+                                            </button>
+                                        </div>
                                     )}
-                                </button>
+
+                                    <button
+                                        type="button"
+                                        disabled={isForging || isTranslating || (!aiPrompt && images.length === 0)}
+                                        onClick={handleForge}
+                                        className="px-8 py-3 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-[#ffaa22] active:scale-95 transition-all disabled:opacity-50 disabled:grayscale flex items-center gap-3 shadow-[0_4px_15px_rgba(255,159,0,0.2)]"
+                                    >
+                                        {isForging ? (
+                                            <>
+                                                <Loader2 className="w-3 h-3 animate-spin" />
+                                                Forging...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Sparkles className="w-3 h-3" />
+                                                Forge Masterpiece
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
