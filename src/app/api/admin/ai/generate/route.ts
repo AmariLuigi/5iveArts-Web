@@ -48,8 +48,6 @@ Output MUST be valid JSON: { "title": "...", "description": "...", "tags": ["tag
     ];
 
     if (image) {
-      // If image is provided, ensure it's a vision-capable prompt structure
-      // Note: Some models require specific vision message formats
       messages.push({
         role: "user",
         // @ts-ignore - NVIDIA/OpenAI vision format
@@ -78,11 +76,11 @@ Output MUST be valid JSON: { "title": "...", "description": "...", "tags": ["tag
           body: JSON.stringify({
             model: model,
             messages: messages,
-            max_tokens: 4096,
-            temperature: 0.7,
+            max_tokens: 16384,
+            temperature: 1.0,
             top_p: 1.0,
             stream: false,
-            // Moonshot AI: disabling 'thinking' for now to ensure we get a fast, structured JSON output within Vercel's response window
+            // Kimi k2.5: keeping thinking false for speed/timeout issues on Vercel
             chat_template_kwargs: { thinking: false },
           })
         });
@@ -94,16 +92,26 @@ Output MUST be valid JSON: { "title": "...", "description": "...", "tags": ["tag
 
         const data = await response.json();
         const content = data.choices[0].message.content;
+        
+        // SERVER SIDE DEBUG: Log the raw payload for inspection
+        console.log("[AI Forge] RAW Response Content:", content);
 
-        // Clean content if model wrapped it in markdown code blocks
-        const jsonStr = content.replace(/^```json\n?/, "").replace(/\n?```$/, "").trim();
+        // EXTRACTION ENGINE: Find the first '{' and last '}' to handle any conversational noise
+        const firstCurly = content.indexOf('{');
+        const lastCurly = content.lastIndexOf('}');
+        
+        if (firstCurly === -1 || lastCurly === -1) {
+          throw new Error("Model response did not contain a valid JSON structure.");
+        }
+
+        const jsonStr = content.substring(firstCurly, lastCurly + 1);
         
         try {
           const result = JSON.parse(jsonStr);
-          if (!result.title || !result.description) throw new Error("Missing required JSON fields");
+          if (!result.title || !result.description) throw new Error("JSON missing required fields");
           return NextResponse.json(result);
         } catch (e) {
-          console.error("[AI Generate] JSON Parse Fail on attempt", retries, content);
+          console.error("[AI Generate] Parsing failed. Content snippet:", jsonStr.substring(0, 50));
           throw new Error("Invalid JSON format in model response");
         }
 
@@ -111,13 +119,13 @@ Output MUST be valid JSON: { "title": "...", "description": "...", "tags": ["tag
         lastError = err;
         retries++;
         if (retries <= maxRetries) {
-          await new Promise(r => setTimeout(r, 1000 * retries)); // Linear backoff
+          await new Promise(r => setTimeout(r, 1000 * retries));
           continue;
         }
       }
     }
 
-    return NextResponse.json({ error: lastError?.message || "Failed to generate content" }, { status: 500 });
+    return NextResponse.json({ error: lastError?.message || "Generation failed" }, { status: 500 });
 
   } catch (error: any) {
     console.error("[AI Generate] Fatal Error:", error);
