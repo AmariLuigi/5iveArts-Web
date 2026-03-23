@@ -23,9 +23,9 @@
     "explore_all": "Tout explorer"
   },
   "homepage": {
-    "featuredHeading": "Collections en Vedette",
-    "viewAll": "Voir Tout",
-    "testimonialsHeading": "Approuvé par les Collectionneurs",
+    "featuredHeading": "Collections de Figurines en Résine Premium Imprimées en 3D",
+    "viewAll": "Voir Toutes les Pièces",
+    "testimonialsHeading": "Approuvé par des Collectionneurs Mondiaux",
     "reviewsLabel": "Avis Vérifiés",
     "collectorChoice": "Choix du Collectionneur",
     "premiumSeries": "Série Premium",
@@ -344,7 +344,8 @@
     "rights": "© 2026 5iveArts Collector Series. Tous droits réservés.",
     "privacy": "Confidentialité",
     "terms": "Conditions",
-    "description": "Studio boutique pour figurines en résine premium peintes à la main et imprimées en 3D. Nous expédions des pièces de collection de qualité musée dans le monde entier depuis notre atelier de Palerme."
+    "description": "Studio boutique pour figurines en résine premium peintes à la main et imprimées en 3D. Nous expédions des pièces de collection de qualité musée dans le monde entier depuis notre atelier de Palerme.",
+    "seoAbout": "5iveArts est un studio boutique de premier plan spécialisé dans la création de figurines en résine premium imprimées en 3D et d'objets de collection peints à la main. Notre série artisanale se concentre sur le détail extrême, utilisant des hauteurs de couche de 0,025 mm pour garantir une qualité musée pour chaque figurine produite. Avec un réseau d'expédition mondial, nous servons une communauté dévouée de collectionneurs qui apprécient l'alliance de la précision industrielle et de l'art fait main. Chaque pièce de notre série est unique, finie par aérographie professionnelle et vernis résistants aux UV pour protéger votre investissement."
   },
   "shipping": {
     "protocol": "Protocole de Logistique",

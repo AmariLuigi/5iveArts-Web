@@ -82,6 +82,14 @@ export default function Footer({ dict, lang }: FooterProps) {
           <Link href={`/${lang}/terms`} className="hover:text-brand-yellow transition-colors">{dict.footer.terms}</Link>
         </div>
       </div>
+
+      {dict.footer.seoAbout && (
+        <div className="max-w-7xl mx-auto mt-16 px-4">
+          <p className="text-[11px] font-medium leading-relaxed text-neutral-800 text-center max-w-4xl mx-auto italic">
+            {dict.footer.seoAbout}
+          </p>
+        </div>
+      )}
     </footer>
   );
 }

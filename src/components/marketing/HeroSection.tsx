@@ -4,37 +4,11 @@ import Link from "next/link";
 import { useRef, useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
-interface Slide {
-  video: string;
-  tagline: string;
-  headline: string;
-  headlineHighlight: string;
-  subtext: string;
-}
-
-const DEFAULT_SLIDES: Slide[] = [
-  {
-    video: "/video/Yellow_resin_3d_printer_model_delpmaspu_ (3).mp4",
-    tagline: "Precision Resin Technology",
-    headline: "3D",
-    headlineHighlight: "Printed",
-    subtext:
-      "High-resolution resin prints at 0.025 mm layer height — every detail captured with industrial-grade precision.",
-  },
-  {
-    video: "/video/Painter_adding_detail_to_model_delpmaspu_.mp4",
-    tagline: "Artisan Hand-Finishing",
-    headline: "Hand",
-    headlineHighlight: "Painted",
-    subtext:
-      "Professional airbrush techniques bring each figure to life — hand-finished by skilled artists, one stroke at a time.",
-  },
-];
-
 export interface HeroSectionProps {
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   heroVideos?: string[];
+  heroPosters?: string[]; // Optional: Add support for poster images for LCP/Performance
   translatedSlides?: any[];
   trustLabels?: {
     quality: string;
@@ -47,14 +21,17 @@ export default function HeroSection({
   primaryCta,
   secondaryCta,
   heroVideos = [],
+  heroPosters = [],
   translatedSlides,
   trustLabels
 }: HeroSectionProps) {
-  // Only use slides with videos when heroVideos are configured
+  // Use DB videos and dictionary text exclusively. 
+  // If no DB content is available, this will render a clean, high-performance fallback layout.
   const activeSlides = heroVideos.length > 0
     ? heroVideos.map((url, i) => ({
-      ...(translatedSlides?.[i] || translatedSlides?.[0] || DEFAULT_SLIDES[0]),
-      video: url
+      ...(translatedSlides?.[i] || translatedSlides?.[0] || {}),
+      video: url,
+      poster: heroPosters?.[i] || ""
     }))
     : [];
 
@@ -136,7 +113,7 @@ export default function HeroSection({
   }, [activeIndex, transitioning]);
 
   // Use first translated slide or first default as fallback for text content
-  const slide = activeSlides[activeIndex] || translatedSlides?.[0] || DEFAULT_SLIDES[0];
+  const slide = activeSlides[activeIndex] || translatedSlides?.[0] || {};
 
   const taglineX = mousePosition.x * -10;
   const taglineY = mousePosition.y * -5;
@@ -211,6 +188,7 @@ export default function HeroSection({
               <video
                 ref={(el) => { videoRefs.current[i] = el; }}
                 src={s.video}
+                poster={s.poster}
                 muted
                 playsInline
                 loop={false}

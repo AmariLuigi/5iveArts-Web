@@ -23,9 +23,9 @@
     "explore_all": "Esplora Tutto"
   },
   "homepage": {
-    "featuredHeading": "Figure in Evidenza",
-    "viewAll": "Visualizza Tutta la Collezione",
-    "testimonialsHeading": "Voci dei Collezionisti",
+    "featuredHeading": "Collezioni Premium di Figure in Resina Stampate in 3D",
+    "viewAll": "Scopri Tutti i Pezzi",
+    "testimonialsHeading": "Apprezzato da Collezionisti Globali",
     "reviewsLabel": "Recensioni dei Collezionisti",
     "collectorChoice": "Scelta del Collezionista",
     "premiumSeries": "Serie Premium",
@@ -344,7 +344,8 @@
     "rights": "© 2026 5iveArts Collector Series. Tutti i diritti riservati.",
     "privacy": "Privacy",
     "terms": "Termini",
-    "description": "Studio boutique per figure in resina premium dipinte a mano e stampate in 3D. Spediamo oggetti da collezione di qualità museale in tutto il mondo dal nostro laboratorio di Palermo."
+    "description": "Studio boutique per figure in resina premium dipinte a mano e stampate in 3D. Spediamo oggetti da collezione di qualità museale in tutto il mondo dal nostro laboratorio di Palermo.",
+    "seoAbout": "5iveArts è uno studio boutique d'eccellenza specializzato nella creazione di figure in resina premium stampate in 3D e oggetti da collezione dipinti a mano. La nostra serie artigianale punta su un dettaglio estremo, utilizzando altezze di strato di 0,025 mm per garantire una qualità museale in ogni figura prodotta. Con una rete di spedizione globale, serviamo una comunità dedicata di collezionisti che apprezzano l'incontro tra precisione industriale e arte fatta a mano. Ogni pezzo della nostra serie è unico, rifinito con tecniche di aerografia professionale e vernici resistenti ai raggi UV per proteggere il tuo investimento nel tempo."
   },
   "shipping": {
     "protocol": "Protocollo Logistica",

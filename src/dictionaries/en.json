@@ -23,9 +23,9 @@
     "explore_all": "Explore All"
   },
   "homepage": {
-    "featuredHeading": "Featured Collections",
-    "viewAll": "View All",
-    "testimonialsHeading": "Trusted by Collectors",
+    "featuredHeading": "Premium 3D-Printed Resin Figure Collections",
+    "viewAll": "View All Pieces",
+    "testimonialsHeading": "Trusted by Global Collectors",
     "reviewsLabel": "Verified Reviews",
     "collectorChoice": "Collector's Choice",
     "premiumSeries": "Premium Series",
@@ -344,7 +344,8 @@
     "rights": "© 2026 5iveArts Collector Series. All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms",
-    "description": "Boutique studio for premium hand-painted and 3D-printed resin figures. We ship museum-grade collectibles to enthusiasts worldwide from our Palermo workshop."
+    "description": "Boutique studio for premium hand-painted and 3D-printed resin figures. We ship museum-grade collectibles to enthusiasts worldwide from our Palermo workshop.",
+    "seoAbout": "5iveArts is a premier boutique studio specializing in the creation of premium 3D-printed resin figures and hand-painted collectibles. Our artisan series focuses on extreme detail, utilizing 0.025mm layer heights to ensure museum-grade quality for every figure we produce. With a global shipping network, we serve a dedicated community of collectors who value the intersection of industrial precision and handcrafted art. Every piece in our series is unique, finished with professional airbrushing and UV-resistant varnishes to protect your investment for years to come."
   },
   "shipping": {
     "protocol": "Logistics Protocol",

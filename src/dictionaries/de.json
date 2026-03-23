@@ -23,9 +23,9 @@
     "explore_all": "Alles Erkunden"
   },
   "homepage": {
-    "featuredHeading": "Top Figuren",
-    "viewAll": "Gesamte Kollektion Ansehen",
-    "testimonialsHeading": "Collector Stimmen",
+    "featuredHeading": "Premium 3D-gedruckte Resin-Figuren-Kollektionen",
+    "viewAll": "Alle Stücke Ansehen",
+    "testimonialsHeading": "Geschätzt von Globalen Sammlern",
     "reviewsLabel": "Kundenstimmen",
     "collectorChoice": "Wahl der Sammler",
     "premiumSeries": "Premium-Serie",
@@ -344,7 +344,8 @@
     "rights": "© 2026 5iveArts Collector Series. Alle Rechte vorbehalten.",
     "privacy": "Datenschutz",
     "terms": "Bedingungen",
-    "description": "Boutique-Studio für handbemalte und 3D-gedruckte Premium-Resinfiguren. Wir versenden Sammlerstücke in Museumsqualität weltweit aus unserer Werkstatt in Palermo."
+    "description": "Boutique-Studio für handbemalte und 3D-gedruckte Premium-Resinfiguren. Wir versenden Sammlerstücke in Museumsqualität weltweit aus unserer Werkstatt in Palermo.",
+    "seoAbout": "5iveArts ist ein erstklassiges Boutique-Studio, das auf die Erstellung von premium 3D-gedruckten Resin-Figuren und handbemalten Sammlerstücken spezialisiert ist. Unsere Artisan-Serie konzentriert sich auf extreme Details und nutzt Schichthöhen von 0,025 mm, um Museumsqualität für jede produzierte Figur zu gewährleisten. Mit einem globalen Versandnetzwerk bedienen wir eine engagierte Gemeinschaft von Sammlern, die die Verbindung von industrieller Präzision und handgefertigter Kunst schätzen. Jedes Stück unserer Serie ist ein Unikat, veredelt mit professioneller Airbrush-Technik und UV-beständigen Lacken."
   },
   "shipping": {
     "protocol": "Logistikprotokoll",
