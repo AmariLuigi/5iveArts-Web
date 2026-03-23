@@ -129,6 +129,12 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         try {
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
+
+                // 10MB Size Guard
+                if (file.size > 10 * 1024 * 1024) {
+                    throw new Error(`File ${file.name} exceeds the 10MB limit. Please compress and retry.`);
+                }
+
                 const fileExt = file.name.split('.').pop();
                 const fileName = `${Math.random()}.${fileExt}`;
                 const folder = type === 'images' ? 'products' : 'cinematics';
@@ -198,21 +204,29 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
         try {
             // If we have images, use the first one as a base64 reference for vision
-            let base64Image = null;
+            let base64Image: string | null = null;
             if (images.length > 0) {
                 try {
-                    const imgResponse = await fetch(images[0]);
-                    const blob = await imgResponse.blob();
-                    const reader = new FileReader();
+                    // COMPRESSION ENGINE: Resize and compress for the AI Forge
+                    // Vercel has a 4.5MB limit, so we downscale the reference image
+                    const img = document.createElement("img");
+                    img.src = images[0];
                     base64Image = await new Promise((resolve) => {
-                        reader.onloadend = () => {
-                            const result = reader.result as string;
-                            resolve(result.split(',')[1]); // remove data:image/jpeg;base64,
+                        img.onload = () => {
+                            const canvas = document.createElement("canvas");
+                            const MAX_WIDTH = 800; // 800px is more than enough for AI vision
+                            const scale = MAX_WIDTH / img.width;
+                            canvas.width = MAX_WIDTH;
+                            canvas.height = img.height * scale;
+                            
+                            const ctx = canvas.getContext("2d");
+                            ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            // Quality 0.7 to keep it well under 1MB
+                            resolve(canvas.toDataURL("image/jpeg", 0.7).split(',')[1]);
                         };
-                        reader.readAsDataURL(blob);
                     });
                 } catch (e) {
-                    console.warn("Failed to convert image to base64 for vision, falling back to text only", e);
+                    console.warn("Compression failed, using fallback", e);
                 }
             }
 
