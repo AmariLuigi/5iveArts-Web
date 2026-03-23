@@ -23,9 +23,8 @@ export async function POST(request: NextRequest) {
         const { text, targetLang, sourceLang = "auto" } = body;
         const rawKey = process.env.NVIDIA_API_KEY;
         const apiKey = rawKey?.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
-        // Switching to Llama 3.1 8B for translation: Sub-second latency for literal tasks to prevent Vercel 10s timeouts. 
-        // Kimi K2.5 is kept for creative narrative generation in the forge.
-        const model = "meta/llama-3.1-8b-instruct";
+        // Switching to Mistral Medium 3 as requested for translation sync.
+        const model = "mistralai/mistral-medium-3-instruct";
 
         if (!text || !targetLang) {
             return NextResponse.json(
