@@ -218,25 +218,33 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             if (images.length > 0) {
                 try {
                     // COMPRESSION ENGINE: Resize and compress for the AI Forge
-                    // Vercel has a 4.5MB limit, so we downscale the reference image
                     const img = document.createElement("img");
+                    img.crossOrigin = "anonymous"; // CRITICAL: Avoid CORS 'tainted canvas' errors
                     img.src = images[0];
-                    base64Image = await new Promise((resolve) => {
+                    
+                    base64Image = await new Promise((resolve, reject) => {
+                        const timeout = setTimeout(() => reject(new Error("Image compression timed out")), 5000);
+                        
                         img.onload = () => {
+                            clearTimeout(timeout);
                             const canvas = document.createElement("canvas");
-                            const MAX_WIDTH = 800; // 800px is more than enough for AI vision
-                            const scale = MAX_WIDTH / img.width;
+                            const MAX_WIDTH = 800;
+                            const scale = MAX_WIDTH / Math.max(img.width, 1);
                             canvas.width = MAX_WIDTH;
-                            canvas.height = img.height * scale;
+                            canvas.height = (img.height || 800) * scale;
                             
                             const ctx = canvas.getContext("2d");
                             ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-                            // Quality 0.7 to keep it well under 1MB
                             resolve(canvas.toDataURL("image/jpeg", 0.7).split(',')[1]);
+                        };
+
+                        img.onerror = () => {
+                            clearTimeout(timeout);
+                            reject(new Error("Image failed to load for compression"));
                         };
                     });
                 } catch (e) {
-                    console.warn("Compression failed, using fallback", e);
+                    console.warn("[AI Forge] Compression protocol failed, proceeding without vision data", e);
                 }
             }
 
@@ -438,7 +446,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                     className="w-full bg-black/40 border border-white/5 rounded-sm p-4 text-[11px] font-bold text-white focus:outline-none focus:border-brand-yellow/30 min-h-[80px] resize-none pr-20"
                                 />
                                 <div className="absolute bottom-4 right-4 text-[8px] uppercase font-black text-neutral-700 tracking-widest">
-                                    NVIDIA QWEN V2
+                                    MOONLIGHT KIMI K2.5
                                 </div>
                             </div>
 

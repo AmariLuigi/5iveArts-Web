@@ -78,11 +78,12 @@ Output MUST be valid JSON: { "title": "...", "description": "...", "tags": ["tag
           body: JSON.stringify({
             model: model,
             messages: messages,
-            max_tokens: 16384,
-            temperature: 1.0,
+            max_tokens: 4096,
+            temperature: 0.7,
             top_p: 1.0,
             stream: false,
-            chat_template_kwargs: { thinking: true },
+            // Moonshot AI: disabling 'thinking' for now to ensure we get a fast, structured JSON output within Vercel's response window
+            chat_template_kwargs: { thinking: false },
           })
         });
 
