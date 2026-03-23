@@ -10,7 +10,7 @@ const BRAND_STATIC_PARTS = {
 
 export async function POST(req: Request) {
   try {
-    const { prompt, image, model = "qwen/qwen3.5-397b-a17b" } = await req.json();
+    const { prompt, image, model = "moonshotai/kimi-k2.5" } = await req.json();
     const rawKey = process.env.NVIDIA_API_KEY;
     const apiKey = rawKey?.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
 
@@ -78,11 +78,11 @@ Output MUST be valid JSON: { "title": "...", "description": "...", "tags": ["tag
           body: JSON.stringify({
             model: model,
             messages: messages,
-            max_tokens: 4096,
-            temperature: 0.7,
-            top_p: 1,
-            // NVIDIA specific: ensure the response is treated as JSON if model supports it
-            // or just rely on the system prompt
+            max_tokens: 16384,
+            temperature: 1.0,
+            top_p: 1.0,
+            stream: false,
+            chat_template_kwargs: { thinking: true },
           })
         });
 

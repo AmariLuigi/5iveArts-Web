@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
         const { text, targetLang, sourceLang = "auto" } = body;
         const rawKey = process.env.NVIDIA_API_KEY;
         const apiKey = rawKey?.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
-        const model = "qwen/qwen3.5-397b-a17b";
+        const model = "moonshotai/kimi-k2.5";
 
         if (!text || !targetLang) {
             return NextResponse.json(
@@ -49,10 +49,11 @@ export async function POST(request: NextRequest) {
                     content: `You are a professional translator. ${langInstruction}\n\nText to translate:\n"${text}"`,
                 },
             ],
-            max_tokens: 4096,
-            temperature: 0.1, // Lower temperature for more accurate translation
+            max_tokens: 16384,
+            temperature: 0.3, 
             top_p: 1,
             stream: false,
+            chat_template_kwargs: { thinking: true },
         };
 
         const response = await axios.post(INVOKE_URL, payload, {
