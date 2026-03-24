@@ -31,6 +31,15 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     const [selectedScale, setSelectedScale] = useState<ProductScale>("1/9");
     const [selectedFinish, setSelectedFinish] = useState<ProductFinish>("painted");
     const [activeMedia, setActiveMedia] = useState(0);
+    const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+    const [isZooming, setIsZooming] = useState(false);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+        const x = ((e.clientX - left) / width) * 100;
+        const y = ((e.clientY - top) / height) * 100;
+        setZoomPos({ x, y });
+    };
 
     const media = [
         ...(product.images || []),
@@ -91,18 +100,35 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                 playsInline
                                 crossOrigin="anonymous"
                                 preload="auto"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover transition-transform duration-700 ease-out"
+                                style={{
+                                    transform: isZooming ? "scale(1.2)" : "scale(1)",
+                                }}
                             />
                         ) : (
-                            <Image
-                                src={media[activeMedia] || "/images/placeholder.jpg"}
-                                alt={product.name}
-                                fill
-                                className="object-cover transition-transform duration-[4s] group-hover:scale-110"
-                                sizes="(max-width: 1024px) 100vw, 50vw"
-                                priority
-                                fetchPriority="high"
-                            />
+                            <div 
+                                className="relative w-full h-full cursor-zoom-in group"
+                                onMouseMove={handleMouseMove}
+                                onMouseEnter={() => setIsZooming(true)}
+                                onMouseLeave={() => setIsZooming(false)}
+                            >
+                                <Image
+                                    src={media[activeMedia] || "/images/placeholder.jpg"}
+                                    alt={product.name}
+                                    fill
+                                    priority
+                                    fetchPriority="high"
+                                    sizes="(max-width: 1024px) 100vw, 50vw"
+                                    className="object-cover md:object-contain transition-transform duration-500 ease-out"
+                                    style={{
+                                        transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+                                        transform: isZooming ? "scale(2)" : "scale(1)",
+                                    }}
+                                />
+                                {/* Ambient Detail Overlay */}
+                                <div className={`absolute inset-0 bg-black/10 transition-opacity duration-500 pointer-events-none ${isZooming ? 'opacity-0' : 'opacity-100'}`} />
+                                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                            </div>
                         )}
                         <span className="absolute top-6 left-6 hasbro-tag flex items-center gap-1.5 shadow-2xl z-10">
                             <Tag className="w-3.5 h-3.5" />
