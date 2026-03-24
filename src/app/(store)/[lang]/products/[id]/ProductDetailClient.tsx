@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { ChevronLeft, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play } from "lucide-react";
+import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play, Sparkles } from "lucide-react";
 import { Product, ProductScale, ProductFinish } from "@/types";
 import { formatPrice, calculatePrice, SCALE_CONFIG } from "@/lib/products";
 import AddToCartButton from "./AddToCartButton";
@@ -33,6 +36,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     const [activeMedia, setActiveMedia] = useState(0);
     const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
     const [isZooming, setIsZooming] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
@@ -40,6 +44,12 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
         const y = ((e.clientY - top) / height) * 100;
         setZoomPos({ x, y });
     };
+
+    // Prevent body scroll when lightbox is active
+    useEffect(() => {
+        if (isFullscreen) document.body.style.overflow = 'hidden';
+        else document.body.style.overflow = 'unset';
+    }, [isFullscreen]);
 
     const media = [
         ...(product.images || []),
@@ -128,13 +138,56 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                 {/* Ambient Detail Overlay */}
                                 <div className={`absolute inset-0 bg-black/10 transition-opacity duration-500 pointer-events-none ${isZooming ? 'opacity-0' : 'opacity-100'}`} />
                                 <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                                
+                                {/* Mobile Expansion Trigger */}
+                                <button 
+                                    onClick={() => setIsFullscreen(true)}
+                                    className="md:hidden absolute bottom-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-full border border-white/10"
+                                >
+                                    <Sparkles className="w-4 h-4 text-brand-yellow" />
+                                </button>
                             </div>
                         )}
                         <span className="absolute top-6 left-6 hasbro-tag flex items-center gap-1.5 shadow-2xl z-10">
                             <Tag className="w-3.5 h-3.5" />
-                            {dict.product_detail.handPaintedTag}
+                            {dict?.product_detail?.handPaintedTag || "Hand-Painted & 3D Printed"}
                         </span>
                     </div>
+
+                    {/* Lightbox / Fullscreen Viewer */}
+                    <AnimatePresence>
+                        {isFullscreen && !isVideo(media[activeMedia]) && (
+                            <motion.div 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4"
+                                onClick={() => setIsFullscreen(false)}
+                            >
+                                <button className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors">
+                                    <X className="w-8 h-8" />
+                                </button>
+                                <motion.div 
+                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    exit={{ scale: 0.9, opacity: 0 }}
+                                    className="relative w-full h-[80vh]"
+                                >
+                                    <Image
+                                        src={media[activeMedia]}
+                                        alt={product.name}
+                                        fill
+                                        className="object-contain"
+                                        quality={100}
+                                    />
+                                </motion.div>
+                                <div className="absolute bottom-12 text-center">
+                                    <p className="text-[10px] uppercase font-black tracking-widest text-brand-yellow">{product.name}</p>
+                                    <p className="text-[8px] uppercase font-bold text-neutral-500 mt-2">TAP ANYWHERE TO EXIT ARCHIVE</p>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Thumbnails */}
                     {media.length > 1 && (
