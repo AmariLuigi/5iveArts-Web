@@ -166,13 +166,13 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                 
                                 {/* Status Overlays */}
                                 {isMobileZoomed && (
-                                    <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10 pointer-events-none">
+                                    <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10 pointer-events-none z-20 shadow-2xl">
                                         <p className="text-[8px] uppercase font-black tracking-widest text-brand-yellow">Manual Panning Active [Drag to move]</p>
                                     </div>
                                 )}
                             </div>
                         )}
-                        <span className="absolute top-6 left-6 hasbro-tag flex items-center gap-1.5 shadow-2xl z-10">
+                        <span className={`absolute top-6 left-6 hasbro-tag flex items-center gap-1.5 shadow-2xl z-10 transition-all duration-500 ${isMobileZoomed || isHovering ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'}`}>
                             <Tag className="w-3.5 h-3.5" />
                             {dict?.product_detail?.handPaintedTag || "Hand-Painted & 3D Printed"}
                         </span>
