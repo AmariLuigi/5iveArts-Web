@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ShoppingCart, Menu, X, ChevronDown, User } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import MiniCart from "@/components/cart/MiniCart";
 import { createClient } from "@/lib/supabase-browser";
 import { AuthChangeEvent, Session } from "@supabase/supabase-js";
@@ -142,7 +143,7 @@ export default function Navbar({ dict, lang }: NavbarProps) {
             </div>
 
             <div
-              className="relative hidden md:block"
+              className="relative"
               onMouseEnter={handleCartEnter}
               onMouseLeave={handleCartLeave}
             >
@@ -154,9 +155,13 @@ export default function Navbar({ dict, lang }: NavbarProps) {
                 <div className="relative">
                   <ShoppingCart className="w-6 h-6" />
                   {totalItems > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-brand-yellow text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-black">
+                    <motion.span 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -top-2 -right-2 bg-brand-yellow text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-black"
+                    >
                       {totalItems}
-                    </span>
+                    </motion.span>
                   )}
                 </div>
                 <div className="hidden xl:flex flex-col -space-y-1">
@@ -212,7 +217,6 @@ export default function Navbar({ dict, lang }: NavbarProps) {
             <Link href={`/${lang}/products`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.products}</Link>
             <Link href={`/${lang}/faq`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.faq}</Link>
             <Link href={`/${lang}/shipping`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.shipping}</Link>
-            <Link href={`/${lang}/cart`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.cart} ({totalItems})</Link>
           </div>
         </nav>
       )}
