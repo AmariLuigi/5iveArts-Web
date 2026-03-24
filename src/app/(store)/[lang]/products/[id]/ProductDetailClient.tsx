@@ -35,21 +35,36 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     const [selectedFinish, setSelectedFinish] = useState<ProductFinish>("painted");
     const [activeMedia, setActiveMedia] = useState(0);
     const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
-    const [isZooming, setIsZooming] = useState(false);
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isHovering, setIsHovering] = useState(false);
+    const [isMobileZoomed, setIsMobileZoomed] = useState(false);
+    const [lastTap, setLastTap] = useState(0);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        // Only run on desktop/hoverable devices
+        if (window.matchMedia("(hover: none)").matches) return;
+        
         const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
         const x = ((e.clientX - left) / width) * 100;
         const y = ((e.clientY - top) / height) * 100;
         setZoomPos({ x, y });
     };
 
-    // Prevent body scroll when lightbox is active
-    useEffect(() => {
-        if (isFullscreen) document.body.style.overflow = 'hidden';
-        else document.body.style.overflow = 'unset';
-    }, [isFullscreen]);
+    const handleMobileInteraction = (e: React.MouseEvent | React.TouchEvent) => {
+        const now = Date.now();
+        const DOUBLE_TAP_DELAY = 300;
+
+        if (now - lastTap < DOUBLE_TAP_DELAY) {
+            // Double tap detected -> Zoom Out
+            setIsMobileZoomed(false);
+            setLastTap(0);
+        } else {
+            // Single tap -> Zoom In if not zoomed
+            if (!isMobileZoomed) {
+                setIsMobileZoomed(true);
+            }
+            setLastTap(now);
+        }
+    };
 
     const media = [
         ...(product.images || []),
@@ -112,40 +127,49 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                 preload="auto"
                                 className="w-full h-full object-cover transition-transform duration-700 ease-out"
                                 style={{
-                                    transform: isZooming ? "scale(1.2)" : "scale(1)",
+                                    transform: isHovering ? "scale(1.2)" : "scale(1)",
                                 }}
                             />
                         ) : (
                             <div 
-                                className="relative w-full h-full cursor-zoom-in group"
+                                className="relative w-full h-full cursor-zoom-in overflow-hidden"
                                 onMouseMove={handleMouseMove}
-                                onMouseEnter={() => setIsZooming(true)}
-                                onMouseLeave={() => setIsZooming(false)}
+                                onMouseEnter={() => setIsHovering(true)}
+                                onMouseLeave={() => setIsHovering(false)}
+                                onClick={handleMobileInteraction}
                             >
-                                <Image
-                                    src={media[activeMedia] || "/images/placeholder.jpg"}
-                                    alt={product.name}
-                                    fill
-                                    priority
-                                    fetchPriority="high"
-                                    sizes="(max-width: 1024px) 100vw, 50vw"
-                                    className="object-cover md:object-contain transition-transform duration-500 ease-out"
-                                    style={{
-                                        transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
-                                        transform: isZooming ? "scale(2)" : "scale(1)",
+                                <motion.div
+                                    className="relative w-full h-full"
+                                    drag={isMobileZoomed}
+                                    dragConstraints={{ left: -300, right: 300, top: -300, bottom: 300 }}
+                                    dragElastic={0.1}
+                                    animate={{
+                                        scale: isMobileZoomed ? 2.5 : (isHovering ? 1.8 : 1),
+                                        x: isMobileZoomed ? undefined : 0,
+                                        y: isMobileZoomed ? undefined : 0,
                                     }}
-                                />
-                                {/* Ambient Detail Overlay */}
-                                <div className={`absolute inset-0 bg-black/10 transition-opacity duration-500 pointer-events-none ${isZooming ? 'opacity-0' : 'opacity-100'}`} />
-                                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                                
-                                {/* Mobile Expansion Trigger */}
-                                <button 
-                                    onClick={() => setIsFullscreen(true)}
-                                    className="md:hidden absolute bottom-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-full border border-white/10"
+                                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                                    style={{
+                                        transformOrigin: isMobileZoomed ? "center" : `${zoomPos.x}% ${zoomPos.y}%`,
+                                    }}
                                 >
-                                    <Sparkles className="w-4 h-4 text-brand-yellow" />
-                                </button>
+                                    <Image
+                                        src={media[activeMedia] || "/images/placeholder.jpg"}
+                                        alt={product.name}
+                                        fill
+                                        priority
+                                        fetchPriority="high"
+                                        sizes="(max-width: 1024px) 100vw, 50vw"
+                                        className="object-contain"
+                                    />
+                                </motion.div>
+                                
+                                {/* Status Overlays */}
+                                {isMobileZoomed && (
+                                    <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10 pointer-events-none">
+                                        <p className="text-[8px] uppercase font-black tracking-widest text-brand-yellow">Manual Panning Active [Drag to move]</p>
+                                    </div>
+                                )}
                             </div>
                         )}
                         <span className="absolute top-6 left-6 hasbro-tag flex items-center gap-1.5 shadow-2xl z-10">
@@ -153,41 +177,6 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                             {dict?.product_detail?.handPaintedTag || "Hand-Painted & 3D Printed"}
                         </span>
                     </div>
-
-                    {/* Lightbox / Fullscreen Viewer */}
-                    <AnimatePresence>
-                        {isFullscreen && !isVideo(media[activeMedia]) && (
-                            <motion.div 
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4"
-                                onClick={() => setIsFullscreen(false)}
-                            >
-                                <button className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors">
-                                    <X className="w-8 h-8" />
-                                </button>
-                                <motion.div 
-                                    initial={{ scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.9, opacity: 0 }}
-                                    className="relative w-full h-[80vh]"
-                                >
-                                    <Image
-                                        src={media[activeMedia]}
-                                        alt={product.name}
-                                        fill
-                                        className="object-contain"
-                                        quality={100}
-                                    />
-                                </motion.div>
-                                <div className="absolute bottom-12 text-center">
-                                    <p className="text-[10px] uppercase font-black tracking-widest text-brand-yellow">{product.name}</p>
-                                    <p className="text-[8px] uppercase font-bold text-neutral-500 mt-2">TAP ANYWHERE TO EXIT ARCHIVE</p>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
 
                     {/* Thumbnails */}
                     {media.length > 1 && (
