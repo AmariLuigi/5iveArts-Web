@@ -169,7 +169,7 @@ export default function Navbar({ dict, lang }: NavbarProps) {
                   <span className="text-[10px] font-black uppercase tracking-widest text-brand-yellow">{dict.nav.vault}</span>
                 </div>
               </Link>
-              {isCartHovered && (
+              {isCartHovered && typeof window !== 'undefined' && window.matchMedia("(hover: hover)").matches && (
                 <div className="absolute right-0 top-full pt-2 z-[60] animate-in fade-in slide-in-from-top-2 duration-300">
                   <MiniCart dict={dict} lang={lang} />
                 </div>
