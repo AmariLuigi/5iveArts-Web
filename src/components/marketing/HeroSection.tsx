@@ -44,6 +44,9 @@ export default function HeroSection({
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      // Disable parallax on touch devices or fine pointer is not available
+      if (typeof window !== 'undefined' && !window.matchMedia("(pointer: fine)").matches) return;
+      
       if (!heroRef.current) return;
       const rect = heroRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -240,7 +243,7 @@ export default function HeroSection({
         </motion.span>
 
         <motion.h1
-          className="text-6xl md:text-[10rem] font-black leading-[0.85] mb-10 uppercase tracking-tighter"
+          className="text-4xl sm:text-6xl md:text-[10rem] font-black leading-[0.85] mb-10 uppercase tracking-tighter flex flex-col items-center justify-center"
           initial={false}
           animate="visible"
           variants={textContainerVariants}
@@ -250,7 +253,7 @@ export default function HeroSection({
             variants={wordVariants}
             style={{ x: headlineX, y: headlineY }}
           >
-            {slide.headline}{" "}
+            {slide.headline}
           </motion.span>
           <motion.span
             className="text-brand-yellow inline-block drop-shadow-[0_10px_40px_rgba(255,159,0,0.4)]"
