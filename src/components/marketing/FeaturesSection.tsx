@@ -65,17 +65,17 @@ function AnimatedStatCounter({
         containerRef.current = el;
         setElement(el);
       }}
-      className="flex flex-col items-center text-center"
+      className="flex flex-col items-center text-center p-6 glass rounded-2xl border border-white/5 glow-shadow-yellow group"
     >
       <motion.span
-        className="text-4xl md:text-5xl font-black text-brand-yellow mb-2"
+        className="text-4xl md:text-5xl font-black text-brand-yellow mb-2 drop-shadow-[0_0_15px_rgba(255,159,0,0.3)]"
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
       >
         {formattedValue}
       </motion.span>
-      <span className="text-[10px] uppercase font-black text-white/40 tracking-widest">
+      <span className="text-[9px] uppercase font-black text-white/50 tracking-[0.3em] group-hover:text-white transition-colors">
         {label}
       </span>
     </div>
@@ -140,14 +140,18 @@ export default function FeaturesSection({ features, dict, stats: settingsStats }
   const featuresY = useTransform(scrollYProgress, [0, 1], [0, -30]);
 
   return (
-    <section ref={sectionRef} className="relative py-24 px-4 bg-[#050505] border-b border-[#111] overflow-hidden">
+    <section ref={sectionRef} className="relative py-32 px-4 bg-[#050505] border-b border-[#111] overflow-hidden">
+      {/* Premium Background Layer */}
+      <div className="absolute inset-0 bg-dot-grid opacity-30 pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-yellow/20 to-transparent" />
+      
       {/* Accessibility: Sequential heading hierarchy */}
       <h2 className="sr-only">Our Core Features and Global Statistics</h2>
       
       {/* Animated stats section */}
-      <div className="max-w-7xl mx-auto mb-20 pb-10 border-b border-white/5">
+      <div className="max-w-7xl mx-auto mb-24 relative z-10">
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -168,23 +172,26 @@ export default function FeaturesSection({ features, dict, stats: settingsStats }
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         style={{ y: featuresY }}
-        className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12"
+        className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 relative z-10"
       >
         {features.map((f, index) => (
           <motion.div
             key={f.title}
             variants={itemVariants}
-            className="flex flex-col items-center text-center group"
+            className="flex flex-col items-center text-center group glass p-10 rounded-[2rem] border border-white/5 hover:border-brand-yellow/30 transition-all duration-700 glow-shadow-yellow hover:-translate-y-3 relative overflow-hidden"
           >
+            {/* Elegant Inner Glow */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            
             <motion.div
-              className="mb-6 p-4 bg-[#111] rounded-2xl border border-white/5 group-hover:border-brand-yellow/30 transition-all duration-500 group-hover:-translate-y-2 relative overflow-hidden"
-              whileHover={{ scale: 1.05 }}
+              className="mb-8 p-5 bg-black/40 rounded-2xl border border-white/10 group-hover:border-brand-yellow/40 transition-all duration-500 relative overflow-hidden ring-4 ring-transparent group-hover:ring-brand-yellow/5"
+              whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
             >
               {/* Glow effect on hover */}
               <motion.div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
-                  background: "radial-gradient(circle at center, rgba(255,159,0,0.15) 0%, transparent 70%)",
+                  background: "radial-gradient(circle at center, rgba(255,159,0,0.2) 0%, transparent 70%)",
                 }}
               />
               <motion.div
@@ -193,8 +200,18 @@ export default function FeaturesSection({ features, dict, stats: settingsStats }
                 {f.icon}
               </motion.div>
             </motion.div>
-            <h3 className="font-black uppercase tracking-widest text-sm text-white mb-2 group-hover:text-brand-yellow transition-colors duration-300">{f.title}</h3>
-            <p className="text-xs text-neutral-500 font-medium leading-relaxed">{f.text}</p>
+            
+            <h3 className="font-black uppercase tracking-[0.2em] text-[11px] mb-4 text-white group-hover:text-brand-yellow transition-colors duration-300">
+              <span className="block mb-1 opacity-40 text-[9px] font-bold">Featured Protocol</span>
+              {f.title}
+            </h3>
+            
+            <p className="text-[12px] text-neutral-400 font-medium leading-relaxed max-w-[200px] group-hover:text-neutral-200 transition-colors">
+              {f.text}
+            </p>
+
+            {/* Visual indicator line */}
+            <div className="mt-8 w-8 h-px bg-white/10 group-hover:w-16 group-hover:bg-brand-yellow transition-all duration-700" />
           </motion.div>
         ))}
       </motion.div>

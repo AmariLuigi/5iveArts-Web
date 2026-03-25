@@ -256,6 +256,21 @@ body {
   color: white;
 }
 
+/* Technical background pattern */
+.bg-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Brand glow shadow */
+.glow-shadow-yellow {
+  box-shadow: 0 0 40px -10px rgba(255, 159, 0, 0.15);
+}
+
+.glow-shadow-yellow:hover {
+  box-shadow: 0 0 50px -5px rgba(255, 159, 0, 0.3);
+}
+
 /* --- SLA PRINTER ANIMATION SYSTEM --- */
 
 .printer-container {
