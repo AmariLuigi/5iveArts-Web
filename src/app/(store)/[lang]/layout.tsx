@@ -23,6 +23,9 @@ export const metadata: Metadata = {
     default: "5iveArts — Hand-Painted & 3D-Printed Action Figures",
     template: "%s | 5iveArts"
   },
+  icons: {
+    icon: "/favicon.ico",
+  },
   description:
     "Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art. Shop online with fast shipping.",
   openGraph: {

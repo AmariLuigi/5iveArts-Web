@@ -5,6 +5,9 @@ import AdminLayoutBody from "./AdminLayoutBody";
 export const metadata: Metadata = {
     title: "Admin Dashboard | 5iveArts",
     description: "Secure management portal for 5iveArts Collector Series.",
+    icons: {
+        icon: "/favicon.ico",
+    },
 };
 
 export default function AdminLayout({
