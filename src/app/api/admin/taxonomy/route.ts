@@ -12,38 +12,51 @@ export async function GET(req: NextRequest) {
     const supabase = getSupabaseAdmin() as any;
 
     try {
-        // Fetch all products to derive taxonomy
-        // Note: In a massive catalog, this should scan a dedicated taxonomy table, 
-        // but for current scale, derivation from products ensures 100% data accuracy.
         const { data: products, error } = await supabase
             .from("products")
-            .select("franchise, subcategory, category");
+            .select("franchise, subcategory, category, tags");
 
         if (error) throw error;
 
         const franchiseMap: Record<string, { name: string; types: Set<string>; subjects: Set<string> }> = {};
+        const standaloneTags = new Set<string>();
 
         products.forEach((p: any) => {
-            if (!p.franchise) return;
-            
-            if (!franchiseMap[p.franchise]) {
-                franchiseMap[p.franchise] = {
-                    name: p.franchise,
-                    types: new Set(),
-                    subjects: new Set(),
-                };
+            // Priority 1: Structured Taxonomy
+            if (p.franchise) {
+                if (!franchiseMap[p.franchise]) {
+                    franchiseMap[p.franchise] = { name: p.franchise, types: new Set(), subjects: new Set() };
+                }
+                if (p.category) franchiseMap[p.franchise].types.add(p.category);
+                if (p.subcategory) franchiseMap[p.franchise].subjects.add(p.subcategory);
             }
-            
-            if (p.category) franchiseMap[p.franchise].types.add(p.category);
-            if (p.subcategory) franchiseMap[p.franchise].subjects.add(p.subcategory);
+
+            // Priority 2: Flat Tags Discovery (Fallback for Legacy Data)
+            if (p.tags && Array.isArray(p.tags)) {
+                p.tags.forEach((tag: string) => {
+                    // Only add to standalone tags if it's not already handled by a franchise node
+                    if (!p.franchise || (tag !== p.franchise && tag !== p.subcategory)) {
+                        standaloneTags.add(tag);
+                    }
+                });
+            }
         });
 
-        // Convert Sets to Arrays for JSON serialization
-        const result = Object.values(franchiseMap).map(f => ({
-            ...f,
-            types: Array.from(f.types),
-            subjects: Array.from(f.subjects),
-        })).sort((a,b) => a.name.localeCompare(b.name));
+        const result = [
+            ...Object.values(franchiseMap).map(f => ({
+                ...f,
+                types: Array.from(f.types),
+                subjects: Array.from(f.subjects),
+                isLegacy: false
+            })),
+            // Include standalone tags as a pseudo-franchise for bulk cleanup
+            ...(standaloneTags.size > 0 ? [{
+                name: "Legacy Search Tags",
+                isLegacy: true,
+                types: [],
+                subjects: Array.from(standaloneTags)
+            }] : [])
+        ].sort((a,b) => a.name.localeCompare(b.name));
 
         return NextResponse.json(result);
 
@@ -71,15 +84,32 @@ export async function DELETE(req: NextRequest) {
     }
 
     try {
-        const payload: Record<string, any> = {};
-        payload[type] = null;
+        if (type === 'tags') {
+            // Bulk tag removal (JSONB array logic)
+            // 1. Fetch products having this tag
+            const { data: products, error: fetchErr } = await supabase
+                .from("products")
+                .select("id, tags")
+                .contains("tags", [value]);
 
-        const { error } = await supabase
-            .from("products")
-            .update(payload)
-            .eq(type, value);
+            if (fetchErr) throw fetchErr;
 
-        if (error) throw error;
+            // 2. Perform updates for each product (batching could be improved but fine for this scope)
+            for (const p of (products || [])) {
+                const newTags = p.tags.filter((t: string) => t !== value);
+                await supabase.from("products").update({ tags: newTags }).eq("id", p.id);
+            }
+        } else {
+            const payload: Record<string, any> = {};
+            payload[type] = null;
+
+            const { error } = await supabase
+                .from("products")
+                .update(payload)
+                .eq(type, value);
+
+            if (error) throw error;
+        }
 
         return NextResponse.json({ success: true, message: `Purged ${value} from all products` });
 

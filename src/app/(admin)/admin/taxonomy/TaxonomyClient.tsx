@@ -17,6 +17,7 @@ interface FranchiseNode {
     name: string;
     types: string[];
     subjects: string[];
+    isLegacy?: boolean;
 }
 
 export default function TaxonomyClient() {
@@ -41,8 +42,12 @@ export default function TaxonomyClient() {
         }
     };
 
-    const handlePurge = async (type: 'franchise' | 'subcategory', value: string) => {
-        if (!confirm(`GLOBAL PURGE PROTOCOL: This will remove '${value}' from all products. Proceed?`)) return;
+    const handlePurge = async (type: 'franchise' | 'subcategory' | 'tags', value: string) => {
+        const msg = type === 'tags' 
+            ? `CLEANUP PROTOCOL: This will remove the tag '${value}' from ALL products. Proceed?`
+            : `GLOBAL PURGE PROTOCOL: This will remove ${type} '${value}' from all products. Proceed?`;
+            
+        if (!confirm(msg)) return;
 
         setActiveOperation(`${type}-${value}`);
         try {
@@ -110,42 +115,49 @@ export default function TaxonomyClient() {
                                 key={franchise.name}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="group/nexus bg-[#050505] border border-white/5 rounded-sm overflow-hidden"
+                                className={`group/nexus border rounded-sm overflow-hidden ${franchise.isLegacy ? 'bg-black/80 border-neutral-800' : 'bg-[#050505] border-white/5'}`}
                             >
                                 {/* Franchise Row */}
-                                <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
+                                <div className={`p-8 border-b flex items-center justify-between ${franchise.isLegacy ? 'border-neutral-800 bg-neutral-900/20' : 'border-white/5 bg-white/[0.01]'}`}>
                                     <div className="flex items-center gap-6">
-                                        <div className="w-12 h-12 bg-black border border-white/10 rounded-sm flex items-center justify-center text-brand-yellow shadow-[0_4px_15px_rgba(255,215,0,0.1)]">
+                                        <div className={`w-12 h-12 bg-black border rounded-sm flex items-center justify-center shadow-[0_4px_15px_rgba(255,215,0,0.1)] ${franchise.isLegacy ? 'border-neutral-800 text-neutral-600' : 'border-white/10 text-brand-yellow'}`}>
                                             <GitCommit className="w-6 h-6" />
                                         </div>
                                         <div>
-                                            <h3 className="text-2xl font-black uppercase tracking-tighter text-white">{franchise.name}</h3>
+                                            <h3 className={`text-2xl font-black uppercase tracking-tighter ${franchise.isLegacy ? 'text-neutral-500' : 'text-white'}`}>{franchise.name}</h3>
                                             <div className="flex gap-2 mt-1">
-                                                {franchise.types.map(t => (
-                                                    <span key={t} className="text-[8px] uppercase font-black tracking-widest text-neutral-600 border border-neutral-800 px-2 py-0.5 rounded-[2px]">{t}</span>
-                                                ))}
+                                                {franchise.isLegacy ? (
+                                                    <span className="text-[8px] uppercase font-black tracking-widest text-[#df9e55] bg-[#df9e55]/10 px-2 py-0.5 rounded-[2px]">Unmapped Discovery</span>
+                                                ) : (
+                                                    franchise.types.map(t => (
+                                                        <span key={t} className="text-[8px] uppercase font-black tracking-widest text-neutral-600 border border-neutral-800 px-2 py-0.5 rounded-[2px]">{t}</span>
+                                                    ))
+                                                )}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button 
-                                        onClick={() => handlePurge('franchise', franchise.name)}
-                                        disabled={activeOperation !== null}
-                                        className="p-3 text-neutral-600 hover:text-red-500 hover:bg-red-500/5 transition-all group/trash"
-                                    >
-                                        {activeOperation === `franchise-${franchise.name}` ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4 group-hover/trash:scale-110 transition-transform" /> }
-                                    </button>
+                                    {!franchise.isLegacy && (
+                                        <button 
+                                            onClick={() => handlePurge('franchise', franchise.name)}
+                                            disabled={activeOperation !== null}
+                                            className="p-3 text-neutral-600 hover:text-red-500 hover:bg-red-500/5 transition-all group/trash"
+                                        >
+                                            {activeOperation === `franchise-${franchise.name}` ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4 group-hover/trash:scale-110 transition-transform" /> }
+                                        </button>
+                                    )}
                                 </div>
 
                                 {/* Subjects Row */}
                                 <div className="p-8 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 bg-black/40 relative">
-                                    <div className="absolute left-8 top-0 w-px h-full bg-gradient-to-b from-brand-yellow/20 to-transparent" />
+                                    <div className={`absolute left-8 top-0 w-px h-full bg-gradient-to-b from-transparent ${franchise.isLegacy ? 'from-neutral-800' : 'from-brand-yellow/20'}`} />
                                     
                                     {franchise.subjects.map((sub) => (
                                         <div key={sub} className="group/sub flex items-center justify-between bg-white/[0.03] border border-white/5 p-4 rounded-sm hover:border-white/10 transition-all">
                                             <span className="text-[9px] uppercase font-black tracking-widest text-neutral-400 group-hover/sub:text-white transition-colors">{sub}</span>
                                             <button 
-                                                onClick={() => handlePurge('subcategory', sub)}
+                                                onClick={() => handlePurge(franchise.isLegacy ? 'tags' : 'subcategory', sub)}
+                                                disabled={activeOperation !== null}
                                                 className="opacity-0 group-hover/sub:opacity-100 p-2 text-neutral-600 hover:text-red-500 transition-all"
                                             >
                                                 <Trash2 className="w-3 h-3" />
