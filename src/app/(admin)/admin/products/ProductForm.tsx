@@ -304,20 +304,71 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 }
             }
 
-            console.log("[AI Forge] Telemetry: Dispatching to Edge Network...");
-            const response = await axios.post("/api/admin/ai/generate", {
-                prompt: aiPrompt,
-                image: base64Image,
-                existingFranchises: allExistingFranchises,
-                existingSubcategories: allExistingSubcategories
+            console.log("[AI Forge] Telemetry: Dispatching Streaming Nexus Request...");
+            
+            // USE NATIVE FETCH FOR STREAMING
+            const fetchResponse = await fetch("/api/admin/ai/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    prompt: aiPrompt,
+                    image: base64Image,
+                    existingFranchises: allExistingFranchises,
+                    existingSubcategories: allExistingSubcategories,
+                    model: "google/gemma-3-27b-it"
+                }),
             });
-            console.log(`[AI Forge] --- NEXUS SUCCESS (${Date.now() - t_start}ms) ---`);
+
+            if (!fetchResponse.ok) {
+                const errData = await fetchResponse.json().catch(() => ({}));
+                throw new Error(`Forge API Error: ${fetchResponse.status} ${errData.error || ""}`);
+            }
+
+            // STREAM READER PROTOCOL
+            const reader = fetchResponse.body?.getReader();
+            if (!reader) throw new Error("Forge Stream Connection Failed");
+
+            let fullContent = "";
+            const decoder = new TextDecoder();
+            
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                
+                const chunk = decoder.decode(value);
+                // NVIDIA NIM: Extract actual content from SSE format data: {...}
+                const lines = chunk.split('\n');
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const dataStr = line.slice(6);
+                        if (dataStr === '[DONE]') break;
+                        try {
+                            const json = JSON.parse(dataStr);
+                            const text = json.choices[0]?.delta?.content || "";
+                            fullContent += text;
+                        } catch (e) { /* partial chunk */ }
+                    }
+                }
+            }
+
+            console.log(`[AI Forge] --- NEXUS DATA RECEIVED (${Date.now() - t_start}ms) ---`);
+
+            // EXTRACTION ENGINE
+            const firstCurly = fullContent.indexOf('{');
+            const lastCurly = fullContent.lastIndexOf('}');
+            
+            if (firstCurly === -1 || lastCurly === -1) {
+                throw new Error("Forge response did not contain a valid JSON structure.");
+            }
+
+            const jsonStr = fullContent.substring(firstCurly, lastCurly + 1);
+            const ForgeResult = JSON.parse(jsonStr);
 
             const { 
                 title, 
                 description, 
                 categorical_tags
-            } = response.data;
+            } = ForgeResult;
 
             if (title) setName(title);
             
