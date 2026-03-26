@@ -690,7 +690,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                         <div className="space-y-3">
                             <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Base Value (Cents)</label>
                             <input
@@ -760,7 +760,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-6 py-8 px-6 bg-white/[0.01] border border-white/5 rounded-sm relative overflow-hidden group/nexus">
+                        <div className="md:col-span-3 flex items-center gap-6 py-6 px-6 bg-white/[0.01] border border-white/5 rounded-sm relative overflow-hidden group/nexus">
                             {/* Animated Background Pulse */}
                             <div className="absolute inset-0 bg-brand-yellow/[0.01] opacity-0 group-hover/nexus:opacity-100 transition-opacity duration-1000" />
                             
