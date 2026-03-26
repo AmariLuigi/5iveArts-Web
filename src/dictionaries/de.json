@@ -238,7 +238,9 @@
       "Präzisionsdetail-Erfassung (0.025mm)",
       "Signatur-Display-Basis",
       "Gepolsterte Sammlerbox"
-    ]
+    ],
+    "readMore": "Mehr lesen",
+    "readLess": "Weniger lesen"
   },
   "trust": [
     {

@@ -238,7 +238,9 @@
       "Detalle de Alta Precisión (0.025mm)",
       "Base de Exhibición Autoría",
       "Caja de Coleccionista Acolchada"
-    ]
+    ],
+    "readMore": "Leer más",
+    "readLess": "Leer menos"
   },
   "trust": [
     {

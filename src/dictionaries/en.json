@@ -238,7 +238,9 @@
       "Precision Detail Capture (0.025mm)",
       "Custom Signature Display Base",
       "Signature Foam-Padded Collector Box"
-    ]
+    ],
+    "readMore": "Read More",
+    "readLess": "Read Less"
   },
   "trust": [
     {

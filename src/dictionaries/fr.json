@@ -238,7 +238,9 @@
       "Capture des Détails de Précision (0,025 mm)",
       "Base d'Affichage Signature",
       "Boîte de Collection Rembourrée"
-    ]
+    ],
+    "readMore": "Lire plus",
+    "readLess": "Réduire"
   },
   "trust": [
     {

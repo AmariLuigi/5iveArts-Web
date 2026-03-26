@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronLeft, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play, Sparkles, ChevronRight, Lock, Unlock } from "lucide-react";
+import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play, Sparkles, ChevronRight, Lock, Unlock, ChevronDown, ChevronUp } from "lucide-react";
 import { Product, ProductScale, ProductFinish } from "@/types";
 import { formatPrice, calculatePrice, SCALE_CONFIG } from "@/lib/products";
 import AddToCartButton from "./AddToCartButton";
@@ -40,6 +40,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     const [lastTap, setLastTap] = useState(0);
     const [isInteracting, setIsInteracting] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    const [isDescExpanded, setIsDescExpanded] = useState(false);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         // Only run on desktop/hoverable devices
@@ -387,18 +388,53 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                         </div>
                     </div>
 
+                    <div className="mb-12">
+                        <AddToCartButton
+                            product={product}
+                            selectedScale={selectedScale}
+                            selectedFinish={selectedFinish}
+                            currentPrice={currentPrice}
+                            lang={lang}
+                            dict={dict}
+                        />
+                    </div>
+
                     <div className="mb-10">
                         <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-4">{dict.product_detail.description}</h2>
-                        <p className="text-neutral-400 font-medium leading-[1.8] text-base whitespace-pre-wrap">
-                            {
-                                (lang === 'en' ? product.description_en :
-                                 lang === 'it' ? product.description_it :
-                                 lang === 'de' ? product.description_de :
-                                 lang === 'fr' ? product.description_fr :
-                                 lang === 'es' ? product.description_es : 
-                                 product.description) || product.description
-                            }
-                        </p>
+                        <div className="relative group/desc">
+                            <p className={`text-neutral-400 font-medium leading-[1.8] text-base whitespace-pre-wrap transition-all duration-500 overflow-hidden ${isDescExpanded ? 'max-h-[2000px]' : 'max-h-32'}`}>
+                                {
+                                    (lang === 'en' ? product.description_en :
+                                    lang === 'it' ? product.description_it :
+                                    lang === 'de' ? product.description_de :
+                                    lang === 'fr' ? product.description_fr :
+                                    lang === 'es' ? product.description_es : 
+                                    product.description) || product.description
+                                }
+                            </p>
+                            
+                            {!isDescExpanded && (
+                                <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+                            )}
+                            
+                            <button
+                                type="button"
+                                onClick={() => setIsDescExpanded(!isDescExpanded)}
+                                className="mt-4 flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-brand-yellow hover:text-white transition-colors"
+                            >
+                                {isDescExpanded ? (
+                                    <>
+                                        <ChevronUp className="w-3 h-3" />
+                                        {dict.product_detail.readLess || "Read Less"}
+                                    </>
+                                ) : (
+                                    <>
+                                        <ChevronDown className="w-3 h-3" />
+                                        {dict.product_detail.readMore || "Read More"}
+                                    </>
+                                )}
+                            </button>
+                        </div>
                     </div>
 
                     {/* Details list */}
@@ -418,19 +454,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                     </div>
 
                     {/* Action */}
-                    <div className="mt-auto space-y-8">
-                        <div className="max-w-md mx-auto">
-                            <AddToCartButton
-                                product={product}
-                                selectedScale={selectedScale}
-                                selectedFinish={selectedFinish}
-                                currentPrice={currentPrice}
-                                lang={lang}
-                                dict={dict}
-                            />
-                        </div>
-
-                        {/* Minor trust badges */}
+                    <div className="mt-auto">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-10 border-t border-white/5">
                             <div className="flex items-start gap-3 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
                                 <ShieldCheck className="w-5 h-5 text-brand-yellow flex-shrink-0" />

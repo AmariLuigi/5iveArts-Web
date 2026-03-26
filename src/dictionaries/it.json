@@ -236,9 +236,11 @@
       "Pittura Professionale Artigianale",
       "Vernice Protettiva UV Qualità Museale",
       "Dettaglio ad Alta Precisione (0.025mm)",
-      "Base Display d'Autore",
+      "Base di Esposizione Firmata",
       "Scatola da Collezione Imbottita"
-    ]
+    ],
+    "readMore": "Leggi di più",
+    "readLess": "Mostra meno"
   },
   "trust": [
     {

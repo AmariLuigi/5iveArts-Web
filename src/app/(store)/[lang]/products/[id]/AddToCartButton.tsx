@@ -51,10 +51,10 @@ export default function AddToCartButton({ product, selectedScale, selectedFinish
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="grid grid-cols-2 gap-4">
       <button
         onClick={handleAdd}
-        className={`w-full flex items-center justify-center gap-2 font-black uppercase tracking-[0.2em] py-5 rounded transition-all text-xs ${added
+        className={`w-full flex items-center justify-center gap-2 font-black uppercase tracking-[0.15em] py-5 rounded transition-all text-[10px] ${added
           ? "bg-green-500 text-white shadow-lg shadow-green-500/20"
           : "hasbro-btn-primary shadow-lg shadow-brand-yellow/10"
           }`}
@@ -62,22 +62,22 @@ export default function AddToCartButton({ product, selectedScale, selectedFinish
         {added ? (
           <>
             <Check className="w-5 h-5" />
-            {dict.product_detail.confirmed}
+            <span className="truncate">{dict.product_detail.confirmed}</span>
           </>
         ) : (
           <>
-            <ShoppingCart className="w-5 h-5" />
-            {dict.product_detail.addToCollection}
+            <ShoppingCart className="w-4 h-4 text-black" />
+            <span className="truncate">{dict.product_detail.addToCollection}</span>
           </>
         )}
       </button>
 
       <button
         onClick={handleBuyNow}
-        className="w-full flex items-center justify-center gap-2 font-black uppercase tracking-[0.2em] py-5 rounded border-2 border-white/20 text-white hover:bg-white/5 hover:border-white/40 transition-all text-xs"
+        className="w-full flex items-center justify-center gap-2 font-black uppercase tracking-[0.15em] py-5 rounded border-2 border-white/20 text-white hover:bg-white/5 hover:border-white/40 transition-all text-[10px]"
       >
-        <Zap className="w-5 h-5 text-brand-yellow" />
-        {dict.product_detail.instantCheckout}
+        <Zap className="w-4 h-4 text-brand-yellow" />
+        <span className="truncate">{dict.product_detail.instantCheckout}</span>
       </button>
     </div>
   );
