@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
+import { Search } from "lucide-react";
 
 export default function CustomCursor() {
     const [isHovering, setIsHovering] = useState(false);
     const [isPressed, setIsPressed] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [isMobile, setIsMobile] = useState(true);
+    const [cursorType, setCursorType] = useState<'default' | 'magnifier'>('default');
 
     // Precise coordinates
     const mouseX = useMotionValue(-100);
@@ -38,9 +40,15 @@ export default function CustomCursor() {
 
         const handleLinkHover = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            // Precise detection: only trigger if hovering a clickable element
-            const isInteractive = target.closest('button, a, .interactive-cursor, input, select, textarea');
-            setIsHovering(!!isInteractive);
+            const container = target.closest('button, a, .interactive-cursor, input, select, textarea, .cursor-zoom-in');
+            
+            setIsHovering(!!container);
+
+            if (container?.classList.contains('cursor-zoom-in')) {
+                setCursorType('magnifier');
+            } else {
+                setCursorType('default');
+            }
         };
 
         window.addEventListener("mousemove", moveCursor);
@@ -60,10 +68,10 @@ export default function CustomCursor() {
     if (isMobile) return null;
 
     return (
-        <>
+        <div className="hidden lg:block">
             {/* The Main Dot */}
             <motion.div
-                className="fixed top-0 left-0 w-1.5 h-1.5 bg-brand-yellow rounded-full pointer-events-none z-[9999]"
+                className="fixed top-0 left-0 w-1 h-1 bg-brand-yellow rounded-full pointer-events-none z-[9999]"
                 style={{
                     x: mouseX,
                     y: mouseY,
@@ -72,13 +80,13 @@ export default function CustomCursor() {
                 }}
                 animate={{
                     scale: isPressed ? 0.5 : 1,
-                    opacity: isVisible ? 1 : 0
+                    opacity: isVisible ? (cursorType === 'magnifier' ? 0 : 1) : 0
                 }}
             />
 
             {/* The Outer Ring */}
             <motion.div
-                className="fixed top-0 left-0 w-8 h-8 border border-brand-yellow/30 rounded-full pointer-events-none z-[9998]"
+                className="fixed top-0 left-0 border border-brand-yellow/30 rounded-full pointer-events-none z-[9998] flex items-center justify-center overflow-hidden"
                 style={{
                     x: springX,
                     y: springY,
@@ -86,17 +94,33 @@ export default function CustomCursor() {
                     translateY: "-50%",
                 }}
                 animate={{
-                    scale: isHovering ? 1.5 : (isPressed ? 0.8 : 1),
-                    backgroundColor: isHovering ? "rgba(255, 215, 0, 0.05)" : "transparent",
-                    borderColor: isHovering ? "rgba(255, 215, 0, 0.5)" : "rgba(255, 215, 0, 0.2)",
+                    width: cursorType === 'magnifier' ? 48 : (isHovering ? 32 : 12),
+                    height: cursorType === 'magnifier' ? 48 : (isHovering ? 32 : 12),
+                    scale: isPressed ? 0.8 : 1,
+                    backgroundColor: cursorType === 'magnifier' ? "rgba(255, 215, 0, 0.1)" : (isHovering ? "rgba(255, 215, 0, 0.05)" : "transparent"),
+                    borderColor: cursorType === 'magnifier' ? "rgba(255, 215, 0, 0.8)" : (isHovering ? "rgba(255, 215, 0, 0.5)" : "rgba(255, 215, 0, 0.2)"),
                     opacity: isVisible ? 1 : 0
                 }}
                 transition={{
                     type: "spring",
                     stiffness: 300,
-                    damping: 20
+                    damping: 20,
+                    backgroundColor: { duration: 0.2 }
                 }}
-            />
-        </>
+            >
+                <AnimatePresence>
+                    {cursorType === 'magnifier' && (
+                        <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            className="text-brand-yellow"
+                        >
+                            <Search className="w-5 h-5 stroke-[3]" />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.div>
+        </div>
     );
 }
