@@ -173,6 +173,22 @@ function ProductsContent({
     });
   }, [initialProducts, activeCategory, searchTerm]);
 
+  // Debounced Search Analytics
+  useEffect(() => {
+    if (!searchTerm.trim()) return;
+
+    const timer = setTimeout(() => {
+      track("search_performed", { 
+        term: searchTerm.trim(), 
+        results_count: filteredProducts.length,
+        has_results: filteredProducts.length > 0,
+        active_category: activeCategory
+      });
+    }, 2000); // 2s debounce to capture full intent without noise
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, track]); // Track whenever search term stabilizes
+
   const handleCategorySelect = (cat: string) => {
     setActiveCategory(cat);
     track("filter_applied", { value: cat, source: "taxonomy_nexus" });
