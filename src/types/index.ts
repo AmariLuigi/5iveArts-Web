@@ -16,7 +16,7 @@ export interface Product {
   images: string[];
   videos: string[];
   category: ProductCategory;
-  status: "draft" | "published";
+  status: "draft" | "published" | "archived";
   tags: string[];
   details: string[];
   rating?: number;

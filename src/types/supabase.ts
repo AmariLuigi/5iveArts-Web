@@ -22,7 +22,7 @@ export interface Database {
           images: string[];
           videos: string[];
           category: "hand-painted" | "home-printed" | "figures" | "busts" | "dioramas";
-          status: "draft" | "published";
+          status: "draft" | "published" | "archived";
           tags: string[];
           details: string[];
           created_at: string;
@@ -33,7 +33,7 @@ export interface Database {
           updated_at?: string;
           images?: string[];
           videos?: string[];
-          status?: "draft" | "published";
+          status?: "draft" | "published" | "archived";
           tags?: string[];
           details?: string[];
           description_en?: string | null;

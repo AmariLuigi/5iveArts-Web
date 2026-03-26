@@ -52,7 +52,7 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
             setProducts(prev => prev.filter(p => p.id !== id));
             
             if (data.archived) {
-                alert(`"${name}" was archived (set to draft) because it is linked to existing orders. It is now hidden from the store.`);
+                alert(`"${name}" was archived because it is linked to existing orders. It is now hidden from the store and admin list.`);
             }
 
             // Ensure server components refresh too

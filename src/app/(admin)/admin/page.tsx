@@ -8,7 +8,7 @@ export default async function AdminDashboard() {
 
     // Fetch some quick stats
     const { data: orders } = await supabase.from("orders").select("*");
-    const { data: products } = await supabase.from("products").select("*");
+    const { data: products } = await supabase.from("products").select("*").neq("status", "archived");
 
     const totalRevenue = orders?.reduce((acc: number, order: any) => acc + (order.total_pence || 0), 0) || 0;
     const totalOrders = orders?.length || 0;

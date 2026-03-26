@@ -148,7 +148,7 @@ export async function DELETE(
         if ((deleteError as any).code === "23503") {
             const { error: archiveError } = await supabase
                 .from("products")
-                .update({ status: "draft" })
+                .update({ status: "archived" })
                 .eq("id", id);
 
             if (archiveError) {

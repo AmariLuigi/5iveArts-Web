@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     const { data, error } = await supabase
         .from("products")
         .select("*")
+        .neq("status", "archived")
         .order("created_at", { ascending: false });
 
     if (error) {
