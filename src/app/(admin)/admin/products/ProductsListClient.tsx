@@ -53,8 +53,11 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
             router.refresh();
         } catch (err: any) {
             const errMsg = err.response?.data?.error || "Failed to delete product";
-            setError(errMsg);
-            alert(errMsg);
+            const details = err.response?.data?.details;
+            const fullMsg = details ? `${errMsg}: ${details}` : errMsg;
+            
+            setError(fullMsg);
+            alert(fullMsg);
         } finally {
             setDeletingId(null);
         }
