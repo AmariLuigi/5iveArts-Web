@@ -6,7 +6,11 @@ const NVIDIA_INVOKE_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 
 export async function POST(req: Request) {
   try {
-    const { text, context = "Collector review for high-end resin figures collection" } = await req.json();
+    const { 
+      text, 
+      gender = "neutral",
+      context = "Collector review for high-end resin figures collection" 
+    } = await req.json();
 
     if (!text) {
       return NextResponse.json({ error: "Text is required for translation" }, { status: 400 });
@@ -22,6 +26,8 @@ export async function POST(req: Request) {
     const systemPrompt = `You are a professional multilingual curator for 5iveArts.
 Translate the provided text into English, Italian, German, French, and Spanish.
 Maintain the professional, enthusiastic tone of a high-end collector.
+
+GENDER: The reviewer is ${gender}. Use appropriate gendered inflections in Italian, French, German, and Spanish.
 
 SCHEMA: { "en": "...", "it": "...", "de": "...", "fr": "...", "es": "..." }
 

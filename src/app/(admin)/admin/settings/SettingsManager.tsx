@@ -352,7 +352,7 @@ export default function SettingsManager({ initialSettings }: Props) {
                         <div className="flex justify-between items-center">
                             <h3 className="text-xl font-black uppercase text-white">Collector Voices</h3>
                             <button 
-                                onClick={() => updateTestimonials([...testimonials, { name: "NEW COLLECTOR", role: "Collector", quote: "...", rating: 5, avatar: AVATAR_LIBRARY[0] }])} 
+                                onClick={() => updateTestimonials([...testimonials, { name: "NEW COLLECTOR", role: "Collector", quote: "...", rating: 5, avatar: AVATAR_LIBRARY[0], gender: 'neutral' }])} 
                                 className="px-6 py-3 bg-white/[0.03] border border-white/5 text-[10px] font-black uppercase text-white hover:bg-white/[0.05] flex items-center gap-2"
                             >
                                 <Plus className="w-3.5 h-3.5" />
@@ -364,7 +364,10 @@ export default function SettingsManager({ initialSettings }: Props) {
                                 const handleForgeTranslation = async () => {
                                     setLoading(true);
                                     try {
-                                        const { data: trans } = await axios.post("/api/admin/ai/translate", { text: testi.quote });
+                                        const { data: trans } = await axios.post("/api/admin/ai/translate", { 
+                                            text: testi.quote,
+                                            gender: testi.gender || 'neutral'
+                                        });
                                         const nl = [...testimonials];
                                         nl[i].quote_en = trans.en;
                                         nl[i].quote_it = trans.it;
@@ -429,6 +432,21 @@ export default function SettingsManager({ initialSettings }: Props) {
                                                 <span className="text-[8px] font-black text-brand-yellow/50 uppercase">Master Source</span>
                                             </div>
                                             <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[i].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/40 border border-white/10 p-4 text-[11px] text-white font-medium min-h-[100px] outline-none focus:border-brand-yellow/50" placeholder="GLOBAL QUOTE" />
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <label className="text-[8px] font-black text-neutral-600 uppercase">Grammatical Gender (For Translation)</label>
+                                            <div className="flex gap-2">
+                                                {['male', 'female', 'neutral'].map((g) => (
+                                                    <button
+                                                        key={g}
+                                                        onClick={() => { const nl = [...testimonials]; nl[i].gender = g as any; updateTestimonials(nl); }}
+                                                        className={`flex-1 py-2 px-3 text-[10px] font-black uppercase transition-all border ${testi.gender === g ? "bg-brand-yellow/10 border-brand-yellow text-brand-yellow" : "bg-black/20 border-white/5 text-neutral-500 hover:border-white/20"}`}
+                                                    >
+                                                        {g}
+                                                    </button>
+                                                ))}
+                                            </div>
                                         </div>
 
                                         {/* Multilingual Projections */}
