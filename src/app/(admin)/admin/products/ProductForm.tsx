@@ -309,8 +309,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 prompt: aiPrompt,
                 image: base64Image,
                 existingFranchises: allExistingFranchises,
-                existingSubcategories: allExistingSubcategories,
-                existingTags: allExistingTags
+                existingSubcategories: allExistingSubcategories
             });
             console.log(`[AI Forge] --- NEXUS SUCCESS (${Date.now() - t_start}ms) ---`);
 

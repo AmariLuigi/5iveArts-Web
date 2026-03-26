@@ -13,23 +13,22 @@ const BRAND_STATIC_PARTS = {
 export async function POST(req: Request) {
   const t_start = Date.now();
   console.log("[AI Forge] --- SHIELD INITIATED ---");
-
+  
   try {
     const body = await req.json();
     const t_parsed = Date.now();
-
-    const {
-      prompt,
-      image,
-      existingFranchises = [],
-      existingSubcategories = [],
-      existingTags = [],
-      model = "moonshotai/kimi-k2.5"
+    
+    const { 
+      prompt, 
+      image, 
+      existingFranchises = [], 
+      existingSubcategories = [], 
+      model = "moonshotai/kimi-k2.5" 
     } = body;
 
     console.log(`[AI Forge] Latency: JSON Parsed (+${t_parsed - t_start}ms)`);
-    console.log(`[AI Forge] Payload Telemetry: ImageSize=${image?.length || 0}, VaultTags=${existingTags.length}`);
-
+    console.log(`[AI Forge] Telemetry: ImageSize=${image?.length || 0}`);
+    
     const rawKey = process.env.NVIDIA_API_KEY;
     const apiKey = rawKey?.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
 
@@ -41,31 +40,20 @@ export async function POST(req: Request) {
     const vaultContext = `
 VAULT_FRANCHISES: ${existingFranchises.join(", ")}
 VAULT_SUB_CATEGORIES: ${existingSubcategories.join(", ")}
-VAULT_TAGS: ${existingTags.join(", ")}
     `.trim();
 
     // Construct the system prompt to force JSON and brand alignment
-    const systemPrompt = `You are an elite pop-culture curator for "5iveArts", specializing in museum-grade resin statues.
-Your goal is to identify a character and map them to a strict hierarchical taxonomy.
+    const systemPrompt = `You are a curator for "5iveArts" (resin statues).
+Goal: Map character to hierarchy { Franchise, Character, Series, Artist }.
 
-TAXONOMY RULES:
-- EVERY identifier must be a Category:Subcategory pair.
-- **FORBIDDEN**: Never suggest generic attributes like "Material", "Vibe", "Style", "Color", "Quality", "Technical", "Description".
-- **ELITE IDENTIFIERS ONLY**: Focus on specific lore, franchise, and character tags:
-    - **Franchise**: The broad universe (e.g., "DC Comics", "Marvel").
-    - **Character**: The specific name (e.g., "Zatanna", "Iron Man").
-    - **Series**: The specific release line or comic volume (e.g., "Justice League Dark", "Infinity Saga").
-    - **Artist**: If well-known (e.g., "Artgerm", "Todd McFarlane").
-    - **Era**: (e.g., "Golden Age", "Renaissance").
-
-CORE CHARACTER IDENTIFICATION:
-- In Vision Mode (image provided), identify the character and their primary hierarchy immediately.
-- If the identified Franchise or Subcategory matches an item in the provided VAULT lists exactly, YOU MUST USE THE VAULT STRING.
-
-VAULT DATA CONTEXT:
+RULES:
+- Respond ONLY with valid JSON.
+- For categorical_tags, use Category:Subcategory mapping.
+- NO generic tags (Material, Color, etc).
+- Use Vault strings if available:
 ${vaultContext}
 
-Output MUST be valid JSON: { 
+JSON SCHEMA: { 
   "title": "...", 
   "description": "...", 
   "categorical_tags": { 
@@ -74,8 +62,7 @@ Output MUST be valid JSON: {
     "Series": "...", 
     "Artist": "..."
   }
-}
-BE CONCISE. Use high-speed identification. Maximize lore precision.`;
+}`;
 
     const messages = [
       { role: "system", content: systemPrompt }
@@ -86,7 +73,7 @@ BE CONCISE. Use high-speed identification. Maximize lore precision.`;
         role: "user",
         // @ts-ignore - NVIDIA/OpenAI vision format
         content: [
-          { type: "text", text: prompt || "Analyze this figure and generate title/description." },
+          { type: "text", text: prompt || "Analyze this figure." },
           { type: "image_url", image_url: { url: `data:image/jpeg;base64,${image}` } }
         ]
       });
@@ -108,7 +95,7 @@ BE CONCISE. Use high-speed identification. Maximize lore precision.`;
       body: JSON.stringify({
         model: model,
         messages: messages,
-        max_tokens: 2000,
+        max_tokens: 1500,
         temperature: 0.7,
         top_p: 0.9,
         stream: false,
@@ -120,33 +107,32 @@ BE CONCISE. Use high-speed identification. Maximize lore precision.`;
     console.log(`[AI Forge] NVIDIA Response received in ${t_after_fetch - t_before_fetch}ms`);
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error(`[AI Forge] NVIDIA ERROR: ${response.status}`, errorData);
-      return NextResponse.json({ error: `AI Provider Error: ${response.status}`, details: errorData }, { status: response.status });
+        const errorData = await response.json().catch(() => ({}));
+        console.error(`[AI Forge] NVIDIA ERROR: ${response.status}`, errorData);
+        return NextResponse.json({ error: `AI Provider Error: ${response.status}`, details: errorData }, { status: response.status });
     }
 
     const data = await response.json();
     const content = data.choices[0].message.content;
-
+    
     // EXTRACTION
     const firstCurly = content.indexOf('{');
     const lastCurly = content.lastIndexOf('}');
-
+    
     if (firstCurly === -1 || lastCurly === -1) {
       console.error("[AI Forge] No JSON found in response:", content);
-      return NextResponse.json({ error: "Model response did not contain a valid JSON structure." }, { status: 500 });
+      return NextResponse.json({ error: "No JSON found" }, { status: 500 });
     }
 
     const jsonStr = content.substring(firstCurly, lastCurly + 1);
-
+    
     try {
       const result = JSON.parse(jsonStr);
       const t_end = Date.now();
       console.log(`[AI Forge] --- SHIELD SUCCESS (${t_end - t_start}ms) ---`);
       return NextResponse.json(result);
     } catch (e) {
-      console.error("[AI Forge] JSON Parse Error:", jsonStr);
-      return NextResponse.json({ error: "Invalid JSON format in model response" }, { status: 500 });
+      return NextResponse.json({ error: "Invalid JSON format" }, { status: 500 });
     }
 
   } catch (error: any) {
