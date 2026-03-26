@@ -35,6 +35,8 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     const [selectedFinish, setSelectedFinish] = useState<ProductFinish>("painted");
     const [activeMedia, setActiveMedia] = useState(0);
     
+    const [isMobileZoomed, setIsMobileZoomed] = useState(false);
+    
     // Performance Optimized Motion Values for Zoom
     const zoomX = useMotionValue(50);
     const zoomY = useMotionValue(50);
@@ -43,7 +45,6 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     );
 
     const [isHovering, setIsHovering] = useState(false);
-    const [isMobileZoomed, setIsMobileZoomed] = useState(false);
     const [lastTap, setLastTap] = useState(0);
     const [isInteracting, setIsInteracting] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
