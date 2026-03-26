@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { Plus, ChevronLeft } from "lucide-react";
 import Link from "next/link";

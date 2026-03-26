@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { formatPrice } from "@/lib/products";
 import { DbProduct } from "@/types/supabase";
-import { Search, Filter, Edit3, Trash2, Box, Eye, EyeOff, Loader2, AlertCircle, Copy, ChevronDown, Tag } from "lucide-react";
+import { Search, Filter, Edit3, Trash2, Box, Eye, EyeOff, Loader2, AlertCircle, Copy, ChevronDown, Tag, Archive } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
@@ -72,7 +72,8 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
     const stats = {
         total: products.length,
         published: products.filter(p => p.status === 'published').length,
-        draft: products.filter(p => p.status === 'draft').length
+        draft: products.filter(p => p.status === 'draft').length,
+        archived: products.filter(p => p.status === 'archived').length
     };
 
     return (
@@ -106,6 +107,7 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
                             <option value="all" className="bg-[#0a0a0a]">All Visibility</option>
                             <option value="published" className="bg-[#0a0a0a]">Published</option>
                             <option value="draft" className="bg-[#0a0a0a]">Drafts</option>
+                            <option value="archived" className="bg-[#0a0a0a]">Archived</option>
                         </select>
                         <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-2.5 h-2.5 text-neutral-600 pointer-events-none" />
                     </div>
@@ -163,9 +165,15 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
                                     </div>
                                 )}
                                 <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
-                                    <span className={`px-2 py-1 rounded-[2px] border text-[9px] font-black uppercase tracking-widest backdrop-blur-md ${product.status === "draft" ? "text-neutral-400 bg-black/50 border-white/10" : "text-brand-yellow bg-brand-yellow/10 border-brand-yellow/20"}`}>
+                                    <span className={`px-2 py-1 rounded-[2px] border text-[9px] font-black uppercase tracking-widest backdrop-blur-md ${
+                                        product.status === "draft" ? "text-neutral-400 bg-black/50 border-white/10" : 
+                                        product.status === "archived" ? "text-red-400 bg-red-900/20 border-red-500/30" :
+                                        "text-brand-yellow bg-brand-yellow/10 border-brand-yellow/20"
+                                    }`}>
                                         {product.status === "draft" ? (
                                             <span className="flex items-center gap-1.5"><EyeOff className="w-3 h-3" /> Draft</span>
+                                        ) : product.status === "archived" ? (
+                                            <span className="flex items-center gap-1.5"><Archive className="w-3 h-3" /> Archived</span>
                                         ) : (
                                             <span className="flex items-center gap-1.5"><Eye className="w-3 h-3" /> Published</span>
                                         )}
