@@ -15,7 +15,8 @@ export interface Testimonial {
 export interface TestimonialsSectionProps {
   heading?: string;
   reviewsLabel?: string;
-  testimonials: Testimonial[];
+  testimonials: any[]; // Changed to any to allow for multilingual fields from DB
+  lang?: string;
   autoRotate?: boolean;
   autoRotateInterval?: number;
 }
@@ -24,6 +25,7 @@ export default function TestimonialsSection({
   heading = "What collectors are saying",
   reviewsLabel = "Collector Reviews",
   testimonials,
+  lang = "en",
   autoRotate = true,
   autoRotateInterval = 5000,
 }: TestimonialsSectionProps) {
@@ -159,7 +161,7 @@ export default function TestimonialsSection({
                         <Star className="w-3 h-3 text-brand-yellow fill-brand-yellow" />
                       </div>
                       <p className="text-white font-medium text-sm leading-[1.6]">
-                        &ldquo;{t.quote}&rdquo;
+                        &ldquo;{(t as any)[`quote_${lang}`] || t.quote}&rdquo;
                       </p>
                       <div className="mt-auto flex items-center gap-4 pt-6 border-t border-white/5">
                         <div className="w-10 h-10 bg-brand-yellow/10 rounded-full overflow-hidden flex items-center justify-center text-brand-yellow font-black text-xs group-hover:scale-110 transition-transform">
@@ -208,7 +210,7 @@ export default function TestimonialsSection({
                       ))}
                     </div>
                     <p className="text-white font-medium text-sm leading-[1.6]">
-                      &ldquo;{t.quote}&rdquo;
+                      &ldquo;{(t as any)[`quote_${lang}`] || t.quote}&rdquo;
                     </p>
                     <div className="mt-auto flex items-center gap-4 pt-6 border-t border-white/5">
                       <motion.div

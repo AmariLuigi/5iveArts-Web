@@ -70,3 +70,9 @@ stripe custom payment page.md
 stripe.exe
 packlink_debug.json
 test_packlink.js
+schema.sql
+dump.sql
+analytics_delta.sql
+analytics_init.sql
+lhreport.json
+inspect_remote_db.mjs

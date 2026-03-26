@@ -3,7 +3,12 @@ import { getSupabasePublic } from "./supabase";
 export interface Testimonial {
     name: string;
     role: string;
-    quote: string;
+    quote: string; // Master quote (fallback)
+    quote_en?: string;
+    quote_it?: string;
+    quote_de?: string;
+    quote_fr?: string;
+    quote_es?: string;
     rating: 1 | 2 | 3 | 4 | 5;
     avatar?: string;
 }

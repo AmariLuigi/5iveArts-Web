@@ -109,6 +109,7 @@ export default async function HomePage({
           heading={dict?.homepage?.testimonialsHeading || "Trusted by Collectors"}
           reviewsLabel={dict?.homepage?.reviewsLabel || "Verified Reviews"}
           testimonials={activeTestimonials}
+          lang={lang}
         />
       </ScrollReveal>
 

@@ -24,7 +24,8 @@ import {
     Trash2,
     Quote,
     Image as LibraryIcon,
-    TrendingUp
+    TrendingUp,
+    Sparkles
 } from "lucide-react";
 import { SiteSettings, Testimonial } from "@/lib/settings";
 import { Product } from "@/types";
@@ -58,6 +59,16 @@ export default function SettingsManager({ initialSettings }: Props) {
     const [activeTab, setActiveTab] = useState<'visual' | 'engine'>('visual');
 
     const supabase = createClient();
+
+    const showToast = (msg: string, type: 'success' | 'error' = 'success') => {
+        if (type === 'success') {
+            setSuccess(true);
+            setTimeout(() => setSuccess(false), 3000);
+        } else {
+            setError(msg);
+            setTimeout(() => setError(null), 5000);
+        }
+    };
 
     useEffect(() => {
         const fetchAll = async () => {
@@ -340,24 +351,111 @@ export default function SettingsManager({ initialSettings }: Props) {
                     <div className="bg-[#0a0a0a] border border-white/5 p-10 flex flex-col gap-8 relative overflow-hidden md:col-span-2">
                         <div className="flex justify-between items-center">
                             <h3 className="text-xl font-black uppercase text-white">Collector Voices</h3>
-                            <button onClick={() => updateTestimonials([...testimonials, { name: "NEW COLLECTOR", role: "Collector", quote: "...", rating: 5, avatar: AVATAR_LIBRARY[0] }])} className="px-6 py-3 bg-white/[0.03] border border-white/5 text-[10px] font-black uppercase text-white hover:bg-white/[0.05]">ADD STORY</button>
+                            <button 
+                                onClick={() => updateTestimonials([...testimonials, { name: "NEW COLLECTOR", role: "Collector", quote: "...", rating: 5, avatar: AVATAR_LIBRARY[0] }])} 
+                                className="px-6 py-3 bg-white/[0.03] border border-white/5 text-[10px] font-black uppercase text-white hover:bg-white/[0.05] flex items-center gap-2"
+                            >
+                                <Plus className="w-3.5 h-3.5" />
+                                ADD STORY
+                            </button>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-10 border-t border-white/5">
-                            {testimonials.map((testi, i) => (
-                                <div key={i} className="bg-white/[0.01] border border-white/5 p-8 rounded-sm space-y-6">
-                                    <div className="flex justify-between items-start">
-                                        <div className="flex gap-4 items-center">
-                                            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-brand-yellow/20"><img src={testi.avatar} alt="" className="w-full h-full object-cover" /></div>
-                                            <div className="flex gap-1">{AVATAR_LIBRARY.map((img, idx) => (
-                                                <button key={idx} onClick={() => { const nl = [...testimonials]; nl[i].avatar = img; updateTestimonials(nl); }} className={`w-5 h-5 rounded-full border ${testi.avatar === img ? "border-brand-yellow" : "border-white/5 opacity-40"}`}><img src={img} className="w-full h-full object-cover rounded-full" /></button>
-                                            ))}</div>
+                            {testimonials.map((testi, i) => {
+                                const handleForgeTranslation = async () => {
+                                    setLoading(true);
+                                    try {
+                                        const { data: trans } = await axios.post("/api/admin/ai/translate", { text: testi.quote });
+                                        const nl = [...testimonials];
+                                        nl[i].quote_en = trans.en;
+                                        nl[i].quote_it = trans.it;
+                                        nl[i].quote_de = trans.de;
+                                        nl[i].quote_fr = trans.fr;
+                                        nl[i].quote_es = trans.es;
+                                        updateTestimonials(nl);
+                                        showToast(`Translations forged for ${testi.name}`, 'success');
+                                    } catch (err) {
+                                        console.error("Forge Failed:", err);
+                                        setError("Translation Forge failed. Verify API connection.");
+                                    } finally {
+                                        setLoading(false);
+                                    }
+                                };
+
+                                return (
+                                    <div key={i} className="bg-white/[0.01] border border-white/5 p-8 rounded-sm space-y-6 group/testi">
+                                        <div className="flex justify-between items-start">
+                                            <div className="flex gap-4 items-center">
+                                                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-brand-yellow/20 bg-black">
+                                                    <img src={testi.avatar} alt="" className="w-full h-full object-cover" />
+                                                </div>
+                                                <div className="flex gap-1">
+                                                    {AVATAR_LIBRARY.map((img, idx) => (
+                                                        <button 
+                                                            key={idx} 
+                                                            onClick={() => { const nl = [...testimonials]; nl[i].avatar = img; updateTestimonials(nl); }} 
+                                                            className={`w-5 h-5 rounded-full border transition-all ${testi.avatar === img ? "border-brand-yellow scale-110 shadow-[0_0_8px_rgba(255,159,0,0.5)]" : "border-white/5 opacity-40 hover:opacity-100"}`}
+                                                        >
+                                                            <img src={img} className="w-full h-full object-cover rounded-full" />
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <button 
+                                                    onClick={handleForgeTranslation}
+                                                    title="Forge Global Translations"
+                                                    className="p-3 bg-brand-yellow/5 border border-brand-yellow/10 text-brand-yellow hover:bg-brand-yellow hover:text-black transition-all rounded-sm flex items-center justify-center -translate-y-2 opacity-0 group-hover/testi:opacity-100 duration-500"
+                                                >
+                                                    <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+                                                </button>
+                                                <button onClick={() => updateTestimonials(testimonials.filter((_, idx) => idx !== i))} className="text-neutral-800 hover:text-red-500 transition-colors -translate-y-2"><Trash2 className="w-4 h-4" /></button>
+                                            </div>
                                         </div>
-                                        <button onClick={() => updateTestimonials(testimonials.filter((_, idx) => idx !== i))} className="text-neutral-800 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-2">
+                                                <label className="text-[8px] font-black text-neutral-600 uppercase">Collector Identity</label>
+                                                <input value={testi.name} onChange={(e) => { const nl = [...testimonials]; nl[i].name = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-3 text-[10px] font-black text-white uppercase outline-none focus:border-brand-yellow/20" placeholder="NAME" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[8px] font-black text-neutral-600 uppercase">Role / Rank</label>
+                                                <input value={testi.role || ""} onChange={(e) => { const nl = [...testimonials]; nl[i].role = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-3 text-[10px] font-black text-white uppercase outline-none focus:border-brand-yellow/20" placeholder="COLLECTOR" />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <div className="flex items-center justify-between">
+                                                <label className="text-[8px] font-black text-neutral-600 uppercase">Primary Review (English)</label>
+                                                <span className="text-[8px] font-black text-brand-yellow/50 uppercase">Master Source</span>
+                                            </div>
+                                            <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[i].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/40 border border-white/10 p-4 text-[11px] text-white font-medium min-h-[100px] outline-none focus:border-brand-yellow/50" placeholder="GLOBAL QUOTE" />
+                                        </div>
+
+                                        {/* Multilingual Projections */}
+                                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
+                                            {[
+                                                { key: 'it', label: 'Italian', icon: '🇮🇹' },
+                                                { key: 'de', label: 'German', icon: '🇩🇪' },
+                                                { key: 'fr', label: 'French', icon: '🇫🇷' },
+                                                { key: 'es', label: 'Spanish', icon: '🇪🇸' }
+                                            ].map(lang => (
+                                                <div key={lang.key} className="space-y-2">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-[8px] grayscale opacity-50">{lang.icon}</span>
+                                                        <label className="text-[8px] font-black text-neutral-700 uppercase">{lang.label} Quote</label>
+                                                    </div>
+                                                    <textarea 
+                                                        value={(testi as any)[`quote_${lang.key}`] || ""} 
+                                                        onChange={(e) => { const nl = [...testimonials]; (nl[i] as any)[`quote_${lang.key}`] = e.target.value; updateTestimonials(nl); }} 
+                                                        className="w-full bg-white/[0.012] border border-white/5 p-3 text-[10px] text-neutral-500 min-h-[80px] outline-none focus:border-brand-yellow/20" 
+                                                        placeholder="..." 
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <input value={testi.name} onChange={(e) => { const nl = [...testimonials]; nl[i].name = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-3 text-[10px] font-black text-white uppercase outline-none" placeholder="NAME" />
-                                    <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[i].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-4 text-[10px] text-neutral-400 min-h-[80px] outline-none" placeholder="QUOTE" />
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
 
