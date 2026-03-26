@@ -306,24 +306,40 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                 {/* Right: Details */}
                 <div className="flex flex-col pt-4">
                     <div className="mb-8">
-                        <div className="flex flex-wrap gap-3 mb-6 animate-in fade-in slide-in-from-left-4 duration-1000">
+                        <div className="flex flex-wrap items-center gap-3 mb-6 animate-in fade-in slide-in-from-left-4 duration-1000">
                             <Link 
-                                href={`/${lang}/products?category=${encodeURIComponent(product.category)}`}
-                                onClick={() => track("category_clicked", { category: product.category, source: "product_detail_main" })}
-                                className="text-[11px] uppercase font-black tracking-[0.4em] text-brand-yellow hover:text-white transition-colors"
+                                href={`/${lang}/products?category=${encodeURIComponent(product.franchise || product.category)}`}
+                                onClick={() => track("category_clicked", { category: product.franchise || product.category, source: "product_detail_franchise" })}
+                                className="text-[11px] uppercase font-black tracking-[0.4em] text-brand-yellow hover:text-white transition-colors flex items-center gap-2"
                             >
-                                {product.category}
+                                {product.franchise || product.category}
                             </Link>
-                            {product.tags?.map((tag: string) => (
-                                <Link 
-                                    key={tag}
-                                    href={`/${lang}/products?category=${encodeURIComponent(tag)}`}
-                                    onClick={() => track("category_clicked", { category: tag, source: "product_detail_tag" })}
-                                    className="text-[10px] uppercase font-black tracking-[0.2em] text-white/30 border border-white/10 px-3 py-1 rounded-sm backdrop-blur-md hover:border-brand-yellow/30 hover:text-white transition-all"
-                                >
-                                    {tag}
-                                </Link>
-                            ))}
+                            
+                            {product.subcategory && (
+                                <>
+                                    <span className="text-white/10 text-[10px]">/</span>
+                                    <Link 
+                                        href={`/${lang}/products?category=${encodeURIComponent(product.subcategory)}`}
+                                        onClick={() => track("category_clicked", { category: product.franchise || product.category, subcategory: product.subcategory, source: "product_detail_sub" })}
+                                        className="text-[10px] uppercase font-black tracking-[0.2em] text-white/60 hover:text-brand-yellow transition-colors"
+                                    >
+                                        {product.subcategory}
+                                    </Link>
+                                </>
+                            )}
+
+                            <div className="flex flex-wrap gap-2 ml-2 border-l border-white/5 pl-4">
+                                {product.tags?.map((tag: string) => (
+                                    <Link 
+                                        key={tag}
+                                        href={`/${lang}/products?category=${encodeURIComponent(tag)}`}
+                                        onClick={() => track("category_clicked", { category: tag, source: "product_detail_tag" })}
+                                        className="text-[9px] uppercase font-black tracking-[0.2em] text-white/20 border border-white/10 px-2 py-0.5 rounded-sm hover:border-brand-yellow/30 hover:text-white transition-all"
+                                    >
+                                        {tag}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
                         <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-[0.9] mb-6">
                             {product.name}

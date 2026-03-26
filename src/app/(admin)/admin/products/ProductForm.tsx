@@ -61,10 +61,20 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     });
     const [price, setPrice] = useState(initialData?.price || 8999);
     const [category, setCategory] = useState(initialData?.category || "figures");
+    const [franchise, setFranchise] = useState(initialData?.franchise || "");
+    const [subcategory, setSubcategory] = useState(initialData?.subcategory || "");
     const [status, setStatus] = useState<"draft" | "published" | "archived">(initialData?.status || "published");
     const [tags, setTags] = useState<string[]>(initialData?.tags || []);
     const [tagInput, setTagInput] = useState("");
+    
+    // Taxonomy Context
     const [allExistingTags, setAllExistingTags] = useState<string[]>([]);
+    const [allExistingFranchises, setAllExistingFranchises] = useState<string[]>([]);
+    const [allExistingSubcategories, setAllExistingSubcategories] = useState<string[]>([]);
+    
+    // AI Suggestions Data
+    const [suggestedExistingTags, setSuggestedExistingTags] = useState<string[]>([]);
+    const [suggestedNewTags, setSuggestedNewTags] = useState<string[]>([]);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isTagSuggestionsOpen, setIsTagSuggestionsOpen] = useState(false);
 
@@ -103,15 +113,20 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const supabase = createClient();
 
     useEffect(() => {
-        // Fetch all unique tags on mount
-        const fetchTags = async () => {
-            const { data } = await supabase.from("products").select("tags") as { data: { tags: string[] }[] | null };
+        // Fetch all unique taxonomy data on mount
+        const fetchTaxonomy = async () => {
+            const { data } = await supabase.from("products").select("tags, franchise, subcategory") as { data: { tags: string[], franchise: string, subcategory: string }[] | null };
             if (data) {
                 const uniqueTags = Array.from(new Set(data.flatMap(p => p.tags || []))).sort();
+                const uniqueFranchises = Array.from(new Set(data.map(p => p.franchise).filter(Boolean))).sort();
+                const uniqueSubcategories = Array.from(new Set(data.map(p => p.subcategory).filter(Boolean))).sort();
+                
                 setAllExistingTags(uniqueTags);
+                setAllExistingFranchises(uniqueFranchises);
+                setAllExistingSubcategories(uniqueSubcategories);
             }
         };
-        fetchTags();
+        fetchTaxonomy();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -284,12 +299,29 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
             const response = await axios.post("/api/admin/ai/generate", {
                 prompt: aiPrompt,
-                image: base64Image
+                image: base64Image,
+                existingFranchises: allExistingFranchises,
+                existingSubcategories: allExistingSubcategories,
+                existingTags: allExistingTags
             });
 
-            const { title, description, tags: suggestedTags } = response.data;
+            const { 
+                title, 
+                description, 
+                franchise: suggestedFranchise, 
+                subcategory: suggestedSub, 
+                suggestedExistingTags: sExisting, 
+                suggestedNewTags: sNew 
+            } = response.data;
 
             if (title) setName(title);
+            if (suggestedFranchise) setFranchise(suggestedFranchise);
+            if (suggestedSub) setSubcategory(suggestedSub);
+            
+            // Store suggestions for UI legend and quick selection
+            if (sExisting) setSuggestedExistingTags(sExisting.filter((t: string) => !tags.includes(t.toLowerCase())));
+            if (sNew) setSuggestedNewTags(sNew.filter((t: string) => !tags.includes(t.toLowerCase())));
+
             if (description) {
                 const newDescriptions: Record<string, string | null> = { ...descriptions, en: description };
 
@@ -333,11 +365,9 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 setDescriptions(newDescriptions);
                 setIsTranslating(false);
             }
-            if (suggestedTags && Array.isArray(suggestedTags)) {
-                // Merge tags, avoid duplicates
-                const uniqueTags = Array.from(new Set([...tags, ...suggestedTags.map(t => t.toLowerCase())]));
-                setTags(uniqueTags);
-            }
+            
+            // Note: We don't merge tags automatically anymore to give Admin control over quality
+            // Suggestions are now displayed in the "Suggestion Deck"
 
         } catch (err: any) {
             console.error("[AI Forge] Fatal Error:", err);
@@ -373,6 +403,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             description_es: descriptions.es,
             price: Number(price),
             category,
+            franchise,
+            subcategory,
             status,
             tags,
             images,
@@ -693,7 +725,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                     <ChevronDown className={`w-4 h-4 text-neutral-600 transition-transform duration-300 ${isCategoryOpen ? 'rotate-180' : ''}`} />
                                 </button>
 
-                                {isCategoryOpen && (
+                                 {isCategoryOpen && (
                                     <div className="absolute top-full left-0 w-full mt-2 bg-[#0c0c0c] border border-white/10 rounded-sm shadow-2xl z-50 overflow-hidden backdrop-blur-xl">
                                         <div className="py-2">
                                             {categories.map((cat) => (
@@ -725,16 +757,71 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                 )}
                             </div>
                         </div>
+
+                        <div className="space-y-3">
+                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Franchise / Universe</label>
+                            <div className="relative">
+                                <input
+                                    value={franchise}
+                                    onChange={(e) => setFranchise(e.target.value)}
+                                    placeholder="e.g. DC Comics"
+                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
+                                />
+                                {franchise && !allExistingFranchises.includes(franchise) && (
+                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[7px] font-black uppercase text-orange-500 tracking-widest px-2 py-1 bg-orange-500/10 rounded-sm border border-orange-500/20">
+                                        New Universe
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Subject Character / Series</label>
+                            <div className="relative">
+                                <input
+                                    value={subcategory}
+                                    onChange={(e) => setSubcategory(e.target.value)}
+                                    placeholder="e.g. Zatanna"
+                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
+                                />
+                                {subcategory && !allExistingSubcategories.includes(subcategory) && (
+                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[7px] font-black uppercase text-orange-500 tracking-widest px-2 py-1 bg-orange-500/10 rounded-sm border border-orange-500/20">
+                                        First Appearance
+                                    </span>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     <div className="space-y-4 pt-6 mt-4 border-t border-white/5">
-                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 flex items-center gap-2">
-                            <Tag className="w-3.5 h-3.5" />
-                            Franchise & Origins (Tags)
-                        </label>
+                        <div className="flex items-center justify-between">
+                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 flex items-center gap-2">
+                                <Tag className="w-3.5 h-3.5" />
+                                Masterpiece Identifiers (Tags)
+                            </label>
+                            
+                            {/* Tags Info Icon & Legend */}
+                            <div className="relative group/legend">
+                                <AlertCircle className="w-4 h-4 text-neutral-700 cursor-help hover:text-brand-yellow transition-colors" />
+                                <div className="absolute bottom-full right-0 mb-4 w-64 bg-black border border-white/10 p-4 rounded-sm shadow-2xl scale-90 opacity-0 group-hover/legend:scale-100 group-hover/legend:opacity-100 transition-all z-[100] pointer-events-none">
+                                    <h5 className="text-[10px] font-black uppercase text-white mb-3 tracking-widest border-b border-white/5 pb-2">Tag Taxonomy Legend</h5>
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-brand-yellow shadow-[0_0_8px_rgba(255,215,0,0.5)]" />
+                                            <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-widest">Cyan/Yellow: Vault Match (Existing)</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]" />
+                                            <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-widest">Orange: New AI Proposition</span>
+                                        </div>
+                                        <p className="text-[7px] text-neutral-600 leading-relaxed pt-2">Prioritize Vault Matches to keep your collection organization clean and avoid near-duplicates.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className="flex flex-wrap gap-2 mb-3">
                             {tags.map((tag) => (
-                                <span key={tag} className="flex items-center gap-2 bg-brand-yellow/10 border border-brand-yellow/30 px-3 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest text-brand-yellow group animate-in fade-in zoom-in duration-300">
+                                <span key={tag} className={`flex items-center gap-2 border px-3 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest group animate-in fade-in zoom-in duration-300 ${allExistingTags.includes(tag) ? 'bg-brand-yellow/10 border-brand-yellow/30 text-brand-yellow' : 'bg-orange-500/10 border-orange-500/30 text-orange-500'}`}>
                                     {tag}
                                     <button
                                         type="button"
@@ -746,6 +833,43 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                 </span>
                             ))}
                         </div>
+
+                        {/* Suggestion Deck */}
+                        {(suggestedExistingTags.length > 0 || suggestedNewTags.length > 0) && (
+                            <div className="bg-white/[0.02] border border-white/5 p-4 mb-6 rounded-sm space-y-4 animate-in slide-in-from-top-2 duration-500">
+                                <span className="text-[8px] font-black uppercase text-neutral-600 tracking-widest block mb-1">Forge Suggestions</span>
+                                <div className="flex flex-wrap gap-2">
+                                    {suggestedExistingTags.map(tag => (
+                                        <button
+                                            key={tag}
+                                            type="button"
+                                            onClick={() => {
+                                                setTags([...tags, tag.toLowerCase()]);
+                                                setSuggestedExistingTags(suggestedExistingTags.filter(t => t !== tag));
+                                            }}
+                                            className="px-2 py-1 bg-brand-yellow/5 border border-brand-yellow/20 rounded-sm text-[9px] font-black uppercase text-brand-yellow/60 hover:text-brand-yellow hover:border-brand-yellow/50 transition-all flex items-center gap-1.5"
+                                        >
+                                            <Zap className="w-2.5 h-2.5" />
+                                            {tag}
+                                        </button>
+                                    ))}
+                                    {suggestedNewTags.map(tag => (
+                                        <button
+                                            key={tag}
+                                            type="button"
+                                            onClick={() => {
+                                                setTags([...tags, tag.toLowerCase()]);
+                                                setSuggestedNewTags(suggestedNewTags.filter(t => t !== tag));
+                                            }}
+                                            className="px-2 py-1 bg-orange-500/5 border border-orange-500/20 rounded-sm text-[9px] font-black uppercase text-orange-500/60 hover:text-orange-500 hover:border-orange-500/50 transition-all flex items-center gap-1.5"
+                                        >
+                                            <Sparkles className="w-2.5 h-2.5" />
+                                            {tag}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                         <div className="relative">
                             <input
                                 type="text"

@@ -16,6 +16,8 @@ export interface Product {
   images: string[];
   videos: string[];
   category: ProductCategory;
+  franchise?: string | null;
+  subcategory?: string | null;
   status: "draft" | "published" | "archived";
   tags: string[];
   details: string[];

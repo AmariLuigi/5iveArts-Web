@@ -10,7 +10,8 @@ interface CategoryStat {
 }
 
 export default function CategoryInsights() {
-    const [stats, setStats] = useState<CategoryStat[]>([]);
+    const [stats, setStats] = useState<{ categories: CategoryStat[], subcategories: CategoryStat[] }>({ categories: [], subcategories: [] });
+    const [activeTab, setActiveTab] = useState<'categories' | 'subcategories'>('categories');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -19,7 +20,7 @@ export default function CategoryInsights() {
                 const { data } = await axios.get("/api/admin/analytics/categories");
                 setStats(data);
             } catch (err) {
-                console.error("Failed to fetch category insights:", err);
+                console.error("Failed to fetch taxonomy insights:", err);
             } finally {
                 setLoading(false);
             }
@@ -34,21 +35,41 @@ export default function CategoryInsights() {
         </div>
     );
 
-    const maxClicks = Math.max(...stats.map(s => s.clicks), 0);
+    const currentStats = activeTab === 'categories' ? stats.categories : stats.subcategories;
+    const maxClicks = Math.max(...currentStats.map(s => s.clicks), 0);
 
     return (
         <div className="space-y-6">
-            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/40 flex items-center gap-2">
-                <BarChart className="w-3.5 h-3.5" />
-                Category Interest Ranking
-            </h3>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/40 flex items-center gap-2">
+                    <BarChart className="w-3.5 h-3.5" />
+                    Vault Interest Profiles
+                </h3>
+
+                <div className="flex bg-black/40 border border-white/5 rounded-sm p-1 self-start sm:self-auto">
+                    <button 
+                        type="button"
+                        onClick={() => setActiveTab('categories')}
+                        className={`px-3 py-1.5 text-[8px] font-black uppercase tracking-widest transition-all rounded-sm ${activeTab === 'categories' ? 'bg-white/10 text-white' : 'text-neutral-600 hover:text-neutral-400'}`}
+                    >
+                        Franchises
+                    </button>
+                    <button 
+                        type="button"
+                        onClick={() => setActiveTab('subcategories')}
+                        className={`px-3 py-1.5 text-[8px] font-black uppercase tracking-widest transition-all rounded-sm ${activeTab === 'subcategories' ? 'bg-brand-yellow text-black shadow-[0_0_10px_rgba(255,215,0,0.3)]' : 'text-neutral-600 hover:text-neutral-400'}`}
+                    >
+                        Characters
+                    </button>
+                </div>
+            </div>
 
             <div className="bg-[#0a0a0a] border border-white/5 rounded-sm p-8 space-y-6 border-l-brand-yellow/20 border-l-4">
-                {stats.length === 0 ? (
+                {currentStats.length === 0 ? (
                     <p className="text-[10px] font-black uppercase text-neutral-600 text-center py-10">No engagement data recorded</p>
                 ) : (
                     <div className="space-y-8">
-                        {stats.map((cat, i) => (
+                        {currentStats.map((cat, i) => (
                             <div key={cat.name} className="space-y-3">
                                 <div className="flex justify-between items-end">
                                     <div className="flex items-center gap-3">
@@ -72,7 +93,13 @@ export default function CategoryInsights() {
                 )}
 
                 <div className="pt-6 border-t border-white/5 flex items-center justify-between">
-                    <p className="text-[8px] font-bold uppercase text-neutral-600 tracking-widest">REAL-TIME VAULT METRICS</p>
+                    <div className="flex items-center gap-4">
+                        <p className="text-[8px] font-bold uppercase text-neutral-600 tracking-widest">REAL-TIME VAULT METRICS</p>
+                        <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow animate-pulse" />
+                            <span className="text-[7px] font-black text-neutral-700 uppercase tracking-widest">Tracking Segment: {activeTab}</span>
+                        </div>
+                    </div>
                     <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
                 </div>
             </div>
