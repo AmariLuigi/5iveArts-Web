@@ -166,7 +166,8 @@ body {
 .has-custom-cursor, 
 .has-custom-cursor a,
 .has-custom-cursor button,
-.has-custom-cursor [role="button"] {
+.has-custom-cursor [role="button"],
+.has-custom-cursor .cursor-zoom-in {
   cursor: none !important;
 }
 
