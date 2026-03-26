@@ -324,36 +324,45 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 throw new Error(`Forge API Error: ${fetchResponse.status} ${errData.error || ""}`);
             }
 
-            // STREAM READER PROTOCOL
+            // STREAM READER PROTOCOL (Buffered to handle partial lines)
             const reader = fetchResponse.body?.getReader();
             if (!reader) throw new Error("Forge Stream Connection Failed");
 
             let fullContent = "";
+            let buffer = ""; // CARRY-OVER BUFFER
             const decoder = new TextDecoder();
             
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
                 
-                const chunk = decoder.decode(value);
-                // NVIDIA NIM: Extract actual content from SSE format data: {...}
-                const lines = chunk.split('\n');
+                const chunk = decoder.decode(value, { stream: true });
+                buffer += chunk;
+                
+                const lines = buffer.split('\n');
+                // Keep the last potentially incomplete line in the buffer
+                buffer = lines.pop() || "";
+                
                 for (const line of lines) {
-                    if (line.startsWith('data: ')) {
-                        const dataStr = line.slice(6);
-                        if (dataStr === '[DONE]') break;
+                    const trimmedLine = line.trim();
+                    if (!trimmedLine || trimmedLine === 'data: [DONE]') continue;
+                    
+                    if (trimmedLine.startsWith('data: ')) {
                         try {
+                            const dataStr = trimmedLine.slice(6);
                             const json = JSON.parse(dataStr);
                             const text = json.choices[0]?.delta?.content || "";
                             fullContent += text;
-                        } catch (e) { /* partial chunk */ }
+                        } catch (e) {
+                            // Partial JSON in the data payload, skip and let buffer handle if possible
+                        }
                     }
                 }
             }
 
             console.log(`[AI Forge] --- NEXUS DATA RECEIVED (${Date.now() - t_start}ms) ---`);
 
-            // EXTRACTION ENGINE
+            // EXTRACTION ENGINE (CLEANS MARKDOWN PREAMBLE)
             const firstCurly = fullContent.indexOf('{');
             const lastCurly = fullContent.lastIndexOf('}');
             
@@ -361,7 +370,11 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 throw new Error("Forge response did not contain a valid JSON structure.");
             }
 
-            const jsonStr = fullContent.substring(firstCurly, lastCurly + 1);
+            // CLEAN: Remove possible newlines/spaces between marker and start of JSON
+            const jsonStr = fullContent.substring(firstCurly, lastCurly + 1)
+                .replace(/\\n/g, '\n') // Handle escaped newlines
+                .trim();
+            
             const ForgeResult = JSON.parse(jsonStr);
 
             const { 

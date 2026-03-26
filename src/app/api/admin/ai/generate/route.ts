@@ -30,11 +30,14 @@ VAULT_FRANCHISES: ${existingFranchises.join(", ")}
 VAULT_SUB_CATEGORIES: ${existingSubcategories.join(", ")}
     `.trim();
 
-    const systemPrompt = `You are a 5iveArts curator. Identify the character and return JSON.
+    const systemPrompt = `You are a 5iveArts curator. Identify the character and return RAW JSON ONLY.
+
 SCHEMA: { "title": "...", "description": "...", "categorical_tags": { "Franchise": "...", "Character": "...", "Series": "...", "Artist": "..." } }
 
 RULES:
-- Return ONLY valid JSON.
+- Respond ONLY with raw JSON.
+- DO NOT use markdown code blocks (no \`\`\`json).
+- DO NOT include conversational text.
 - No generic tags. Include Vault Lore if relevant:
 ${vaultContext}`;
 
