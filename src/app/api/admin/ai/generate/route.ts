@@ -33,32 +33,22 @@ VAULT_TAGS: ${existingTags.join(", ")}
     `.trim();
 
     // Construct the system prompt to force JSON and brand alignment
-    const systemPrompt = `You are an elite pop-culture curator for "5iveArts", specializing in museum-grade resin statues of iconic characters. 
-Your goal is to transform a visual/textual concept of a LEGENDARY CHARACTER into a luxury product listing.
+    const systemPrompt = `You are an elite pop-culture curator for "5iveArts", specializing in museum-grade resin statues.
+Your goal is to identify a character and map them to a strict hierarchical taxonomy.
+
+TAXONOMY RULES:
+- EVERY identifier must be a Category:Subcategory pair.
+- **FORBIDDEN**: Never suggest generic attributes like "Material", "Vibe", "Style", "Color", "Quality", "Technical", "Description".
+- **ELITE IDENTIFIERS ONLY**: Focus on specific lore, franchise, and character tags:
+    - **Franchise**: The broad universe (e.g., "DC Comics", "Marvel").
+    - **Character**: The specific name (e.g., "Zatanna", "Iron Man").
+    - **Series**: The specific release line or comic volume (e.g., "Justice League Dark", "Infinity Saga").
+    - **Artist**: If well-known (e.g., "Artgerm", "Todd McFarlane").
+    - **Era**: (e.g., "Golden Age", "Renaissance").
 
 CORE CHARACTER IDENTIFICATION:
-- In Vision Mode (image provided), strictly prioritize identifying the character and their specific series/franchise.
-- Identify the Primary Franchise (e.g., "DC Comics", "Star Wars"). 
-- Identify the Subcategory (The specific character name or series volume, e.g., "Zatanna", "Berserk").
-
-HIERARCHY RULES:
-- If the identified Franchise or Subcategory matches an item in the provided VAULT lists exactly, YOU MUST USE THE VAULT STRING to avoid duplicates.
-- Example: If VAULT_FRANCHISES contains "DC Comics", do not suggest "DC Universe".
-
-TAGGING PROTOCOL:
-- suggestedExistingTags: Tags from VAULT_TAGS that perfectly apply to this character.
-- suggestedNewTags: ONLY high-quality, lore-specific tags (3-5 max). 
-- FORBIDDEN: NEVER suggest generic tags like "heroine", "statue", "collectible", "action", "toy", "figure".
-- PREFERRED: "Gotham Knight", "Zatara Heritage", "Sith Lord", "Berserker Armor".
-
-STRICT TITLE RULES:
-- Use only the character's legendary name and a subtitle.
-- Example: "Kratos: The Father of Sparta".
-
-STRICT DESCRIPTION RULES:
-- Focus on the iconic weight of the character and the poetic details of the sculpt.
-- MUST include tech specs: "${BRAND_STATIC_PARTS.material}" and "${BRAND_STATIC_PARTS.painting}".
-- MUST end with: "${BRAND_STATIC_PARTS.disclaimer}"
+- In Vision Mode (image provided), identify the character and their primary hierarchy immediately.
+- If the identified Franchise or Subcategory matches an item in the provided VAULT lists exactly, YOU MUST USE THE VAULT STRING.
 
 VAULT DATA CONTEXT:
 ${vaultContext}
@@ -66,10 +56,12 @@ ${vaultContext}
 Output MUST be valid JSON: { 
   "title": "...", 
   "description": "...", 
-  "franchise": "...", 
-  "subcategory": "...", 
-  "suggestedExistingTags": ["tag1", ...], 
-  "suggestedNewTags": ["tag2", ...] 
+  "categorical_tags": { 
+    "Franchise": "...", 
+    "Character": "...", 
+    "Series": "...", 
+    "Artist": "..."
+  }
 }`;
 
     const messages = [

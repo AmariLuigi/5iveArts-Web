@@ -55,7 +55,7 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
   const currentImage = product.images?.[mediaIndex] || "/images/placeholder.jpg";
   const displayVideo = hasVideo && isHovered && !showScaleSelector;
   const videoUrl = product.videos?.[0];
-  const categoryLabel = dict?.homepage?.premiumSeries || "Premium Series";
+  const categoryLabel = product.franchise || dict?.homepage?.premiumSeries || "Premium Series";
 
   const scales: ProductScale[] = ["1/9", "1/6", "1/4"];
 
@@ -165,11 +165,21 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
           )}
 
           <div className="flex flex-wrap gap-2 mb-2">
-            {product.tags?.slice(0, 3).map(tag => (
-              <span key={tag} className="text-[8px] uppercase font-bold text-neutral-600 tracking-widest bg-white/[0.03] px-2 py-0.5 rounded-sm border border-white/[0.02]">
-                {tag}
+            {product.subcategory && (
+              <span className="text-[8px] uppercase font-black text-brand-yellow tracking-[0.2em] bg-brand-yellow/5 px-2 py-0.5 rounded-sm border border-brand-yellow/10">
+                {product.subcategory}
               </span>
-            ))}
+            )}
+            {product.tags?.slice(0, 2).map(tag => {
+              const hasHierarchy = tag.includes(':');
+              const [cat, sub] = hasHierarchy ? tag.split(':') : [null, tag];
+              return (
+                <span key={tag} className="text-[8px] uppercase font-bold text-neutral-600 tracking-widest bg-white/[0.03] px-2 py-0.5 rounded-sm border border-white/[0.02] flex items-center gap-1">
+                  {cat && <span className="opacity-40">{cat}:</span>}
+                  {sub}
+                </span>
+              );
+            })}
           </div>
 
           <Link href={`/${lang}/products/${product.id}`} className="text-xl font-black uppercase tracking-tight text-white hover:text-brand-yellow transition-colors leading-none block">

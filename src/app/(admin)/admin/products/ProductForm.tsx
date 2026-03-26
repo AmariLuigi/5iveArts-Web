@@ -26,7 +26,9 @@ import {
     EyeOff,
     Sparkles,
     Zap,
-    Archive
+    Archive,
+    GitCommit,
+    ArrowRight
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -66,6 +68,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [status, setStatus] = useState<"draft" | "published" | "archived">(initialData?.status || "published");
     const [tags, setTags] = useState<string[]>(initialData?.tags || []);
     const [tagInput, setTagInput] = useState("");
+    const [newCat, setNewCat] = useState("");
+    const [newSub, setNewSub] = useState("");
     
     // Taxonomy Context
     const [allExistingTags, setAllExistingTags] = useState<string[]>([]);
@@ -73,8 +77,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [allExistingSubcategories, setAllExistingSubcategories] = useState<string[]>([]);
     
     // AI Suggestions Data
-    const [suggestedExistingTags, setSuggestedExistingTags] = useState<string[]>([]);
-    const [suggestedNewTags, setSuggestedNewTags] = useState<string[]>([]);
+    const [suggestedPairs, setSuggestedPairs] = useState<Record<string, string>>({});
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isTagSuggestionsOpen, setIsTagSuggestionsOpen] = useState(false);
 
@@ -308,19 +311,18 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             const { 
                 title, 
                 description, 
-                franchise: suggestedFranchise, 
-                subcategory: suggestedSub, 
-                suggestedExistingTags: sExisting, 
-                suggestedNewTags: sNew 
+                categorical_tags
             } = response.data;
 
             if (title) setName(title);
-            if (suggestedFranchise) setFranchise(suggestedFranchise);
-            if (suggestedSub) setSubcategory(suggestedSub);
             
-            // Store suggestions for UI legend and quick selection
-            if (sExisting) setSuggestedExistingTags(sExisting.filter((t: string) => !tags.includes(t.toLowerCase())));
-            if (sNew) setSuggestedNewTags(sNew.filter((t: string) => !tags.includes(t.toLowerCase())));
+            // Handle categorical suggestions
+            if (categorical_tags) {
+                setSuggestedPairs(categorical_tags);
+                // Also auto-fill primary if present
+                if (categorical_tags.Franchise) setFranchise(categorical_tags.Franchise);
+                if (categorical_tags.Character) setSubcategory(categorical_tags.Character);
+            }
 
             if (description) {
                 const newDescriptions: Record<string, string | null> = { ...descriptions, en: description };
@@ -758,37 +760,46 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             </div>
                         </div>
 
-                        <div className="space-y-3">
-                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Franchise / Universe</label>
-                            <div className="relative">
-                                <input
-                                    value={franchise}
-                                    onChange={(e) => setFranchise(e.target.value)}
-                                    placeholder="e.g. DC Comics"
-                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
-                                />
-                                {franchise && !allExistingFranchises.includes(franchise) && (
-                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[7px] font-black uppercase text-orange-500 tracking-widest px-2 py-1 bg-orange-500/10 rounded-sm border border-orange-500/20">
-                                        New Universe
-                                    </span>
-                                )}
+                        <div className="flex items-center gap-6 py-8 px-6 bg-white/[0.01] border border-white/5 rounded-sm relative overflow-hidden group/nexus">
+                            {/* Animated Background Pulse */}
+                            <div className="absolute inset-0 bg-brand-yellow/[0.01] opacity-0 group-hover/nexus:opacity-100 transition-opacity duration-1000" />
+                            
+                            {/* Left Node: Franchise */}
+                            <div className="flex-1 space-y-3 relative z-10">
+                                <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block mb-1">Franchise / Universe</label>
+                                <div className="relative">
+                                    <input
+                                        value={franchise}
+                                        onChange={(e) => setFranchise(e.target.value)}
+                                        placeholder="e.g. DC Comics"
+                                        className="w-full bg-white/[0.02] border border-white/10 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30 transition-all"
+                                    />
+                                    <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-brand-yellow rounded-full shadow-[0_0_8px_rgba(255,215,0,0.5)]" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="space-y-3">
-                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Subject Character / Series</label>
-                            <div className="relative">
-                                <input
-                                    value={subcategory}
-                                    onChange={(e) => setSubcategory(e.target.value)}
-                                    placeholder="e.g. Zatanna"
-                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
-                                />
-                                {subcategory && !allExistingSubcategories.includes(subcategory) && (
-                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[7px] font-black uppercase text-orange-500 tracking-widest px-2 py-1 bg-orange-500/10 rounded-sm border border-orange-500/20">
-                                        First Appearance
-                                    </span>
-                                )}
+                            {/* Center Connector */}
+                            <div className="flex flex-col items-center justify-center gap-1 group/connector pt-6">
+                                <div className="w-12 h-[2px] bg-gradient-to-r from-brand-yellow/40 to-cyan-500/40 relative">
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-black border border-white/10 rounded-full flex items-center justify-center shadow-2xl">
+                                        <GitCommit className="w-2.5 h-2.5 text-brand-yellow animate-pulse" />
+                                    </div>
+                                </div>
+                                <span className="text-[8px] font-black uppercase text-neutral-700 tracking-[0.2em]">Linking</span>
+                            </div>
+
+                            {/* Right Node: Subcategory */}
+                            <div className="flex-1 space-y-3 relative z-10">
+                                <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block mb-1">Subject Character / Series</label>
+                                <div className="relative">
+                                    <input
+                                        value={subcategory}
+                                        onChange={(e) => setSubcategory(e.target.value)}
+                                        placeholder="e.g. Zatanna"
+                                        className="w-full bg-white/[0.02] border border-white/10 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30 transition-all"
+                                    />
+                                    <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-cyan-500 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -797,118 +808,140 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         <div className="flex items-center justify-between">
                             <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 flex items-center gap-2">
                                 <Tag className="w-3.5 h-3.5" />
-                                Masterpiece Identifiers (Tags)
+                                Hierarchical Taxonomy (Categorical Tags)
                             </label>
                             
-                            {/* Tags Info Icon & Legend */}
                             <div className="relative group/legend">
                                 <AlertCircle className="w-4 h-4 text-neutral-700 cursor-help hover:text-brand-yellow transition-colors" />
-                                <div className="absolute bottom-full right-0 mb-4 w-64 bg-black border border-white/10 p-4 rounded-sm shadow-2xl scale-90 opacity-0 group-hover/legend:scale-100 group-hover/legend:opacity-100 transition-all z-[100] pointer-events-none">
-                                    <h5 className="text-[10px] font-black uppercase text-white mb-3 tracking-widest border-b border-white/5 pb-2">Tag Taxonomy Legend</h5>
+                                <div className="absolute bottom-full right-0 mb-4 w-72 bg-black border border-white/10 p-4 rounded-sm shadow-2xl scale-90 opacity-0 group-hover/legend:scale-100 group-hover/legend:opacity-100 transition-all z-[100] pointer-events-none">
+                                    <h5 className="text-[10px] font-black uppercase text-white mb-3 tracking-widest border-b border-white/5 pb-2">Hierarchy Protocol</h5>
                                     <div className="space-y-3">
-                                        <div className="flex items-center gap-2">
+                                        <p className="text-[8px] font-bold text-neutral-400 uppercase leading-relaxed">Every tag must belong to a parent category. Format: <span className="text-brand-yellow">Category</span> &rarr; <span className="text-cyan-500">Subcategory</span>.</p>
+                                        <div className="flex items-center gap-2 pt-1 border-t border-white/5">
                                             <div className="w-2 h-2 rounded-full bg-brand-yellow shadow-[0_0_8px_rgba(255,215,0,0.5)]" />
-                                            <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-widest">Cyan/Yellow: Vault Match (Existing)</span>
+                                            <span className="text-[7px] font-bold text-neutral-500 uppercase tracking-widest">Vault Category</span>
+                                            <ArrowRight className="w-2.5 h-2.5 text-neutral-800" />
+                                            <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
+                                            <span className="text-[7px] font-bold text-neutral-500 uppercase tracking-widest">Local Subject</span>
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]" />
-                                            <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-widest">Orange: New AI Proposition</span>
-                                        </div>
-                                        <p className="text-[7px] text-neutral-600 leading-relaxed pt-2">Prioritize Vault Matches to keep your collection organization clean and avoid near-duplicates.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-wrap gap-2 mb-3">
-                            {tags.map((tag) => (
-                                <span key={tag} className={`flex items-center gap-2 border px-3 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest group animate-in fade-in zoom-in duration-300 ${allExistingTags.includes(tag) ? 'bg-brand-yellow/10 border-brand-yellow/30 text-brand-yellow' : 'bg-orange-500/10 border-orange-500/30 text-orange-500'}`}>
-                                    {tag}
-                                    <button
-                                        type="button"
-                                        onClick={() => removeTag(tag)}
-                                        className="hover:text-white transition-colors p-0.5"
-                                    >
-                                        <X className="w-3 h-3" />
-                                    </button>
-                                </span>
-                            ))}
+
+                        {/* Categorical Tag Cloud */}
+                        <div className="flex flex-wrap gap-3 mb-6">
+                            {tags.map((tag) => {
+                                const [cat, sub] = tag.includes(':') ? tag.split(':') : ['Other', tag];
+                                return (
+                                    <div key={tag} className="flex items-center bg-white/[0.03] border border-white/10 rounded-sm overflow-hidden animate-in zoom-in duration-300">
+                                        <span className="px-2 py-1 text-[8px] font-black uppercase tracking-widest text-brand-yellow/80 bg-brand-yellow/5 border-r border-white/5">{cat}</span>
+                                        <div className="px-3 py-1 text-[9px] font-black uppercase tracking-widest text-white flex items-center gap-2">
+                                            {sub}
+                                            <button
+                                                type="button"
+                                                onClick={() => removeTag(tag)}
+                                                className="hover:text-red-500 transition-colors p-0.5"
+                                            >
+                                                <X className="w-2.5 h-2.5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
 
-                        {/* Suggestion Deck */}
-                        {(suggestedExistingTags.length > 0 || suggestedNewTags.length > 0) && (
-                            <div className="bg-white/[0.02] border border-white/5 p-4 mb-6 rounded-sm space-y-4 animate-in slide-in-from-top-2 duration-500">
-                                <span className="text-[8px] font-black uppercase text-neutral-600 tracking-widest block mb-1">Forge Suggestions</span>
-                                <div className="flex flex-wrap gap-2">
-                                    {suggestedExistingTags.map(tag => (
+                        {/* Suggestion Deck (Categorical) */}
+                        {Object.keys(suggestedPairs).length > 0 && (
+                            <div className="bg-white/[0.01] border-l-2 border-brand-yellow border border-white/5 p-5 mb-8 rounded-sm space-y-4 animate-in slide-in-from-top-4 duration-700">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[9px] font-black uppercase text-neutral-500 tracking-widest flex items-center gap-2">
+                                        <Sparkles className="w-3 h-3 text-brand-yellow" />
+                                        Forge Proposed Taxonomy
+                                    </span>
+                                    <button 
+                                        type="button"
+                                        onClick={() => setSuggestedPairs({})}
+                                        className="text-[8px] font-black text-neutral-700 uppercase hover:text-white transition-colors"
+                                    >
+                                        Dismiss
+                                    </button>
+                                </div>
+                                <div className="flex flex-wrap gap-3">
+                                    {Object.entries(suggestedPairs).map(([cat, sub]) => (
                                         <button
-                                            key={tag}
+                                            key={`${cat}-${sub}`}
                                             type="button"
                                             onClick={() => {
-                                                setTags([...tags, tag.toLowerCase()]);
-                                                setSuggestedExistingTags(suggestedExistingTags.filter(t => t !== tag));
+                                                const tagStr = `${cat}:${sub}`;
+                                                if (!tags.includes(tagStr)) {
+                                                    setTags([...tags, tagStr]);
+                                                }
+                                                const newPairs = { ...suggestedPairs };
+                                                delete newPairs[cat];
+                                                setSuggestedPairs(newPairs);
                                             }}
-                                            className="px-2 py-1 bg-brand-yellow/5 border border-brand-yellow/20 rounded-sm text-[9px] font-black uppercase text-brand-yellow/60 hover:text-brand-yellow hover:border-brand-yellow/50 transition-all flex items-center gap-1.5"
+                                            className="group flex items-center bg-white/[0.05] border border-white/10 rounded-sm overflow-hidden hover:border-brand-yellow/40 transition-all hover:translate-y-[-2px] hover:shadow-xl"
                                         >
-                                            <Zap className="w-2.5 h-2.5" />
-                                            {tag}
-                                        </button>
-                                    ))}
-                                    {suggestedNewTags.map(tag => (
-                                        <button
-                                            key={tag}
-                                            type="button"
-                                            onClick={() => {
-                                                setTags([...tags, tag.toLowerCase()]);
-                                                setSuggestedNewTags(suggestedNewTags.filter(t => t !== tag));
-                                            }}
-                                            className="px-2 py-1 bg-orange-500/5 border border-orange-500/20 rounded-sm text-[9px] font-black uppercase text-orange-500/60 hover:text-orange-500 hover:border-orange-500/50 transition-all flex items-center gap-1.5"
-                                        >
-                                            <Sparkles className="w-2.5 h-2.5" />
-                                            {tag}
+                                            <span className="px-2 py-1.5 text-[8px] font-black uppercase tracking-widest text-neutral-500 group-hover:text-brand-yellow transition-colors border-r border-white/5">{cat}</span>
+                                            <div className="px-3 py-1.5 text-[9px] font-black uppercase tracking-widest text-neutral-300 group-hover:text-white flex items-center gap-2">
+                                                {sub as string}
+                                                <Zap className="w-2.5 h-2.5 text-brand-yellow/30 group-hover:text-brand-yellow animate-pulse" />
+                                            </div>
                                         </button>
                                     ))}
                                 </div>
                             </div>
                         )}
-                        <div className="relative">
-                            <input
-                                type="text"
-                                value={tagInput}
-                                onChange={(e) => {
-                                    setTagInput(e.target.value);
-                                    setIsTagSuggestionsOpen(true);
-                                }}
-                                onKeyDown={handleAddTag}
-                                onBlur={() => setTimeout(() => setIsTagSuggestionsOpen(false), 200)}
-                                placeholder="Type anime, game or show name and press Enter..."
-                                className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-[11px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
-                            />
 
-                            {isTagSuggestionsOpen && suggestions.length > 0 && (
-                                <div className="absolute top-full left-0 w-full mt-2 bg-[#0c0c0c] border border-white/10 rounded-sm shadow-2xl z-[60] overflow-hidden backdrop-blur-xl">
-                                    <div className="py-2 max-h-48 overflow-y-auto custom-scrollbar">
-                                        {suggestions.map((suggestion) => (
-                                            <button
-                                                key={suggestion}
-                                                type="button"
-                                                onClick={() => {
-                                                    if (!tags.includes(suggestion)) {
-                                                        setTags([...tags, suggestion]);
-                                                        setTagInput("");
-                                                        setIsTagSuggestionsOpen(false);
-                                                    }
-                                                }}
-                                                className="w-full text-left px-5 py-3 text-[10px] uppercase font-black tracking-widest text-neutral-400 hover:text-brand-yellow hover:bg-white/[0.03] transition-colors flex items-center justify-between group"
-                                            >
-                                                {suggestion}
-                                                <Plus className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
+                        {/* Manual Categorical Input */}
+                        <div className="bg-white/[0.02] border border-white/5 p-4 rounded-sm flex flex-col md:flex-row items-end gap-4 shadow-inner">
+                            <div className="flex-1 space-y-2 w-full">
+                                <label className="text-[8px] uppercase font-black tracking-widest text-neutral-600">Parent Category</label>
+                                <input
+                                    value={newCat}
+                                    onChange={(e) => setNewCat(e.target.value)}
+                                    placeholder="e.g. Artist"
+                                    className="w-full bg-black/20 border border-white/5 rounded-sm p-3 text-[10px] font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/20"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center pt-6 opacity-20">
+                                <ArrowRight className="w-4 h-4 text-white" />
+                            </div>
+                            <div className="flex-1 space-y-2 w-full">
+                                <label className="text-[8px] uppercase font-black tracking-widest text-neutral-600">Local Subject</label>
+                                <input
+                                    value={newSub}
+                                    onChange={(e) => setNewSub(e.target.value)}
+                                    placeholder="e.g. Artgerm"
+                                    className="w-full bg-black/20 border border-white/5 rounded-sm p-3 text-[10px] font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/20"
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault();
+                                            if (newCat && newSub) {
+                                                setTags([...tags, `${newCat}:${newSub}`]);
+                                                setNewCat("");
+                                                setNewSub("");
+                                            }
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    if (newCat && newSub) {
+                                        setTags([...tags, `${newCat}:${newSub}`]);
+                                        setNewCat("");
+                                        setNewSub("");
+                                    }
+                                }}
+                                className="bg-white/5 border border-white/10 p-3 rounded-sm hover:bg-white/10 hover:border-brand-yellow/30 transition-all font-black text-xs uppercase text-brand-yellow flex items-center gap-2"
+                            >
+                                <Plus className="w-4 h-4" />
+                                Link
+                            </button>
                         </div>
-                        <p className="text-[8px] uppercase font-black text-neutral-700 tracking-widest">Add series names like: "Batman", "Naruto", "Star Wars"</p>
                     </div>
 
                     <div className="space-y-4 pt-4 border-t border-white/5">

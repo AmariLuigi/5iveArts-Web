@@ -33,6 +33,8 @@ function ProductsContent({
     const catsAndTags = new Set<string>();
     initialProducts.forEach(p => {
       if (p.category) catsAndTags.add(p.category);
+      if (p.franchise) catsAndTags.add(p.franchise);
+      if (p.subcategory) catsAndTags.add(p.subcategory);
       if (p.tags) p.tags.forEach(t => catsAndTags.add(t));
     });
     return ["all", ...Array.from(catsAndTags)].sort();
@@ -42,9 +44,13 @@ function ProductsContent({
     return initialProducts.filter(p => {
       const matchesCategory = activeCategory === "all" || 
                               p.category === activeCategory || 
+                              p.franchise === activeCategory ||
+                              p.subcategory === activeCategory ||
                               (p.tags && p.tags.includes(activeCategory));
       const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            p.description.toLowerCase().includes(searchTerm.toLowerCase());
+                            p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            (p.franchise && p.franchise.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                            (p.subcategory && p.subcategory.toLowerCase().includes(searchTerm.toLowerCase()));
       return matchesCategory && matchesSearch;
     });
   }, [initialProducts, activeCategory, searchTerm]);

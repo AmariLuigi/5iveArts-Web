@@ -329,16 +329,23 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                             )}
 
                             <div className="flex flex-wrap gap-2 ml-2 border-l border-white/5 pl-4">
-                                {product.tags?.map((tag: string) => (
-                                    <Link 
-                                        key={tag}
-                                        href={`/${lang}/products?category=${encodeURIComponent(tag)}`}
-                                        onClick={() => track("category_clicked", { category: tag, source: "product_detail_tag" })}
-                                        className="text-[9px] uppercase font-black tracking-[0.2em] text-white/20 border border-white/10 px-2 py-0.5 rounded-sm hover:border-brand-yellow/30 hover:text-white transition-all"
-                                    >
-                                        {tag}
-                                    </Link>
-                                ))}
+                                {product.tags?.map((tag: string) => {
+                                    const hasHierarchy = tag.includes(':');
+                                    const [cat, sub] = hasHierarchy ? tag.split(':') : [null, tag];
+                                    
+                                    return (
+                                        <Link 
+                                            key={tag}
+                                            href={`/${lang}/products?category=${encodeURIComponent(tag)}`}
+                                            onClick={() => track("category_clicked", { category: tag, source: "product_detail_tag" })}
+                                            className="text-[9px] uppercase font-black tracking-[0.2em] text-white/20 border border-white/10 px-2 py-0.5 rounded-sm hover:border-brand-yellow/30 hover:text-white transition-all flex items-center gap-1.5"
+                                        >
+                                            {cat && <span className="opacity-30">{cat}</span>}
+                                            {cat && <span className="text-[7px] opacity-10">&bull;</span>}
+                                            {sub}
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </div>
                         <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-[0.9] mb-6">
