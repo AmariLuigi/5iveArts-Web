@@ -2,6 +2,7 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { LogOut, Package, ShoppingCart, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/products";
+import CategoryInsights from "@/components/admin/CategoryInsights";
 
 export default async function AdminDashboard() {
     const supabase = getSupabaseAdmin() as any;
@@ -59,13 +60,17 @@ export default async function AdminDashboard() {
                 ))}
             </div>
 
-            {/* Quick Actions / Recent Activity Placeholder */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 space-y-6">
-                    <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/40">Recent Shipments</h3>
-                    <div className="bg-[#0a0a0a] border border-white/5 rounded-sm p-12 text-center">
-                        <Package className="w-12 h-12 text-neutral-800 mx-auto mb-4" />
-                        <p className="text-[10px] font-black uppercase tracking-widest text-neutral-600">No recent orders found</p>
+            {/* Quick Actions / Recent Activity Layout Expanded */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pt-8">
+                <div className="lg:col-span-2 space-y-12">
+                    <CategoryInsights />
+
+                    <div className="space-y-6">
+                        <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/40">Recent Shipments</h3>
+                        <div className="bg-[#0a0a0a] border border-white/5 rounded-sm p-12 text-center">
+                            <Package className="w-12 h-12 text-neutral-800 mx-auto mb-4" />
+                            <p className="text-[10px] font-black uppercase tracking-widest text-neutral-600">No recent orders found</p>
+                        </div>
                     </div>
                 </div>
 

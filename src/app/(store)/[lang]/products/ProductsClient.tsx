@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
 import { Product } from "@/types";
 import ProductCard from "@/components/product/ProductCard";
 import { Box, Search } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
-export default function ProductsClient({ 
+function ProductsContent({ 
   initialProducts, 
   dict,
   lang
@@ -14,19 +16,43 @@ export default function ProductsClient({
   dict: any,
   lang: string
 }) {
+  const searchParams = useSearchParams();
+  const { track } = useAnalytics();
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const categories = useMemo(() => ["all", ...Array.from(new Set(initialProducts.map(p => p.category)))].sort(), [initialProducts]);
+  // Sync with URL params
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat) {
+      setActiveCategory(cat);
+    }
+  }, [searchParams]);
+
+  const categories = useMemo(() => {
+    const catsAndTags = new Set<string>();
+    initialProducts.forEach(p => {
+      if (p.category) catsAndTags.add(p.category);
+      if (p.tags) p.tags.forEach(t => catsAndTags.add(t));
+    });
+    return ["all", ...Array.from(catsAndTags)].sort();
+  }, [initialProducts]);
 
   const filteredProducts = useMemo(() => {
     return initialProducts.filter(p => {
-      const matchesCategory = activeCategory === "all" || p.category === activeCategory;
+      const matchesCategory = activeCategory === "all" || 
+                              p.category === activeCategory || 
+                              (p.tags && p.tags.includes(activeCategory));
       const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             p.description.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesCategory && matchesSearch;
     });
   }, [initialProducts, activeCategory, searchTerm]);
+
+  const handleCategorySelect = (cat: string) => {
+    setActiveCategory(cat);
+    track("category_clicked", { category: cat, source: "filter_bar" });
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 min-h-screen">
@@ -66,7 +92,7 @@ export default function ProductsClient({
             {categories.map(cat => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategorySelect(cat)}
                 className={`px-4 py-2 text-[9px] uppercase font-black tracking-widest rounded-sm transition-all border ${
                   activeCategory === cat 
                     ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
@@ -87,7 +113,7 @@ export default function ProductsClient({
             No masterpieces match your configuration
           </p>
           <button 
-            onClick={() => {setActiveCategory("all"); setSearchTerm("");}}
+            onClick={() => {handleCategorySelect("all"); setSearchTerm("");}}
             className="mt-6 text-brand-yellow text-[9px] uppercase font-black tracking-widest hover:text-white transition-colors"
           >
             Reset Filters
@@ -106,5 +132,17 @@ export default function ProductsClient({
         </div>
       )}
     </div>
+  );
+}
+
+export default function ProductsClient(props: { 
+  initialProducts: Product[],
+  dict: any,
+  lang: string
+}) {
+  return (
+    <Suspense fallback={<div className="min-h-screen text-white p-20 flex items-center justify-center font-black uppercase tracking-widest text-[10px]">Filtering Vault...</div>}>
+      <ProductsContent {...props} />
+    </Suspense>
   );
 }
