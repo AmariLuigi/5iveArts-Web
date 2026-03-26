@@ -86,7 +86,7 @@ export default function CustomCursor() {
         <div className="hidden lg:block">
             {/* The Main Dot */}
             <motion.div
-                className="fixed top-0 left-0 w-1 h-1 bg-brand-yellow rounded-full pointer-events-none z-[9999]"
+                className="fixed top-0 left-0 w-1.5 h-1.5 bg-brand-yellow rounded-full pointer-events-none z-[9999]"
                 style={{
                     x: mouseX,
                     y: mouseY,
@@ -109,8 +109,8 @@ export default function CustomCursor() {
                     translateY: "-50%",
                 }}
                 animate={{
-                    width: cursorType === 'magnifier' ? 48 : (isHovering ? 32 : 12),
-                    height: cursorType === 'magnifier' ? 48 : (isHovering ? 32 : 12),
+                    width: cursorType === 'magnifier' ? 64 : (isHovering ? 44 : 16),
+                    height: cursorType === 'magnifier' ? 64 : (isHovering ? 44 : 16),
                     scale: isPressed ? 0.8 : 1,
                     backgroundColor: cursorType === 'magnifier' ? "rgba(255, 215, 0, 0.1)" : (isHovering ? "rgba(255, 215, 0, 0.05)" : "transparent"),
                     borderColor: cursorType === 'magnifier' ? "rgba(255, 215, 0, 0.8)" : (isHovering ? "rgba(255, 215, 0, 0.5)" : "rgba(255, 215, 0, 0.2)"),
