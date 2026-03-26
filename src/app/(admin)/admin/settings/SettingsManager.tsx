@@ -62,7 +62,7 @@ export default function SettingsManager({ initialSettings }: Props) {
     useEffect(() => {
         const fetchAll = async () => {
             try {
-                const { data } = await axios.get("/api/admin/products");
+                const { data } = await axios.get("/api/admin/products?archived=true");
                 setAllProducts(data);
             } catch (err) {
                 console.error("Failed to fetch products for curation:", err);
@@ -194,7 +194,12 @@ export default function SettingsManager({ initialSettings }: Props) {
     };
 
     const selectedFeaturedIds = settings.homepage?.featured_product_ids || [];
-    const selectedProducts = allProducts.filter(p => selectedFeaturedIds.includes(p.id));
+    
+    // Maintain curation order and handle "Ghost" products (deleted/archived)
+    const selectedProductsOrder = selectedFeaturedIds.map(id => {
+        const found = allProducts.find(p => p.id === id);
+        return found || { id, name: "MISSING OR DELETED", status: "archived" } as Product;
+    });
     const suggestedProducts = productSearch.length > 0
         ? allProducts.filter(p => p.name.toLowerCase().includes(productSearch.toLowerCase()) && !selectedFeaturedIds.includes(p.id)).slice(0, 5)
         : [];
@@ -276,7 +281,10 @@ export default function SettingsManager({ initialSettings }: Props) {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 border-t border-white/5">
                             {[0, 1, 2].map((i) => {
-                                const product = selectedProducts[i];
+                                const product = selectedProductsOrder[i];
+                                const isGhost = product?.name === "MISSING OR DELETED";
+                                const isArchived = product?.status === "archived";
+
                                 return (
                                     <div key={i} className="group relative aspect-[3/4] bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden flex flex-col items-center justify-center p-8">
                                         {product ? (
@@ -285,9 +293,12 @@ export default function SettingsManager({ initialSettings }: Props) {
                                                     {product.images?.[0] && <img src={product.images[0]} alt="" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 transition-all duration-700" />}
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                                                 </div>
-                                                <div className="relative z-10">
+                                                <div className="relative z-10 text-center">
                                                     <span className="text-[7px] font-black uppercase tracking-[0.3em] text-brand-yellow mb-2 block">Slot 0{i + 1}</span>
-                                                    <h4 className="text-sm font-black uppercase text-white mb-1">{product.name}</h4>
+                                                    <h4 className={`text-sm font-black uppercase mb-1 ${isGhost ? 'text-red-500' : 'text-white'}`}>{product.name}</h4>
+                                                    {isArchived && !isGhost && (
+                                                        <span className="text-[6px] font-black uppercase bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full border border-red-500/20">Archived</span>
+                                                    )}
                                                 </div>
                                                 <button onClick={() => updateHomepageFeatured(selectedFeaturedIds.filter(id => id !== product.id))} className="absolute top-4 right-4 z-20 w-8 h-8 bg-black/80 flex items-center justify-center text-white hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><X className="w-4 h-4" /></button>
                                             </>

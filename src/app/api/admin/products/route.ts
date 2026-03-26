@@ -7,12 +7,19 @@ export async function GET(req: NextRequest) {
     if (!auth.authorized) return auth.response;
 
     const supabase = getSupabaseAdmin() as any;
+    const { searchParams } = new URL(req.url);
+    const includeArchived = searchParams.get('archived') === 'true';
 
-    const { data, error } = await supabase
+    let query = supabase
         .from("products")
         .select("*")
-        .neq("status", "archived")
         .order("created_at", { ascending: false });
+
+    if (!includeArchived) {
+        query = query.neq("status", "archived");
+    }
+
+    const { data, error } = await query;
 
     if (error) {
         console.error("[api/admin/products] GET error:", error.message);
