@@ -98,11 +98,12 @@ export async function DELETE(
     
     // Helper to get path relative to the bucket 'product-media'
     const getPathFromUrl = (url: string) => {
-        if (!url) return null;
+        if (!url || typeof url !== 'string') return null;
         try {
             // Check if it's a Supabase storage URL
             if (url.includes('/storage/v1/object/public/product-media/')) {
-                return url.split('/storage/v1/object/public/product-media/')[1];
+                const pathWithQuery = url.split('/storage/v1/object/public/product-media/')[1];
+                return pathWithQuery.split('?')[0]; // Strip cache-busting query params if any
             }
             return null;
         } catch (e) {
@@ -110,14 +111,14 @@ export async function DELETE(
         }
     };
 
-    if (product.images) {
+    if (Array.isArray(product.images)) {
         product.images.forEach((url: string) => {
             const path = getPathFromUrl(url);
             if (path) mediaToCleanup.push(path);
         });
     }
 
-    if (product.videos) {
+    if (Array.isArray(product.videos)) {
         product.videos.forEach((url: string) => {
             const path = getPathFromUrl(url);
             if (path) mediaToCleanup.push(path);
@@ -132,7 +133,6 @@ export async function DELETE(
             
         if (storageError) {
             console.error("[api/admin/products] Storage cleanup error:", storageError.message);
-            // We continue anyway so the DB record can be deleted even if storage cleanup fails partially
         }
     }
 
@@ -144,7 +144,10 @@ export async function DELETE(
 
     if (deleteError) {
         console.error("[api/admin/products] DELETE record error:", deleteError.message);
-        return NextResponse.json({ error: "Failed to delete product record" }, { status: 400 });
+        return NextResponse.json({ 
+            error: "Failed to delete product record", 
+            details: deleteError.message 
+        }, { status: 400 });
     }
 
     return NextResponse.json({ success: true });
