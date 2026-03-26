@@ -263,12 +263,15 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
         setIsForging(true);
         setError(null);
+        const t_start = Date.now();
+        console.log("[AI Forge] --- NEXUS INITIATED ---");
 
         try {
             // If we have images, use the first one as a base64 reference for vision
             let base64Image: string | null = null;
             if (images.length > 0) {
                 try {
+                    const t_comp_start = Date.now();
                     // COMPRESSION ENGINE: Resize and compress for the AI Forge
                     const img = document.createElement("img");
                     img.crossOrigin = "anonymous"; // CRITICAL: Avoid CORS 'tainted canvas' errors
@@ -295,11 +298,13 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             reject(new Error("Image failed to load for compression"));
                         };
                     });
+                    console.log(`[AI Forge] Telemetry: Image compressed in ${Date.now() - t_comp_start}ms. PayloadSize: ${base64Image?.length} chars`);
                 } catch (e) {
                     console.warn("[AI Forge] Compression protocol failed, proceeding without vision data", e);
                 }
             }
 
+            console.log("[AI Forge] Telemetry: Dispatching to Edge Network...");
             const response = await axios.post("/api/admin/ai/generate", {
                 prompt: aiPrompt,
                 image: base64Image,
@@ -307,6 +312,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 existingSubcategories: allExistingSubcategories,
                 existingTags: allExistingTags
             });
+            console.log(`[AI Forge] --- NEXUS SUCCESS (${Date.now() - t_start}ms) ---`);
 
             const { 
                 title, 

@@ -11,16 +11,25 @@ const BRAND_STATIC_PARTS = {
 };
 
 export async function POST(req: Request) {
+  const t_start = Date.now();
+  console.log("[AI Forge] --- SHIELD INITIATED ---");
+
   try {
-    const { 
-      prompt, 
-      image, 
-      existingFranchises = [], 
-      existingSubcategories = [], 
-      existingTags = [], 
-      model = "moonshotai/kimi-k2.5" 
-    } = await req.json();
-    
+    const body = await req.json();
+    const t_parsed = Date.now();
+
+    const {
+      prompt,
+      image,
+      existingFranchises = [],
+      existingSubcategories = [],
+      existingTags = [],
+      model = "moonshotai/kimi-k2.5"
+    } = body;
+
+    console.log(`[AI Forge] Latency: JSON Parsed (+${t_parsed - t_start}ms)`);
+    console.log(`[AI Forge] Payload Telemetry: ImageSize=${image?.length || 0}, VaultTags=${existingTags.length}`);
+
     const rawKey = process.env.NVIDIA_API_KEY;
     const apiKey = rawKey?.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
 
@@ -85,7 +94,10 @@ BE CONCISE. Use high-speed identification. Maximize lore precision.`;
       messages.push({ role: "user", content: prompt });
     }
 
-    // FAST EXECUTION PROTOCOL: Single attempt on Hobby to avoid 10s timeout
+    // CALL PROVIDER
+    const t_before_fetch = Date.now();
+    console.log(`[AI Forge] Calling NVIDIA NIM: ${model}...`);
+
     const response = await fetch(NVIDIA_INVOKE_URL, {
       method: "POST",
       headers: {
@@ -104,35 +116,42 @@ BE CONCISE. Use high-speed identification. Maximize lore precision.`;
       })
     });
 
+    const t_after_fetch = Date.now();
+    console.log(`[AI Forge] NVIDIA Response received in ${t_after_fetch - t_before_fetch}ms`);
+
     if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        return NextResponse.json({ error: `AI Provider Error: ${response.status}`, details: errorData }, { status: response.status });
+      const errorData = await response.json().catch(() => ({}));
+      console.error(`[AI Forge] NVIDIA ERROR: ${response.status}`, errorData);
+      return NextResponse.json({ error: `AI Provider Error: ${response.status}`, details: errorData }, { status: response.status });
     }
 
     const data = await response.json();
     const content = data.choices[0].message.content;
-    
-    // EXTRACTION ENGINE: Find the first '{' and last '}' to handle any conversational noise
+
+    // EXTRACTION
     const firstCurly = content.indexOf('{');
     const lastCurly = content.lastIndexOf('}');
-    
+
     if (firstCurly === -1 || lastCurly === -1) {
+      console.error("[AI Forge] No JSON found in response:", content);
       return NextResponse.json({ error: "Model response did not contain a valid JSON structure." }, { status: 500 });
     }
 
     const jsonStr = content.substring(firstCurly, lastCurly + 1);
-    
+
     try {
       const result = JSON.parse(jsonStr);
-      if (!result.title || !result.description) throw new Error("JSON missing required fields");
+      const t_end = Date.now();
+      console.log(`[AI Forge] --- SHIELD SUCCESS (${t_end - t_start}ms) ---`);
       return NextResponse.json(result);
     } catch (e) {
-      console.error("[AI Generate] Parsing failed:", jsonStr);
+      console.error("[AI Forge] JSON Parse Error:", jsonStr);
       return NextResponse.json({ error: "Invalid JSON format in model response" }, { status: 500 });
     }
 
   } catch (error: any) {
-    console.error("[AI Generate] Fatal Error:", error);
+    const t_error = Date.now();
+    console.error(`[AI Forge] --- SHIELD FATAL ERROR (+${t_error - t_start}ms) ---`, error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
