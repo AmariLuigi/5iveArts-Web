@@ -11,6 +11,13 @@ export default function CustomCursor() {
     const [isMobile, setIsMobile] = useState(true);
     const [cursorType, setCursorType] = useState<'default' | 'magnifier'>('default');
 
+    // Refs for state comparison to prevent redundant re-renders
+    const stateRef = useRef({
+        isHovering: false,
+        cursorType: 'default' as 'default' | 'magnifier',
+        isVisible: false
+    });
+
     // Precise coordinates
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
@@ -32,7 +39,10 @@ export default function CustomCursor() {
         const moveCursor = (e: MouseEvent) => {
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
-            if (!isVisible) setIsVisible(true);
+            if (!stateRef.current.isVisible) {
+                stateRef.current.isVisible = true;
+                setIsVisible(true);
+            }
         };
 
         const handleMouseDown = () => setIsPressed(true);
@@ -42,19 +52,24 @@ export default function CustomCursor() {
             const target = e.target as HTMLElement;
             const container = target.closest('button, a, .interactive-cursor, input, select, textarea, .cursor-zoom-in');
             
-            setIsHovering(!!container);
+            const newIsHovering = !!container;
+            const newCursorType = container?.classList.contains('cursor-zoom-in') ? 'magnifier' : 'default';
 
-            if (container?.classList.contains('cursor-zoom-in')) {
-                setCursorType('magnifier');
-            } else {
-                setCursorType('default');
+            if (newIsHovering !== stateRef.current.isHovering) {
+                stateRef.current.isHovering = newIsHovering;
+                setIsHovering(newIsHovering);
+            }
+
+            if (newCursorType !== stateRef.current.cursorType) {
+                stateRef.current.cursorType = newCursorType;
+                setCursorType(newCursorType);
             }
         };
 
-        window.addEventListener("mousemove", moveCursor);
+        window.addEventListener("mousemove", moveCursor, { passive: true });
         window.addEventListener("mousedown", handleMouseDown);
         window.addEventListener("mouseup", handleMouseUp);
-        window.addEventListener("mouseover", handleLinkHover);
+        window.addEventListener("mouseover", handleLinkHover, { passive: true });
 
         return () => {
             document.body.classList.remove('has-custom-cursor');
@@ -63,7 +78,7 @@ export default function CustomCursor() {
             window.removeEventListener("mouseup", handleMouseUp);
             window.removeEventListener("mouseover", handleLinkHover);
         };
-    }, [isVisible]);
+    }, []); // Removed isVisible to prevent listener re-attachment leaks
 
     if (isMobile) return null;
 

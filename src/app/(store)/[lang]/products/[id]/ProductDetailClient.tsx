@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ChevronLeft, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play, Sparkles, ChevronRight, Lock, Unlock, ChevronDown, ChevronUp } from "lucide-react";
 import { Product, ProductScale, ProductFinish } from "@/types";
@@ -34,7 +34,14 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     const [selectedScale, setSelectedScale] = useState<ProductScale>("1/9");
     const [selectedFinish, setSelectedFinish] = useState<ProductFinish>("painted");
     const [activeMedia, setActiveMedia] = useState(0);
-    const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+    
+    // Performance Optimized Motion Values for Zoom
+    const zoomX = useMotionValue(50);
+    const zoomY = useMotionValue(50);
+    const transformOrigin = useTransform([zoomX, zoomY], ([x, y]) => 
+        isMobileZoomed ? "center" : `${x}% ${y}%`
+    );
+
     const [isHovering, setIsHovering] = useState(false);
     const [isMobileZoomed, setIsMobileZoomed] = useState(false);
     const [lastTap, setLastTap] = useState(0);
@@ -49,7 +56,9 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
         const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
         const x = ((e.clientX - left) / width) * 100;
         const y = ((e.clientY - top) / height) * 100;
-        setZoomPos({ x, y });
+        
+        zoomX.set(x);
+        zoomY.set(y);
     };
 
     const handleMobileInteraction = (e: React.MouseEvent | React.TouchEvent) => {
@@ -171,7 +180,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                     }}
                                     transition={{ type: "spring", stiffness: 200, damping: 25 }}
                                     style={{
-                                        transformOrigin: isMobileZoomed ? "center" : `${zoomPos.x}% ${zoomPos.y}%`,
+                                        transformOrigin,
                                     }}
                                 >
                                     <Image
