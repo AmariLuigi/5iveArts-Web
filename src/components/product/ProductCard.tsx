@@ -164,13 +164,28 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
             </div>
           )}
 
-          <div className="flex flex-wrap gap-2 mb-2">
+          <div className="flex flex-wrap gap-2 mb-2 min-h-[1.5rem]">
             {product.subcategory && (
               <span className="text-[8px] uppercase font-black text-brand-yellow tracking-[0.2em] bg-brand-yellow/5 px-2 py-0.5 rounded-sm border border-brand-yellow/10">
                 {product.subcategory}
               </span>
             )}
-            {product.tags?.slice(0, 2).map(tag => {
+            {/* High-Value Metadata: Find and show Artist prominently */}
+            {(() => {
+                const artistTag = product.tags?.find(t => t.toLowerCase().startsWith('artist:'));
+                if (artistTag) {
+                    const artistName = artistTag.split(':')[1];
+                    return (
+                        <span className="text-[8px] uppercase font-black text-cyan-500 tracking-[0.2em] bg-cyan-500/5 px-2 py-0.5 rounded-sm border border-cyan-500/10 flex items-center gap-1">
+                            <Star className="w-2.5 h-2.5 fill-cyan-500/20" />
+                            {artistName}
+                        </span>
+                    );
+                }
+                return null;
+            })()}
+            {/* Standard Categorical Tags */}
+            {product.tags?.filter(t => !t.toLowerCase().startsWith('artist:')).slice(0, 1).map(tag => {
               const hasHierarchy = tag.includes(':');
               const [cat, sub] = hasHierarchy ? tag.split(':') : [null, tag];
               return (

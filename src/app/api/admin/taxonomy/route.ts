@@ -18,43 +18,50 @@ export async function GET(req: NextRequest) {
 
         if (error) throw error;
 
-        const franchiseMap: Record<string, { name: string; types: Set<string>; subjects: Set<string> }> = {};
-        const standaloneTags = new Set<string>();
+        const taxonomyMap: Record<string, { name: string; types: Set<string>; subjects: Set<string>; isLegacy?: boolean; isCategorical?: boolean }> = {};
+        const unmappedTags = new Set<string>();
 
         products.forEach((p: any) => {
-            // Priority 1: Structured Taxonomy
+            // Priority 1: Primary Structured Taxonomy (The Core Masterpieces)
             if (p.franchise) {
-                if (!franchiseMap[p.franchise]) {
-                    franchiseMap[p.franchise] = { name: p.franchise, types: new Set(), subjects: new Set() };
+                if (!taxonomyMap[p.franchise]) {
+                    taxonomyMap[p.franchise] = { name: p.franchise, types: new Set(), subjects: new Set() };
                 }
-                if (p.category) franchiseMap[p.franchise].types.add(p.category);
-                if (p.subcategory) franchiseMap[p.franchise].subjects.add(p.subcategory);
+                if (p.category) taxonomyMap[p.franchise].types.add(p.category);
+                if (p.subcategory) taxonomyMap[p.franchise].subjects.add(p.subcategory);
             }
 
-            // Priority 2: Flat Tags Discovery (Fallback for Legacy Data)
+            // Priority 2: Categorical Lore (The Artist/Series/Edition Nodes)
             if (p.tags && Array.isArray(p.tags)) {
                 p.tags.forEach((tag: string) => {
-                    // Only add to standalone tags if it's not already handled by a franchise node
-                    if (!p.franchise || (tag !== p.franchise && tag !== p.subcategory)) {
-                        standaloneTags.add(tag);
+                    if (tag.includes(':')) {
+                        const [nodeName, subject] = tag.split(':');
+                        if (!taxonomyMap[nodeName]) {
+                            taxonomyMap[nodeName] = { name: nodeName, types: new Set(), subjects: new Set(), isCategorical: true };
+                        }
+                        taxonomyMap[nodeName].subjects.add(subject);
+                    } else {
+                        // Priority 3: Truly Unmapped Flat Tags (Legacy Discovery)
+                        if (tag !== p.franchise && tag !== p.subcategory) {
+                            unmappedTags.add(tag);
+                        }
                     }
                 });
             }
         });
 
         const result = [
-            ...Object.values(franchiseMap).map(f => ({
+            ...Object.values(taxonomyMap).map(f => ({
                 ...f,
                 types: Array.from(f.types),
                 subjects: Array.from(f.subjects),
-                isLegacy: false
             })),
-            // Include standalone tags as a pseudo-franchise for bulk cleanup
-            ...(standaloneTags.size > 0 ? [{
-                name: "Legacy Search Tags",
+            // Standalone unmapped tags for bulk cleanup
+            ...(unmappedTags.size > 0 ? [{
+                name: "Unmapped Discovery",
                 isLegacy: true,
                 types: [],
-                subjects: Array.from(standaloneTags)
+                subjects: Array.from(unmappedTags)
             }] : [])
         ].sort((a,b) => a.name.localeCompare(b.name));
 

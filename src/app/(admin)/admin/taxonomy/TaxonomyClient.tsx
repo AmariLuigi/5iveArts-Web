@@ -18,6 +18,7 @@ interface FranchiseNode {
     types: string[];
     subjects: string[];
     isLegacy?: boolean;
+    isCategorical?: boolean;
 }
 
 export default function TaxonomyClient() {
@@ -156,7 +157,17 @@ export default function TaxonomyClient() {
                                         <div key={sub} className="group/sub flex items-center justify-between bg-white/[0.03] border border-white/5 p-4 rounded-sm hover:border-white/10 transition-all">
                                             <span className="text-[9px] uppercase font-black tracking-widest text-neutral-400 group-hover/sub:text-white transition-colors">{sub}</span>
                                             <button 
-                                                onClick={() => handlePurge(franchise.isLegacy ? 'tags' : 'subcategory', sub)}
+                                                onClick={() => {
+                                                    if (franchise.isLegacy) {
+                                                        handlePurge('tags', sub);
+                                                    } else if (franchise.isCategorical) {
+                                                        // This is a 'Category:Value' tag in the DB
+                                                        handlePurge('tags', `${franchise.name}:${sub}`);
+                                                    } else {
+                                                        // This is a specialized database column
+                                                        handlePurge('subcategory', sub);
+                                                    }
+                                                }}
                                                 disabled={activeOperation !== null}
                                                 className="opacity-0 group-hover/sub:opacity-100 p-2 text-neutral-600 hover:text-red-500 transition-all"
                                             >
