@@ -91,7 +91,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
         }, 3000); // 3-second cycle
 
         return () => clearInterval(interval);
-    }, [isInteracting, isMobileZoomed, media.length]);
+    }, [isInteracting, isMobileZoomed, activeMedia, media.length]);
     useEffect(() => {
         track("product_viewed", {
             product_id: product.id,
