@@ -162,6 +162,14 @@ body {
   }
 }
 
+/* Custom Cursor Logic */
+.has-custom-cursor, 
+.has-custom-cursor a,
+.has-custom-cursor button,
+.has-custom-cursor [role="button"] {
+  cursor: none !important;
+}
+
 /* Animation utility classes */
 .animate-shimmer {
   animation: shimmer 2s ease-in-out infinite;

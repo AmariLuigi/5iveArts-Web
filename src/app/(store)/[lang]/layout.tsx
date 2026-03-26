@@ -11,6 +11,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import CookieBanner from "@/components/layout/CookieBanner";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -96,6 +97,7 @@ export default async function StoreLayout({
         <Analytics />
         <SpeedInsights />
         <CookieBanner dict={dict} lang={lang} />
+        <CustomCursor />
       </body>
     </html>
   );
