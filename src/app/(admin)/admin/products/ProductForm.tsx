@@ -148,8 +148,20 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         }
     };
 
-    const removeTag = (tagToRemove: string) => {
-        setTags(tags.filter(t => t !== tagToRemove));
+    const removeTag = async (tagToRemove: string) => {
+        const nextTags = tags.filter(t => t !== tagToRemove);
+        setTags(nextTags);
+        
+        // Immediate Sync: If editing established data, strip the tag from the database record immediately
+        // to prevent sync drift and satisfy the 'actual removal' protocol
+        if (initialData?.id) {
+            try {
+                await axios.patch(`/api/admin/products/${initialData.id}`, { tags: nextTags });
+                showToast(`Tag '${tagToRemove}' purged from archive`, 'success');
+            } catch (err) {
+                console.error("Discovery: Failed to purge tag from master record", err);
+            }
+        }
     };
 
     const handleUploadSingle = async (file: File, type: 'images' | 'videos') => {
@@ -850,13 +862,28 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             {/* Left Node: Franchise */}
                             <div className="flex-1 space-y-3 relative z-10">
                                 <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block mb-1">Franchise / Universe</label>
-                                <div className="relative">
+                                <div className="relative group/field">
                                     <input
                                         value={franchise}
                                         onChange={(e) => setFranchise(e.target.value)}
                                         placeholder="e.g. DC Comics"
-                                        className="w-full bg-white/[0.02] border border-white/10 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30 transition-all"
+                                        className="w-full bg-white/[0.02] border border-white/10 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30 transition-all pr-12"
                                     />
+                                    {franchise && (
+                                        <button 
+                                            type="button"
+                                            onClick={async () => {
+                                                setFranchise("");
+                                                if (initialData?.id) {
+                                                    await axios.patch(`/api/admin/products/${initialData.id}`, { franchise: null });
+                                                    showToast("Franchise decoupled from archive", 'success');
+                                                }
+                                            }}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-red-500 transition-all opacity-0 group-hover/field:opacity-100"
+                                        >
+                                            <X className="w-3.5 h-3.5" />
+                                        </button>
+                                    )}
                                     <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-brand-yellow rounded-full shadow-[0_0_8px_rgba(255,215,0,0.5)]" />
                                 </div>
                             </div>
@@ -874,13 +901,28 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             {/* Right Node: Subcategory */}
                             <div className="flex-1 space-y-3 relative z-10">
                                 <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block mb-1">Subject Character / Series</label>
-                                <div className="relative">
+                                <div className="relative group/field">
                                     <input
                                         value={subcategory}
                                         onChange={(e) => setSubcategory(e.target.value)}
                                         placeholder="e.g. Zatanna"
-                                        className="w-full bg-white/[0.02] border border-white/10 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30 transition-all"
+                                        className="w-full bg-white/[0.02] border border-white/10 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30 transition-all pr-12"
                                     />
+                                    {subcategory && (
+                                        <button 
+                                            type="button"
+                                            onClick={async () => {
+                                                setSubcategory("");
+                                                if (initialData?.id) {
+                                                    await axios.patch(`/api/admin/products/${initialData.id}`, { subcategory: null });
+                                                    showToast("Subject decoupled from archive", 'success');
+                                                }
+                                            }}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-red-500 transition-all opacity-0 group-hover/field:opacity-100"
+                                        >
+                                            <X className="w-3.5 h-3.5" />
+                                        </button>
+                                    )}
                                     <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-cyan-500 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
                                 </div>
                             </div>
