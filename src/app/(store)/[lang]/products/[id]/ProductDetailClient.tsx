@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronLeft, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play, Sparkles, ChevronRight } from "lucide-react";
+import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play, Sparkles, ChevronRight, Lock, Unlock } from "lucide-react";
 import { Product, ProductScale, ProductFinish } from "@/types";
 import { formatPrice, calculatePrice, SCALE_CONFIG } from "@/lib/products";
 import AddToCartButton from "./AddToCartButton";
@@ -39,6 +39,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     const [isMobileZoomed, setIsMobileZoomed] = useState(false);
     const [lastTap, setLastTap] = useState(0);
     const [isInteracting, setIsInteracting] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         // Only run on desktop/hoverable devices
@@ -84,14 +85,14 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
 
     // AUTO-ROTATION SYSTEM
     useEffect(() => {
-        if (isInteracting || isMobileZoomed || media.length <= 1) return;
+        if (isInteracting || isMobileZoomed || isPaused || media.length <= 1) return;
 
         const interval = setInterval(() => {
             setActiveMedia((prev) => (prev + 1) % media.length);
         }, 3000); // 3-second cycle
 
         return () => clearInterval(interval);
-    }, [isInteracting, isMobileZoomed, activeMedia, media.length]);
+    }, [isInteracting, isMobileZoomed, isPaused, activeMedia, media.length]);
     useEffect(() => {
         track("product_viewed", {
             product_id: product.id,
@@ -213,6 +214,37 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                         <p className="text-[8px] uppercase font-black tracking-widest text-brand-yellow">Manual Panning Active [Drag to move]</p>
                                     </div>
                                 )}
+
+                                {/* Slideshow Lock Toggle */}
+                                <div className="absolute bottom-6 right-6 z-30 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsPaused(!isPaused);
+                                        }}
+                                        className={`p-3 backdrop-blur-md border rounded-full transition-all flex items-center gap-2 group/lock ${
+                                            isPaused 
+                                            ? "bg-brand-yellow border-brand-yellow text-black" 
+                                            : "bg-black/40 border-white/10 text-white hover:bg-white/10"
+                                        }`}
+                                    >
+                                        <AnimatePresence mode="wait">
+                                            <motion.div
+                                                key={isPaused ? 'locked' : 'unlocked'}
+                                                initial={{ scale: 0.5, opacity: 0, rotate: -45 }}
+                                                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                                                exit={{ scale: 0.5, opacity: 0, rotate: 45 }}
+                                                transition={{ duration: 0.2 }}
+                                            >
+                                                {isPaused ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+                                            </motion.div>
+                                        </AnimatePresence>
+                                        <span className={`text-[8px] uppercase font-black tracking-widest overflow-hidden transition-all duration-300 ${isPaused ? "w-16 opacity-100" : "w-0 opacity-0"}`}>
+                                            Locked
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
                         )}
                         <span className={`absolute top-6 left-6 hasbro-tag flex items-center gap-1.5 shadow-2xl z-10 transition-all duration-500 ${isMobileZoomed || isHovering ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'}`}>
