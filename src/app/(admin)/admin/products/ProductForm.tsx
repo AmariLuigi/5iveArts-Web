@@ -25,7 +25,8 @@ import {
     Eye,
     EyeOff,
     Sparkles,
-    Zap
+    Zap,
+    Archive
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -60,7 +61,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     });
     const [price, setPrice] = useState(initialData?.price || 8999);
     const [category, setCategory] = useState(initialData?.category || "figures");
-    const [status, setStatus] = useState<"draft" | "published">(initialData?.status || "published");
+    const [status, setStatus] = useState<"draft" | "published" | "archived">(initialData?.status || "published");
     const [tags, setTags] = useState<string[]>(initialData?.tags || []);
     const [tagInput, setTagInput] = useState("");
     const [allExistingTags, setAllExistingTags] = useState<string[]>([]);
@@ -500,6 +501,14 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             >
                                 <Eye className="w-3 h-3" />
                                 Published
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setStatus("archived")}
+                                className={`px-4 py-2 text-[8px] font-black uppercase tracking-widest flex items-center gap-2 rounded-sm transition-all ${status === "archived" ? "bg-red-500/20 text-red-500" : "text-neutral-600 hover:text-neutral-400"}`}
+                            >
+                                <Archive className="w-3 h-3" />
+                                Archived
                             </button>
                         </div>
                     </div>
