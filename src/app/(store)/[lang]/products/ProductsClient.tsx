@@ -29,15 +29,22 @@ function ProductsContent({
     }
   }, [searchParams]);
 
-  const categories = useMemo(() => {
-    const catsAndTags = new Set<string>();
+  const taxonomy = useMemo(() => {
+    const mainCats = new Set<string>();
+    const franchises = new Set<string>();
+    const subcats = new Set<string>();
+    
     initialProducts.forEach(p => {
-      if (p.category) catsAndTags.add(p.category);
-      if (p.franchise) catsAndTags.add(p.franchise);
-      if (p.subcategory) catsAndTags.add(p.subcategory);
-      if (p.tags) p.tags.forEach(t => catsAndTags.add(t));
+      if (p.category) mainCats.add(p.category);
+      if (p.franchise) franchises.add(p.franchise);
+      if (p.subcategory) subcats.add(p.subcategory);
     });
-    return ["all", ...Array.from(catsAndTags)].sort();
+    
+    return {
+      main: ["all", ...Array.from(mainCats)].sort(),
+      franchise: Array.from(franchises).sort(),
+      subcategory: Array.from(subcats).sort()
+    };
   }, [initialProducts]);
 
   const filteredProducts = useMemo(() => {
@@ -48,16 +55,16 @@ function ProductsContent({
                               p.subcategory === activeCategory ||
                               (p.tags && p.tags.includes(activeCategory));
       const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            (p.franchise && p.franchise.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                            (p.subcategory && p.subcategory.toLowerCase().includes(searchTerm.toLowerCase()));
+                             p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                             (p.franchise && p.franchise.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                             (p.subcategory && p.subcategory.toLowerCase().includes(searchTerm.toLowerCase()));
       return matchesCategory && matchesSearch;
     });
   }, [initialProducts, activeCategory, searchTerm]);
 
   const handleCategorySelect = (cat: string) => {
     setActiveCategory(cat);
-    track("category_clicked", { category: cat, source: "filter_bar" });
+    track("filter_applied", { value: cat, source: "taxonomy_nexus" });
   };
 
   return (
@@ -91,11 +98,11 @@ function ProductsContent({
 
       {/* Filter Matrix */}
       <div className="mb-16 space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-700">
-        {/* Categories */}
+        {/* Row 1: Base Categories */}
         <div className="flex flex-wrap items-center gap-4">
-          <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px]">{dict.products.categories} /</span>
+          <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px]">Type /</span>
           <div className="flex flex-wrap gap-2">
-            {categories.map(cat => (
+            {taxonomy.main.map(cat => (
               <button
                 key={cat}
                 onClick={() => handleCategorySelect(cat)}
@@ -110,6 +117,50 @@ function ProductsContent({
             ))}
           </div>
         </div>
+
+        {/* Row 2: Franchises */}
+        {taxonomy.franchise.length > 0 && (
+          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/5">
+            <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px]">Franchise /</span>
+            <div className="flex flex-wrap gap-2">
+              {taxonomy.franchise.map(fan => (
+                <button
+                  key={fan}
+                  onClick={() => handleCategorySelect(fan)}
+                  className={`px-4 py-2 text-[9px] uppercase font-black tracking-widest rounded-sm transition-all border ${
+                    activeCategory === fan 
+                      ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
+                      : "bg-white/[0.02] text-neutral-500 border-white/5 hover:border-white/20 hover:text-white"
+                  }`}
+                >
+                  {fan}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Row 3: Characters */}
+        {taxonomy.subcategory.length > 0 && (
+          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/5">
+            <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px]">Subject /</span>
+            <div className="flex flex-wrap gap-2">
+              {taxonomy.subcategory.map(sub => (
+                <button
+                  key={sub}
+                  onClick={() => handleCategorySelect(sub)}
+                  className={`px-4 py-2 text-[9px] uppercase font-black tracking-widest rounded-sm transition-all border ${
+                    activeCategory === sub 
+                      ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
+                      : "bg-white/[0.02] text-neutral-500 border-white/5 hover:border-white/20 hover:text-white"
+                  }`}
+                >
+                  {sub}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {filteredProducts.length === 0 ? (

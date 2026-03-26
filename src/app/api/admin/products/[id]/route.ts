@@ -41,7 +41,7 @@ export async function PATCH(
         "name", "description", 
         "description_en", "description_it", "description_de", "description_fr", "description_es",
         "price", "images", "videos",
-        "category", "status", "tags", "details", "rating", "reviewCount"
+        "category", "franchise", "subcategory", "status", "tags", "details", "rating", "reviewCount"
     ];
 
     const safePayload: Record<string, any> = {};
@@ -98,75 +98,45 @@ export async function DELETE(
     
     // Helper to get path relative to the bucket 'product-media'
     const getPathFromUrl = (url: string) => {
-        if (!url || typeof url !== 'string') return null;
-        try {
-            // Check if it's a Supabase storage URL
-            if (url.includes('/storage/v1/object/public/product-media/')) {
-                const pathWithQuery = url.split('/storage/v1/object/public/product-media/')[1];
-                return pathWithQuery.split('?')[0]; // Strip cache-busting query params if any
-            }
-            return null;
-        } catch (e) {
-            return null;
+        if (url.includes('/product-media/')) {
+            return url.split('/product-media/')[1];
         }
+        return null;
     };
 
-    if (Array.isArray(product.images)) {
+    if (product.images) {
         product.images.forEach((url: string) => {
             const path = getPathFromUrl(url);
             if (path) mediaToCleanup.push(path);
         });
     }
-
-    if (Array.isArray(product.videos)) {
+    if (product.videos) {
         product.videos.forEach((url: string) => {
             const path = getPathFromUrl(url);
             if (path) mediaToCleanup.push(path);
         });
     }
 
-    // 3. Delete from Storage if paths found
+    // 3. Remove media from storage first
     if (mediaToCleanup.length > 0) {
         const { error: storageError } = await supabase.storage
             .from('product-media')
             .remove(mediaToCleanup);
-            
+        
         if (storageError) {
-            console.error("[api/admin/products] Storage cleanup error:", storageError.message);
+            console.error("[api/admin/products] Storage Cleanup Error:", storageError.message);
         }
     }
 
-    // 4. Delete DB record
-    const { error: deleteError } = await supabase
+    // 4. Finally delete from database
+    const { error } = await supabase
         .from("products")
         .delete()
         .eq("id", id);
 
-    if (deleteError) {
-        // ERROR CODE 23503: Foreign Key Violation (linked to orders)
-        // If deletion is blocked by orders, we ARCHIVE (set to draft) as a fallback
-        if ((deleteError as any).code === "23503") {
-            const { error: archiveError } = await supabase
-                .from("products")
-                .update({ status: "archived" })
-                .eq("id", id);
-
-            if (archiveError) {
-                console.error("[api/admin/products] ARCHIVE fallback failed:", archiveError.message);
-                return NextResponse.json({ 
-                    error: "Deletion blocked by orders and archive fallback failed", 
-                    details: archiveError.message 
-                }, { status: 400 });
-            }
-
-            return NextResponse.json({ success: true, archived: true });
-        }
-
-        console.error("[api/admin/products] DELETE record error:", deleteError.message);
-        return NextResponse.json({ 
-            error: "Failed to delete product record", 
-            details: deleteError.message 
-        }, { status: 400 });
+    if (error) {
+        console.error("[api/admin/products] DELETE error:", error.message);
+        return NextResponse.json({ error: "Failed to delete product" }, { status: 400 });
     }
 
     return NextResponse.json({ success: true });

@@ -50,6 +50,8 @@ export async function POST(req: NextRequest) {
         images: Array.isArray(body.images) ? body.images : [],
         videos: Array.isArray(body.videos) ? body.videos : [],
         category: body.category,
+        franchise: body.franchise,
+        subcategory: body.subcategory,
         status: body.status,
         tags: Array.isArray(body.tags) ? body.tags : [],
         details: Array.isArray(body.details) ? body.details : [],
