@@ -387,10 +387,24 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             
             // Handle categorical suggestions
             if (categorical_tags) {
-                setSuggestedPairs(categorical_tags);
-                // Also auto-fill primary if present
-                if (categorical_tags.Franchise) setFranchise(categorical_tags.Franchise);
-                if (categorical_tags.Character) setSubcategory(categorical_tags.Character);
+                // Filter out primary nodes (Franchise/Character) from the tag suggestion deck
+                // to prevent data duplication since they are now separate database columns
+                const secondaryLore: Record<string, string> = { ...categorical_tags };
+                
+                if (categorical_tags.Franchise) {
+                    setFranchise(categorical_tags.Franchise);
+                    delete secondaryLore.Franchise;
+                }
+                if (categorical_tags.Character) {
+                    setSubcategory(categorical_tags.Character);
+                    delete secondaryLore.Character;
+                }
+                // Allow 'Character' alias as well
+                if (categorical_tags.Character) {
+                    delete secondaryLore.Character;
+                }
+
+                setSuggestedPairs(secondaryLore);
             }
 
             if (description) {
