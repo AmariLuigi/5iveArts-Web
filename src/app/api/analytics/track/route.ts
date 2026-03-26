@@ -46,7 +46,12 @@ export async function POST(req: NextRequest) {
 
     if (error) {
       console.error("[analytics] Supabase insert error:", error);
-      return NextResponse.json({ error: "Failed to store event" }, { status: 500 });
+      return NextResponse.json({ 
+        error: "Failed to store event", 
+        details: error.message,
+        hint: error.hint,
+        code: error.code
+      }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
