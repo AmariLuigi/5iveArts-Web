@@ -143,6 +143,25 @@ export async function DELETE(
         .eq("id", id);
 
     if (deleteError) {
+        // ERROR CODE 23503: Foreign Key Violation (linked to orders)
+        // If deletion is blocked by orders, we ARCHIVE (set to draft) as a fallback
+        if ((deleteError as any).code === "23503") {
+            const { error: archiveError } = await supabase
+                .from("products")
+                .update({ status: "draft" })
+                .eq("id", id);
+
+            if (archiveError) {
+                console.error("[api/admin/products] ARCHIVE fallback failed:", archiveError.message);
+                return NextResponse.json({ 
+                    error: "Deletion blocked by orders and archive fallback failed", 
+                    details: archiveError.message 
+                }, { status: 400 });
+            }
+
+            return NextResponse.json({ success: true, archived: true });
+        }
+
         console.error("[api/admin/products] DELETE record error:", deleteError.message);
         return NextResponse.json({ 
             error: "Failed to delete product record", 

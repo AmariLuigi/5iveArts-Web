@@ -46,9 +46,15 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
         setError(null);
         
         try {
-            await axios.delete(`/api/admin/products/${id}`);
+            const { data } = await axios.delete(`/api/admin/products/${id}`);
+            
             // Remove from local state
             setProducts(prev => prev.filter(p => p.id !== id));
+            
+            if (data.archived) {
+                alert(`"${name}" was archived (set to draft) because it is linked to existing orders. It is now hidden from the store.`);
+            }
+
             // Ensure server components refresh too
             router.refresh();
         } catch (err: any) {
