@@ -185,11 +185,26 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
                                 <div className="mb-4">
                                     <div className="flex flex-wrap gap-2 mb-2">
                                         <span className="text-[9px] uppercase font-black tracking-widest text-brand-yellow">{product.category}</span>
-                                        {product.tags?.map(tag => (
-                                            <span key={tag} className="text-[8px] uppercase font-bold tracking-widest text-neutral-600 bg-white/5 px-2 py-0.5 rounded-sm">
-                                                {tag}
-                                            </span>
-                                        ))}
+                                        {/* Lore Tags Rendering */}
+                                        {product.tags?.map(tag => {
+                                            const hasHierarchy = tag.includes(':');
+                                            const [node, value] = hasHierarchy ? tag.split(':') : [null, tag];
+                                            
+                                            // Highlight Artists in Cyan
+                                            if (node?.toLowerCase() === 'artist') {
+                                                return (
+                                                    <span key={tag} className="text-[8px] uppercase font-bold tracking-widest text-cyan-500 bg-cyan-500/5 px-2 py-0.5 rounded-sm border border-cyan-500/10">
+                                                        {value}
+                                                    </span>
+                                                );
+                                            }
+
+                                            return (
+                                                <span key={tag} className={`text-[8px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-sm border ${hasHierarchy ? "text-white/40 bg-white/5 border-white/5" : "text-neutral-600 bg-white/5 border-white/[0.02]"}`}>
+                                                    {hasHierarchy ? <><span className="opacity-30">{node}:</span>{value}</> : tag}
+                                                </span>
+                                            );
+                                        })}
                                     </div>
                                     <h3 className="text-xl font-black uppercase tracking-tighter text-white leading-tight group-hover:text-brand-yellow transition-colors">
                                         {product.name}
