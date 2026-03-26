@@ -18,6 +18,9 @@ DO $$ BEGIN
     CHECK (event_type IN (
       'product_viewed',
       'variant_selected',
+      'filter_applied',
+      'category_clicked',
+      'search_performed',
       'add_to_cart',
       'remove_from_cart',
       'cart_viewed',

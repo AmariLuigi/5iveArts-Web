@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS public.analytics_events (
         -- Product discovery
         'product_viewed',
         'variant_selected',
+        'filter_applied',
+        'category_clicked',
+        'search_performed',
         -- Cart interactions
         'add_to_cart',
         'remove_from_cart',
