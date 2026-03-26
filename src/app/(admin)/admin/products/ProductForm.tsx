@@ -31,6 +31,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import MultiLanguageEditor from "@/components/admin/MultiLanguageEditor";
+import ImageCropper from "@/components/admin/ImageCropper";
 
 interface ProductFormProps {
     initialData?: any;
@@ -42,6 +43,10 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [isMediaUploading, setIsMediaUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [error, setError] = useState<string | null>(null);
+
+    // Cropping flow state
+    const [cropQueue, setCropQueue] = useState<File[]>([]);
+    const [isCropping, setIsCropping] = useState(false);
 
     // Form State
     const [id, setId] = useState(initialData?.id || "");
@@ -128,82 +133,107 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         setTags(tags.filter(t => t !== tagToRemove));
     };
 
+    const handleUploadSingle = async (file: File, type: 'images' | 'videos') => {
+        setIsMediaUploading(true);
+        setError(null);
+        
+        try {
+            // 10MB Size Guard (redundant check but safe)
+            if (file.size > 10 * 1024 * 1024) throw new Error(`${file.name} exceeds 10MB limit`);
+
+            const fileExt = file instanceof File ? file.name.split('.').pop() : 'jpg';
+            const fileName = `${Math.random()}.${fileExt}`;
+            const folder = type === 'images' ? 'products' : 'cinematics';
+            const filePath = `${folder}/${fileName}`;
+
+            const uploadOptions = {
+                upsert: true,
+                contentType: file.type || 'image/jpeg',
+            };
+
+            const { error: uploadError } = await supabase.storage
+                .from('product-media')
+                .upload(filePath, file, uploadOptions);
+
+            let targetBucket = 'product-media';
+
+            if (uploadError) {
+                // Fallback attempt
+                const { error: fallbackError } = await supabase.storage
+                    .from('product-images')
+                    .upload(filePath, file, uploadOptions);
+
+                if (fallbackError) {
+                    throw new Error(`Upload failed for ${file.name || 'cropped image'}. Ref: ${uploadError.message}`);
+                }
+                targetBucket = 'product-images';
+            }
+
+            const { data: { publicUrl } } = supabase.storage
+                .from(targetBucket)
+                .getPublicUrl(filePath);
+
+            if (type === 'images') setImages(prev => [...prev, publicUrl]);
+            else setVideos(prev => [...prev, publicUrl]);
+
+        } catch (err: any) {
+            console.error("[MediaUpload] Single upload error:", err);
+            setError(err.message);
+        } finally {
+            setIsMediaUploading(false);
+            setUploadProgress(0);
+        }
+    };
+
     const handleMediaUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'images' | 'videos') => {
         const files = Array.from(e.target.files || []);
         if (files.length === 0) return;
 
+        if (type === 'images') {
+            // Initialize cropping flow for images
+            setCropQueue(files);
+            setIsCropping(true);
+            return;
+        }
+
+        // Standard direct upload for videos
         setIsMediaUploading(true);
         setError(null);
-
-        // Use a functional update to track URLs collected so far
-        const newUrls: string[] = [];
 
         try {
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-
-                // 10MB Size Guard
-                if (file.size > 10 * 1024 * 1024) {
-                    showToast(`File ${file.name} exceeds the 10MB limit.`, 'error');
-                    continue; // Skip this large file and process others
-                }
-
-                const fileExt = file.name.split('.').pop();
-                const fileName = `${Math.random()}.${fileExt}`;
-                const folder = type === 'images' ? 'products' : 'cinematics';
-                const filePath = `${folder}/${fileName}`;
-
-                // Update progress for the current batch
                 const baseProgress = (i / files.length) * 100;
                 setUploadProgress(Math.max(1, Math.round(baseProgress)));
-
-                const uploadOptions = {
-                    upsert: true,
-                    contentType: file.type,
-                    onUploadProgress: (progress: { loaded: number; total?: number }) => {
-                        if (progress.total && progress.total > 0) {
-                            const currentFilePercent = (progress.loaded / progress.total) * (100 / files.length);
-                            setUploadProgress(Math.min(99, Math.round(baseProgress + currentFilePercent)));
-                        }
-                    },
-                };
-
-                const { error: uploadError } = await supabase.storage
-                    .from('product-media')
-                    .upload(filePath, file, uploadOptions);
-
-                let targetBucket = 'product-media';
-
-                if (uploadError) {
-                    const { error: fallbackError } = await supabase.storage
-                        .from('product-images')
-                        .upload(filePath, file, uploadOptions);
-
-                    if (fallbackError) {
-                        throw new Error(`Upload failed for ${file.name}. Ref: ${uploadError.message}`);
-                    }
-                    targetBucket = 'product-images';
-                }
-
-                const { data: { publicUrl } } = supabase.storage
-                    .from(targetBucket)
-                    .getPublicUrl(filePath);
-
-                newUrls.push(publicUrl);
+                
+                await handleUploadSingle(file, type);
+                setUploadProgress(Math.round(((i + 1) / files.length) * 100));
             }
-
-            setUploadProgress(100);
-            if (type === 'images') setImages([...images, ...newUrls]);
-            else setVideos([...videos, ...newUrls]);
-
         } catch (err: any) {
-            console.error("[MediaUpload] Fatal error:", err);
             setError(err.message);
-            setUploadProgress(0);
         } finally {
             setIsMediaUploading(false);
-            setTimeout(() => setUploadProgress(0), 1500);
+            setUploadProgress(0);
         }
+    };
+
+    const onCropDone = async (blob: Blob) => {
+        const currentFile = cropQueue[0];
+        if (!currentFile) return;
+
+        // Create a File from the blob to preserve original name/metadata if possible
+        const croppedFile = new File([blob], currentFile.name, { type: 'image/jpeg' });
+        
+        // Remove processed item from queue
+        const nextQueue = cropQueue.slice(1);
+        setCropQueue(nextQueue);
+        
+        if (nextQueue.length === 0) {
+            setIsCropping(false);
+        }
+
+        // Upload to storage
+        await handleUploadSingle(croppedFile, 'images');
     };
 
     const handleForge = async () => {
@@ -399,6 +429,19 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         <ChevronLeft className="w-4 h-4" />
                         Discard & Exit
                     </Link>
+
+                    {/* Image Cropping Engine Overlay */}
+                    {isCropping && cropQueue.length > 0 && (
+                        <ImageCropper
+                            file={cropQueue[0]}
+                            onCropComplete={onCropDone}
+                            onCancel={() => {
+                                setCropQueue(prev => prev.slice(1));
+                                if (cropQueue.length <= 1) setIsCropping(false);
+                            }}
+                        />
+                    )}
+
                     <button
                         type="submit"
                         disabled={loading}

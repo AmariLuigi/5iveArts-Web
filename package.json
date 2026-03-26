@@ -26,6 +26,7 @@
     "next": "^16.2.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-image-crop": "^11.0.10",
     "recharts": "^3.8.0",
     "resend": "^6.9.2",
     "schema-dts": "^1.1.5",
