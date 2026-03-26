@@ -178,8 +178,8 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                         src={media[activeMedia] || "/images/placeholder.jpg"}
                                         alt={product.name}
                                         fill
-                                        priority
-                                        fetchPriority="high"
+                                        priority={activeMedia === 0}
+                                        fetchPriority={activeMedia === 0 ? "high" : "low"}
                                         sizes="(max-width: 1024px) 100vw, 50vw"
                                         className="object-contain"
                                     />
