@@ -401,7 +401,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
 
                     <div className="mb-10">
                         <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-4">{dict.product_detail.description}</h2>
-                        <div className="relative group/desc">
+                        <div className="relative">
                             <p className={`text-neutral-400 font-medium leading-[1.8] text-base whitespace-pre-wrap transition-all duration-500 overflow-hidden ${isDescExpanded ? 'max-h-[2000px]' : 'max-h-32'}`}>
                                 {
                                     (lang === 'en' ? product.description_en :
@@ -414,27 +414,27 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                             </p>
                             
                             {!isDescExpanded && (
-                                <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+                                <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black to-transparent pointer-events-none group-hover/desc:from-black/80 transition-all duration-300" />
                             )}
-                            
-                            <button
-                                type="button"
-                                onClick={() => setIsDescExpanded(!isDescExpanded)}
-                                className="mt-4 flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-brand-yellow hover:text-white transition-colors"
-                            >
-                                {isDescExpanded ? (
-                                    <>
-                                        <ChevronUp className="w-3 h-3" />
-                                        {dict.product_detail.readLess || "Read Less"}
-                                    </>
-                                ) : (
-                                    <>
-                                        <ChevronDown className="w-3 h-3" />
-                                        {dict.product_detail.readMore || "Read More"}
-                                    </>
-                                )}
-                            </button>
                         </div>
+                        
+                        <button
+                            type="button"
+                            onClick={() => setIsDescExpanded(!isDescExpanded)}
+                            className="mt-4 flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-brand-yellow hover:text-white transition-colors py-2"
+                        >
+                            {isDescExpanded ? (
+                                <>
+                                    <ChevronUp className="w-3 h-3" />
+                                    {dict.product_detail.readLess || "Read Less"}
+                                </>
+                            ) : (
+                                <>
+                                    <ChevronDown className="w-3 h-3" />
+                                    {dict.product_detail.readMore || "Read More"}
+                                </>
+                            )}
+                        </button>
                     </div>
 
                     {/* Details list */}
