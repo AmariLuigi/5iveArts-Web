@@ -102,6 +102,15 @@ body {
   scrollbar-color: #222 #000;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 /* Global utility for custom scrollbar in containers */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;

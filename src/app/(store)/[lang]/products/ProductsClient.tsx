@@ -3,9 +3,82 @@
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { Product } from "@/types";
 import ProductCard from "@/components/product/ProductCard";
-import { Box, Search } from "lucide-react";
+import { Box, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useRef } from "react";
+
+/**
+ * REUSABLE: Horizontal Scroll Container with Arrow Controls
+ * Automatically handles visibility based on overflow and scroll position.
+ */
+function HorizontalNexus({ children, label }: { children: React.ReactNode, label: string }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
+
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    
+    // Safety check for overflow
+    const isOverflowing = el.scrollWidth > el.clientWidth;
+    
+    setShowLeft(isOverflowing && el.scrollLeft > 10);
+    setShowRight(isOverflowing && (el.scrollLeft + el.clientWidth < el.scrollWidth - 10));
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, [children]);
+
+  const scroll = (dir: 'left' | 'right') => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const amount = el.clientWidth * 0.6;
+    el.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' });
+  };
+
+  return (
+    <div className="flex items-center gap-4 group/nexus relative pb-2 pt-2 border-t border-white/5 first:border-0">
+      <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px] shrink-0">{label}</span>
+      
+      <div className="relative flex-1 min-w-0 overflow-hidden">
+        {/* Navigation Arrows */}
+        {showLeft && (
+          <button 
+            onClick={() => scroll('left')}
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/90 text-brand-yellow border-r border-white/10 hover:bg-white/5 transition-all animate-in fade-in duration-300 backdrop-blur-md"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+          </button>
+        )}
+        
+        {showRight && (
+          <button 
+            onClick={() => scroll('right')}
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/90 text-brand-yellow border-l border-white/10 hover:bg-white/5 transition-all animate-in fade-in duration-300 backdrop-blur-md"
+          >
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        )}
+
+        {/* The Scrollable Deck */}
+        <div 
+          ref={scrollRef}
+          onScroll={checkScroll}
+          className="flex gap-2 overflow-x-auto no-scrollbar scroll-smooth"
+        >
+          {children}
+          {/* Edge Padding to ensure right-most items aren't cut by arrow/shadow */}
+          <div className="min-w-[40px] shrink-0" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function ProductsContent({ 
   initialProducts, 
@@ -97,69 +170,60 @@ function ProductsContent({
       </div>
 
       {/* Filter Matrix */}
-      <div className="mb-16 space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-700">
+      <div className="mb-16 space-y-2 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-700">
         {/* Row 1: Base Categories */}
-        <div className="flex flex-wrap items-center gap-4">
-          <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px]">Type /</span>
-          <div className="flex flex-wrap gap-2">
-            {taxonomy.main.map(cat => (
+        <HorizontalNexus label="Type /">
+          {taxonomy.main.map(cat => (
+            <button
+              key={cat}
+              onClick={() => handleCategorySelect(cat)}
+              className={`px-4 py-2 shrink-0 text-[10px] uppercase font-black tracking-widest rounded-sm transition-all border ${
+                activeCategory === cat 
+                  ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
+                  : "bg-white/[0.02] text-neutral-500 border-white/5 hover:border-white/20 hover:text-white"
+              }`}
+            >
+              {cat === "all" ? dict.products.all : cat}
+            </button>
+          ))}
+        </HorizontalNexus>
+
+        {/* Row 2: Franchises */}
+        {taxonomy.franchise.length > 0 && (
+          <HorizontalNexus label="Franchise /">
+            {taxonomy.franchise.map(fan => (
               <button
-                key={cat}
-                onClick={() => handleCategorySelect(cat)}
-                className={`px-4 py-2 text-[9px] uppercase font-black tracking-widest rounded-sm transition-all border ${
-                  activeCategory === cat 
+                key={fan}
+                onClick={() => handleCategorySelect(fan)}
+                className={`px-4 py-2 shrink-0 text-[10px] uppercase font-black tracking-widest rounded-sm transition-all border ${
+                  activeCategory === fan 
                     ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
                     : "bg-white/[0.02] text-neutral-500 border-white/5 hover:border-white/20 hover:text-white"
                 }`}
               >
-                {cat === "all" ? dict.products.all : cat}
+                {fan}
               </button>
             ))}
-          </div>
-        </div>
-
-        {/* Row 2: Franchises */}
-        {taxonomy.franchise.length > 0 && (
-          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/5">
-            <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px]">Franchise /</span>
-            <div className="flex flex-wrap gap-2">
-              {taxonomy.franchise.map(fan => (
-                <button
-                  key={fan}
-                  onClick={() => handleCategorySelect(fan)}
-                  className={`px-4 py-2 text-[9px] uppercase font-black tracking-widest rounded-sm transition-all border ${
-                    activeCategory === fan 
-                      ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
-                      : "bg-white/[0.02] text-neutral-500 border-white/5 hover:border-white/20 hover:text-white"
-                  }`}
-                >
-                  {fan}
-                </button>
-              ))}
-            </div>
-          </div>
+          </HorizontalNexus>
         )}
 
         {/* Row 3: Characters */}
         {taxonomy.subcategory.length > 0 && (
-          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/5">
-            <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px]">Subject /</span>
-            <div className="flex flex-wrap gap-2">
-              {taxonomy.subcategory.map(sub => (
-                <button
-                  key={sub}
-                  onClick={() => handleCategorySelect(sub)}
-                  className={`px-4 py-2 text-[9px] uppercase font-black tracking-widest rounded-sm transition-all border ${
-                    activeCategory === sub 
-                      ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
-                      : "bg-white/[0.02] text-neutral-500 border-white/5 hover:border-white/20 hover:text-white"
-                  }`}
-                >
-                  {sub}
-                </button>
-              ))}
-            </div>
-          </div>
+          <HorizontalNexus label="Subject /">
+            {taxonomy.subcategory.map(sub => (
+              <button
+                key={sub}
+                onClick={() => handleCategorySelect(sub)}
+                className={`px-4 py-2 shrink-0 text-[10px] uppercase font-black tracking-widest rounded-sm transition-all border ${
+                  activeCategory === sub 
+                    ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
+                    : "bg-white/[0.02] text-neutral-500 border-white/5 hover:border-white/20 hover:text-white"
+                }`}
+              >
+                {sub}
+              </button>
+            ))}
+          </HorizontalNexus>
         )}
       </div>
 
