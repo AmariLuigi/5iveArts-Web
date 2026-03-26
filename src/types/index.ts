@@ -7,6 +7,11 @@ export interface Product {
   id: string;
   name: string;
   description: string;
+  description_en?: string | null;
+  description_it?: string | null;
+  description_de?: string | null;
+  description_fr?: string | null;
+  description_es?: string | null;
   price: number; // base price in cents (relative to 1/12 multiplier)
   images: string[];
   videos: string[];

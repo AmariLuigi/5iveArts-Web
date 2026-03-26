@@ -314,8 +314,15 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
 
                     <div className="mb-10">
                         <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-4">{dict.product_detail.description}</h2>
-                        <p className="text-neutral-400 font-medium leading-[1.8] text-base">
-                            {product.description}
+                        <p className="text-neutral-400 font-medium leading-[1.8] text-base whitespace-pre-wrap">
+                            {
+                                (lang === 'en' ? product.description_en :
+                                 lang === 'it' ? product.description_it :
+                                 lang === 'de' ? product.description_de :
+                                 lang === 'fr' ? product.description_fr :
+                                 lang === 'es' ? product.description_es : 
+                                 product.description) || product.description
+                            }
                         </p>
                     </div>
 

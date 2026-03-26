@@ -30,8 +30,14 @@ export async function POST(req: NextRequest) {
 
     // Explicitly allowlist only valid product columns to prevent mass-assignment
     const safePayload = {
+        id: body.id,
         name: body.name,
         description: body.description,
+        description_en: body.description_en,
+        description_it: body.description_it,
+        description_de: body.description_de,
+        description_fr: body.description_fr,
+        description_es: body.description_es,
         price: body.price,
         images: Array.isArray(body.images) ? body.images : [],
         videos: Array.isArray(body.videos) ? body.videos : [],

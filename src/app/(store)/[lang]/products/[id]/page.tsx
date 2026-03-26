@@ -30,13 +30,22 @@ export async function generateMetadata({ params }: Props) {
   const product = products.find(p => p.id === id);
   if (!product) return {};
   
+  const metaDescription = (
+    lang === 'en' ? product.description_en :
+    lang === 'it' ? product.description_it :
+    lang === 'de' ? product.description_de :
+    lang === 'fr' ? product.description_fr :
+    lang === 'es' ? product.description_es : 
+    product.description
+  ) || product.description;
+
   return {
     title: `${product.name} — 5iveArts`,
-    description: product.description,
+    description: metaDescription,
     openGraph: {
-      type: 'website', // Use website since it's a detail page
+      type: 'website', 
       title: `${product.name} | 5iveArts`,
-      description: product.description,
+      description: metaDescription,
       url: `https://5ivearts.com/${lang}/products/${product.id}`,
       images: [
         {
@@ -48,7 +57,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: 'summary_large_image',
       title: `${product.name} | 5iveArts`,
-      description: product.description,
+      description: metaDescription,
       images: [product.images?.[0] || '/logo.svg'],
     },
   };
