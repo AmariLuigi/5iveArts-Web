@@ -83,7 +83,7 @@ export default function ImageCropper({ file, onCropComplete, onCancel }: ImageCr
                             <p className="text-[8px] uppercase font-bold text-neutral-600 tracking-widest mt-0.5">Adjust framing to remove watermarks or optimize display</p>
                         </div>
                     </div>
-                    <button onClick={onCancel} className="p-2 hover:bg-white/5 rounded-full transition-colors text-neutral-600 hover:text-white">
+                    <button type="button" onClick={onCancel} className="p-2 hover:bg-white/5 rounded-full transition-colors text-neutral-600 hover:text-white">
                         <X className="w-5 h-5" />
                     </button>
                 </div>
@@ -111,6 +111,7 @@ export default function ImageCropper({ file, onCropComplete, onCancel }: ImageCr
                 <div className="p-8 border-t border-white/5 bg-black/40 flex items-center justify-between">
                     <div className="flex items-center gap-6">
                         <button 
+                            type="button"
                             onClick={() => setCrop(undefined)}
                             className="flex items-center gap-2 text-[9px] uppercase font-black tracking-widest text-neutral-600 hover:text-white transition-colors"
                         >
@@ -120,12 +121,14 @@ export default function ImageCropper({ file, onCropComplete, onCancel }: ImageCr
                     </div>
                     <div className="flex gap-4">
                         <button
+                            type="button"
                             onClick={onCancel}
                             className="px-8 py-4 text-[10px] uppercase font-black tracking-widest text-neutral-500 hover:text-white transition-colors"
                         >
                             Discard
                         </button>
                         <button
+                            type="button"
                             onClick={handleConfirm}
                             className="hasbro-btn-primary px-10 py-4 flex items-center gap-3"
                         >
