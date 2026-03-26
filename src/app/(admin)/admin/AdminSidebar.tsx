@@ -11,7 +11,8 @@ import {
     Settings,
     ShieldCheck,
     User,
-    BarChart3
+    BarChart3,
+    GitCommit
 } from "lucide-react";
 import { createClient } from "@/lib/supabase-browser";
 
@@ -33,6 +34,7 @@ export default function AdminSidebar() {
         { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
         { label: "Manage Orders", href: "/admin/orders", icon: ShoppingCart },
         { label: "Products", href: "/admin/products", icon: Tag },
+        { label: "Lore Taxonomy", href: "/admin/taxonomy", icon: GitCommit },
         { label: "Settings", href: "/admin/settings", icon: Settings },
     ];
 
