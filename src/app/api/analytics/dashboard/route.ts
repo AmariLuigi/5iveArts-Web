@@ -10,6 +10,7 @@ import type {
     RevenueData,
     UserSegmentData,
     GeographicData,
+    DiscoveryData,
     TimePatterns,
     OverviewData
 } from "@/types/analytics";
@@ -602,6 +603,50 @@ async function getTimePatterns(startDate: string, endDate: string): Promise<Time
     return { hourlyPatterns, dailyPatterns, weeklyPatterns };
 }
 
+// ── Discovery Analytics ──────────────────────────────────────────────────
+async function getDiscoveryData(startDate: string, endDate: string): Promise<DiscoveryData> {
+    const supabase = getSupabaseAdmin();
+
+    const { data: discoveryEvents } = await supabase
+        .from('analytics_events')
+        .select('event_type, event_data')
+        .in('event_type', ['filter_applied', 'category_clicked', 'search_performed'])
+        .gte('created_at', startDate)
+        .lte('created_at', endDate) as { data: AnalyticsEvent[] | null };
+
+    const filterCounts: Record<string, number> = {};
+    const franchiseCounts: Record<string, number> = {};
+    const searchTerms: Record<string, number> = {};
+
+    discoveryEvents?.forEach((event: AnalyticsEvent) => {
+        if (event.event_type === 'filter_applied') {
+            const filter = event.event_data?.value || 'unknown';
+            filterCounts[filter] = (filterCounts[filter] || 0) + 1;
+        } else if (event.event_type === 'category_clicked') {
+            const franchise = event.event_data?.category || 'unknown';
+            franchiseCounts[franchise] = (franchiseCounts[franchise] || 0) + 1;
+        } else if (event.event_type === 'search_performed') {
+            const term = (event.event_data?.term || '').toLowerCase().trim();
+            if (term) searchTerms[term] = (searchTerms[term] || 0) + 1;
+        }
+    });
+
+    return {
+        filterUsage: Object.entries(filterCounts)
+            .map(([filter, count]) => ({ filter, count }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 15),
+        franchiseAffinity: Object.entries(franchiseCounts)
+            .map(([franchise, count]) => ({ franchise, count }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 15),
+        searchInsights: Object.entries(searchTerms)
+            .map(([term, count]) => ({ term, count }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 20)
+    };
+}
+
 // ── Main Handler ────────────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
     const auth = await requireAdmin(req);
@@ -647,15 +692,19 @@ export async function GET(req: NextRequest) {
             case 'timepatterns':
                 return NextResponse.json(await getTimePatterns(startDate, endDate));
 
+            case 'discovery':
+                return NextResponse.json(await getDiscoveryData(startDate, endDate));
+
             case 'overview':
             default: {
-                const [funnel, cart, conversion, revenue, users, geographic, timepatterns] = await Promise.all([
+                const [funnel, cart, conversion, revenue, users, geographic, discovery, timepatterns] = await Promise.all([
                     getFunnelData(startDate, endDate),
                     getCartBehaviorData(startDate, endDate),
                     getConversionData(startDate, endDate),
                     getRevenueData(startDate, endDate, days),
                     getUserSegmentData(startDate, endDate),
                     getGeographicData(startDate, endDate),
+                    getDiscoveryData(startDate, endDate),
                     getTimePatterns(startDate, endDate)
                 ]);
 
@@ -666,6 +715,7 @@ export async function GET(req: NextRequest) {
                     revenue,
                     users,
                     geographic,
+                    discovery,
                     timepatterns,
                     meta: { days, startDate, endDate }
                 };

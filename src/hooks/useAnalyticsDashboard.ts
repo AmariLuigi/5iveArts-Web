@@ -103,6 +103,10 @@ export function useTimePatternsData(days: number = 30) {
     return useAnalyticsSection('timepatterns', days);
 }
 
+export function useDiscoveryData(days: number = 30) {
+    return useAnalyticsSection('discovery', days);
+}
+
 function useAnalyticsSection<T>(type: string, days: number) {
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState(true);

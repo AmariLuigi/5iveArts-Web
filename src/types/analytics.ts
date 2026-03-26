@@ -23,7 +23,10 @@ export type EventType =
     | 'courier_selected'
     | 'payment_failed'
     | 'payment_success'
-    | 'payment_gateway_error';
+    | 'payment_gateway_error'
+    | 'filter_applied'
+    | 'category_clicked'
+    | 'search_performed';
 
 export interface EventData {
     // UTM and referrer
@@ -61,6 +64,11 @@ export interface EventData {
 
     // Channel attribution
     channel?: string;
+
+    // Discovery
+    value?: string;     // Filter value
+    category?: string;  // Category/Franchise name
+    term?: string;      // Search term
 }
 
 // API Response Types
@@ -203,6 +211,12 @@ export interface WeeklyPattern {
     rate: number;
 }
 
+export interface DiscoveryData {
+    filterUsage: { filter: string; count: number }[];
+    franchiseAffinity: { franchise: string; count: number }[];
+    searchInsights: { term: string; count: number }[];
+}
+
 export interface TimePatterns {
     hourlyPatterns: HourlyPattern[];
     dailyPatterns: DailyPattern[];
@@ -222,6 +236,7 @@ export interface OverviewData {
     revenue: RevenueData;
     users: UserSegmentData;
     geographic: GeographicData;
+    discovery: DiscoveryData;
     timepatterns: TimePatterns;
     meta: DashboardMeta;
 }

@@ -101,6 +101,7 @@ function SectionToggle({ activeSections, onToggle }: SectionToggleProps) {
         { id: "conversion", label: "Conversion" },
         { id: "revenue", label: "Revenue" },
         { id: "users", label: "Users" },
+        { id: "discovery", label: "Discovery" },
         { id: "timepatterns", label: "Time Patterns" },
     ];
 
@@ -125,7 +126,7 @@ function SectionToggle({ activeSections, onToggle }: SectionToggleProps) {
 
 export default function AnalyticsDashboard() {
     const [days, setDays] = useState(30);
-    const [activeSections, setActiveSections] = useState<string[]>(["overview", "funnel", "cart", "conversion", "revenue", "users", "timepatterns"]);
+    const [activeSections, setActiveSections] = useState<string[]>(["overview", "discovery", "funnel", "cart"]);
     const [autoRefresh, setAutoRefresh] = useState(false);
     const [isExporting, setIsExporting] = useState(false);
 
@@ -700,6 +701,53 @@ export default function AnalyticsDashboard() {
                 </div>
             )}
 
+            {/* Discovery Section */}
+            {shouldShowSection("discovery") && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <DashboardCard title="Franchise Affinity (Lore Engagement)">
+                        {data?.discovery.franchiseAffinity ? (
+                            <BarChart
+                                data={data.discovery.franchiseAffinity}
+                                xKey="franchise"
+                                bars={[{ dataKey: "count", color: "#22D3EE", name: "Clicks" }]}
+                                height={280}
+                                horizontal
+                            />
+                        ) : (
+                            <LoadingSkeleton height="280px" />
+                        )}
+                    </DashboardCard>
+
+                    <DashboardCard title="Filter Usage (Horizontal Nexus)">
+                        {data?.discovery.filterUsage ? (
+                            <BarChart
+                                data={data.discovery.filterUsage}
+                                xKey="filter"
+                                bars={[{ dataKey: "count", color: "#E5C100", name: "Interactions" }]}
+                                height={280}
+                                horizontal
+                            />
+                        ) : (
+                            <LoadingSkeleton height="280px" />
+                        )}
+                    </DashboardCard>
+
+                    <DashboardCard title="Search & Masterpiece Gaps" className="lg:col-span-2">
+                        {data?.discovery.searchInsights ? (
+                            <DataTable
+                                data={data.discovery.searchInsights}
+                                columns={[
+                                    { key: "term", header: "Searched Term", width: "70%" },
+                                    { key: "count", header: "Total Requests", align: "right" },
+                                ]}
+                            />
+                        ) : (
+                            <LoadingSkeleton height="200px" />
+                        )}
+                    </DashboardCard>
+                </div>
+            )}
+
             {/* Time-Based Patterns */}
             {shouldShowSection("timepatterns") && (
                 <DashboardCard title="Temporal Patterns">
@@ -714,7 +762,7 @@ export default function AnalyticsDashboard() {
                 </DashboardCard>
             )}
 
-            {/* Footer */}
+            {/* Geographic & Device Insights */}
             <div className="text-center py-8 border-t border-white/5">
                 <p className="text-[10px] text-neutral-500 uppercase tracking-widest">
                     5ive Arts Analytics Dashboard • Data refreshes every {autoRefresh ? "minute" : "manual refresh"}
