@@ -40,7 +40,24 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
     });
 
     const handleDelete = async (id: string, name: string) => {
-        // ... (skipping unchanged handleDelete logic for brevity but will match context)
+        if (!confirm(`Are you sure you want to delete "${name}"? This action is permanent and will delete all associated media.`)) return;
+        
+        setDeletingId(id);
+        setError(null);
+        
+        try {
+            await axios.delete(`/api/admin/products/${id}`);
+            // Remove from local state
+            setProducts(prev => prev.filter(p => p.id !== id));
+            // Ensure server components refresh too
+            router.refresh();
+        } catch (err: any) {
+            const errMsg = err.response?.data?.error || "Failed to delete product";
+            setError(errMsg);
+            alert(errMsg);
+        } finally {
+            setDeletingId(null);
+        }
     };
 
     const stats = {

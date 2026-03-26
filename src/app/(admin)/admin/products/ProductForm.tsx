@@ -365,12 +365,29 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         }
     };
 
+    const deleteMediaFromStorage = async (url: string) => {
+        if (!url || !url.includes('/product-media/')) return;
+        
+        try {
+            const path = url.split('/product-media/')[1];
+            if (path) {
+                await supabase.storage.from('product-media').remove([path]);
+            }
+        } catch (err) {
+            console.error("Cleanup error:", err);
+        }
+    };
+
     const removeImage = (index: number) => {
+        const urlToRemove = images[index];
         setImages(images.filter((_, i) => i !== index));
+        if (urlToRemove) deleteMediaFromStorage(urlToRemove);
     };
 
     const removeVideo = (index: number) => {
+        const urlToRemove = videos[index];
         setVideos(videos.filter((_, i) => i !== index));
+        if (urlToRemove) deleteMediaFromStorage(urlToRemove);
     };
 
     return (
