@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronLeft, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play, Sparkles } from "lucide-react";
+import { Star, Tag, CheckCircle, ShieldCheck, Truck, Play, Sparkles, ChevronRight } from "lucide-react";
 import { Product, ProductScale, ProductFinish } from "@/types";
 import { formatPrice, calculatePrice, SCALE_CONFIG } from "@/lib/products";
 import AddToCartButton from "./AddToCartButton";
@@ -38,6 +38,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     const [isHovering, setIsHovering] = useState(false);
     const [isMobileZoomed, setIsMobileZoomed] = useState(false);
     const [lastTap, setLastTap] = useState(0);
+    const [isInteracting, setIsInteracting] = useState(false);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         // Only run on desktop/hoverable devices
@@ -50,6 +51,9 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
     };
 
     const handleMobileInteraction = (e: React.MouseEvent | React.TouchEvent) => {
+        // Only run on touch/mobile devices
+        if (!window.matchMedia("(hover: none)").matches) return;
+
         const now = Date.now();
         const DOUBLE_TAP_DELAY = 300;
 
@@ -78,7 +82,16 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
 
     const isVideo = (url: string) => product.videos?.includes(url);
 
-    // Track product_viewed once on mount
+    // AUTO-ROTATION SYSTEM
+    useEffect(() => {
+        if (isInteracting || isMobileZoomed || media.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setActiveMedia((prev) => (prev + 1) % media.length);
+        }, 3000); // 3-second cycle
+
+        return () => clearInterval(interval);
+    }, [isInteracting, isMobileZoomed, media.length]);
     useEffect(() => {
         track("product_viewed", {
             product_id: product.id,
@@ -134,8 +147,14 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                             <div 
                                 className="relative w-full h-full cursor-zoom-in overflow-hidden"
                                 onMouseMove={handleMouseMove}
-                                onMouseEnter={() => setIsHovering(true)}
-                                onMouseLeave={() => setIsHovering(false)}
+                                onMouseEnter={() => {
+                                    setIsHovering(true);
+                                    setIsInteracting(true);
+                                }}
+                                onMouseLeave={() => {
+                                    setIsHovering(false);
+                                    setIsInteracting(false);
+                                }}
                                 onClick={handleMobileInteraction}
                             >
                                 <motion.div
@@ -163,6 +182,30 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                         className="object-contain"
                                     />
                                 </motion.div>
+
+                                {/* Navigation Arrows */}
+                                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setActiveMedia((prev) => (prev - 1 + media.length) % media.length);
+                                        }}
+                                        className="p-3 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-white pointer-events-auto hover:bg-brand-yellow hover:text-black transition-all"
+                                    >
+                                        <ChevronLeft className="w-5 h-5" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setActiveMedia((prev) => (prev + 1) % media.length);
+                                        }}
+                                        className="p-3 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-white pointer-events-auto hover:bg-brand-yellow hover:text-black transition-all"
+                                    >
+                                        <ChevronRight className="w-5 h-5" />
+                                    </button>
+                                </div>
                                 
                                 {/* Status Overlays */}
                                 {isMobileZoomed && (
