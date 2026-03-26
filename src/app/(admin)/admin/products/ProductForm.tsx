@@ -280,14 +280,14 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         img.onload = () => {
                             clearTimeout(timeout);
                             const canvas = document.createElement("canvas");
-                            const MAX_WIDTH = 800;
+                            const MAX_WIDTH = 512;
                             const scale = MAX_WIDTH / Math.max(img.width, 1);
                             canvas.width = MAX_WIDTH;
-                            canvas.height = (img.height || 800) * scale;
+                            canvas.height = (img.height || 512) * scale;
                             
                             const ctx = canvas.getContext("2d");
                             ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-                            resolve(canvas.toDataURL("image/jpeg", 0.7).split(',')[1]);
+                            resolve(canvas.toDataURL("image/jpeg", 0.5).split(',')[1]);
                         };
 
                         img.onerror = () => {

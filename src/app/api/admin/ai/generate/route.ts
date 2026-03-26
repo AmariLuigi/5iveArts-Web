@@ -20,6 +20,7 @@ export async function POST(req: Request) {
       existingTags = [], 
       model = "moonshotai/kimi-k2.5" 
     } = await req.json();
+    
     const rawKey = process.env.NVIDIA_API_KEY;
     const apiKey = rawKey?.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
 
@@ -64,7 +65,8 @@ Output MUST be valid JSON: {
     "Series": "...", 
     "Artist": "..."
   }
-}`;
+}
+BE CONCISE. Use high-speed identification. Maximize lore precision.`;
 
     const messages = [
       { role: "system", content: systemPrompt }
@@ -83,72 +85,51 @@ Output MUST be valid JSON: {
       messages.push({ role: "user", content: prompt });
     }
 
-    let retries = 0;
-    const maxRetries = 2;
-    let lastError = null;
+    // FAST EXECUTION PROTOCOL: Single attempt on Hobby to avoid 10s timeout
+    const response = await fetch(NVIDIA_INVOKE_URL, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: messages,
+        max_tokens: 2000,
+        temperature: 0.7,
+        top_p: 0.9,
+        stream: false,
+        chat_template_kwargs: { thinking: false },
+      })
+    });
 
-    while (retries <= maxRetries) {
-      try {
-        const response = await fetch(NVIDIA_INVOKE_URL, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify({
-            model: model,
-            messages: messages,
-            max_tokens: 16384,
-            temperature: 1.0,
-            top_p: 1.0,
-            stream: false,
-            // Kimi k2.5: keeping thinking false for speed/timeout issues on Vercel
-            chat_template_kwargs: { thinking: false },
-          })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(`NVIDIA API Error: ${response.status} ${JSON.stringify(errorData)}`);
-        }
-
-        const data = await response.json();
-        const content = data.choices[0].message.content;
-        
-        // SERVER SIDE DEBUG: Log the raw payload for inspection
-        console.log("[AI Forge] RAW Response Content:", content);
-
-        // EXTRACTION ENGINE: Find the first '{' and last '}' to handle any conversational noise
-        const firstCurly = content.indexOf('{');
-        const lastCurly = content.lastIndexOf('}');
-        
-        if (firstCurly === -1 || lastCurly === -1) {
-          throw new Error("Model response did not contain a valid JSON structure.");
-        }
-
-        const jsonStr = content.substring(firstCurly, lastCurly + 1);
-        
-        try {
-          const result = JSON.parse(jsonStr);
-          if (!result.title || !result.description) throw new Error("JSON missing required fields");
-          return NextResponse.json(result);
-        } catch (e) {
-          console.error("[AI Generate] Parsing failed. Content snippet:", jsonStr.substring(0, 50));
-          throw new Error("Invalid JSON format in model response");
-        }
-
-      } catch (err: any) {
-        lastError = err;
-        retries++;
-        if (retries <= maxRetries) {
-          await new Promise(r => setTimeout(r, 1000 * retries));
-          continue;
-        }
-      }
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        return NextResponse.json({ error: `AI Provider Error: ${response.status}`, details: errorData }, { status: response.status });
     }
 
-    return NextResponse.json({ error: lastError?.message || "Generation failed" }, { status: 500 });
+    const data = await response.json();
+    const content = data.choices[0].message.content;
+    
+    // EXTRACTION ENGINE: Find the first '{' and last '}' to handle any conversational noise
+    const firstCurly = content.indexOf('{');
+    const lastCurly = content.lastIndexOf('}');
+    
+    if (firstCurly === -1 || lastCurly === -1) {
+      return NextResponse.json({ error: "Model response did not contain a valid JSON structure." }, { status: 500 });
+    }
+
+    const jsonStr = content.substring(firstCurly, lastCurly + 1);
+    
+    try {
+      const result = JSON.parse(jsonStr);
+      if (!result.title || !result.description) throw new Error("JSON missing required fields");
+      return NextResponse.json(result);
+    } catch (e) {
+      console.error("[AI Generate] Parsing failed:", jsonStr);
+      return NextResponse.json({ error: "Invalid JSON format in model response" }, { status: 500 });
+    }
 
   } catch (error: any) {
     console.error("[AI Generate] Fatal Error:", error);
