@@ -3,10 +3,11 @@
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { Product } from "@/types";
 import ProductCard from "@/components/product/ProductCard";
-import { Box, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Box, Search, ChevronLeft, ChevronRight, Hand } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * REUSABLE: Horizontal Scroll Container with Arrow Controls
@@ -17,6 +18,8 @@ function HorizontalNexus({ children, label }: { children: React.ReactNode, label
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
 
+  const [showHint, setShowHint] = useState(false);
+
   const checkScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -26,7 +29,21 @@ function HorizontalNexus({ children, label }: { children: React.ReactNode, label
     
     setShowLeft(isOverflowing && el.scrollLeft > 10);
     setShowRight(isOverflowing && (el.scrollLeft + el.clientWidth < el.scrollWidth - 10));
+
+    // Hide hint once they start scrolling
+    if (el.scrollLeft > 5) setShowHint(false);
   };
+
+  useEffect(() => {
+    // Initial check for hint (mobile only)
+    const el = scrollRef.current;
+    if (el && el.scrollWidth > el.clientWidth && window.innerWidth < 768) {
+      setShowHint(true);
+      // Auto-hide hint after 6 seconds if no interaction
+      const timeout = setTimeout(() => setShowHint(false), 6000);
+      return () => clearTimeout(timeout);
+    }
+  }, [children]);
 
   useEffect(() => {
     checkScroll();
@@ -39,6 +56,7 @@ function HorizontalNexus({ children, label }: { children: React.ReactNode, label
     if (!el) return;
     const amount = el.clientWidth * 0.6;
     el.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' });
+    setShowHint(false);
   };
 
   return (
@@ -46,7 +64,7 @@ function HorizontalNexus({ children, label }: { children: React.ReactNode, label
       <span className="text-[9px] uppercase font-black text-white/20 tracking-widest min-w-[80px] shrink-0">{label}</span>
       
       <div className="relative flex-1 min-w-0 overflow-hidden">
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows (Desktop Only) */}
         {showLeft && (
           <button 
             onClick={() => scroll('left')}
@@ -64,6 +82,26 @@ function HorizontalNexus({ children, label }: { children: React.ReactNode, label
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         )}
+
+        {/* Mobile Swipe Hint (Fades out on scroll) */}
+        <AnimatePresence>
+          {showHint && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: [20, -20, 20] }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ 
+                opacity: { duration: 0.5 },
+                x: { repeat: Infinity, duration: 1.5, ease: "easeInOut" }
+              }}
+              className="md:hidden absolute right-10 top-1/2 -translate-y-1/2 z-30 pointer-events-none flex items-center gap-2"
+            >
+              <div className="bg-brand-yellow/10 border border-brand-yellow/20 p-2 rounded-full backdrop-blur-sm shadow-[0_0_15px_rgba(255,159,0,0.1)]">
+                <Hand className="w-4 h-4 text-brand-yellow" />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* The Scrollable Deck */}
         <div 
