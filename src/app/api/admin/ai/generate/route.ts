@@ -60,13 +60,15 @@ ${vaultContext}`;
       headers: {
         "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
+        "Accept": "text/event-stream"
       },
       body: JSON.stringify({
         model: model,
         messages: messages,
-        max_tokens: 1500,
-        temperature: 0.2,
-        stream: true, // CRITICAL: STREAMING TO BEAT VERCEL 10S LIMIT
+        max_tokens: 1024, // Enough room for detail, but still fast
+        temperature: 0.20,
+        top_p: 0.70,
+        stream: true, 
       })
     });
 
