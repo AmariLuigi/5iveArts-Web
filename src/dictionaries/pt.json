@@ -1,0 +1,502 @@
+{
+  "nav": {
+    "products": "Produtos",
+    "faq": "Perguntas Frequentes",
+    "shipping": "Envio",
+    "cart": "Carrinho",
+    "login": "Entrar",
+    "admin": "Admin",
+    "discovery": "Descoberta",
+    "terminal": "Acesso ao Terminal",
+    "regional": "Projeção Regional",
+    "switchRegion": "Trocar Região",
+    "vault": "Cofre",
+    "warehouse": "Armazém",
+    "access": "Acesso",
+    "wishlist": "Lista de Desejos"
+  },
+  "home": {
+    "title": "5iveArts - Precisão Artesanal",
+    "hero_title": "PRECISÃO ARTESANAL",
+    "hero_subtitle": "Cada figura é uma peça única, esculpida com paixão e finalizada com cuidado meticuloso.",
+    "cta_button": "EXPLORAR COLECÇÃO",
+    "featured_products": "PRODUTOS EM DESTAQUE",
+    "explore_all": "Explorar Tudo"
+  },
+  "homepage": {
+    "featuredHeading": "Colecções Premium de Figuras em Resina 3D",
+    "viewAll": "Ver Todas as Peças",
+    "testimonialsHeading": "Confiado por Coleccionadores Globais",
+    "reviewsLabel": "Avaliações Verificadas",
+    "collectorChoice": "Escolha do Coleccionador",
+    "premiumSeries": "Série Premium",
+    "collectorsVault": "Cofre do Coleccionador",
+    "satisfactionRate": "Taxa de Satisfação",
+    "countriesServed": "Países Atendidos",
+    "yearsExperience": "Anos de Experiência"
+  },
+  "products": {
+    "title": "Arsenal de Modelos",
+    "subtitle": "Navegue pela nossa colecção de figuras artesanais.",
+    "all": "Todas as Obras-primas",
+    "categories": "Categorias",
+    "filter": "Filtrar",
+    "viewDetails": "VER DETALHES",
+    "addToCart": "Adicionar ao Carrinho",
+    "scale": "Escala",
+    "finish": "Acabamento",
+    "painted": "Pintado à Mão",
+    "raw": "Resina Bruta",
+    "description": "Descrição",
+    "shippingInfo": "Envio e Manuseio",
+    "customerReviews": "Avaliações de Clientes",
+    "specifications": "Especificações",
+    "returnPolicy": "Política de Devolução",
+    "securePayment": "Pagamento Seguro",
+    "insuredShipping": "Envio com Seguro",
+    "price": "Preço",
+    "details": "Ver Detalhes",
+    "startingFrom": "A partir de",
+    "deploymentConfig": "Configuração de Implantação",
+    "selectPrototype": "Selecionar Protótipo e Acabamento"
+  },
+  "cart": {
+    "title": "Carrinho do Cofre",
+    "empty": "Seu carrinho está vazio",
+    "emptyMessage": "Parece que ainda não adicionou nenhuma figura.",
+    "returnToShop": "Voltar à Loja",
+    "subtotal": "Subtotal",
+    "shippingCost": "Envio",
+    "total": "Total",
+    "checkout": "Finalizar Compra",
+    "remove": "Remover",
+    "item": "item",
+    "items": "itens",
+    "secureCheckout": "Checkout Seguro",
+    "insuredShipping": "Envio Global com Seguro",
+    "thirtyDayReturns": "30 dias para devoluções",
+    "orderSummary": "Resumo do Pedido",
+    "calculatedAtCheckout": "Calculado na finalização",
+    "estimatedTotal": "Total Estimado",
+    "proceedToCheckout": "Finalizar Compra",
+    "continueShopping": "Continuar Comprando",
+    "freeShipping": "Envio grátis em compras acima de {amount}",
+    "shipping": "Envio",
+    "emptyArsenal": "Arsenal Vazio",
+    "checkoutFlow": "Fluxo de Checkout",
+    "yourCart": "Seu Carrinho",
+    "clearCart": "Limpar Carrinho",
+    "returnShop": "Voltar à Loja",
+    "grandTotal": "Total Geral",
+    "calculatingLogistics": "Calculando Logística..."
+  },
+  "auth": {
+    "verification": "Verificação de Identidade",
+    "terminal": "Terminal de Acesso",
+    "portal": "Portal seguro para Coleccionadores 5iveArts",
+    "login": "Entrar",
+    "register": "Registar",
+    "emailLabel": "Link Neural (Email)",
+    "passwordLabel": "Chave de Segurança (Palavra-passe)",
+    "verifyBtn": "Verificar Sessão",
+    "registerBtn": "Estabelecer Link",
+    "tunnel": "Túnel com Encriptação de Ponta a Ponta",
+    "guidelines": "Ao aceder ao terminal, concorda com as nossas Diretrizes de Protocolo",
+    "backHome": "Voltar ao QG Público",
+    "emailPlaceholder": "COLECCIONADOR@5IVEARTS.COM",
+    "title": "Acesso ao Armazém",
+    "subtitle": "Aceda aos seus ativos e relatórios de logística.",
+    "loginBtn": "Estabelecer Ligação"
+  },
+  "faq": {
+    "infoCenter": "Centro de Informação",
+    "title": "F.A.Q e Contacto",
+    "subtitle": "Tudo o que precisa de saber sobre o nosso processo artesanal, logística e protocolos de coleccionador.",
+    "questions": [
+      {
+        "q": "Como as figuras são feitas?",
+        "a": "Cada figura começa como uma impressão 3D de alta resolução (0,025 mm de altura de camada) usando resina de qualidade industrial. Uma vez curada, os nossos artistas passam horas a pintar à mão cada peça com acrílicos profissionais e técnicas de aerógrafo, finalizando com um verniz resistente aos raios UV de qualidade museológica."
+      },
+      {
+        "q": "Fazem envios internacionais?",
+        "a": "Sim! Enviamos do nosso estúdio em Itália para coleccionadores de todo o mundo. Utilizamos transportadoras globais com seguro para garantir que a sua obra-prima chegue em segurança."
+      },
+      {
+        "q": "Quanto tempo demora a produção?",
+        "a": "Como cada peça é feita por encomenda ou acabada à mão, aguarde 7 a 14 dias para a produção antes do envio. Não apressamos a arte."
+      },
+      {
+        "q": "Qual é a vossa política de devolução?",
+        "a": "Oferecemos uma política de devolução de 30 dias para itens que cheguem danificados ou significativamente diferentes da descrição. Como se trata de peças de arte feitas à mão, não podemos aceitar devoluções por 'mudança de ideia'."
+      }
+    ],
+    "stillHaveQuestions": "Ainda tem dúvidas?",
+    "curatorsMessage": "Os nossos curadores estão de prontidão para ajudar com encomendas personalizadas e suporte a protocolos.",
+    "emailUs": "Envie-nos um e-mail",
+    "liveChat": "Chat ao Vivo",
+    "offline": "Offline"
+  },
+  "errors": {
+    "invalidLogin": "Acesso Negado. Certifique-se de que a sua chave de segurança está correta e a sua identidade vinculada está verificada.",
+    "confirmationSent": "E-mail de confirmação enviado. Verifique a sua caixa de entrada para ativar o seu terminal.",
+    "stripeLoadError": "Falha ao carregar o formulário de pagamento. Atualize e tente novamente.",
+    "unexpectedError": "Ocorreu um erro inesperado. Tente novamente.",
+    "signupFailed": "Falha no registo. Tente novamente.",
+    "genericError": "Algo correu mal",
+    "verifyStatusError": "Não foi possível verificar o estado do seu pagamento. Se recebeu um e-mail de confirmação, o seu pedido está a ser processado.",
+    "maxFeatured": "Máximo de 3 permitidos."
+  },
+  "success": {
+    "orderConfirmed": "Pedido Confirmado",
+    "thankYou": "Obrigado pela sua aquisição na 5iveArts",
+    "confEmailSent": "Um e-mail de confirmação foi enviado para",
+    "shippingNote": "A sua figura será cuidadosamente embalada e enviada com rastreio em tempo real.",
+    "logisticsLog": "Registo de Segurança e Logística",
+    "syncComplete": "Sincronização Concluída e E-mail Enviado",
+    "resendEmail": "Não recebeu o e-mail? Reenviar",
+    "paymentVerified": "Pagamento verificado.",
+    "fulfillmentNote": "A sua figura está agora a ser preparada com enchimento de espuma personalizado.",
+    "vaultEstablished": "Cofre Estabelecido",
+    "orderLinked": "O seu pedido está agora permanentemente vinculado à sua conta segura.",
+    "goWarehouse": "Ir para o meu Armazém",
+    "secureCollection": "Proteja a sua Colecção",
+    "createAccount": "CRIAR CONTA",
+    "securing": "Protegendo...",
+    "returnHQ": "Voltar ao QG"
+  },
+  "checkout": {
+    "gateway": "Portal Seguro",
+    "checkout": "Finalizar Compra",
+    "chooseSaved": "Aceder a Rotas Guardadas",
+    "useThis": "Autorizar Rota",
+    "newAddress": "Estabelecer Novo Protocolo",
+    "saveToVault": "Registar esta rota de envio no meu cofre seguro",
+    "verifying": "Verificando Transação Segura…",
+    "loadingForm": "A carregar protocolos de pagamento...",
+    "processing": "Processando pagamento…",
+    "payNow": "Autorizar Pagamento",
+    "securedBy": "Protegido por Stripe Intelligence",
+    "encryptionNote": "A sua ligação é encriptada com os padrões RSA-4096 e AES-256. Nunca armazenamos dados de pagamento brutos nos nossos servidores.",
+    "deliveryStep": "1. Entrega",
+    "shippingStep": "2. Envio",
+    "paymentStep": "3. Pagamento",
+    "recipientName": "Nome do Destinatário *",
+    "collectorPlaceholder": "Nome do Coleccionador",
+    "emailAddress": "Endereço de E-mail *",
+    "vault": "Cofre",
+    "streetAddress": "Endereço *",
+    "addressLine1": "Linha de Endereço 1",
+    "suite": "Apartamento / Unidade / Andar",
+    "optional": "Opcional",
+    "postcode": "Código Postal *",
+    "zipPlaceholder": "Código Postal",
+    "selectCountryFirst": "(Selecione o país primeiro)",
+    "city": "Cidade *",
+    "detecting": "(Detetando…)",
+    "autoFilled": "(Preenchido automaticamente)",
+    "enterManually": "(Inserir manualmente)",
+    "state": "Distrito / Estado *",
+    "phoneLabel": "Ligação Telefónica *",
+    "invalidFormat": "(Formato Inválido)",
+    "validNumber": "(Número Válido)",
+    "includeCode": "(Incluir código +)",
+    "continueBtn": "Continuar para Opções de Envio",
+    "recalculating": "Recalculando Logística Global…",
+    "backBtn": "Voltar para Entrega",
+    "changeShipping": "Alterar Opção de Envio",
+    "connecting": "A ligar ao portal de pagamento seguro. Sincronizando com protocolos PCI-DSS...",
+    "syncing": "Sincronizando Camada de Transação",
+    "orderReview": "Revisão do Pedido",
+    "subtotal": "Subtotal da Mercadoria",
+    "logistics": "Logística e Manuseio",
+    "tbd": "A definir",
+    "grandTotal": "Total Geral",
+    "initGateway": "A inicializar Portal…",
+    "proceedBtn": "Prosseguir para Pagamento",
+    "emptyArsenalTitle": "Arsenal Vazio",
+    "emptyArsenalDesc": "Parece que ainda não adicionou nenhuma figura à sua colecção.",
+    "returnShop": "Voltar à Loja",
+    "deliveryEstimate": "Entrega:",
+    "businessDay": "dia útil",
+    "businessDays": "dias úteis"
+  },
+  "product_detail": {
+    "handPaintedTag": "Pintado à Mão e Impresso em 3D",
+    "customerReviews": "avaliações de clientes",
+    "selectScale": "Selecionar Escala (Altura Aprox.)",
+    "selectFinish": "Selecionar Acabamento",
+    "handPainted": "Pintado à Mão",
+    "rawKit": "Kit Base (Resina Cinzenta)",
+    "museumGrade": "Acabamento de qualidade museológica",
+    "primed": "Pronto para personalização",
+    "description": "Descrição",
+    "specifications": "Características e Especificações",
+    "encryptedCheckout": "Checkout Encriptado via Stripe",
+    "insuredShipping": "Envio Global com Seguro",
+    "confirmed": "Confirmado",
+    "addToCollection": "Adicionar ao Arsenal",
+    "instantCheckout": "Compra Instantânea",
+    "features": [
+      "Resina Industrial de Alta Resolução",
+      "Pintura Manual Artesanal Profissional",
+      "Verniz Resistente aos UV de Qualidade Museológica",
+      "Captura de Detalhes de Precisão (0,025 mm)"
+    ],
+    "readMore": "Ler Mais",
+    "readLess": "Ler Menos"
+  },
+  "trust": [
+    {
+      "label": "Checkout Seguro",
+      "sub": "Operado por Stripe"
+    },
+    {
+      "label": "Envio Global com Seguro",
+      "sub": "Entrega em todo o mundo"
+    },
+    {
+      "label": "Feito à Mão",
+      "sub": "Cada figura única"
+    },
+    {
+      "label": "30 dias para devoluções",
+      "sub": "Sem complicações"
+    }
+  ],
+  "account": {
+    "portal": "Portal Seguro do Armazém",
+    "title": "Minha Conta",
+    "databaseFor": "Acedendo à base de dados para:",
+    "security": "Segurança",
+    "decommission": "Encerrar Sessão",
+    "activeAssets": "Ativos Ativos",
+    "totalAcquisitions": "Total de aquisições registadas",
+    "status": "Estado da Conta",
+    "verifiedCollector": "Coleccionador Verificado",
+    "level1Encryption": "Encriptação de Nível 1",
+    "history": "Histórico de Aquisições",
+    "verificationRequired": "Verificação Necessária",
+    "verificationDesc": "Verifique a sua identidade para aceder a todas as funcionalidades",
+    "resendLink": "Reenviar Link",
+    "neuralLinkError": "Erro no Link Neural",
+    "syncFailed": "Falha na sincronização com o cofre central de pedidos.",
+    "noAssets": "Nenhum ativo registado no cofre ainda.",
+    "browseCollection": "Explorar Colecção",
+    "recorded": "Registado:",
+    "investment": "Investimento",
+    "prepPhaseActive": "Fase de Preparação",
+    "inTransit": "Em Trânsito:",
+    "fullLogistics": "Dados Logísticos Completos",
+    "settings": {
+      "title": "Cofre de Segurança",
+      "subtitle": "Gerencie a sua identidade de coleccionador e protocolos de acesso.",
+      "identityVerification": "Verificação de Identidade",
+      "verified": "Verificado",
+      "pending": "Verificação Pendente",
+      "guestProtected": "O seu acesso está atualmente num estado de 'Proteção de Convidado'. Alguns dados de cumprimento de pedidos exigem uma identidade verificada.",
+      "requestLink": "Solicitar Novo Link de Verificação",
+      "addresses": "Destinos de Expedição",
+      "addAddress": "Registar Novo Protocolo",
+      "noAddresses": "Nenhum destino registado no cofre.",
+      "default": "Rota Primária",
+      "setDefault": "Definir como Primária",
+      "edit": "Modificar",
+      "delete": "Eliminar",
+      "confirmDelete": "Tem a certeza de que deseja eliminar esta rota de expedição?"
+    },
+    "wishlist": {
+      "title": "Minha Lista de Desejos de Curador",
+      "subtitle": "Artefactos sob Observação",
+      "emptyTitle": "Sua Lista de Desejos está Vazia",
+      "emptyDescription": "Pesquise os nossos artefactos e marque aqueles que ressoam com o seu estilo de curador para futura aquisição."
+    }
+  },
+  "orders": {
+    "orderNum": "Pedido #",
+    "recorded": "Registado:",
+    "investment": "Investimento",
+    "quantity": "Quantidade:",
+    "qty": "Qtd:",
+    "prepPhase": "Fase de Preparação Ativa",
+    "inTransit": "Em Trânsito:",
+    "logisticsData": "Dados Logísticos Completos",
+    "warehouse": "Meu Armazém",
+    "operation": "Operação #",
+    "logged": "Registado:",
+    "verifiedAcquisition": "Aquisição Verificada",
+    "trackShipment": "RASTREAR ENVIO",
+    "exportInvoice": "EXPORTAR FATURA",
+    "lifecycle": "Ciclo de Vida de Implantação",
+    "paymentConfirmed": "Pagamento Confirmado",
+    "fundsVerified": "Fundos de aquisição verificados e seguros.",
+    "prepPhaseActive": "Fase de Preparação",
+    "isolationNote": "Isolamento da figura e espuma protetora no lugar.",
+    "shipped": "Enviado",
+    "logisticsSuccess": "Logística assegurada e em trânsito para o destino.",
+    "delivered": "Entregue",
+    "acquired": "Obra-prima adquirida e segura.",
+    "deploymentZone": "Zona de Implantação",
+    "carrierProtocol": "Protocolo da Transportadora",
+    "class": "Classe: Rastreio Registado",
+    "settlement": "Liquidação",
+    "transactionSecure": "Transação Segura",
+    "discrepancy": "Discrepância Logística?",
+    "contactHQ": "CONTACTAR QG DE IMPLANTAÇÃO",
+    "sku": "SKU:",
+    "backToWarehouse": "Voltar ao Armazém",
+    "reportTitle": "Relatório Logístico Completo",
+    "paid": "Pago",
+    "processing": "Processando",
+    "cancelled": "Cancelado",
+    "pConfirmed": "Pagamento Confirmed",
+    "pConfirmedDesc": "Fundos de aquisição verificados e seguros.",
+    "prepPhaseDesc": "Isolamento da figura e integração de espuma protetora.",
+    "inTransitDesc": "Saída do cofre do armazém. Entrega à logística.",
+    "manifest": "Manifesto de Ativos",
+    "itemDetails": "Detalhes do Item",
+    "subtotal": "Subtotal da Aquisição",
+    "shipping": "Sobretaxa de Logística",
+    "totalContribution": "Contribuição Total do Portfólio"
+  },
+  "footer": {
+    "logistics": "Logística de Ofício Artesanal Global Ativada",
+    "rights": "© 2026 5iveArts Collector Series. Todos os direitos reservados.",
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "description": "Estúdio boutique de figuras premium em resina pintadas à mão e impressas em 3D. Enviamos coleccionáveis de qualidade museumógica para entusiastas de todo o mundo a partir da nossa oficina em Palermo.",
+    "seoAbout": "A 5iveArts é um estúdio boutique de primeira linha especializado na criação de figuras premium em resina impressas em 3D e coleccionáveis pintados à mão. A nossa série artesanal foca-se no detalhe extremo, utilizando alturas de camada de 0,025 mm para garantir qualidade museológica em cada figura que produzimos. Com uma rede de envio global, servimos uma comunidade dedicada de coleccionadores que valorizam a interseção entre precisão industrial e arte artesanal. Cada peça da nossa série é única, finalizada com aerografia profissional e vernizes resistentes aos UV para proteger o seu investimento durante anos."
+  },
+  "shipping": {
+    "protocol": "Protocolo de Logística",
+    "title": "Envio Global",
+    "subtitle": "Entrega segura, com seguro e rastreada para cada obra-prima da colecção.",
+    "insuredTitle": "Cumprimento com Seguro",
+    "insuredText": "Cada figura é embalada utilizando espuma de alta densidade personalizada e caixas de coleccionador de parede dupla. Seguramos cada envio contra perda ou dano durante o trânsito.",
+    "freeTierTitle": "Nível de Envio Gratuito",
+    "freeTierText": "Recompensamos coleccionadores sérios. Todos os pedidos acima de {amount} qualificam-se automaticamente para ENVIO PADRÃO GRATUITO, independentemente da sua localização.",
+    "dynamicTitle": "Logística Dinâmica",
+    "dynamicText": "Utilizamos o Packlink PRO para fornecer taxas de envio com seguro em tempo real de transportadoras premium como UPS, DHL e FedEx. A sua taxa específica é calculada durante a finalização da compra com base na sua localização exata e nas dimensões da encomenda.",
+    "zonesTitle": "Tempos de Trânsito Estimados",
+    "region": "Região",
+    "standard": "Padrão",
+    "express": "Expresso",
+    "estTime": "Tempo Est.",
+    "trackingInfo": "Rastreio Global ao Vivo Fornecido em Todos os Pedidos",
+    "italy": "Itália",
+    "eu": "União Europeia",
+    "uk": "Reino Unido",
+    "global": "Global / Resto do Mundo",
+    "days1_3": "1-3 Dias",
+    "days3_5": "3-5 Dias",
+    "days4_7": "4-7 Dias",
+    "days7_14": "7-14 Dias"
+  },
+  "hero": {
+    "slides": [
+      {
+        "tagline": "Precisão em Resina Premium",
+        "headline": "Obras-primas",
+        "headlineHighlight": "Impressas em 3D",
+        "subtext": "Figuras em resina de alta resolução com 0,025 mm de altura de camada — detalhe de qualidade museológica em cada peça artesanal."
+      },
+      {
+        "tagline": "Detalhe Artesanal Feito à Mão",
+        "headline": "Especialmente",
+        "headlineHighlight": "Pintado à Mão",
+        "subtext": "Sombreado único e técnicas de aerografia profissionais dão vida às suas personagens favoritas, uma criação única de cada vez."
+      }
+    ],
+    "cta": "Comprar Agora",
+    "trust": {
+      "quality": "Qualidade Certificada",
+      "handFinished": "Acabado à Mão",
+      "logistics": "Logística Global"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "Pintado à Mão",
+      "text": "Cada figura é pintada à mão com acrílicos profissionais"
+    },
+    "threeDPrinted": {
+      "title": "Impresso em 3D",
+      "text": "Resolução de camada de 0,025 mm"
+    },
+    "fastShipping": {
+      "title": "Envio Rápido",
+      "text": "Entrega global com seguro e rastreio"
+    },
+    "secureCheckout": {
+      "title": "Checkout Seguro",
+      "text": "Pagamentos processados de forma segura pelo Stripe"
+    }
+  },
+  "ctaSection": {
+    "heading": "Pronto para ter uma peça de arte?",
+    "subtext": "Explore a colecção completa de figuras de ação pintadas à mão e impressas em 3D. Cada uma é feita por encomenda com cuidado.",
+    "button": "Explorar a Loja"
+  },
+  "privacy_policy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última atualização: Março de 2026",
+    "sections": [
+      {
+        "title": "1. Informações que Recolhemos",
+        "content": "Recolhemos informações que nos fornece diretamente, incluindo o seu nome, endereço de e-mail, endereço de envio e informações de pagamento quando faz uma compra."
+      },
+      {
+        "title": "2. Como Usamos as Suas Informações",
+        "content": "Usamos as informações que recolhemos para processar transações, enviar confirmações de pedidos e comunicar consigo sobre os seus pedidos."
+      },
+      {
+        "title": "3. Partilha de Informações",
+        "content": "Não vendemos nem partilhamos as suas informações pessoais com terceiros, exceito conforme necessário para cumprir os seus pedidos e processar pagamentos."
+      },
+      {
+        "title": "4. Segurança dos Dados",
+        "content": "Implementamos medidas de segurança adequadas para proteger as suas informações pessoais contra acesso ou divulgação não autorizados."
+      },
+      {
+        "title": "5. Contacte-nos",
+        "content": "Se tiver alguma dúvida sobre esta Política de Privacidade, contacte-nos através de privacy@5ivearts.com"
+      }
+    ]
+  },
+  "terms_of_service": {
+    "title": "Termos de Serviço",
+    "lastUpdated": "Última atualização: Março de 2026",
+    "sections": [
+      {
+        "title": "1. Aceitação dos Termos",
+        "content": "Ao aceder e utilizar este website, aceita e concorda em estar vinculado pelos termos e disposições deste acordo."
+      },
+      {
+        "title": "2. Produtos e Serviços",
+        "content": "Todos os produtos exibidos neste website são coleccionáveis impressos em 3D. Note que podem ocorrer pequenas variações na cor e acabamento devido à natureza dos processos de impressão 3D."
+      },
+      {
+        "title": "3. Preços e Pagamento",
+        "content": "Os preços estão sujeitos a alterações sem aviso prévio. Reservamo-nos o direito de recusar ou cancelar quaisquer pedidos de produtos listados a um preço incorreto."
+      },
+      {
+        "title": "4. Envio e Entrega",
+        "content": "Os custos de envio e os tempos de entrega variam de acordo com a localização. Não nos responsabilizamos por atrasos causados pela alfândega ou problemas da transportadora."
+      },
+      {
+        "title": "5. Propriedade Intelectual",
+        "content": "Todo o conteúdo deste website, incluindo designs e imagens de produtos, está protegido por direitos de propriedade intelectual."
+      },
+      {
+        "title": "6. Contacte-nos",
+        "content": "Se tiver alguma dúvida sobre estes Termos, contacte-nos através de legal@5ivearts.com"
+      }
+    ]
+  },
+  "cookie_banner": {
+    "tag": "Unidade de Fotopolímero",
+    "title": "Estamos a curar cookies locais.",
+    "description": "O nosso sistema utiliza cookies essenciais para estabilizar o desempenho do site e analisar padrões de tráfego camada por camada.",
+    "accept": "Aceitar Lote",
+    "preferences": "Preferências do Sistema"
+  }
+}

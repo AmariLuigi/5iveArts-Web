@@ -1,0 +1,502 @@
+{
+  "nav": {
+    "products": "プロダクト",
+    "faq": "よくある質問",
+    "shipping": "配送について",
+    "cart": "カート",
+    "login": "ログイン",
+    "admin": "管理",
+    "discovery": "ディスカバリー",
+    "terminal": "ターミナルアクセス",
+    "regional": "リージョナル・プロジェクション",
+    "switchRegion": "地域を切り替える",
+    "vault": "ヴォルト (保管庫)",
+    "warehouse": "ウェアハウス (倉庫)",
+    "access": "アクセス",
+    "wishlist": "ウィッシュリスト"
+  },
+  "home": {
+    "title": "5iveArts - 職人技の極致",
+    "hero_title": "職人技の極致",
+    "hero_subtitle": "すべてのフィギュアは、情熱を込めて造形され、細部までこだわり抜いた唯一無二の作品です。",
+    "cta_button": "コレクションを見る",
+    "featured_products": "注目のプロダクト",
+    "explore_all": "すべて見る"
+  },
+  "homepage": {
+    "featuredHeading": "プレミアム3D樹脂フィギュアコレクション",
+    "viewAll": "すべての作品を見る",
+    "testimonialsHeading": "世界中のコレクターからの信頼",
+    "reviewsLabel": "認証済みレビュー",
+    "collectorChoice": "コレクターズ・チョイス",
+    "premiumSeries": "プレミアム・シリーズ",
+    "collectorsVault": "コレクターズ・ヴォルト",
+    "satisfactionRate": "満足度",
+    "countriesServed": "対応国数",
+    "yearsExperience": "経験年数"
+  },
+  "products": {
+    "title": "モデル・アーセナル",
+    "subtitle": "ハンドメイドのフィギュアコレクションをご覧ください。",
+    "all": "すべての傑作",
+    "categories": "カテゴリー",
+    "filter": "フィルター",
+    "viewDetails": "詳細を見る",
+    "addToCart": "カートに追加",
+    "scale": "スケール",
+    "finish": "仕上げ",
+    "painted": "手塗り (ハンドペイント)",
+    "raw": "未塗装樹脂 (Raw Resin)",
+    "description": "説明",
+    "shippingInfo": "配送・手数料",
+    "customerReviews": "カスタマーレビュー",
+    "specifications": "製品仕様",
+    "returnPolicy": "返品ポリシー",
+    "securePayment": "安全な決済",
+    "insuredShipping": "保険付き配送",
+    "price": "価格",
+    "details": "詳細を見る",
+    "startingFrom": "〜",
+    "deploymentConfig": "デプロイメント構成",
+    "selectPrototype": "プロトタイプと仕上げを選択"
+  },
+  "cart": {
+    "title": "ヴォルト・カート",
+    "empty": "カートは空です",
+    "emptyMessage": "まだフィギュアが追加されていないようです。",
+    "returnToShop": "ショップに戻る",
+    "subtotal": "小計",
+    "shippingCost": "配送料",
+    "total": "合計",
+    "checkout": "レジに進む",
+    "remove": "削除",
+    "item": "点",
+    "items": "点",
+    "secureCheckout": "セキュア・チェックアウト",
+    "insuredShipping": "保険付きグローバル配送",
+    "thirtyDayReturns": "30日間返品保証",
+    "orderSummary": "注文内容の要約",
+    "calculatedAtCheckout": "購入手続き時に計算",
+    "estimatedTotal": "推定合計額",
+    "proceedToCheckout": "購入手続きへ",
+    "continueShopping": "買い物を続ける",
+    "freeShipping": "{amount} 以上のお買い上げで送料無料",
+    "shipping": "配送",
+    "emptyArsenal": "アーセナルは空です",
+    "checkoutFlow": "チェックアウトフロー",
+    "yourCart": "あなたのカート",
+    "clearCart": "カートを空にする",
+    "returnShop": "ストアに戻る",
+    "grandTotal": "総合計",
+    "calculatingLogistics": "物流コスト計算中..."
+  },
+  "auth": {
+    "verification": "本人確認",
+    "terminal": "アクセス・ターミナル",
+    "portal": "5iveArts コレクター専用ポータル",
+    "login": "ログイン",
+    "register": "新規登録",
+    "emailLabel": "ニューラル・リンク (メール)",
+    "passwordLabel": "セキュリティ・キー (パスワード)",
+    "verifyBtn": "セッションを確認",
+    "registerBtn": "接続を確立",
+    "tunnel": "エンドツーエンド暗号化トンネル",
+    "guidelines": "ターミナルにアクセスすることで、プロトコル・ガイドラインに同意したものとみなされます",
+    "backHome": "HQに戻る",
+    "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
+    "title": "ウェアハウス・アクセス",
+    "subtitle": "資産および物流レポートにアクセスします。",
+    "loginBtn": "接続を確立"
+  },
+  "faq": {
+    "infoCenter": "インフォメーション・センター",
+    "title": "FAQ & コンタクト",
+    "subtitle": "制作プロセス、物流、コレクター・プロトコルについて必要なすべての情報。",
+    "questions": [
+      {
+        "q": "フィギュアはどのように作られていますか？",
+        "a": "すべてのフィギュアは、工業用グレードの樹脂を使用し、高解像度の3Dプリント（層の厚さ0.025mm）から始まります。硬化後、アーティストが数時間をかけてプロ仕様のアクリル塗料とエアブラシ技術を用いて手作業で塗装し、最後にUV耐性のある博物館品質のニスで仕上げます。"
+      },
+      {
+        "q": "海外発送は可能ですか？",
+        "a": "はい！イタリアのスタジオから世界中のコレクターへ発送しています。保険付きのグローバル・キャリアを使用して、傑作が安全に届くことを保証します。"
+      },
+      {
+        "q": "制作期間はどのくらいですか？",
+        "a": "各作品は受注生産または手作業で仕上げられるため、発送まで7〜14日間の制作期間をいただいております。芸術に妥協はありません。"
+      },
+      {
+        "q": "返品ポリシーは？",
+        "a": "届いた商品が破損していた場合、または説明と著しく異なる場合は、30日間の返品を承ります。一点一点手作りのため、「心変わり」による返品は受け付けておりません。"
+      }
+    ],
+    "stillHaveQuestions": "まだ質問がありますか？",
+    "curatorsMessage": "キュレーターが個別注文やプロトコル・サポートについてお答えします。",
+    "emailUs": "メールで連絡",
+    "liveChat": "ライブチャット",
+    "offline": "オフライン"
+  },
+  "errors": {
+    "invalidLogin": "アクセスが拒否されました。セキュリティ・キーと本人確認が正しいか確認してください。",
+    "confirmationSent": "確認メールを送信しました。メールを確認してターミナルをアクティベートしてください。",
+    "stripeLoadError": "支払いフォームの読み込みに失敗しました。ページを更新して再試行してください。",
+    "unexpectedError": "予期しないエラーが発生しました。もう一度お試しください。",
+    "signupFailed": "登録に失敗しました。もう一度お試しください。",
+    "genericError": "問題が発生しました",
+    "verifyStatusError": "支払いステータスを確認できませんでした。確認メールが届いている場合は、注文は正常に処理されています。",
+    "maxFeatured": "最大3つまでです。"
+  },
+  "success": {
+    "orderConfirmed": "注文完了",
+    "thankYou": "5iveArtsをご利用いただきありがとうございます",
+    "confEmailSent": "確認メールを送信しました：",
+    "shippingNote": "フィギュアは丁寧に梱包され、追跡番号付きで発送されます。",
+    "logisticsLog": "セキュリティ・物流オペレーションログ",
+    "syncComplete": "同期完了 / メール送信済み",
+    "resendEmail": "メールが届きませんか？再送信",
+    "paymentVerified": "支払いが確認されました。",
+    "fulfillmentNote": "現在、専用のフォーム材を使用して梱包準備中です。",
+    "vaultEstablished": "ヴォルトが構成されました",
+    "orderLinked": "注文は安全なアカウントに永続的にリンクされました。",
+    "goWarehouse": "マイ・ウェアハウスへ",
+    "secureCollection": "コレクションを保護する",
+    "createAccount": "アカウントを作成",
+    "securing": "保護中...",
+    "returnHQ": "HQに戻る"
+  },
+  "checkout": {
+    "gateway": "セキュア・ゲートウェイ",
+    "checkout": "チェックアウト",
+    "chooseSaved": "保存されたルートにアクセス",
+    "useThis": "ルートを承認",
+    "newAddress": "新しいプロトコルを確立",
+    "saveToVault": "この配送ルートをセキュア・ヴォルトに登録する",
+    "verifying": "セキュア・トランザクションを確認中…",
+    "loadingForm": "支払いプロトコルを読み込み中...",
+    "processing": "支払いを処理中…",
+    "payNow": "支払いを承認",
+    "securedBy": "Stripe Intelligence による保護",
+    "encryptionNote": "通信は RSA-4096 および AES-256 規格で暗号化されています。サーバーに生の決済データを保存することはありません。",
+    "deliveryStep": "1. 配送先",
+    "shippingStep": "2. 配送方法",
+    "paymentStep": "3. 支払い",
+    "recipientName": "受取人氏名 *",
+    "collectorPlaceholder": "コレクター名",
+    "emailAddress": "メールアドレス *",
+    "vault": "ヴォルト",
+    "streetAddress": "住所 *",
+    "addressLine1": "住所 1",
+    "suite": "アパート・部屋番号・建物名",
+    "optional": "任意",
+    "postcode": "郵便番号 *",
+    "zipPlaceholder": "郵便番号",
+    "selectCountryFirst": "(先に国を選択してください)",
+    "city": "市区町村 *",
+    "detecting": "(検出中…)",
+    "autoFilled": "(自動入力)",
+    "enterManually": "(手動で入力)",
+    "state": "都道府県 *",
+    "phoneLabel": "電話番号 *",
+    "invalidFormat": "(形式が正しくありません)",
+    "validNumber": "(有効な番号)",
+    "includeCode": "(国番号 + を含める)",
+    "continueBtn": "配送オプションへ",
+    "recalculating": "グローバル物流を再計算中…",
+    "backBtn": "配送先入力に戻る",
+    "changeShipping": "配送方法を変更",
+    "connecting": "セキュア決済ゲートウェイに接続中。PCI-DSSプロトコルを検証しています...",
+    "syncing": "トランザクション・レイヤーの同期",
+    "orderReview": "注文内容の確認",
+    "subtotal": "商品の小計",
+    "logistics": "物流・手数料",
+    "tbd": "未定",
+    "grandTotal": "総合計",
+    "initGateway": "ゲートウェイを初期化中…",
+    "proceedBtn": "支払いに進む",
+    "emptyArsenalTitle": "アーセナルは空です",
+    "emptyArsenalDesc": "コレクションにフィギュアがまだ追加されていないようです。",
+    "returnShop": "ストアに戻る",
+    "deliveryEstimate": "お届け予定：",
+    "businessDay": "営業日",
+    "businessDays": "営業日"
+  },
+  "product_detail": {
+    "handPaintedTag": "ハンドペイント & 3Dプリント",
+    "customerReviews": "カスタマーレビュー",
+    "selectScale": "スケールを選択 (約 高さ)",
+    "selectFinish": "仕上げを選択",
+    "handPainted": "手塗り (ハンドペイント)",
+    "rawKit": "ベースキット (グレー樹脂)",
+    "museumGrade": "博物館品質の仕上げ",
+    "primed": "塗装準備済み",
+    "description": "説明",
+    "specifications": "製品の特徴と仕様",
+    "encryptedCheckout": "Stripeによる暗号化決済",
+    "insuredShipping": "保険付きグローバル配送",
+    "confirmed": "確認済み",
+    "addToCollection": "アーセナルに追加",
+    "instantCheckout": "今すぐ購入",
+    "features": [
+      "高解像度・工業用グレード樹脂",
+      "プロの職人によるハンドペイント",
+      "UV耐性のある博物館仕様ニス",
+      "精密なディテール (0.025 mm)"
+    ],
+    "readMore": "続きを読む",
+    "readLess": "表示を減らす"
+  },
+  "trust": [
+    {
+      "label": "安全な決済",
+      "sub": "Stripeによる保護"
+    },
+    {
+      "label": "保険付きグローバル配送",
+      "sub": "世界中へお届け"
+    },
+    {
+      "label": "手作り工芸品",
+      "sub": "一点ものの価値"
+    },
+    {
+      "label": "30日間返品保証",
+      "sub": "安心のサポート"
+    }
+  ],
+  "account": {
+    "portal": "セキュア・ウェアハウス・ポータル",
+    "title": "マイアカウント",
+    "databaseFor": "データベース・アクセス：",
+    "security": "セキュリティ",
+    "decommission": "セッションを終了",
+    "activeAssets": "アクティブ資産",
+    "totalAcquisitions": "登録された総取得数",
+    "status": "アカウント・ステータス",
+    "verifiedCollector": "認証済みコレクター",
+    "level1 Encryption": "レベル1 暗号化",
+    "history": "取得履歴",
+    "verificationRequired": "認証が必要です",
+    "verificationDesc": "すべての機能にアクセスするために、本人確認を行ってください",
+    "resendLink": "リンクを再送信",
+    "neuralLinkError": "ニューラル・リンク・エラー",
+    "syncFailed": "セントラル・ヴォルトとの同期に失敗しました。",
+    "noAssets": "ヴォルトに登録された資産はありません。",
+    "browseCollection": "コレクションを見る",
+    "recorded": "記録日：",
+    "investment": "投資額",
+    "prepPhaseActive": "準備フェーズ",
+    "inTransit": "配送中：",
+    "fullLogistics": "詳細な物流データ",
+    "settings": {
+      "title": "セキュリティ・ヴォルト",
+      "subtitle": "コレクターIDとアクセスプロトコルを管理します。",
+      "identityVerification": "本人確認",
+      "verified": "認証済み",
+      "pending": "確認待ち",
+      "guestProtected": "現在のアクセスは「ゲスト保護」状態です。一部の配送データには本人確認が必要です。",
+      "requestLink": "新しい認証リンクをリクエスト",
+      "addresses": "配送先ルート",
+      "addAddress": "新しいプロトコルを登録",
+      "noAddresses": "ヴォルトに登録された配送先はありません。",
+      "default": "メインルート",
+      "setDefault": "デフォルトに設定",
+      "edit": "編集",
+      "delete": "削除",
+      "confirmDelete": "この配送ルートを削除してもよろしいですか？"
+    },
+    "wishlist": {
+      "title": "キュレーター・ウィッシュリスト",
+      "subtitle": "監視対象のアーカイブ",
+      "emptyTitle": "ウィッシュリストは空です",
+      "emptyDescription": "アーカイブから、あなたのスタイルに合った作品を見つけて、将来の取得のためにマークしてください。"
+    }
+  },
+  "orders": {
+    "orderNum": "注文番号 #",
+    "recorded": "記録日：",
+    "investment": "投資額",
+    "quantity": "数量：",
+    "qty": "数：",
+    "prepPhase": "準備フェーズ進行中",
+    "inTransit": "配送中：",
+    "logisticsData": "詳細な物流データ",
+    "warehouse": "マイ・ウェアハウス",
+    "operation": "オペレーション #",
+    "logged": "ログ記録：",
+    "verifiedAcquisition": "認証済み取得",
+    "trackShipment": "配送状況を追跡",
+    "exportInvoice": "請求書を出力",
+    "lifecycle": "デプロイメント・ライフサイクル",
+    "paymentConfirmed": "支払い確認済み",
+    "fundsVerified": "資金が確認され、保護されました。",
+    "prepPhaseActive": "準備フェーズ",
+    "isolationNote": "フィギュアの隔離と保護材の構成が完了しました。",
+    "shipped": "発送済み",
+    "logisticsSuccess": "物流が確保され、目的地に向けて出発しました。",
+    "delivered": "配達完了",
+    "acquired": "傑作が正常に取得され、保護されました。",
+    "deploymentZone": "デプロイメント・ゾーン",
+    "carrierProtocol": "キャリア・プロトコル",
+    "class": "クラス：追跡記録あり",
+    "settlement": "決済状況",
+    "transactionSecure": "トランザクション保護済み",
+    "discrepancy": "物流に不備がありますか？",
+    "contactHQ": "HQに連絡",
+    "sku": "SKU:",
+    "backToWarehouse": "ウェアハウスに戻る",
+    "reportTitle": "詳細物流レポート",
+    "paid": "支払い済み",
+    "processing": "処理中",
+    "cancelled": "キャンセル",
+    "pConfirmed": "支払い確認済み",
+    "pConfirmedDesc": "資金が確認され、保護されました。",
+    "prepPhaseDesc": "フィギュアの隔離および保護フォームの統合。",
+    "inTransitDesc": "ウェアハウス・ヴォルトを出発。物流へ引き渡し。",
+    "manifest": "資産マニフェスト",
+    "itemDetails": "商品詳細",
+    "subtotal": "取得小計",
+    "shipping": "物流手数料",
+    "totalContribution": "ポートフォリオ総計"
+  },
+  "footer": {
+    "logistics": "アルチザン・グローバル・ロジスティクス稼働中",
+    "rights": "© 2026 5iveArts Collector Series. All rights reserved.",
+    "privacy": "プライバシー",
+    "terms": "利用規約",
+    "description": "プレミアムなハンドペイントと3Dプリント樹脂フィギュアを制作するブティックスタジオ。パレルモの工房から、世界中のコレクターへ博物館品質の傑作をお届けします。",
+    "seoAbout": "5iveArtsは、プレミアムな3Dプリントフィギュアとハンドペイントのコレクターズアイテムの制作を専門とする、業界をリードするブティックスタジオです。私たちのアルチザン・シリーズは、0.025mmの層の厚さを使用して、製造するすべてのフィギュアに博物館級の品質を保証することに重点を置いています。グローバルな配送ネットワークを通じて、産業的な精密さと手仕事の融合を大切にする熱心なコレクターコミュニティに貢献しています。一点一点がユニークであり、プロフェッショナルなエアブラシ仕上げとUV耐性ニスで仕上げられています。"
+  },
+  "shipping": {
+    "protocol": "ロジスティクス・プロトコル",
+    "title": "世界中へお届け",
+    "subtitle": "コレクションのすべての傑作を、安全・確実・追跡可能にお届けします。",
+    "insuredTitle": "保険付きのお届け",
+    "insuredText": "すべてのフィギュアは、専用の高密度フォームと二重構造のコレクター級ボックスを使用して梱包されます。配送中の紛失や破損に備え、すべての配送に保険を掛けています。",
+    "freeTierTitle": "送料無料の条件",
+    "freeTierText": "ハイエンド・コレクターを大切にしています。{amount} 以上のご注文は、お住まいの地域に関わらず、自動的に「無料標準配送」の対象となります。",
+    "dynamicTitle": "ダイナミック・ロジスティクス",
+    "dynamicText": "Packlink PROを使用して、UPS、DHL、FedExなどのプレミアム・キャリアからリアルタイムの配送見積もりを提供します。送料は、お届け先とパッケージのサイズに基づき、チェックアウト時に計算されます。",
+    "zonesTitle": "お届けまでの目安",
+    "region": "地域",
+    "standard": "標準",
+    "express": "エクスプレス",
+    "estTime": "目安日数",
+    "trackingInfo": "すべてのご注文にリアルタイムの追跡サービスを提供します",
+    "italy": "イタリア",
+    "eu": "欧州連合 (EU)",
+    "uk": "イギリス",
+    "global": "グローバル / その他の国々",
+    "days1_3": "1-3日",
+    "days3_5": "3-5日",
+    "days4_7": "4-7日",
+    "days7_14": "7-14日"
+  },
+  "hero": {
+    "slides": [
+      {
+        "tagline": "プレミアム樹脂の精密さ",
+        "headline": "3Dプリント",
+        "headlineHighlight": "の傑作",
+        "subtext": "高解像度樹脂、層の厚さ0.025mm。一点一点手作業で仕上げられた博物館品質のフィギュア。"
+      },
+      {
+        "tagline": "熟練のアルチザン・ディテール",
+        "headline": "プロによる",
+        "headlineHighlight": "ハンドペイント",
+        "subtext": "独自の陰影表現とエアブラシ技術が、お気に入りのキャラクターに命を吹き込みます。すべてが唯一無二の作品です。"
+      }
+    ],
+    "cta": "今すぐ購入",
+    "trust": {
+      "quality": "認定された品質",
+      "handFinished": "手作業による仕上げ",
+      "logistics": "グローバル物流"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "ハンドペイント",
+      "text": "職人がプロ仕様のアクリル塗料で一点一点手塗り"
+    },
+    "threeDPrinted": {
+      "title": "3Dプリント",
+      "text": "0.025mm解像度（層の厚さ）"
+    },
+    "fastShipping": {
+      "title": "迅速な配送",
+      "text": "追跡・保険付きのグローバル配送"
+    },
+    "secureCheckout": {
+      "title": "安全な決済",
+      "text": "Stripeにより安全に決済が処理されます"
+    }
+  },
+  "ctaSection": {
+    "heading": "アート作品を手にする準備はできましたか？",
+    "subtext": "ハンドペイントと3Dプリントのアクションフィギュア・コレクションをご覧ください。一つひとつ心を込めて制作いたします。",
+    "button": "ストアへ"
+  },
+  "privacy_policy": {
+    "title": "プライバシーポリシー",
+    "lastUpdated": "最終更新日: 2026年3月",
+    "sections": [
+      {
+        "title": "1. 収集する情報",
+        "content": "購入時に提供される氏名、メールアドレス、配送先住所、決済情報などを収集します。"
+      },
+      {
+        "title": "2. 情報の利用目的",
+        "content": "取引の処理、注文確認の送付、および注文に関する連絡のために利用します。"
+      },
+      {
+        "title": "3. 情報の共有",
+        "content": "注文の履行や決済処理に必要な場合を除き、個人情報を第三者に販売または共有することはありません。"
+      },
+      {
+        "title": "4. データセキュリティ",
+        "content": "個人情報を不正アクセスや開示から守るために、適切なセキュリティ対策を講じています。"
+      },
+      {
+        "title": "5. お問い合わせ",
+        "content": "プライバシーポリシーに関するご質問は、privacy@5ivearts.com までご連絡ください。"
+      }
+    ]
+  },
+  "terms_of_service": {
+    "title": "利用規約",
+    "lastUpdated": "最終更新日: 2026年3月",
+    "sections": [
+      {
+        "title": "1. 規約の承諾",
+        "content": "本サイトを利用することで、これらの規約に従うことに同意したものとみなされます。"
+      },
+      {
+        "title": "2. プロダクトとサービス",
+        "content": "サイト上の商品は3Dプリントによるコレクターズアイテムです。製法の特性上、色や仕上げに若干の個体差が生じる場合があります。"
+      },
+      {
+        "title": "3. 価格と支払い",
+        "content": "価格は予告なく変更される場合があります。誤った価格で表示された商品の注文をキャンセルする権利を留保します。"
+      },
+      {
+        "title": "4. 配送",
+        "content": "配送費と期間は地域によって異なります。税関による遅延や配送業者の問題については責任を負いかねます。"
+      },
+      {
+        "title": "5. 知的財産",
+        "content": "デザインや写真を含む本サイトのすべてのコンテンツは、知的財産権により保護されています。"
+      },
+      {
+        "title": "6. お問い合わせ",
+        "content": "利用規約に関するご質問は、legal@5ivearts.com までご連絡ください。"
+      }
+    ]
+  },
+  "cookie_banner": {
+    "tag": "フォトポリマー・ユニット",
+    "title": "ローカル・クッキーを硬化中。",
+    "description": "システムは、サイトの安定性とトラフィック分析（レイヤーごと）のために必須のクッキーを使用しています。",
+    "accept": "バッチを承諾",
+    "preferences": "システム設定"
+  }
+}

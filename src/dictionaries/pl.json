@@ -1,0 +1,502 @@
+{
+  "nav": {
+    "products": "Produkty",
+    "faq": "FAQ",
+    "shipping": "Wysyłka",
+    "cart": "Koszyk",
+    "login": "Zaloguj",
+    "admin": "Admin",
+    "discovery": "Odkrywanie",
+    "terminal": "Dostęp do Terminalu",
+    "regional": "Projekcja Regionalna",
+    "switchRegion": "Zmień Region",
+    "vault": "Skarbiec",
+    "warehouse": "Magazyn",
+    "access": "Dostęp",
+    "wishlist": "Lista Życzeń"
+  },
+  "home": {
+    "title": "5iveArts - Rzemieślnicza Precyzja",
+    "hero_title": "RZEMIEŚLNICZA PRECYZJA",
+    "hero_subtitle": "Każda figurka to unikalne dzieło, rzeźbione z pasją i wykończone z drobiazgową dbałością.",
+    "cta_button": "EKSPLORUJ KOLEKCJĘ",
+    "featured_products": "WYRÓŻNIONE PRODUKTY",
+    "explore_all": "Zobacz Wszystko"
+  },
+  "homepage": {
+    "featuredHeading": "Kolekcje Figurek żywicznych Premium 3D",
+    "viewAll": "Wszystkie Dzieła",
+    "testimonialsHeading": "Zaufanie Kolekcjonerów z Całego Świata",
+    "reviewsLabel": "Zweryfikowane Recenzje",
+    "collectorChoice": "Wybór Kolekcjonera",
+    "premiumSeries": "Seria Premium",
+    "collectorsVault": "Skarbiec Kolekcjonera",
+    "satisfactionRate": "Wskaźnik Satysfakcji",
+    "countriesServed": "Obsługiwane Kraje",
+    "yearsExperience": "Lata Doświadczenia"
+  },
+  "products": {
+    "title": "Arsenał Modeli",
+    "subtitle": "Przeglądaj naszą kolekcję ręcznie wykonanych figurek.",
+    "all": "Wszystkie Arcydzieła",
+    "categories": "Kategorie",
+    "filter": "Filtruj",
+    "viewDetails": "ZOBACZ SZCZEGÓŁY",
+    "addToCart": "Dodaj do Koszyka",
+    "scale": "Skala",
+    "finish": "Wykończenie",
+    "painted": "Ręcznie malowane",
+    "raw": "Surowa żywica",
+    "description": "Opis",
+    "shippingInfo": "Wysyłka i Obsługa",
+    "customerReviews": "Recenzje Klientów",
+    "specifications": "Specyfikacja",
+    "returnPolicy": "Polityka Zwrotów",
+    "securePayment": "Bezpieczna Płatność",
+    "insuredShipping": "Ubezpieczona Wysyłka",
+    "price": "Cena",
+    "details": "Zobacz Szczegóły",
+    "startingFrom": "Od",
+    "deploymentConfig": "Konfiguracja Wdrożenia",
+    "selectPrototype": "Wybierz Prototyp i Wykończenie"
+  },
+  "cart": {
+    "title": "Koszyk Skarbca",
+    "empty": "Twój koszyk jest pusty",
+    "emptyMessage": "Wygląda na to, że nie dodałeś jeszcze żadnych figurek.",
+    "returnToShop": "Wróć do Sklepu",
+    "subtotal": "Suma częściowa",
+    "shippingCost": "Wysyłka",
+    "total": "Suma",
+    "checkout": "Przejdź do Płatności",
+    "remove": "Usuń",
+    "item": "produkt",
+    "items": "produkty",
+    "secureCheckout": "Bezpieczne Płatności",
+    "insuredShipping": "Ubezpieczona Wysyłka Globalna",
+    "thirtyDayReturns": "30-dniowe zwroty",
+    "orderSummary": "Podsumowanie Zamówienia",
+    "calculatedAtCheckout": "Obliczane przy płatności",
+    "estimatedTotal": "Szacowana Suma",
+    "proceedToCheckout": "Przejdź do Płatności",
+    "continueShopping": "Kontynuuj Zakupy",
+    "freeShipping": "Darmowa wysyłka powyżej {amount}",
+    "shipping": "Wysyłka",
+    "emptyArsenal": "Pusty Arsenał",
+    "checkoutFlow": "Proces Zakupowy",
+    "yourCart": "Twój Koszyk",
+    "clearCart": "Wyczyść Koszyk",
+    "returnShop": "Wróć do Sklepu",
+    "grandTotal": "Suma Całkowita",
+    "calculatingLogistics": "Obliczanie Logistyki..."
+  },
+  "auth": {
+    "verification": "Weryfikacja Tożsamości",
+    "terminal": "Terminal Dostępowy",
+    "portal": "Bezpieczny portal dla Kolekcjonerów 5iveArts",
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "emailLabel": "Łącze Neuralne (Email)",
+    "passwordLabel": "Klucz Bezpieczeństwa (Hasło)",
+    "verifyBtn": "Weryfikuj Sesję",
+    "registerBtn": "Nawiąż Połączenie",
+    "tunnel": "Tunel Szyfrowany End-to-End",
+    "guidelines": "Wchodząc do terminalu, akceptujesz nasze Wytyczne Protokołu",
+    "backHome": "Powrót do HQ",
+    "emailPlaceholder": "KOLEKCJONER@5IVEARTS.COM",
+    "title": "Dostęp do Magazynu",
+    "subtitle": "Uzyskaj dostęp do swoich zasobów i raportów logistycznych.",
+    "loginBtn": "Nawiąż Połączenie"
+  },
+  "faq": {
+    "infoCenter": "Centrum Informacyjne",
+    "title": "FAQ i Kontakt",
+    "subtitle": "Wszystko, co musisz wiedzieć o naszym procesie rzemieślniczym, logistyce i protokołach kolekcjonerskich.",
+    "questions": [
+      {
+        "q": "Jak powstają figurki?",
+        "a": "Każda figurka zaczyna jako wydruk 3D o wysokiej rozdzielczości (wysokość warstwy 0,025 mm) przy użyciu żywicy przemysłowej. Po utwardzeniu nasi artyści spędzają godziny na ręcznym malowaniu każdego elementu profesjonalnymi akrylami i technikami aerografu, kończąc proces nałożeniem muzealnej klasy lakieru odpornego na UV."
+      },
+      {
+        "q": "Czy wysyłacie za granicę?",
+        "a": "Tak! Wysyłamy z naszego studia we Włoszech do kolekcjonerów na całym świecie. Korzystamy z ubezpieczonych globalnych kurierów, aby zapewnić bezpieczną dostawę Twojego arcydzieła."
+      },
+      {
+        "q": "Ile trwa produkcja?",
+        "a": "Ponieważ każdy element jest tworzony na zamówienie lub ręcznie wykańczany, prosimy o zarezerwowanie 7-14 dni na produkcję przed wysyłką. Nie poganiamy sztuki."
+      },
+      {
+        "q": "Jaka jest wasza polityka zwrotów?",
+        "a": "Oferujemy 30-dniową politykę zwrotów dla produktów, które dotrą uszkodzone lub znacząco odbiegają od opisu. Ponieważ są to ręcznie wykonane dzieła sztuki, nie przyjmujemy zwrotów z powodu 'zmiany decyzji'."
+      }
+    ],
+    "stillHaveQuestions": "Nadal masz pytania?",
+    "curatorsMessage": "Nasi kuratorzy są gotowi do pomocy w sprawie niestandardowych zleceń i wsparcia protokołów.",
+    "emailUs": "Napisz do nas",
+    "liveChat": "Czat na Żywo",
+    "offline": "Offline"
+  },
+  "errors": {
+    "invalidLogin": "Dostęp Odmówiony. Upewnij się, że klucz bezpieczeństwa jest poprawny, a łącze tożsamości zweryfikowane.",
+    "confirmationSent": "Email potwierdzający został wysłany. Sprawdź skrzynkę, aby aktywować terminal.",
+    "stripeLoadError": "Nie udało się załadować formularza płatności. Odśwież stronę i spróbuj ponownie.",
+    "unexpectedError": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
+    "signupFailed": "Rejestracja nie powiodła się. Spróbuj ponownie.",
+    "genericError": "Coś poszło nie tak",
+    "verifyStatusError": "Nie udało nam się zweryfikować statusu płatności. Jeśli otrzymałeś email z potwierdzeniem, Twoje zamówienie jest przetwarzane.",
+    "maxFeatured": "Maksymalnie 3 dozwolone."
+  },
+  "success": {
+    "orderConfirmed": "Zamówienie Potwierdzone",
+    "thankYou": "Dziękujemy za zakup w 5iveArts",
+    "confEmailSent": "Email z potwierdzeniem został wysłany na adres",
+    "shippingNote": "Twoja figurka zostanie starannie zapakowana i wysłana z funkcją śledzenia na żywo.",
+    "logisticsLog": "Log Operacji Bezpieczeństwa i Logistyki",
+    "syncComplete": "Synchronizacja Zakończona i Email Wysłany",
+    "resendEmail": "Nie otrzymałeś emaila? Wyślij ponownie",
+    "paymentVerified": "Płatność zweryfikowana.",
+    "fulfillmentNote": "Twoja figurka jest teraz przygotowywana z użyciem niestandardowego wypełnienia piankowego.",
+    "vaultEstablished": "Skarbiec Ustanowiony",
+    "orderLinked": "Twoje zamówienie zostało na stałe powiązane z Twoim bezpiecznym kontem.",
+    "goWarehouse": "Przejdź do mojego Magazynu",
+    "secureCollection": "Zabezpiecz swoją Kolekcję",
+    "createAccount": "UTWÓRZ KONTO",
+    "securing": "Zabezpieczanie...",
+    "returnHQ": "Powrót do HQ"
+  },
+  "checkout": {
+    "gateway": "Bezpieczna Bramka",
+    "checkout": "Płatność",
+    "chooseSaved": "Dostęp do Zapisanych Tras",
+    "useThis": "Autoryzuj Trasę",
+    "newAddress": "Ustanów Nowy Protokół",
+    "saveToVault": "Zarejestruj tę trasę wysyłki w moim bezpiecznym skarbcu",
+    "verifying": "Weryfikacja Bezpiecznej Transakcji…",
+    "loadingForm": "Ładowanie protokołów płatności...",
+    "processing": "Przetwarzanie płatności…",
+    "payNow": "Autoryzuj Płatność",
+    "securedBy": "Zabezpieczone przez Stripe Intelligence",
+    "encryptionNote": "Twoje połączenie jest szyfrowane standardami RSA-4096 i AES-256. Nigdy nie przechowujemy surowych danych płatniczych na naszych serwerach.",
+    "deliveryStep": "1. Dostawa",
+    "shippingStep": "2. Wysyłka",
+    "paymentStep": "3. Płatność",
+    "recipientName": "Imię i Nazwisko Odbiorcy *",
+    "collectorPlaceholder": "Imię i Nazwisko Kolekcjonera",
+    "emailAddress": "Adres Email *",
+    "vault": "Skarbiec",
+    "streetAddress": "Adres *",
+    "addressLine1": "Linia Adresu 1",
+    "suite": "Apartament / Numer / Piętro",
+    "optional": "Opcjonalnie",
+    "postcode": "Kod Pocztowy *",
+    "zipPlaceholder": "Kod Pocztowy",
+    "selectCountryFirst": "(Najpierw wybierz kraj)",
+    "city": "Miasto *",
+    "detecting": "(Wykrywanie…)",
+    "autoFilled": "(Wypełnione automatycznie)",
+    "enterManually": "(Wpisz ręcznie)",
+    "state": "Województwo / Region *",
+    "phoneLabel": "Łącze Telefoniczne *",
+    "invalidFormat": "(Błędny format)",
+    "validNumber": "(Poprawny numer)",
+    "includeCode": "(Dołącz kod +)",
+    "continueBtn": "Przejdź do Opcji Wysyłki",
+    "recalculating": "Ponowne Obliczanie Logistyki Globalnej…",
+    "backBtn": "Powrót do Dostawy",
+    "changeShipping": "Zmień Opcję Wysyłki",
+    "connecting": "Łączenie z bezpieczną bramką płatności. Nawiązywanie połączenia z protokołami PCI-DSS...",
+    "syncing": "Synchronizacja Warstwy Transakcyjnej",
+    "orderReview": "Przegląd Zamówienia",
+    "subtotal": "Suma produktów",
+    "logistics": "Logistyka i Obsługa",
+    "tbd": "Do ustalenia",
+    "grandTotal": "Suma Całkowita",
+    "initGateway": "Inicjalizacja Bramki…",
+    "proceedBtn": "Przejdź do Płatności",
+    "emptyArsenalTitle": "Pusty Arsenał",
+    "emptyArsenalDesc": "Wygląda na to, że nie dodałeś jeszcze żadnych figurek do swojej kolekcji.",
+    "returnShop": "Wróć do Sklepu",
+    "deliveryEstimate": "Dostawa:",
+    "businessDay": "dzień roboczy",
+    "businessDays": "dni robocze"
+  },
+  "product_detail": {
+    "handPaintedTag": "Ręcznie Malowane i Drukowane 3D",
+    "customerReviews": "recenzje klientów",
+    "selectScale": "Wybierz Skalę (Ok. Wysokość)",
+    "selectFinish": "Wybierz Wykończenie",
+    "handPainted": "Ręcznie malowane",
+    "rawKit": "Zestaw Bazowy (Szara żywica)",
+    "museumGrade": "Wykończenie klasy muzealnej",
+    "primed": "Gotowe do malowania",
+    "description": "Opis",
+    "specifications": "Cechy i Specyfikacja",
+    "encryptedCheckout": "Szyfrowana Płatność przez Stripe",
+    "insuredShipping": "Ubezpieczona Wysyłka Globalna",
+    "confirmed": "Potwierdzone",
+    "addToCollection": "Dodaj do Arsenału",
+    "instantCheckout": "Kup Teraz",
+    "features": [
+      "Żywica Do Druku 3D o Wysokiej Rozdzielczości",
+      "Profesjonalne Rzemieślnicze Malowanie Ręczne",
+      "Muzealny Lakier Odporny na UV",
+      "Precyzyjne Oddanie Detali (0,025 mm)"
+    ],
+    "readMore": "Czytaj Więcej",
+    "readLess": "Czytaj Mniej"
+  },
+  "trust": [
+    {
+      "label": "Bezpieczne Płatności",
+      "sub": "Obsługiwane przez Stripe"
+    },
+    {
+      "label": "Ubezpieczona Wysyłka Globalna",
+      "sub": "Dostawa na całym świecie"
+    },
+    {
+      "label": "Rękodzieło",
+      "sub": "Każda figurka unikalna"
+    },
+    {
+      "label": "30-dniowe zwroty",
+      "sub": "Bezproblemowo"
+    }
+  ],
+  "account": {
+    "portal": "Bezpieczny Portal Magazynu",
+    "title": "Moje Konto",
+    "databaseFor": "Dostęp do bazy danych dla:",
+    "security": "Bezpieczeństwo",
+    "decommission": "Zakończ Sesję",
+    "activeAssets": "Aktywne Zasoby",
+    "totalAcquisitions": "Całkowita liczba zarejestrowanych zakupów",
+    "status": "Status Konta",
+    "verifiedCollector": "Zweryfikowany Kolekcjoner",
+    "level1Encryption": "Szyfrowanie Poziomu 1",
+    "history": "Historia Zakupów",
+    "verificationRequired": "Wymagana Weryfikacja",
+    "verificationDesc": "Zweryfikuj swoją tożsamość, aby uzyskać dostęp do wszystkich funkcji",
+    "resendLink": "Wyślij Link Ponownie",
+    "neuralLinkError": "Błąd Łącza Neuralnego",
+    "syncFailed": "Synchronizacja z centralnym skarbcem zamówień nie powiodła się.",
+    "noAssets": "Brak zarejestrowanych zasobów w skarbcu.",
+    "browseCollection": "Przeglądaj Kolekcję",
+    "recorded": "Zarejestrowano:",
+    "investment": "Inwestycja",
+    "prepPhaseActive": "Faza Przygotowania",
+    "inTransit": "W Transporcie:",
+    "fullLogistics": "Pełne Dane Logistyczne",
+    "settings": {
+      "title": "Skarbiec Bezpieczeństwa",
+      "subtitle": "Zarządzaj swoją tożsamością kolekcjonera i protokołami dostępu.",
+      "identityVerification": "Weryfikacja Tożsamości",
+      "verified": "Zweryfikowany",
+      "pending": "Weryfikacja w Toku",
+      "guestProtected": "Twój dostęp jest obecnie w stanie ochrony gościa. Niektóre dane dotyczące realizacji zamówień wymagają zweryfikowanej tożsamości.",
+      "requestLink": "Poproś o Nowy Link Weryfikacyjny",
+      "addresses": "Destynacje Wysyłkowe",
+      "addAddress": "Zarejestruj Nowy Protokół",
+      "noAddresses": "Brak zarejestrowanych destynacji w skarbcu.",
+      "default": "Główna Trasa",
+      "setDefault": "Ustaw jako Główną",
+      "edit": "Modyfikuj",
+      "delete": "Usuń",
+      "confirmDelete": "Czy na pewno chcesz usunąć tę trasę wysyłkową?"
+    },
+    "wishlist": {
+      "title": "Moja Lista Życzeń Kuratora",
+      "subtitle": "Artefakty pod Obserwacją",
+      "emptyTitle": "Twoja Lista Życzeń jest Pusta",
+      "emptyDescription": "Przeglądaj nasze artefakty i zapisuj te, które pasują do Twojego stylu kuratorskiego, aby nabyć je w przyszłości."
+    }
+  },
+  "orders": {
+    "orderNum": "Zamówienie #",
+    "recorded": "Zarejestrowano:",
+    "investment": "Inwestycja",
+    "quantity": "Ilość:",
+    "qty": "Ilość:",
+    "prepPhase": "Faza Przygotowania Aktywna",
+    "inTransit": "W Transporcie:",
+    "logisticsData": "Pełne Dane Logistyczne",
+    "warehouse": "Mój Magazyn",
+    "operation": "Operacja #",
+    "logged": "Zarejestrowano:",
+    "verifiedAcquisition": "Zweryfikowany Zakup",
+    "trackShipment": "ŚLEDŹ PRZESYŁKĘ",
+    "exportInvoice": "EKSPORTUJ FAKTURĘ",
+    "lifecycle": "Cykl Życia Dostawy",
+    "paymentConfirmed": "Płatność Potwierdzona",
+    "fundsVerified": "Środki na zakup zweryfikowane i zabezpieczone.",
+    "prepPhaseActive": "Faza Przygotowania",
+    "isolationNote": "Izolacja figurki i pianka ochronna na miejscu.",
+    "shipped": "Wysłano",
+    "logisticsSuccess": "Logistyka zabezpieczona i przesłana do miejsca docelowego.",
+    "delivered": "Dostarczono",
+    "acquired": "Arcydzieło zostało pomyślnie nabyte i zabezpieczone.",
+    "deploymentZone": "Strefa Wdrożenia",
+    "carrierProtocol": "Protokół Przewoźnika",
+    "class": "Klasa: Śledzenie Rejestrowane",
+    "settlement": "Rozliczenie",
+    "transactionSecure": "Transakcja Bezpieczna",
+    "discrepancy": "Rozbieżność Logistyczna?",
+    "contactHQ": "KONTAKT Z HQ",
+    "sku": "SKU:",
+    "backToWarehouse": "Wróć do Magazynu",
+    "reportTitle": "Pełny Raport Logistyczny",
+    "paid": "Zapłacono",
+    "processing": "Przetwarzanie",
+    "cancelled": "Anulowano",
+    "pConfirmed": "Płatność Potwierdzona",
+    "pConfirmedDesc": "Środki na zakup zweryfikowane i zabezpieczone.",
+    "prepPhaseDesc": "Izolacja figurki i integracja pianki ochronnej.",
+    "inTransitDesc": "Wyjście ze skarbca magazynu. Przekazanie do logistyki.",
+    "manifest": "Manifest Zasobów",
+    "itemDetails": "Szczegóły Produktu",
+    "subtotal": "Suma Cząstkowa Zakupu",
+    "shipping": "Opłata Logistyczna",
+    "totalContribution": "Całkowity Wkład do Portfolio"
+  },
+  "footer": {
+    "logistics": "Globalna Logistyka Rzemieślnicza Aktywna",
+    "rights": "© 2026 5iveArts Collector Series. Wszelkie prawa zastrzeżone.",
+    "privacy": "Prywatność",
+    "terms": "Warunki",
+    "description": "Butikowe studio zajmujące się produkcją ręcznie malowanych figurek z żywicy drukowanej 3D. Wysyłamy arcydzieła klasy muzealnej do kolekcjonerów na całym świecie z naszego warsztatu w Palermo.",
+    "seoAbout": "5iveArts to wiodące butikowe studio specjalizujące się w tworzeniu figurek z żywicy drukowanej 3D oraz ręcznie malowanych przedmiotów kolekcjonerskich. Nasza rzemieślnicza seria koncentruje się na ekstremalnej szczegółowości, wykorzystując wysokość warstwy 0,025 mm, aby zapewnić muzealną jakość każdej produkowanej przez nas figurki. Dzięki globalnej sieci wysyłkowej służymy oddanej społeczności kolekcjonerów, którzy cenią połączenie przemysłowej precyzji i rękodzieła. Każdy element w naszej serii jest unikalny, wykończony profesjonalnym malowaniem aerografem i lakierami odpornymi na UV, aby chronić Twoją inwestycję przez lata."
+  },
+  "shipping": {
+    "protocol": "Protokół Logistyczny",
+    "title": "Wysyłka Globalna",
+    "subtitle": "Bezpieczna, ubezpieczona i śledzona dostawa każdego arcydzieła z kolekcji.",
+    "insuredTitle": "Ubezpieczona Realizacja",
+    "insuredText": "Każda figurka jest pakowana z użyciem niestandardowej pianki o wysokiej gęstości i podwójnych pudełek kolekcjonerskich. Ubezpieczamy każdą przesyłkę na wypadek utraty lub uszkodzenia w transporcie.",
+    "freeTierTitle": "Próg Darmowej Wysyłki",
+    "freeTierText": "Nagradzamy poważnych kolekcjonerów. Wszystkie zamówienia powyżej {amount} automatycznie kwalifikują się do DARMOWEJ WYSYŁKI STANDARDOWEJ, niezależnie od lokalizacji.",
+    "dynamicTitle": "Logistyka Dynamiczna",
+    "dynamicText": "Korzystamy z Packlink PRO, aby zapewnić ubezpieczone stawki wysyłkowe w czasie rzeczywistym od przewoźników premium, takich jak UPS, DHL i FedEx. Twoja stawka jest obliczana podczas płatności na podstawie Twojej lokalizacji i wymiarów paczki.",
+    "zonesTitle": "Szacowany Czas Transportu",
+    "region": "Region",
+    "standard": "Standard",
+    "express": "Express",
+    "estTime": "Szac. Czas",
+    "trackingInfo": "Śledzenie Globalne na Żywo dla Wszystkich Zamówień",
+    "italy": "Włochy",
+    "eu": "Unia Europejska",
+    "uk": "Wielka Brytania",
+    "global": "Globalnie / Reszta Świata",
+    "days1_3": "1-3 dni",
+    "days3_5": "3-5 dni",
+    "days4_7": "4-7 dni",
+    "days7_14": "7-14 dni"
+  },
+  "hero": {
+    "slides": [
+      {
+        "tagline": "Precyzja Żywicy Premium",
+        "headline": "Arcydzieła",
+        "headlineHighlight": "Drukowane 3D",
+        "subtext": "Wysokiej rozdzielczości figurki z żywicy o wysokości warstwy 0,025 mm — muzealna jakość w każdym rzemieślniczym elemencie."
+      },
+      {
+        "tagline": "Ręczne Rzemieślnicze Wykończenie",
+        "headline": "Ekspercko",
+        "headlineHighlight": "Ręcznie Malowane",
+        "subtext": "Unikalne cieniowanie i profesjonalne techniki aerografu ożywiają Twoje ulubione postacie, tworząc niepowtarzalne dzieło za każdym razem."
+      }
+    ],
+    "cta": "Kup Teraz",
+    "trust": {
+      "quality": "Certyfikowana Jakość",
+      "handFinished": "Ręcznie Wykończone",
+      "logistics": "Globalna Logistyka"
+    }
+  },
+  "features": {
+    "handPainted": {
+      "title": "Ręcznie Malowane",
+      "text": "Każda figurka jest malowana ręcznie profesjonalnymi akrylami"
+    },
+    "threeDPrinted": {
+      "title": "Drukowane 3D",
+      "text": "Wysoka rozdzielczość, warstwa 0,025 mm"
+    },
+    "fastShipping": {
+      "title": "Szybka Wysyłka",
+      "text": "Ubezpieczona dostawa globalna ze śledzeniem"
+    },
+    "secureCheckout": {
+      "title": "Bezpieczne Płatności",
+      "text": "Płatności obsługiwane bezpiecznie przez Stripe"
+    }
+  },
+  "ctaSection": {
+    "heading": "Gotowy, aby posiadać dzieło sztuki?",
+    "subtext": "Odkryj pełną kolekcję ręcznie malowanych i drukowanych 3D figurek akcji. Każda wykonana na zamówienie z najwyższą dbałością.",
+    "button": "Przejdź do Sklepu"
+  },
+  "privacy_policy": {
+    "title": "Polityka Prywatności",
+    "lastUpdated": "Ostatnia aktualizacja: Marzec 2026",
+    "sections": [
+      {
+        "title": "1. Informacje, Które Zbieramy",
+        "content": "Zbieramy informacje, które podajesz nam bezpośrednio, w tym imię i nazwisko, adres email, adres do wysyłki oraz dane płatnicze podczas dokonywania zakupu."
+      },
+      {
+        "title": "2. Jak Wykorzystujemy Twoje Informacje",
+        "content": "Wykorzystujemy zebrane dane do procesowania transakcji, wysyłania potwierdzeń zamówień i komunikacji z Tobą w sprawach dotyczących zamówień."
+      },
+      {
+        "title": "3. Udostępnianie Informacji",
+        "content": "Nie sprzedajemy ani nie udostępniamy Twoich danych osobowych stronom trzecim, z wyjątkiem przypadków niezbędnych do realizacji zamówienia i przetworzenia płatności."
+      },
+      {
+        "title": "4. Bezpieczeństwo Danych",
+        "content": "Stosujemy odpowiednie środki bezpieczeństwa, aby chronić Twoje dane osobowe przed nieautoryzowanym dostępem lub ujawnieniem."
+      },
+      {
+        "title": "5. Kontakt",
+        "content": "Jeśli masz pytania dotyczące Polityki Prywatności, skontaktuj się z nami pod adresem privacy@5ivearts.com"
+      }
+    ]
+  },
+  "terms_of_service": {
+    "title": "Regulamin Świadczenia Usług",
+    "lastUpdated": "Ostatnia aktualizacja: Marzec 2026",
+    "sections": [
+      {
+        "title": "1. Akceptacja Regulaminu",
+        "content": "Korzystając z tej strony, akceptujesz i zgadzasz się na przestrzeganie warunków i postanowień niniejszej umowy."
+      },
+      {
+        "title": "2. Produkty i Usługi",
+        "content": "Wszystkie produkty prezentowane na stronie to przedmioty kolekcjonerskie drukowane w technologii 3D. Należy pamiętać, że mogą wystąpić niewielkie różnice w kolorze i wykończeniu ze względu na charakter procesu druku 3D."
+      },
+      {
+        "title": "3. Ceny i Płatności",
+        "content": "Ceny mogą ulec zmianie bez wcześniejszego powiadomienia. Zastrzegamy sobie prawo do odmowy lub anulowania zamówień produktów wystawionych w błędnej cenie."
+      },
+      {
+        "title": "4. Wysyłka i Dostawa",
+        "content": "Koszty wysyłki i czas dostawy zależą od lokalizacji. Nie odpowiadamy za opóźnienia spowodowane przez cła lub problemy przewoźników."
+      },
+      {
+        "title": "5. Własność Intelektualna",
+        "content": "Wszystkie treści na tej stronie, w tym projekty i zdjęcia produktów, są chronione prawami własności intelektualnej."
+      },
+      {
+        "title": "6. Kontakt",
+        "content": "Jeśli masz pytania dotyczące Regulaminu, skontaktuj się z nami pod adresem legal@5ivearts.com"
+      }
+    ]
+  },
+  "cookie_banner": {
+    "tag": "Jednostka Fotopolimerowa",
+    "title": "Utwardzamy lokalne pliki cookie.",
+    "description": "Nasz system używa niezbędnych plików cookie, aby stabilizować działanie strony i analizować wzorce ruchu warstwa po warstwie.",
+    "accept": "Akceptuj Partię",
+    "preferences": "Preferencje Systemowe"
+  }
+}

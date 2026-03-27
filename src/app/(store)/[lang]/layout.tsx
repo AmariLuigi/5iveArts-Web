@@ -58,6 +58,13 @@ export const metadata: Metadata = {
       'es': '/es',
       'fr': '/fr',
       'de': '/de',
+      'ru': '/ru',
+      'tr': '/tr',
+      'pt': '/pt',
+      'nl': '/nl',
+      'ja': '/ja',
+      'ar': '/ar',
+      'pl': '/pl',
     },
   },
 };
