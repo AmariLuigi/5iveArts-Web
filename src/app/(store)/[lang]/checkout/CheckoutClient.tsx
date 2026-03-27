@@ -412,7 +412,8 @@ export default function CheckoutClient({
       state: saved.state,
       zip_code: saved.zip_code,
       country: saved.country,
-      phone: saved.phone || ""
+      phone: saved.phone || "",
+      email: saved.email || address.email || user?.email || ""
     });
     setShowAddressPicker(false);
     // Reset rates since location changed

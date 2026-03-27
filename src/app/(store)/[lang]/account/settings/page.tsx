@@ -82,7 +82,7 @@ export default async function SettingsPage({
 
                     {/* Dispatch Destinations */}
                     <div id="addresses" className="bg-[#0a0a0a] border border-white/5 p-8 rounded-sm">
-                        <AddressManager lang={lang} dict={dict} />
+                        <AddressManager lang={lang} dict={dict} userEmail={user.email} />
                     </div>
                 </div>
             </div>

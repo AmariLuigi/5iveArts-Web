@@ -59,7 +59,7 @@ export interface ShippingAddress {
   email: string;
 }
 
-export interface UserAddress extends Omit<ShippingAddress, 'email'> {
+export interface UserAddress extends ShippingAddress {
   id: string;
   user_id: string;
   is_default: boolean;

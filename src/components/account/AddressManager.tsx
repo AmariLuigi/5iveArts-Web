@@ -9,9 +9,10 @@ import { motion, AnimatePresence } from "framer-motion";
 interface AddressManagerProps {
     lang: string;
     dict: any;
+    userEmail?: string;
 }
 
-export default function AddressManager({ lang, dict }: AddressManagerProps) {
+export default function AddressManager({ lang, dict, userEmail }: AddressManagerProps) {
     const [addresses, setAddresses] = useState<UserAddress[]>([]);
     const [loading, setLoading] = useState(true);
     const [isAdding, setIsAdding] = useState(false);
@@ -21,6 +22,7 @@ export default function AddressManager({ lang, dict }: AddressManagerProps) {
     // Form State
     const [formData, setFormData] = useState({
         full_name: "",
+        email: userEmail || "",
         street1: "",
         street2: "",
         city: "",
@@ -88,6 +90,7 @@ export default function AddressManager({ lang, dict }: AddressManagerProps) {
     const resetForm = () => {
         setFormData({
             full_name: "",
+            email: userEmail || "",
             street1: "",
             street2: "",
             city: "",
@@ -102,6 +105,7 @@ export default function AddressManager({ lang, dict }: AddressManagerProps) {
     const startEdit = (address: UserAddress) => {
         setFormData({
             full_name: address.full_name,
+            email: address.email || userEmail || "",
             street1: address.street1,
             street2: address.street2 || "",
             city: address.city,
@@ -166,7 +170,7 @@ export default function AddressManager({ lang, dict }: AddressManagerProps) {
                                 {editingId ? dict.account.settings.edit : dict.account.settings.addAddress}
                             </h3>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[8px] uppercase font-black tracking-widest text-neutral-600">Full Name</label>
                                     <input
@@ -177,11 +181,35 @@ export default function AddressManager({ lang, dict }: AddressManagerProps) {
                                     />
                                 </div>
                                 <div className="space-y-2">
+                                    <label className="text-[8px] uppercase font-black tracking-widest text-neutral-600">Contact Email</label>
+                                    <input
+                                        required
+                                        type="email"
+                                        value={formData.email}
+                                        onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                        className="w-full bg-white/[0.03] border border-white/10 rounded-sm p-4 text-[11px] font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all"
+                                        placeholder="curator@5ivearts.com"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
                                     <label className="text-[8px] uppercase font-black tracking-widest text-neutral-600">Phone (Optional)</label>
                                     <input
                                         value={formData.phone}
                                         onChange={e => setFormData({ ...formData, phone: e.target.value })}
                                         className="w-full bg-white/[0.03] border border-white/10 rounded-sm p-4 text-[11px] font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[8px] uppercase font-black tracking-widest text-neutral-600">Country Code (ISO)</label>
+                                    <input
+                                        required
+                                        value={formData.country}
+                                        onChange={e => setFormData({ ...formData, country: e.target.value.toUpperCase() })}
+                                        className="w-full bg-white/[0.03] border border-white/10 rounded-sm p-4 text-[11px] font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all"
+                                        maxLength={2}
                                     />
                                 </div>
                             </div>
