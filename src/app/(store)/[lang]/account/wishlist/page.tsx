@@ -2,7 +2,7 @@ import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import dynamic from "next/dynamic";
-const WishlistClient = dynamic(() => import("./WishlistClient"), { ssr: false }) as any;
+const WishlistClient = dynamic(() => import("./WishlistClient")) as any;
 
 export default async function WishlistPage({
     params,
