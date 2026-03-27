@@ -59,6 +59,13 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         de: initialData?.name_de || null,
         fr: initialData?.name_fr || null,
         es: initialData?.name_es || null,
+        nl: initialData?.name_nl || null,
+        ru: initialData?.name_ru || null,
+        tr: initialData?.name_tr || null,
+        pt: initialData?.name_pt || null,
+        ja: initialData?.name_ja || null,
+        ar: initialData?.name_ar || null,
+        pl: initialData?.name_pl || null,
     });
     const [descriptions, setDescriptions] = useState<Record<string, string | null>>({
         en: initialData?.description_en || initialData?.description || null,
@@ -66,6 +73,13 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         de: initialData?.description_de || null,
         fr: initialData?.description_fr || null,
         es: initialData?.description_es || null,
+        nl: initialData?.description_nl || null,
+        ru: initialData?.description_ru || null,
+        tr: initialData?.description_tr || null,
+        pt: initialData?.description_pt || null,
+        ja: initialData?.description_ja || null,
+        ar: initialData?.description_ar || null,
+        pl: initialData?.description_pl || null,
     });
     const [price, setPrice] = useState(initialData?.price || 8999);
     const [category, setCategory] = useState(initialData?.category || "figures");
@@ -397,7 +411,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 const newNames: Record<string, string | null> = { ...names, en: title };
                 
                 if (autoTranslate) {
-                    for (const lang of ["it", "es", "fr", "de"]) {
+                    const languages = ["it", "es", "fr", "de", "nl", "ru", "tr", "pt", "ja", "pl", "ar"];
+                    for (const lang of languages) {
                         try {
                             const res = await axios.post("/api/translate", {
                                 text: title,
@@ -443,7 +458,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     setTranslationProgress(0);
                     abortTranslationRef.current = false;
                     
-                    const languages = ["it", "es", "fr", "de"];
+                    const languages = ["it", "es", "fr", "de", "nl", "ru", "tr", "pt", "ja", "pl", "ar"];
                     for (let i = 0; i < languages.length; i++) {
                         if (abortTranslationRef.current) {
                             showToast("Translation protocol interrupted", 'error');
@@ -508,17 +523,11 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         const productData = {
             id: id || names.en!.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, ''),
             name: names.en || "",
-            name_en: names.en,
-            name_it: names.it,
-            name_de: names.de,
-            name_fr: names.fr,
-            name_es: names.es,
+            name_en: names.en, name_it: names.it, name_de: names.de, name_fr: names.fr, name_es: names.es,
+            name_nl: names.nl, name_ru: names.ru, name_tr: names.tr, name_pt: names.pt, name_ja: names.ja, name_ar: names.ar, name_pl: names.pl,
             description: descriptions.en || Object.values(descriptions).find(d => d) || "",
-            description_en: descriptions.en,
-            description_it: descriptions.it,
-            description_de: descriptions.de,
-            description_fr: descriptions.fr,
-            description_es: descriptions.es,
+            description_en: descriptions.en, description_it: descriptions.it, description_de: descriptions.de, description_fr: descriptions.fr, description_es: descriptions.es,
+            description_nl: descriptions.nl, description_ru: descriptions.ru, description_tr: descriptions.tr, description_pt: descriptions.pt, description_ja: descriptions.ja, description_ar: descriptions.ar, description_pl: descriptions.pl,
             price: Number(price),
             category,
             franchise,

@@ -6,17 +6,11 @@ export type ProductFinish = "painted" | "raw";
 export interface Product {
   id: string;
   name: string;
-  name_en?: string | null;
-  name_it?: string | null;
-  name_de?: string | null;
-  name_fr?: string | null;
-  name_es?: string | null;
+  name_en?: string | null; name_it?: string | null; name_de?: string | null; name_fr?: string | null; name_es?: string | null;
+  name_ru?: string | null; name_tr?: string | null; name_pt?: string | null; name_nl?: string | null; name_ja?: string | null; name_ar?: string | null; name_pl?: string | null;
   description: string;
-  description_en?: string | null;
-  description_it?: string | null;
-  description_de?: string | null;
-  description_fr?: string | null;
-  description_es?: string | null;
+  description_en?: string | null; description_it?: string | null; description_de?: string | null; description_fr?: string | null; description_es?: string | null;
+  description_ru?: string | null; description_tr?: string | null; description_pt?: string | null; description_nl?: string | null; description_ja?: string | null; description_ar?: string | null; description_pl?: string | null;
   price: number; // base price in cents (relative to 1/12 multiplier)
   images: string[];
   videos: string[];

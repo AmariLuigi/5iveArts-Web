@@ -38,8 +38,8 @@ export async function PATCH(
     const body = await req.json() as Record<string, any>;
 
     const ALLOWED_FIELDS = [
-        "name", "description", 
-        "description_en", "description_it", "description_de", "description_fr", "description_es",
+        "name", "name_en", "name_it", "name_de", "name_fr", "name_es", "name_ru", "name_tr", "name_pt", "name_nl", "name_ja", "name_ar", "name_pl",
+        "description", "description_en", "description_it", "description_de", "description_fr", "description_es", "description_ru", "description_tr", "description_pt", "description_nl", "description_ja", "description_ar", "description_pl",
         "price", "images", "videos",
         "category", "franchise", "subcategory", "status", "tags", "details", "rating", "reviewCount"
     ];

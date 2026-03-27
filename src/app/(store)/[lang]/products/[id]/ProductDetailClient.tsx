@@ -344,7 +344,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                         </div>
                         <div className="flex items-start justify-between gap-4">
                             <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-[0.9] mb-6">
-                                {product.name}
+                                {(product as any)[`name_${lang}`] || product.name}
                             </h1>
                             <WishlistToggle 
                                 productId={product.id} 
@@ -448,14 +448,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                         <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-4">{dict.product_detail.description}</h2>
                         <div className="relative">
                             <p className={`text-neutral-400 font-medium leading-[1.8] text-base whitespace-pre-wrap transition-all duration-500 overflow-hidden ${isDescExpanded ? 'max-h-[2000px]' : 'max-h-32'}`}>
-                                {
-                                    (lang === 'en' ? product.description_en :
-                                    lang === 'it' ? product.description_it :
-                                    lang === 'de' ? product.description_de :
-                                    lang === 'fr' ? product.description_fr :
-                                    lang === 'es' ? product.description_es : 
-                                    product.description) || product.description
-                                }
+                                {(product as any)[`description_${lang}`] || product.description}
                             </p>
                             
                             {!isDescExpanded && (
