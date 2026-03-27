@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { Product } from "@/types";
 import ProductCard from "@/components/product/ProductCard";
-import { Box, Search, ChevronLeft, ChevronRight, Hand } from "lucide-react";
+import { Box, Search, ChevronLeft, ChevronRight, Hand, ArrowUp } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useRef } from "react";
@@ -131,6 +131,7 @@ function ProductsContent({
   const { track } = useAnalytics();
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Sync with URL params
   useEffect(() => {
@@ -139,6 +140,18 @@ function ProductsContent({
       setActiveCategory(cat);
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const taxonomy = useMemo(() => {
     const mainCats = new Set<string>();
@@ -306,6 +319,24 @@ function ProductsContent({
           ))}
         </div>
       )}
+
+      {/* Back to Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 p-4 bg-brand-yellow text-black border border-white/10 rounded-sm shadow-[0_0_30px_rgba(255,159,0,0.4)] hover:bg-white hover:text-black transition-all group"
+            aria-label="Back to top"
+          >
+             <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
