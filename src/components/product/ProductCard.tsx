@@ -55,6 +55,10 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
   const currentImage = product.images?.[mediaIndex] || "/images/placeholder.jpg";
   const displayVideo = hasVideo && isHovered && !showScaleSelector;
   const videoUrl = product.videos?.[0];
+  
+  // Globalization Logic: Select the correct localized content
+  const localizedName = (product as any)[`name_${lang}`] || product.name;
+  const localizedDescription = (product as any)[`description_${lang}`] || product.description;
   const categoryLabel = product.franchise || dict?.homepage?.premiumSeries || "Premium Series";
 
   const scales: ProductScale[] = ["1/9", "1/6", "1/4"];
@@ -118,7 +122,7 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
         ) : (
           <Image
             src={currentImage}
-            alt={product.name}
+            alt={localizedName}
             fill
             className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-108"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -198,12 +202,12 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
           </div>
 
           <Link href={`/${lang}/products/${product.id}`} className="text-xl font-black uppercase tracking-tight text-white hover:text-brand-yellow transition-colors leading-none block">
-            {product.name}
+            {localizedName}
           </Link>
         </div>
 
         <p className="text-sm text-neutral-500 line-clamp-2 flex-1 font-medium mb-6">
-          {product.description}
+          {localizedDescription}
         </p>
 
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5 relative">

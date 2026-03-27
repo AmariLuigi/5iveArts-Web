@@ -53,7 +53,13 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
     // Form State
     const [id, setId] = useState(initialData?.id || "");
-    const [name, setName] = useState(initialData?.name || "");
+    const [names, setNames] = useState<Record<string, string | null>>({
+        en: initialData?.name_en || initialData?.name || "",
+        it: initialData?.name_it || null,
+        de: initialData?.name_de || null,
+        fr: initialData?.name_fr || null,
+        es: initialData?.name_es || null,
+    });
     const [descriptions, setDescriptions] = useState<Record<string, string | null>>({
         en: initialData?.description_en || initialData?.description || null,
         it: initialData?.description_it || null,
@@ -395,7 +401,25 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 categorical_tags
             } = ForgeResult;
 
-            if (title) setName(title);
+            if (title) {
+                const newNames: Record<string, string | null> = { ...names, en: title };
+                
+                if (autoTranslate) {
+                    for (const lang of ["it", "es", "fr", "de"]) {
+                        try {
+                            const res = await axios.post("/api/translate", {
+                                text: title,
+                                targetLang: lang,
+                                sourceLang: "en"
+                            });
+                            if (res.data.translatedText) newNames[lang] = res.data.translatedText;
+                        } catch (e) {
+                            console.warn(`[AI Forge] Name translation failed for ${lang}`, e);
+                        }
+                    }
+                }
+                setNames(newNames);
+            }
             
             // Handle categorical suggestions
             if (categorical_tags) {
@@ -490,8 +514,13 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         }
 
         const productData = {
-            id: id || name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, ''),
-            name,
+            id: id || names.en!.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, ''),
+            name: names.en || "",
+            name_en: names.en,
+            name_it: names.it,
+            name_de: names.de,
+            name_fr: names.fr,
+            name_es: names.es,
             description: descriptions.en || Object.values(descriptions).find(d => d) || "",
             description_en: descriptions.en,
             description_it: descriptions.it,
@@ -750,11 +779,11 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-3">
-                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Subject Name</label>
+                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Subject Name (EN)</label>
                             <input
                                 required
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={names.en || ""}
+                                onChange={(e) => setNames({ ...names, en: e.target.value })}
                                 placeholder="e.g. Iron Man MK-IV"
                                 className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
                             />

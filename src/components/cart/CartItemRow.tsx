@@ -36,7 +36,7 @@ export default function CartItemRow({ item, lang, dict }: CartItemRowProps) {
       <Link href={`/${lang}/products/${item.product.id}`} className="relative w-24 h-24 flex-shrink-0 border border-white/5 overflow-hidden bg-neutral-900 shadow-xl group">
         <Image
           src={item.product.images[0]}
-          alt={item.product.name}
+          alt={(item.product as any)[`name_${lang}`] || item.product.name}
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-500"
           sizes="96px"
@@ -49,7 +49,7 @@ export default function CartItemRow({ item, lang, dict }: CartItemRowProps) {
       {/* Details */}
       <div className="flex-1 min-w-0 py-1">
         <Link href={`/${lang}/products/${item.product.id}`} className="font-black uppercase tracking-tight text-white hover:text-brand-yellow transition-colors leading-none block text-lg">
-          {item.product.name}
+          {(item.product as any)[`name_${lang}`] || item.product.name}
         </Link>
         <div className="flex flex-wrap gap-2 mt-2">
           <span className="text-[9px] uppercase font-black bg-white/5 text-neutral-400 px-2 py-0.5 border border-white/5 rounded-sm tracking-widest">

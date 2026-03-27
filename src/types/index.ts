@@ -6,6 +6,11 @@ export type ProductFinish = "painted" | "raw";
 export interface Product {
   id: string;
   name: string;
+  name_en?: string | null;
+  name_it?: string | null;
+  name_de?: string | null;
+  name_fr?: string | null;
+  name_es?: string | null;
   description: string;
   description_en?: string | null;
   description_it?: string | null;

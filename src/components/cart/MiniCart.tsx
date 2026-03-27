@@ -53,7 +53,7 @@ export default function MiniCart({ dict, lang }: { dict: any, lang: string }) {
                         <div className="relative w-16 h-16 flex-shrink-0 bg-neutral-900 border border-white/5 overflow-hidden">
                             <Image
                                 src={item.product.images[0]}
-                                alt={item.product.name}
+                                alt={(item.product as any)[`name_${lang}`] || item.product.name}
                                 fill
                                 className="object-cover group-hover:scale-110 transition-transform duration-500"
                                 sizes="64px"
@@ -61,7 +61,7 @@ export default function MiniCart({ dict, lang }: { dict: any, lang: string }) {
                         </div>
                         <div className="flex-1 min-w-0 flex flex-col justify-center">
                             <h4 className="text-[11px] font-black uppercase text-white truncate tracking-tight pr-6">
-                                {item.product.name}
+                                {(item.product as any)[`name_${lang}`] || item.product.name}
                             </h4>
                             <div className="text-[9px] uppercase font-bold text-neutral-500 flex gap-2 mt-1 tracking-widest items-center">
                                 <span>{item.selectedScale}</span>
