@@ -166,6 +166,9 @@
   "checkout": {
     "gateway": "Secure Gateway",
     "checkout": "Checkout",
+    "chooseSaved": "Access Saved Routes",
+    "useThis": "Authorize Route",
+    "newAddress": "Establish New Protocol",
     "verifying": "Verifying Secure Transaction…",
     "loadingForm": "Loading payment protocols...",
     "processing": "Processing payment…",
@@ -235,9 +238,7 @@
       "High-Resolution Industrial Resin",
       "Professional Artisan Hand-Painting",
       "Museum-Grade UV-Resistant Varnish",
-      "Precision Detail Capture (0.025mm)",
-      "Custom Signature Display Base",
-      "Signature Foam-Padded Collector Box"
+      "Precision Detail Capture (0.025mm)"
     ],
     "readMore": "Read More",
     "readLess": "Read Less"
@@ -291,7 +292,15 @@
       "verified": "Verified",
       "pending": "Verification Pending",
       "guestProtected": "Your access is currently in a 'Guest-Protected' state. Some order fulfillment data requires a verified identity.",
-      "requestLink": "Request New Verification Link"
+      "requestLink": "Request New Verification Link",
+      "addresses": "Dispatch Destinations",
+      "addAddress": "Register New Protocol",
+      "noAddresses": "No destinations registered in the vault.",
+      "default": "Primary Route",
+      "setDefault": "Set as Primary",
+      "edit": "Modify",
+      "delete": "Decommission",
+      "confirmDelete": "Are you sure you want to decommission this dispatch route?"
     }
   },
   "orders": {

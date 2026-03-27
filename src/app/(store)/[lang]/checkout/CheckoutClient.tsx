@@ -6,7 +6,8 @@ import Link from "next/link";
 import { Truck, CreditCard, Loader2, Check, ShieldCheck, Lock, ChevronLeft, ArrowLeft } from "lucide-react";
 import { useCartStore, CartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/products";
-import { ShippingAddress, ShippingRate } from "@/types";
+import { ShippingAddress, ShippingRate, UserAddress } from "@/types";
+import { MapPin, Globe, ChevronDown, CheckCircle2 } from "lucide-react";
 import axios from "axios";
 import StripePaymentForm from "@/components/checkout/StripePaymentForm";
 import { countries } from "@/lib/countries";
@@ -62,6 +63,8 @@ export default function CheckoutClient({
   const [isZipLoading, setIsZipLoading] = useState(false);
   const [hasHydrated, setHasHydrated] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [savedAddresses, setSavedAddresses] = useState<UserAddress[]>([]);
+  const [showAddressPicker, setShowAddressPicker] = useState(false);
 
   // Hydration and Persistence
   useEffect(() => {
@@ -72,6 +75,16 @@ export default function CheckoutClient({
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUser(user);
+        // Fetch saved addresses
+        axios.get("/api/account/addresses").then(res => {
+          setSavedAddresses(res.data);
+          // If there's a default address and current address is empty, auto-fill it
+          const defaultAddr = res.data.find((a: UserAddress) => a.is_default);
+          if (defaultAddr && (!address.street1 || address.street1 === "")) {
+            applySavedAddress(defaultAddr);
+          }
+        }).catch(err => console.error("Failed to fetch saved addresses:", err));
+
         // Only auto-fill if the user hasn't typed anything yet
         setAddress((prev: ShippingAddress) => ({ 
           ...prev, 
@@ -386,6 +399,25 @@ export default function CheckoutClient({
     }
   };
 
+  const applySavedAddress = (saved: UserAddress) => {
+    setAddress({
+      ...address,
+      full_name: saved.full_name,
+      street1: saved.street1,
+      street2: saved.street2 || "",
+      city: saved.city,
+      state: saved.state,
+      zip_code: saved.zip_code,
+      country: saved.country,
+      phone: saved.phone || ""
+    });
+    setShowAddressPicker(false);
+    // Reset rates since location changed
+    setRates([]);
+    setSelectedRate(null);
+    if (activeStep > 1) setActiveStep(1);
+  };
+
   const handleCheckout = async () => {
     const log = (m: string) => navigator.sendBeacon("/api/debug/log", JSON.stringify({ message: `[STATE] ${m}`, type: "info" }));
     log("Starting handleCheckout...");
@@ -494,6 +526,49 @@ export default function CheckoutClient({
                 <Truck className="w-5 h-5 text-brand-yellow" />
                 {dict.checkout.deliveryStep}
               </h2>
+
+              {/* Saved Address Integration */}
+              {user && savedAddresses.length > 0 && (
+                <div className="mb-10 bg-white/[0.02] border border-white/5 p-6 rounded-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500 italic">
+                      {dict.checkout.chooseSaved}
+                    </span>
+                    <button 
+                      type="button"
+                      onClick={() => setShowAddressPicker(!showAddressPicker)}
+                      className="text-[9px] font-black uppercase tracking-widest text-brand-yellow hover:text-white transition-colors flex items-center gap-2"
+                    >
+                      {showAddressPicker ? <Globe className="w-3 h-3" /> : <MapPin className="w-3 h-3" />}
+                      {showAddressPicker ? dict.checkout.newAddress : dict.checkout.chooseSaved}
+                    </button>
+                  </div>
+                  
+                  {showAddressPicker && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                      {savedAddresses.map((sa) => (
+                        <button
+                          key={sa.id}
+                          type="button"
+                          onClick={() => applySavedAddress(sa)}
+                          className="text-left bg-black/40 border border-white/5 p-4 rounded-sm hover:border-brand-yellow/40 transition-all group"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-brand-yellow transition-colors">
+                              {sa.full_name}
+                            </span>
+                            {sa.is_default && <CheckCircle2 className="w-3 h-3 text-brand-yellow" />}
+                          </div>
+                          <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest line-clamp-1">
+                            {sa.street1}, {sa.city}
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 <div className="sm:col-span-2">
                   <CustomSelect

@@ -166,6 +166,9 @@
   "checkout": {
     "gateway": "Sicheres Gateway",
     "checkout": "Checkout",
+    "chooseSaved": "Gespeicherte Routen aufrufen",
+    "useThis": "Route autorisieren",
+    "newAddress": "Neues Protokoll einrichten",
     "verifying": "Sichere Transaktion wird verifiziert…",
     "loadingForm": "Zahlungsprotokolle werden geladen...",
     "processing": "Zahlung wird verarbeitet…",
@@ -235,9 +238,7 @@
       "Hochauflösendes Industrieresin",
       "Professionelle Kunstmalerei",
       "Museums-UV-Schutzlack",
-      "Präzisionsdetail-Erfassung (0.025mm)",
-      "Signatur-Display-Basis",
-      "Gepolsterte Sammlerbox"
+      "Präzisionsdetail-Erfassung (0.025mm)"
     ],
     "readMore": "Mehr lesen",
     "readLess": "Weniger lesen"
@@ -291,7 +292,15 @@
       "verified": "Verifiziert",
       "pending": "Verifizierung Ausstehend",
       "guestProtected": "Ihr Zugriff befindet sich derzeit in einem 'Gast-geschützten' Zustand. Einige administrative Protokolle erfordern eine verifizierte Identität.",
-      "requestLink": "Neuen Verifizierungslink anfordern"
+      "requestLink": "Neuen Verifizierungslink anfordern",
+      "addresses": "Versandziele",
+      "addAddress": "Neues Protokoll registrieren",
+      "noAddresses": "Keine Ziele im Tresor registriert.",
+      "default": "Hauptroute",
+      "setDefault": "Als Hauptroute festlegen",
+      "edit": "Bearbeiten",
+      "delete": "Deaktivieren",
+      "confirmDelete": "Sind Sie sicher, dass Sie diese Versandroute deaktivieren möchten?"
     }
   },
   "orders": {

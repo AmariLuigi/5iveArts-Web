@@ -152,6 +152,31 @@ export interface Database {
           created_at?: string;
         };
       };
+
+      user_addresses: {
+        Row: {
+          id: string;
+          user_id: string;
+          full_name: string;
+          street1: string;
+          street2: string | null;
+          city: string;
+          state: string;
+          zip_code: string;
+          country: string;
+          phone: string | null;
+          is_default: boolean;
+          created_at: string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["user_addresses"]["Row"], "id" | "created_at"> & {
+          id?: string;
+          created_at?: string;
+          street2?: string | null;
+          phone?: string | null;
+          is_default?: boolean;
+        };
+        Update: Partial<Database["public"]["Tables"]["user_addresses"]["Insert"]>;
+      };
     };
     Functions: {};
   };

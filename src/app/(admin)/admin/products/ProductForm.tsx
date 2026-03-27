@@ -110,14 +110,6 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     ];
     const [images, setImages] = useState<string[]>(initialData?.images || []);
     const [videos, setVideos] = useState<string[]>(initialData?.videos || []);
-    const [details, setDetails] = useState<string[]>(initialData?.details || [
-        "High-Resolution Industrial Resin",
-        "Professional Artisan Hand-Painting",
-        "Museum-Grade UV-Resistant Varnish",
-        "Precision Detail Capture (0.025mm)",
-        "Custom Signature Display Base",
-        "Signature Foam-Padded Collector Box"
-    ]);
 
     const supabase = createClient();
 
@@ -535,7 +527,6 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             tags,
             images,
             videos,
-            details,
             updated_at: new Date().toISOString()
         };
 
@@ -1098,39 +1089,6 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         </div>
                     </div>
 
-                    <div className="space-y-4 pt-4 border-t border-white/5">
-                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Technical Specifications</label>
-                        <div className="space-y-3">
-                            {details.map((detail, idx) => (
-                                <div key={idx} className="flex gap-2">
-                                    <input
-                                        value={detail}
-                                        onChange={(e) => {
-                                            const newDetails = [...details];
-                                            newDetails[idx] = e.target.value;
-                                            setDetails(newDetails);
-                                        }}
-                                        className="flex-1 bg-white/[0.01] border border-white/5 rounded-sm px-4 py-2 text-[11px] font-bold text-neutral-400 focus:border-brand-yellow/20 outline-none"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setDetails(details.filter((_, i) => i !== idx))}
-                                        className="p-2 text-neutral-800 hover:text-red-500 transition-colors"
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </button>
-                                </div>
-                            ))}
-                            <button
-                                type="button"
-                                onClick={() => setDetails([...details, ""])}
-                                className="text-[9px] uppercase font-black tracking-widest text-brand-yellow hover:text-white flex items-center gap-2 transition-colors mt-2"
-                            >
-                                <Plus className="w-3 h-3" />
-                                Add Specification
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
                 {/* Visual Assets (Images) */}

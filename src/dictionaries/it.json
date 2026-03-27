@@ -166,6 +166,9 @@
   "checkout": {
     "gateway": "Gateway Sicuro",
     "checkout": "Pagamento",
+    "chooseSaved": "Accedi alle Rotte Salvate",
+    "useThis": "Autorizza Rotta",
+    "newAddress": "Stabilisci Nuovo Protocollo",
     "verifying": "Verifica della Transazione Sicura…",
     "loadingForm": "Caricamento dei protocolli di pagamento...",
     "processing": "Elaborazione del pagamento…",
@@ -235,9 +238,7 @@
       "Resina Industriale ad Alta Risoluzione",
       "Pittura Professionale Artigianale",
       "Vernice Protettiva UV Qualità Museale",
-      "Dettaglio ad Alta Precisione (0.025mm)",
-      "Base di Esposizione Firmata",
-      "Scatola da Collezione Imbottita"
+      "Dettaglio ad Alta Precisione (0.025mm)"
     ],
     "readMore": "Leggi di più",
     "readLess": "Mostra meno"
@@ -291,7 +292,15 @@
       "verified": "Verificato",
       "pending": "Verifica in Sospeso",
       "guestProtected": "Il tuo accesso è attualmente in uno stato 'Guest-Protected'. Alcuni dati di evasione ordini richiedono un'identità verificata.",
-      "requestLink": "Richiedi Nuovo Link di Verifica"
+      "requestLink": "Richiedi Nuovo Link di Verifica",
+      "addresses": "Destinazioni di Spedizione",
+      "addAddress": "Registra Nuovo Protocollo",
+      "noAddresses": "Nessuna destinazione registrata nel vault.",
+      "default": "Rotta Primaria",
+      "setDefault": "Imposta come Primaria",
+      "edit": "Modifica",
+      "delete": "Decommissiona",
+      "confirmDelete": "Sei sicuro di voler decommissionare questa rotta di spedizione?"
     }
   },
   "orders": {

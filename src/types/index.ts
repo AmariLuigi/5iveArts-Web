@@ -25,7 +25,6 @@ export interface Product {
   subcategory?: string | null;
   status: "draft" | "published" | "archived";
   tags: string[];
-  details: string[];
   rating?: number;
   reviewCount?: number;
 }
@@ -58,4 +57,11 @@ export interface ShippingAddress {
   country: string;
   phone: string;
   email: string;
+}
+
+export interface UserAddress extends Omit<ShippingAddress, 'email'> {
+  id: string;
+  user_id: string;
+  is_default: boolean;
+  created_at: string;
 }

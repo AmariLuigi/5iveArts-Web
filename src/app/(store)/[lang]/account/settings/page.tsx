@@ -1,7 +1,8 @@
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
-import { ShieldCheck, Mail, Send, AlertTriangle } from "lucide-react";
+import { ShieldCheck, Mail, Send, AlertTriangle, MapPin } from "lucide-react";
+import AddressManager from "@/components/account/AddressManager";
 
 export default async function SettingsPage({
     params,
@@ -77,6 +78,11 @@ export default async function SettingsPage({
                                 </form>
                             </div>
                         )}
+                    </div>
+
+                    {/* Dispatch Destinations */}
+                    <div id="addresses" className="bg-[#0a0a0a] border border-white/5 p-8 rounded-sm">
+                        <AddressManager lang={lang} dict={dict} />
                     </div>
                 </div>
             </div>

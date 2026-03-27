@@ -166,6 +166,9 @@
   "checkout": {
     "gateway": "Passerelle Sécurisée",
     "checkout": "Paiement",
+    "chooseSaved": "Accéder aux Routes Sauvées",
+    "useThis": "Autoriser Route",
+    "newAddress": "Établir Nouveau Protocole",
     "verifying": "Vérification de la Transaction Sécurisée…",
     "loadingForm": "Chargement des protocoles de paiement...",
     "processing": "Traitement du paiement…",
@@ -234,10 +237,8 @@
     "features": [
       "Résine Industrielle Haute Résolution",
       "Peinture Artisanale Professionnelle",
-      "Vernis Résistant aux UV Qualité Musée",
-      "Capture des Détails de Précision (0,025 mm)",
-      "Base d'Affichage Signature",
-      "Boîte de Collection Rembourrée"
+      "Vernis Qualité Musée Résistant aux UV",
+      "Capture de Détails Haute Précision (0.025mm)"
     ],
     "readMore": "Lire plus",
     "readLess": "Réduire"
@@ -291,7 +292,15 @@
       "verified": "Vérifié",
       "pending": "Vérification en Attente",
       "guestProtected": "Votre accès est actuellement à l'état 'Protégé Invité'. Certaines données d'exécution de commande nécessitent une identité vérifiée.",
-      "requestLink": "Demander un Nouveau Lien de Vérification"
+      "requestLink": "Demander un Nouveau Lien de Vérification",
+      "addresses": "Destinations d'Expédition",
+      "addAddress": "Enregistrer Nouveau Protocole",
+      "noAddresses": "Aucune destination enregistrée dans le vault.",
+      "default": "Route Primaire",
+      "setDefault": "Définir comme Primaire",
+      "edit": "Modifier",
+      "delete": "Décommissionner",
+      "confirmDelete": "Êtes-vous sûr de vouloir décommissionner cette route d'expédition ?"
     }
   },
   "orders": {

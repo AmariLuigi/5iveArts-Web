@@ -19,14 +19,7 @@ interface Props {
     dict: any;
 }
 
-const STANDARD_FEATURES = [
-    "High-Resolution Industrial Resin",
-    "Professional Artisan Hand-Painting",
-    "Museum-Grade UV-Resistant Varnish",
-    "Precision Detail Capture (0.025mm)",
-    "Custom Signature Display Base",
-    "Signature Foam-Padded Collector Box",
-];
+
 
 export default function ProductDetailClient({ product, lang, dict }: Props) {
     const { pricing } = useSiteSettings();
@@ -485,10 +478,7 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                     <div className="mb-12">
                         <h2 className="text-[10px] uppercase font-black tracking-[0.2em] text-neutral-400 mb-6">{dict.product_detail.specifications}</h2>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
-                            {(product.details && product.details.length > 0 
-                                ? product.details 
-                                : (dict.product_detail.features || STANDARD_FEATURES)
-                            ).map((detail: string) => (
+                            {dict.product_detail.features.map((detail: string) => (
                                 <li key={detail} className="flex items-start gap-3 text-xs uppercase font-bold tracking-wider text-white">
                                     <CheckCircle className="w-4 h-4 text-brand-yellow flex-shrink-0" />
                                     {detail}

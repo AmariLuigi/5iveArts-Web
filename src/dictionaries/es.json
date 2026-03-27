@@ -166,6 +166,9 @@
   "checkout": {
     "gateway": "Pasarela Segura",
     "checkout": "Pago",
+    "chooseSaved": "Acceder a Rutas Guardadas",
+    "useThis": "Autorizar Ruta",
+    "newAddress": "Establecer Nuevo Protocolo",
     "verifying": "Verificando Transacción Segura…",
     "loadingForm": "Cargando protocolos de pago...",
     "processing": "Procesando pago…",
@@ -233,11 +236,9 @@
     "instantCheckout": "Compra Rápida",
     "features": [
       "Resina Industrial de Alta Resolución",
-      "Pintura Profesional Artesanal",
+      "Pintura Artesanal Profesional",
       "Barniz Resistente UV Calidad Museo",
-      "Detalle de Alta Precisión (0.025mm)",
-      "Base de Exhibición Autoría",
-      "Caja de Coleccionista Acolchada"
+      "Detalle de Alta Precisión (0.025mm)"
     ],
     "readMore": "Leer más",
     "readLess": "Leer menos"
@@ -291,7 +292,15 @@
       "verified": "Verificado",
       "pending": "Verificación Pendiente",
       "guestProtected": "Su acceso se encuentra actualmente en un estado de 'Invitado Protegido'. Algunos registros administrativos requieren una identidad verificada.",
-      "requestLink": "Solicitar Nuevo Enlace de Verificación"
+      "requestLink": "Solicitar Nuevo Enlace de Verificación",
+      "addresses": "Destinos de Despacho",
+      "addAddress": "Registrar Nuevo Protocolo",
+      "noAddresses": "No hay destinos registrados en la bóveda.",
+      "default": "Ruta Primaria",
+      "setDefault": "Fijar como Primaria",
+      "edit": "Modificar",
+      "delete": "Descomisionar",
+      "confirmDelete": "¿Seguro que desea descomisionar esta ruta de despacho?"
     }
   },
   "orders": {
