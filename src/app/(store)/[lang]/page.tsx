@@ -24,6 +24,10 @@ const CtaSection = dynamic(() => import("@/components/marketing/CtaSection"), {
   ssr: true,
   loading: () => <div className="h-64 bg-black/20 animate-pulse rounded-2xl m-4" />
 });
+const TrendingArtifacts = dynamic(() => import("@/components/marketing/TrendingArtifacts"), { 
+  ssr: false,
+  loading: () => <div className="h-96 bg-black/20 animate-pulse rounded-2xl m-4" />
+});
 
 import { type Feature } from "@/components/marketing/FeaturesSection";
 import { type Testimonial } from "@/components/marketing/TestimonialsSection";
@@ -102,6 +106,10 @@ export default async function HomePage({
           lang={lang}
           dict={dict}
         />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <TrendingArtifacts lang={lang} dict={dict} />
       </ScrollReveal>
 
       <ScrollReveal>

@@ -12,7 +12,8 @@
     "switchRegion": "Switch Region",
     "vault": "Vault",
     "warehouse": "Warehouse",
-    "access": "Access"
+    "access": "Access",
+    "wishlist": "Wishlist"
   },
   "home": {
     "title": "5iveArts - Artisan Precision",
@@ -302,6 +303,12 @@
       "edit": "Modify",
       "delete": "Decommission",
       "confirmDelete": "Are you sure you want to decommission this dispatch route?"
+    },
+    "wishlist": {
+      "title": "My Curator Wishlist",
+      "subtitle": "Artifacts Under Observation",
+      "emptyTitle": "Your Wishlist is Empty",
+      "emptyDescription": "Scout our artifacts and bookmark those that resonate with your curator style for future acquisition."
     }
   },
   "orders": {

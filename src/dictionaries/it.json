@@ -12,7 +12,8 @@
     "switchRegion": "Cambia Regione",
     "vault": "Caveau",
     "warehouse": "Magazzino",
-    "access": "Accesso"
+    "access": "Accesso",
+    "wishlist": "Lista desideri"
   },
   "home": {
     "title": "5iveArts - Precisione Artigianale",
@@ -302,6 +303,12 @@
       "edit": "Modifica",
       "delete": "Decommissiona",
       "confirmDelete": "Sei sicuro di voler decommissionare questa rotta di spedizione?"
+    },
+    "wishlist": {
+      "title": "La Mia Lista dei Desideri",
+      "subtitle": "Manufatti Sotto Osservazione",
+      "emptyTitle": "La tua Lista è Vuota",
+      "emptyDescription": "Esplora i nostri manufatti e salva quelli che risuonano con il tuo stile per acquisizioni future."
     }
   },
   "orders": {

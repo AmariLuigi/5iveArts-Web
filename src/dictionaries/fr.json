@@ -12,7 +12,8 @@
     "switchRegion": "Changer de Région",
     "vault": "Coffre",
     "warehouse": "Entrepôt",
-    "access": "Accès"
+    "access": "Accès",
+    "wishlist": "Liste de souhaits"
   },
   "home": {
     "title": "5iveArts - Artisanat de Precision",
@@ -302,6 +303,12 @@
       "edit": "Modifier",
       "delete": "Décommissionner",
       "confirmDelete": "Êtes-vous sûr de vouloir décommissionner cette route d'expédition ?"
+    },
+    "wishlist": {
+      "title": "Ma Liste de Souhaits de Conservateur",
+      "subtitle": "Artefacts Sous Observation",
+      "emptyTitle": "Votre Liste de Souhaits est Vide",
+      "emptyDescription": "Scannez nos artefacts et marquez ceux qui résonnent avec votre style pour une acquisition future."
     }
   },
   "orders": {

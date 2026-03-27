@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Menu, X, ChevronDown, User } from "lucide-react";
+import { ShoppingCart, Menu, X, ChevronDown, User, Heart } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
@@ -175,6 +175,14 @@ export default function Navbar({ dict, lang }: NavbarProps) {
                 </div>
               )}
             </div>
+
+            <Link
+              href={`/${lang}/account/wishlist`}
+              className="flex items-center gap-1 text-white hover:text-brand-yellow transition-all"
+              title={dict.nav.wishlist}
+            >
+              <Heart className="w-6 h-6" />
+            </Link>
 
             <Link
               href={user ? `/${lang}/account` : `/${lang}/login`}

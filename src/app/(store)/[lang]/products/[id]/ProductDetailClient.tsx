@@ -12,6 +12,7 @@ import AddToCartButton from "./AddToCartButton";
 import TrustBadges from "@/components/ui/TrustBadges";
 import { useSiteSettings } from "@/components/providers/SettingsProvider";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import WishlistToggle from "@/components/ui/WishlistToggle";
 
 interface Props {
     product: Product;
@@ -341,9 +342,16 @@ export default function ProductDetailClient({ product, lang, dict }: Props) {
                                 })}
                             </div>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-[0.9] mb-6">
-                            {product.name}
-                        </h1>
+                        <div className="flex items-start justify-between gap-4">
+                            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-[0.9] mb-6">
+                                {product.name}
+                            </h1>
+                            <WishlistToggle 
+                                productId={product.id} 
+                                productName={product.name}
+                                className="w-16 h-16 bg-white/5 backdrop-blur-md rounded-sm border border-white/10 hover:bg-white/10 transition-all flex-shrink-0"
+                            />
+                        </div>
                         <p className="text-4xl font-black text-white tracking-tighter">
                             {formatPrice(currentPrice)}
                         </p>

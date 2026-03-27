@@ -65,3 +65,10 @@ export interface UserAddress extends ShippingAddress {
   is_default: boolean;
   created_at: string;
 }
+
+export interface WishlistItem {
+  product_id: string;
+  user_id: string;
+  created_at: string;
+  product?: Product; // Optional join
+}

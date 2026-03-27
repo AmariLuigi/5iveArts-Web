@@ -12,7 +12,8 @@
     "switchRegion": "Cambiar Región",
     "vault": "Bóveda",
     "warehouse": "Almacén",
-    "access": "Acceso"
+    "access": "Acceso",
+    "wishlist": "Lista de deseos"
   },
   "home": {
     "title": "5iveArts - Precisión Artesanal",
@@ -302,6 +303,12 @@
       "edit": "Modificar",
       "delete": "Descomisionar",
       "confirmDelete": "¿Seguro que desea descomisionar esta ruta de despacho?"
+    },
+    "wishlist": {
+      "title": "Mi Lista de Deseos de Curador",
+      "subtitle": "Artefactos Bajo Observación",
+      "emptyTitle": "Tu Lista de Deseos está Vacía",
+      "emptyDescription": "Escanea nuestros artefactos y marca aquellos que resuenen con tu estilo para una adquisición futura."
     }
   },
   "orders": {

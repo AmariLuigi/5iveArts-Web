@@ -9,6 +9,7 @@ import { Product, ProductScale, ProductFinish } from "@/types";
 import { formatPrice, calculatePrice, SCALE_CONFIG } from "@/lib/products";
 import { useCartStore } from "@/store/cart";
 import { useSiteSettings } from "@/components/providers/SettingsProvider";
+import WishlistToggle from "@/components/ui/WishlistToggle";
 
 interface ProductCardProps {
   product: Product;
@@ -150,6 +151,15 @@ export default function ProductCard({ product, lang = "en", dict }: ProductCardP
           <Tag className="w-3 h-3" />
           {categoryLabel}
         </span>
+
+        {/* Wishlist Toggle Overlay */}
+        <div className="absolute top-4 right-4 z-20">
+          <WishlistToggle 
+            productId={product.id} 
+            productName={localizedName}
+            className="w-10 h-10 bg-black/40 backdrop-blur-md rounded-full border border-white/10 hover:bg-black/60 shadow-xl"
+          />
+        </div>
       </Link>
 
       <div className="p-6 flex flex-col flex-1 bg-gradient-to-b from-[#111] to-[#0a0a0a]">
