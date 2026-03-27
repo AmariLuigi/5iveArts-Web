@@ -7,7 +7,7 @@ import { Truck, CreditCard, Loader2, Check, ShieldCheck, Lock, ChevronLeft, Arro
 import { useCartStore, CartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/products";
 import { ShippingAddress, ShippingRate, UserAddress } from "@/types";
-import { MapPin, Globe, ChevronDown, CheckCircle2 } from "lucide-react";
+import { MapPin, Globe, ChevronDown, CheckCircle2, Plus } from "lucide-react";
 import axios from "axios";
 import StripePaymentForm from "@/components/checkout/StripePaymentForm";
 import { countries } from "@/lib/countries";
@@ -66,6 +66,7 @@ export default function CheckoutClient({
   const [savedAddresses, setSavedAddresses] = useState<UserAddress[]>([]);
   const [showAddressPicker, setShowAddressPicker] = useState(false);
   const [saveToVault, setSaveToVault] = useState(false);
+  const [selectedSavedId, setSelectedSavedId] = useState<string | null>(null);
 
   // Hydration and Persistence
   useEffect(() => {
@@ -82,6 +83,7 @@ export default function CheckoutClient({
           // If there's a default address and current address is empty, auto-fill it
           const defaultAddr = res.data.find((a: UserAddress) => a.is_default);
           if (defaultAddr && (!address.street1 || address.street1 === "")) {
+            setSelectedSavedId(defaultAddr.id);
             applySavedAddress(defaultAddr);
           }
         }).catch(err => console.error("Failed to fetch saved addresses:", err));
@@ -419,6 +421,12 @@ export default function CheckoutClient({
     if (activeStep > 1) setActiveStep(1);
   };
 
+  const handleApplySaved = (sa: UserAddress) => {
+    setSelectedSavedId(sa.id);
+    applySavedAddress(sa);
+    setShowAddressPicker(false);
+  };
+
   const handleCheckout = async () => {
     const log = (m: string) => navigator.sendBeacon("/api/debug/log", JSON.stringify({ message: `[STATE] ${m}`, type: "info" }));
     log("Starting handleCheckout...");
@@ -546,260 +554,280 @@ export default function CheckoutClient({
 
               {/* Saved Address Integration */}
               {user && savedAddresses.length > 0 && (
-                <div className="mb-10 bg-white/[0.02] border border-white/5 p-6 rounded-sm">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500 italic">
+                <div className="mb-10 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500 italic">
                       {dict.checkout.chooseSaved}
                     </span>
                     <button 
                       type="button"
-                      onClick={() => setShowAddressPicker(!showAddressPicker)}
-                      className="text-[9px] font-black uppercase tracking-widest text-brand-yellow hover:text-white transition-colors flex items-center gap-2"
+                      onClick={() => {
+                        setSelectedSavedId(null);
+                        setAddress(EMPTY_ADDRESS);
+                      }}
+                      className={`text-[9px] font-black uppercase tracking-widest transition-colors flex items-center gap-2 ${
+                        !selectedSavedId ? "text-white" : "text-brand-yellow hover:text-white"
+                      }`}
                     >
-                      {showAddressPicker ? <Globe className="w-3 h-3" /> : <MapPin className="w-3 h-3" />}
-                      {showAddressPicker ? dict.checkout.newAddress : dict.checkout.chooseSaved}
+                      <Plus className="w-3.5 h-3.5" />
+                      {dict.checkout.newAddress}
                     </button>
                   </div>
-                  
-                  {showAddressPicker && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                      {savedAddresses.map((sa) => (
-                        <button
-                          key={sa.id}
-                          type="button"
-                          onClick={() => applySavedAddress(sa)}
-                          className="text-left bg-black/40 border border-white/5 p-4 rounded-sm hover:border-brand-yellow/40 transition-all group"
-                        >
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-brand-yellow transition-colors">
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {savedAddresses.map((sa) => (
+                      <button
+                        key={sa.id}
+                        type="button"
+                        onClick={() => handleApplySaved(sa)}
+                        className={`text-left p-6 rounded-sm border transition-all group relative ${
+                          selectedSavedId === sa.id 
+                            ? "bg-brand-yellow/5 border-brand-yellow shadow-[0_0_20px_-10px_var(--hasbro-yellow)]" 
+                            : "bg-[#050505] border-white/5 hover:border-white/20"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex flex-col">
+                            <span className={`text-[11px] font-black uppercase tracking-widest ${
+                              selectedSavedId === sa.id ? "text-brand-yellow" : "text-white group-hover:text-brand-yellow"
+                            } transition-colors`}>
                               {sa.full_name}
                             </span>
-                            {sa.is_default && <CheckCircle2 className="w-3 h-3 text-brand-yellow" />}
+                            <span className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest mt-1">
+                              {sa.is_default ? dict.account.settings.default : "Route"}
+                            </span>
                           </div>
-                          <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest line-clamp-1">
-                            {sa.street1}, {sa.city}
-                          </p>
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                          {selectedSavedId === sa.id && (
+                            <div className="bg-brand-yellow text-black p-1 rounded-full">
+                              <Check className="w-3 h-3" />
+                            </div>
+                          )}
+                        </div>
+                        <p className={`text-[10px] font-bold uppercase tracking-widest leading-relaxed ${
+                          selectedSavedId === sa.id ? "text-neutral-400" : "text-neutral-500"
+                        }`}>
+                          {sa.street1}<br />
+                          {sa.zip_code} {sa.city}, {sa.state}<br />
+                          {sa.country}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <div className="sm:col-span-2">
-                  <CustomSelect
-                    label={dict.navbar?.country || "Country *"}
-                    options={localizedCountries}
-                    value={address.country}
-                    onChange={(val: string) => setAddress((prev: ShippingAddress) => ({ ...prev, country: val }))}
-                    name="country"
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
-                    {dict.checkout.recipientName}
-                  </label>
-                  <input
-                    type="text"
-                    name="full_name"
-                    value={address.full_name}
-                    onChange={handleAddressChange}
-                    className="w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors"
-                    placeholder={dict.checkout.collectorPlaceholder}
-                    required
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <div className="flex justify-between items-center mb-2">
-                    <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500">
-                      {dict.checkout.emailAddress}
-                    </label>
-                    {user && (
-                      <span className="text-[8px] font-black uppercase tracking-widest text-brand-yellow">
-                        {dict.checkout.vault}: {user.email}
-                      </span>
+              {/* Manual Entry Protocol */}
+              {(!selectedSavedId || (user && savedAddresses.length === 0)) && (
+                <div className="p-8 border border-white/5 bg-white/[0.01] rounded-sm animate-in fade-in slide-in-from-top-4 duration-500">
+                  <div className="flex items-center justify-between mb-8">
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white">
+                      {dict.checkout.newAddress}
+                    </h3>
+                    {selectedSavedId && (
+                       <button 
+                        onClick={() => setSelectedSavedId(null)}
+                        className="text-[9px] font-black uppercase tracking-widest text-neutral-500 hover:text-brand-yellow transition-colors"
+                       >
+                        {dict.checkout.backBtn}
+                       </button>
                     )}
                   </div>
-                  <input
-                    type="email"
-                    name="email"
-                    value={address.email}
-                    onChange={handleAddressChange}
-                    className="w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors"
-                    placeholder="email@example.com"
-                    required
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
-                    {dict.checkout.streetAddress}
-                  </label>
-                  <input
-                    type="text"
-                    name="street1"
-                    value={address.street1}
-                    onChange={handleAddressChange}
-                    className="w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors"
-                    placeholder={dict.checkout.addressLine1}
-                    required
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
-                    {dict.checkout.suite}
-                  </label>
-                  <input
-                    type="text"
-                    name="street2"
-                    value={address.street2}
-                    onChange={handleAddressChange}
-                    className="w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors"
-                    placeholder={dict.checkout.optional}
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className={`block text-[10px] uppercase font-black tracking-widest mb-2 ${!address.country ? 'text-neutral-700' : 'text-neutral-500'}`}>
-                    {dict.checkout.postcode} {!address.country && dict.checkout.selectCountryFirst}
-                  </label>
-                  <input
-                    type="text"
-                    name="zip_code"
-                    value={address.zip_code}
-                    onChange={handleAddressChange}
-                    disabled={!address.country}
-                    className={`w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors ${!address.country ? 'opacity-30 cursor-not-allowed' : ''}`}
-                    placeholder={dict.checkout.zipPlaceholder}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className={`block text-[10px] uppercase font-black tracking-widest mb-2 ${!zipFetched && !zipLookupFailed ? 'text-neutral-700' : 'text-neutral-500'}`}>
-                    {dict.checkout.city} {isZipLoading ? dict.checkout.detecting : (zipFetched ? dict.checkout.autoFilled : (zipLookupFailed ? dict.checkout.enterManually : dict.checkout.detecting))}
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={address.city}
-                    onChange={handleAddressChange}
-                    readOnly={zipFetched && !zipLookupFailed}
-                    className={`w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors ${!zipFetched && !zipLookupFailed ? 'opacity-30 cursor-not-allowed' : ''}`}
-                    placeholder="City"
-                    required
-                  />
-                </div>
-                <div>
-                  {regions.length > 0 ? (
-                    <CustomSelect
-                      label={`${dict.checkout.state} ${isZipLoading ? dict.checkout.detecting : (zipFetched ? dict.checkout.autoFilled : (zipLookupFailed ? dict.checkout.enterManually : dict.checkout.detecting))}`}
-                      options={regions.map((r) => ({
-                        code: r.state_code || r.name,
-                        name: r.name
-                      }))}
-                      value={address.state}
-                      onChange={(val: string) => setAddress((prev: ShippingAddress) => ({ ...prev, state: val }))}
-                      placeholder="Select Region"
-                      disabled={!zipFetched && !zipLookupFailed}
-                    />
-                  ) : (
-                    <>
-                      <label className={`block text-[10px] uppercase font-black tracking-widest mb-2 ${!zipFetched && !zipLookupFailed ? 'text-neutral-700' : 'text-neutral-500'}`}>
-                        {dict.checkout.state} {isZipLoading ? dict.checkout.detecting : (zipFetched ? dict.checkout.autoFilled : (zipLookupFailed ? dict.checkout.enterManually : dict.checkout.detecting))}
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div className="sm:col-span-2">
+                      <CustomSelect
+                        label={dict.navbar?.country || "Country *"}
+                        options={localizedCountries}
+                        value={address.country}
+                        onChange={(val: string) => setAddress((prev: ShippingAddress) => ({ ...prev, country: val }))}
+                        name="country"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
+                        {dict.checkout.recipientName}
                       </label>
                       <input
                         type="text"
-                        name="state"
-                        value={address.state}
+                        name="full_name"
+                        value={address.full_name}
                         onChange={handleAddressChange}
-                        readOnly={zipFetched && !zipLookupFailed}
-                        className={`w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors ${!zipFetched && !zipLookupFailed ? 'opacity-30 cursor-not-allowed' : ''}`}
-                        placeholder={loadingRegions ? "..." : "Region"}
+                        className="w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors"
+                        placeholder={dict.checkout.collectorPlaceholder}
+                        required
                       />
-                    </>
-                  )}
-                </div>
-                <div className="sm:col-span-2">
-                  {(() => {
-                    const phoneAsYouType = new AsYouType();
-                    phoneAsYouType.input(address.phone);
-                    const detectedCountry = phoneAsYouType.getCountry();
-                    const isValid = isValidPhoneNumber(address.phone);
-
-                    return (
-                      <>
-                        <label className={`block text-[10px] uppercase font-black tracking-widest mb-2 ${address.phone && !isValid
-                          ? "text-red-400"
-                          : isValid
-                            ? "text-brand-yellow"
-                            : "text-neutral-500"
-                          }`}>
-                          {dict.checkout.phoneLabel} {address.phone && !isValid ? dict.checkout.invalidFormat : isValid ? dict.checkout.validNumber : dict.checkout.includeCode}
+                    </div>
+                    <div className="sm:col-span-2">
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500">
+                          {dict.checkout.emailAddress}
                         </label>
-                        <div className="relative">
-                          <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2 border-r border-white/10 pr-3 h-5">
-                            {detectedCountry ? (
-                              <button
-                                type="button"
-                                title={`Switch to ${detectedCountry}`}
-                                onClick={() => {
-                                  if (detectedCountry !== address.country) {
-                                      setAddress((prev: ShippingAddress) => ({ ...prev, country: detectedCountry }));
-                                  }
-                                }}
-                                className="hover:scale-110 transition-transform cursor-pointer"
-                              >
-                                <img
-                                  src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${detectedCountry.toUpperCase()}.svg`}
-                                  alt={detectedCountry}
-                                  className="w-5 h-auto rounded-sm shadow-sm"
-                                />
-                              </button>
-                            ) : (
-                              <div className="w-5 h-5 flex items-center justify-center text-neutral-600 text-[10px] font-bold">
-                                +
-                              </div>
-                            )}
-                          </div>
-                          <input
-                            type="tel"
-                            name="phone"
-                            value={address.phone}
-                            onChange={handleAddressChange}
-                            className={`w-full bg-[#050505] border rounded pl-16 pr-4 py-3 text-sm text-white focus:outline-none transition-all ${address.phone && !isValid
-                              ? "border-red-500/50"
-                              : isValid
-                                ? "border-brand-yellow/50 shadow-[0_0_15px_-5px_var(--hasbro-yellow)]"
-                                : "border-white/5 focus:border-brand-yellow"
-                              }`}
-                            placeholder="+44 7700 900000"
-                            required
-                          />
-                        </div>
-
-                        {/* Save to Vault Protocol */}
-                        {user && !showAddressPicker && (
-                          <div className="sm:col-span-2 pt-4">
-                            <label className="flex items-center gap-3 cursor-pointer group">
-                              <div className="relative flex items-center justify-center">
-                                <input
-                                  type="checkbox"
-                                  checked={saveToVault}
-                                  onChange={(e) => setSaveToVault(e.target.checked)}
-                                  className="peer appearance-none w-5 h-5 border border-white/10 rounded-sm checked:bg-brand-yellow checked:border-brand-yellow transition-all"
-                                />
-                                <Check className="absolute w-3.5 h-3.5 text-black opacity-0 peer-checked:opacity-100 transition-opacity" />
-                              </div>
-                              <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500 group-hover:text-white transition-colors">
-                                {dict.checkout.saveToVault}
-                              </span>
-                            </label>
+                      </div>
+                      <input
+                        type="email"
+                        name="email"
+                        value={address.email}
+                        onChange={handleAddressChange}
+                        className="w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors"
+                        placeholder="collector@5ivearts.com"
+                        required
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
+                        {dict.checkout.stAddress}
+                      </label>
+                      <input
+                        type="text"
+                        name="street1"
+                        value={address.street1}
+                        onChange={handleAddressChange}
+                        className="w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors mb-4"
+                        placeholder={dict.checkout.streetPlaceholder}
+                        required
+                      />
+                      <input
+                        type="text"
+                        name="street2"
+                        value={address.street2 || ""}
+                        onChange={handleAddressChange}
+                        className="w-full bg-[#050505] border border-white/5 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow transition-colors"
+                        placeholder={dict.checkout.aptPlaceholder}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
+                        {dict.checkout.city}
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          name="city"
+                          value={address.city}
+                          onChange={handleAddressChange}
+                          className={`w-full bg-[#050505] border rounded px-4 py-3 text-sm text-white focus:outline-none transition-all ${zipFetched ? "border-brand-yellow/30 shadow-[0_0_10px_-5px_var(--hasbro-yellow)]" : "border-white/5 focus:border-brand-yellow"}`}
+                          placeholder="Firenze"
+                          required
+                        />
+                        {isZipLoading && (
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                            <Loader2 className="w-3 h-3 animate-spin text-brand-yellow" />
                           </div>
                         )}
-                      </>
-                    );
-                  })()}
+                        {zipFetched && (
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                            <Check className="w-3 h-3 text-brand-yellow" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <CustomSelect
+                        label={dict.checkout.state}
+                        options={regions.length > 0 ? regions.map(r => ({ code: r.state_code, name: r.name })) : []}
+                        value={address.state}
+                        onChange={(val: string) => setAddress((prev: ShippingAddress) => ({ ...prev, state: val }))}
+                        name="state"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2">
+                        {dict.checkout.zipCode}
+                      </label>
+                      <input
+                        type="text"
+                        name="zip_code"
+                        value={address.zip_code}
+                        onChange={handleAddressChange}
+                        className={`w-full bg-[#050505] border rounded px-4 py-3 text-sm text-white focus:outline-none transition-all ${zipLookupFailed ? "border-red-500/50" : zipFetched ? "border-brand-yellow/30" : "border-white/5 focus:border-brand-yellow"}`}
+                        placeholder="50123"
+                        required
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      {(() => {
+                        const phoneAsYouType = new AsYouType();
+                        phoneAsYouType.input(address.phone);
+                        const detectedCountry = phoneAsYouType.getCountry();
+                        const isValid = isValidPhoneNumber(address.phone);
+
+                        return (
+                          <>
+                            <label className={`block text-[10px] uppercase font-black tracking-widest mb-2 ${address.phone && !isValid
+                              ? "text-red-400"
+                              : isValid
+                                ? "text-brand-yellow"
+                                : "text-neutral-500"
+                              }`}>
+                              {dict.checkout.phoneLabel} {address.phone && !isValid ? dict.checkout.invalidFormat : isValid ? dict.checkout.validNumber : dict.checkout.includeCode}
+                            </label>
+                            <div className="relative">
+                              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2 border-r border-white/10 pr-3 h-5">
+                                {detectedCountry ? (
+                                  <button
+                                    type="button"
+                                    title={`Switch to ${detectedCountry}`}
+                                    onClick={() => {
+                                      if (detectedCountry !== address.country) {
+                                          setAddress((prev: ShippingAddress) => ({ ...prev, country: detectedCountry }));
+                                      }
+                                    }}
+                                    className="hover:scale-110 transition-transform cursor-pointer"
+                                  >
+                                    <img
+                                      src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${detectedCountry.toUpperCase()}.svg`}
+                                      alt={detectedCountry}
+                                      className="w-5 h-auto rounded-sm shadow-sm"
+                                    />
+                                  </button>
+                                ) : (
+                                  <div className="w-5 h-5 flex items-center justify-center text-neutral-600 text-[10px] font-bold">
+                                    +
+                                  </div>
+                                )}
+                              </div>
+                              <input
+                                type="tel"
+                                name="phone"
+                                value={address.phone}
+                                onChange={handleAddressChange}
+                                className={`w-full bg-[#050505] border rounded pl-16 pr-4 py-3 text-sm text-white focus:outline-none transition-all ${address.phone && !isValid
+                                  ? "border-red-500/50"
+                                  : isValid
+                                    ? "border-brand-yellow/50 shadow-[0_0_15px_-5px_var(--hasbro-yellow)]"
+                                    : "border-white/5 focus:border-brand-yellow"
+                                  }`}
+                                placeholder="+44 7700 900000"
+                                required
+                              />
+                            </div>
+
+                            {/* Save to Vault Protocol */}
+                            {user && !selectedSavedId && (
+                              <div className="sm:col-span-2 pt-4">
+                                <label className="flex items-center gap-3 cursor-pointer group">
+                                  <div className="relative flex items-center justify-center">
+                                    <input
+                                      type="checkbox"
+                                      checked={saveToVault}
+                                      onChange={(e) => setSaveToVault(e.target.checked)}
+                                      className="peer appearance-none w-5 h-5 border border-white/10 rounded-sm checked:bg-brand-yellow checked:border-brand-yellow transition-all"
+                                    />
+                                    <Check className="absolute w-3.5 h-3.5 text-black opacity-0 peer-checked:opacity-100 transition-opacity" />
+                                  </div>
+                                  <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500 group-hover:text-white transition-colors">
+                                    {dict.checkout.saveToVault}
+                                  </span>
+                                </label>
+                              </div>
+                            )}
+                          </>
+                        );
+                      })()}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <button
                 type="button"
