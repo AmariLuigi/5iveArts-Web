@@ -273,7 +273,7 @@
     "totalAcquisitions": "登録された総取得数",
     "status": "アカウント・ステータス",
     "verifiedCollector": "認証済みコレクター",
-    "level1 Encryption": "レベル1 暗号化",
+    "level1Encryption": "レベル1 暗号化",
     "history": "取得履歴",
     "verificationRequired": "認証が必要です",
     "verificationDesc": "すべての機能にアクセスするために、本人確認を行ってください",
