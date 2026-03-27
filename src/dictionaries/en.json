@@ -169,6 +169,7 @@
     "chooseSaved": "Access Saved Routes",
     "useThis": "Authorize Route",
     "newAddress": "Establish New Protocol",
+    "saveToVault": "Register this dispatch route in my secure vault",
     "verifying": "Verifying Secure Transaction…",
     "loadingForm": "Loading payment protocols...",
     "processing": "Processing payment…",

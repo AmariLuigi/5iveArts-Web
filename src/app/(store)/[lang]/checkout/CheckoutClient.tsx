@@ -65,6 +65,7 @@ export default function CheckoutClient({
   const [user, setUser] = useState<any>(null);
   const [savedAddresses, setSavedAddresses] = useState<UserAddress[]>([]);
   const [showAddressPicker, setShowAddressPicker] = useState(false);
+  const [saveToVault, setSaveToVault] = useState(false);
 
   // Hydration and Persistence
   useEffect(() => {
@@ -445,6 +446,22 @@ export default function CheckoutClient({
         shippingRate: selectedRate,
         shippingAddress: address,
       });
+
+      // Address Auto-Save Protocol
+      if (saveToVault && user) {
+        axios.post("/api/account/addresses", {
+            full_name: address.full_name,
+            street1: address.street1,
+            street2: address.street2,
+            city: address.city,
+            state: address.state,
+            zip_code: address.zip_code,
+            country: address.country,
+            phone: address.phone,
+            is_default: savedAddresses.length === 0
+        }).catch(err => console.error("Failed to auto-save dispatch destination:", err));
+      }
+
       setClientSecret(res.data.clientSecret);
       setActiveStep(3);
     } catch (err: any) {
@@ -758,6 +775,26 @@ export default function CheckoutClient({
                             required
                           />
                         </div>
+
+                        {/* Save to Vault Protocol */}
+                        {user && !showAddressPicker && (
+                          <div className="sm:col-span-2 pt-4">
+                            <label className="flex items-center gap-3 cursor-pointer group">
+                              <div className="relative flex items-center justify-center">
+                                <input
+                                  type="checkbox"
+                                  checked={saveToVault}
+                                  onChange={(e) => setSaveToVault(e.target.checked)}
+                                  className="peer appearance-none w-5 h-5 border border-white/10 rounded-sm checked:bg-brand-yellow checked:border-brand-yellow transition-all"
+                                />
+                                <Check className="absolute w-3.5 h-3.5 text-black opacity-0 peer-checked:opacity-100 transition-opacity" />
+                              </div>
+                              <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500 group-hover:text-white transition-colors">
+                                {dict.checkout.saveToVault}
+                              </span>
+                            </label>
+                          </div>
+                        )}
                       </>
                     );
                   })()}

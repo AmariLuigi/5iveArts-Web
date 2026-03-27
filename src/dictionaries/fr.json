@@ -169,6 +169,7 @@
     "chooseSaved": "Accéder aux Routes Sauvées",
     "useThis": "Autoriser Route",
     "newAddress": "Établir Nouveau Protocole",
+    "saveToVault": "Enregistrer cette route d'expédition dans mon vault sécurisé",
     "verifying": "Vérification de la Transaction Sécurisée…",
     "loadingForm": "Chargement des protocoles de paiement...",
     "processing": "Traitement du paiement…",

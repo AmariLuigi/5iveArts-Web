@@ -169,6 +169,7 @@
     "chooseSaved": "Acceder a Rutas Guardadas",
     "useThis": "Autorizar Ruta",
     "newAddress": "Establecer Nuevo Protocolo",
+    "saveToVault": "Registrar este destino de despacho en mi bóveda segura",
     "verifying": "Verificando Transacción Segura…",
     "loadingForm": "Cargando protocolos de pago...",
     "processing": "Procesando pago…",
