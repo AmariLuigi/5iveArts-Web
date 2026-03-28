@@ -531,7 +531,39 @@
     "success_message": "Ваша документация была зашифрована и передана нашим ведущим кураторам. Мы проверим осуществимость и сложность в течение 24–48 часов.",
     "cta_vault": "Войти в Мой Сейф",
     "tagline": "Продвинутый протокол настройки",
-    "logistics_title": "Системная логистика"
+    "logistics_title": "Системная логистика",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Информация о проекте",
+    "proposal_field_title_label": "Название персонажа / проекта",
+    "proposal_field_title_placeholder": "например, Master Chief - Mark VI",
+    "proposal_field_scale_label": "Желаемый масштаб",
+    "proposal_field_finish_label": "Протокол отделки",
+    "proposal_cta_configure": "Настроить детали",
+    "proposal_step_narrative_tag": "Документация бюро",
+    "proposal_step_narrative_title": "Описание проекта",
+    "proposal_field_desc_label": "Описание проекта",
+    "proposal_field_desc_placeholder": "Опишите ваше видение, конкретные позы или детали...",
+    "proposal_cta_upload": "Загрузить материалы",
+    "proposal_cta_back": "Назад",
+    "proposal_step_visual_tag": "Визуальные референсы",
+    "proposal_step_visual_title": "Передача материалов",
+    "proposal_field_upload_label": "Добавить файл",
+    "proposal_field_upload_hint": "Форматы: JPG, PNG, WEBP (МАКС. 3)",
+    "proposal_cta_submit": "Отправить заказ",
+    "error_max_files": "Разрешено максимум 3 изображения",
+    "error_required_fields": "Пожалуйста, заполните все обязательные поля и загрузите хотя бы одно изображение.",
+    "scales": {
+      "1:12": "Масштаб 1:12",
+      "1:10": "Масштаб 1:10",
+      "1:6": "Масштаб 1:6",
+      "1:4": "Масштаб 1:4",
+      "other": "Другое / Свой масштаб"
+    },
+    "finishes": {
+      "raw": "Черновой (серая смола)",
+      "standard": "Покраска (Стандарт)",
+      "master": "Покраска (Мастер-уровень)"
+    }
   },
   "marketing": {
     "trendingTag": "Самый желанный протокол",

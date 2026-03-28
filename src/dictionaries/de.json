@@ -531,7 +531,39 @@
     "success_message": "Ihre Unterlagen wurden verschlüsselt und an unsere leitenden Kuratoren übermittelt. Wir werden die Machbarkeit und Komplexität innerhalb von 24-48 Stunden prüfen.",
     "cta_vault": "Mein Vault Betreten",
     "tagline": "Erweitertes Custom-Protokoll",
-    "logistics_title": "Systemlogistik"
+    "logistics_title": "Systemlogistik",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Projektidentität",
+    "proposal_field_title_label": "Charakter / Projekt-Titel",
+    "proposal_field_title_placeholder": "z.B. Master Chief - Mark VI",
+    "proposal_field_scale_label": "Gewünschter Maßstab",
+    "proposal_field_finish_label": "Veredelungsprotokoll",
+    "proposal_cta_configure": "Details konfigurieren",
+    "proposal_step_narrative_tag": "Bureau Dokumentation",
+    "proposal_step_narrative_title": "Narrativer Umfang",
+    "proposal_field_desc_label": "Projektbeschreibung",
+    "proposal_field_desc_placeholder": "Beschreiben Sie Ihre Vision, spezifische Posen oder Referenzdetails...",
+    "proposal_cta_upload": "Assets hochladen",
+    "proposal_cta_back": "Zurück",
+    "proposal_step_visual_tag": "Visueller Beweis",
+    "proposal_step_visual_title": "Asset-Übermittlung",
+    "proposal_field_upload_label": "Datei hinzufügen",
+    "proposal_field_upload_hint": "Unterstützte Formate: JPG, PNG, WEBP (MAX 3)",
+    "proposal_cta_submit": "Auftrag einreichen",
+    "error_max_files": "Maximal 3 Referenzbilder erlaubt",
+    "error_required_fields": "Bitte füllen Sie alle erforderlichen Felder aus und laden Sie mindestens ein Bild hoch.",
+    "scales": {
+      "1:12": "Maßstab 1:12",
+      "1:10": "Maßstab 1:10",
+      "1:6": "Maßstab 1:6",
+      "1:4": "Maßstab 1:4",
+      "other": "Andere / Individuell"
+    },
+    "finishes": {
+      "raw": "Roh (Graues Harz)",
+      "standard": "Bemalt (Standard)",
+      "master": "Bemalt (Meistergrad)"
+    }
   },
   "marketing": {
     "trendingTag": "Meistgewünschtes Protokoll",

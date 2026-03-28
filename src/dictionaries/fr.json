@@ -531,7 +531,39 @@
     "success_message": "Votre documentation a été cryptée et soumise à nos conservateurs en chef. Nous examinerons la faisabilité et la complexité dans un délai de 24 à 48 heures.",
     "cta_vault": "Accéder à Mon Vault",
     "tagline": "Protocole Personnalisé Avancé",
-    "logistics_title": "Logistique du Système"
+    "logistics_title": "Logistique du Système",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Identité du Projet",
+    "proposal_field_title_label": "Titre du Personnage / Projet",
+    "proposal_field_title_placeholder": "ex. Master Chief - Mark VI",
+    "proposal_field_scale_label": "Échelle Souhaitée",
+    "proposal_field_finish_label": "Protocole de Finition",
+    "proposal_cta_configure": "Configurer les Détails",
+    "proposal_step_narrative_tag": "Documentation du Bureau",
+    "proposal_step_narrative_title": "Portée Narrative",
+    "proposal_field_desc_label": "Description du Projet",
+    "proposal_field_desc_placeholder": "Décrivez votre vision, des poses spécifiques ou des détails de référence...",
+    "proposal_cta_upload": "Télécharger les Actifs",
+    "proposal_cta_back": "Retour",
+    "proposal_step_visual_tag": "Preuve Visuelle",
+    "proposal_step_visual_title": "Transmission des Actifs",
+    "proposal_field_upload_label": "Ajouter un Fichier",
+    "proposal_field_upload_hint": "Formats supportés : JPG, PNG, WEBP (MAX 3)",
+    "proposal_cta_submit": "Soumettre la Commande",
+    "error_max_files": "Maximum 3 images de référence autorisées",
+    "error_required_fields": "Veuillez remplir tous les champs obligatoires et télécharger au moins une image.",
+    "scales": {
+      "1:12": "Échelle 1:12",
+      "1:10": "Échelle 1:10",
+      "1:6": "Échelle 1:6",
+      "1:4": "Échelle 1:4",
+      "other": "Autre / Personnalisé"
+    },
+    "finishes": {
+      "raw": "Brut (Résine Grise)",
+      "standard": "Peint (Standard)",
+      "master": "Peint (Niveau Maître)"
+    }
   },
   "marketing": {
     "trendingTag": "Protocole le Plus Désiré",

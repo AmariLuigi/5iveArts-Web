@@ -531,7 +531,39 @@
     "success_message": "تم تشفير مستنداتك وإرسالها إلى كبار المنسقين لدينا. سنراجع الجدوى والتعقيد في غضون 24-48 ساعة.",
     "cta_vault": "الدخول إلى خزانتي",
     "tagline": "بروتوكول التخصيص المتقدم",
-    "logistics_title": "لوجستيات النظام"
+    "logistics_title": "لوجستيات النظام",
+    "proposal_step_identity_tag": "مكتب الحرفيين",
+    "proposal_step_identity_title": "هوية المشروع",
+    "proposal_field_title_label": "اسم الشخصية / المشروع",
+    "proposal_field_title_placeholder": "مثال: ماستر تشيف - مارك VI",
+    "proposal_field_scale_label": "المقياس المطلوب",
+    "proposal_field_finish_label": "بروتوكول اللمسات الأخيرة",
+    "proposal_cta_configure": "تكوين التفاصيل",
+    "proposal_step_narrative_tag": "وثائق المكتب",
+    "proposal_step_narrative_title": "نطاق السرد",
+    "proposal_field_desc_label": "وصف المشروع",
+    "proposal_field_desc_placeholder": "صف رؤيتك، أو وضعيات معينة، أو تفاصيل مرجعية...",
+    "proposal_cta_upload": "تحميل الأصول",
+    "proposal_cta_back": "عودة",
+    "proposal_step_visual_tag": "أدلة بصرية",
+    "proposal_step_visual_title": "نقل الأصول",
+    "proposal_field_upload_label": "إضافة ملف",
+    "proposal_field_upload_hint": "الصيغ المدعومة: JPG, PNG, WEBP (بحد أقصى 3)",
+    "proposal_cta_submit": "إرسال التكليف",
+    "error_max_files": "يُسمح بحد أقصى 3 صور مرجعية",
+    "error_required_fields": "يرجى إكمال جميع الحقول المطلوبة وتحميل صورة واحدة على الأقل.",
+    "scales": {
+      "1:12": "مقياس 1:12",
+      "1:10": "مقياس 1:10",
+      "1:6": "مقياس 1:6",
+      "1:4": "مقياس 1:4",
+      "other": "آخر / مخصص"
+    },
+    "finishes": {
+      "raw": "خام (راتنج رمادي)",
+      "standard": "ملون (قياسي)",
+      "master": "ملون (درجة احترافية)"
+    }
   },
   "marketing": {
     "trendingTag": "البروتوكول الأكثر رغبة",

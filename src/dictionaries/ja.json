@@ -531,7 +531,39 @@
     "success_message": "ドキュメントは暗号化され、リードキュレーターに提出されました。24〜48時間以内に実現可能性と複雑さを確認いたします。",
     "cta_vault": "マイ・ヴォルトへ",
     "tagline": "高度なカスタムプロトコル",
-    "logistics_title": "システム物流"
+    "logistics_title": "システム物流",
+    "proposal_step_identity_tag": "アルチザン・ビューロー",
+    "proposal_step_identity_title": "プロジェクトのアイデンティティ",
+    "proposal_field_title_label": "キャラクター / プロジェクト名",
+    "proposal_field_title_placeholder": "例：マスターチーフ - Mark VI",
+    "proposal_field_scale_label": "希望のスケール",
+    "proposal_field_finish_label": "仕上げプロトコル",
+    "proposal_cta_configure": "詳細を構成する",
+    "proposal_step_narrative_tag": "ビューロー・ドキュメンテーション",
+    "proposal_step_narrative_title": "制作範囲と詳細",
+    "proposal_field_desc_label": "プロジェクトの説明",
+    "proposal_field_desc_placeholder": "あなたのビジョン、特定のポーズ、または参照の詳細を記述してください...",
+    "proposal_cta_upload": "資産をアップロード",
+    "proposal_cta_back": "戻る",
+    "proposal_step_visual_tag": "視覚的エビデンス",
+    "proposal_step_visual_title": "資産の送信",
+    "proposal_field_upload_label": "ファイルを追加",
+    "proposal_field_upload_hint": "対応フォーマット：JPG, PNG, WEBP (最大3枚)",
+    "proposal_cta_submit": "依頼を提出する",
+    "error_max_files": "最大3枚の参照画像が許可されています",
+    "error_required_fields": "すべての必須フィールドに入力し、少なくとも1枚の画像をアップロードしてください。",
+    "scales": {
+      "1:12": "1:12 スケール",
+      "1:10": "1:10 スケール",
+      "1:6": "1:6 スケール",
+      "1:4": "1:4 スケール",
+      "other": "その他 / カスタム"
+    },
+    "finishes": {
+      "raw": "未塗装（グレーレジン）",
+      "standard": "塗装済み（標準）",
+      "master": "塗装済み（マスターグレード）"
+    }
   },
   "marketing": {
     "trendingTag": "最も望まれるプロトコル",

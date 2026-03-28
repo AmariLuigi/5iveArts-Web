@@ -531,7 +531,39 @@
     "success_message": "Belgeleriniz şifrelenmiş ve baş küratörlerimize iletilmiştir. Fizibiliteyi ve karmaşıklığı 24-48 saat içinde gözden geçireceğiz.",
     "cta_vault": "Vault'uma Gir",
     "tagline": "Gelişmiş Özel Protokol",
-    "logistics_title": "Sistem Lojistiği"
+    "logistics_title": "Sistem Lojistiği",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Proje Kimliği",
+    "proposal_field_title_label": "Karakter / Proje Başlığı",
+    "proposal_field_title_placeholder": "örn. Master Chief - Mark VI",
+    "proposal_field_scale_label": "İstenilen Ölçek",
+    "proposal_field_finish_label": "Bitiş Protokolü",
+    "proposal_cta_configure": "Detayları Yapılandır",
+    "proposal_step_narrative_tag": "Bureau Dokümantasyonu",
+    "proposal_step_narrative_title": "Anlatı Kapsamı",
+    "proposal_field_desc_label": "Proje Açıklaması",
+    "proposal_field_desc_placeholder": "Vizyonunuzu, belirli pozları veya referans detaylarını açıklayın...",
+    "proposal_cta_upload": "Varlıkları Yükle",
+    "proposal_cta_back": "Geri",
+    "proposal_step_visual_tag": "Görsel Kanıt",
+    "proposal_step_visual_title": "Varlık İletimi",
+    "proposal_field_upload_label": "Dosya Ekle",
+    "proposal_field_upload_hint": "Desteklenen formatlar: JPG, PNG, WEBP (MAKS 3)",
+    "proposal_cta_submit": "Siparişi Gönder",
+    "error_max_files": "Maksimum 3 referans resmine izin verlir",
+    "error_required_fields": "Lütfen gerekli tüm alanları doldurun ve en az bir resim yükleyin.",
+    "scales": {
+      "1:12": "1:12 Ölçek",
+      "1:10": "1:10 Ölçek",
+      "1:6": "1:6 Ölçek",
+      "1:4": "1:4 Ölçek",
+      "other": "Diğer / Özel"
+    },
+    "finishes": {
+      "raw": "Ham (Gri Reçine)",
+      "standard": "Boyalı (Standart)",
+      "master": "Boyalı (Usta Sınıfı)"
+    }
   },
   "marketing": {
     "trendingTag": "En Çok Arzulanan Protokol",

@@ -531,7 +531,39 @@
     "success_message": "Uw documentatie is versleuteld en verzonden naar onze hoofdcuratoren. We zullen de haalbaarheid en complexiteit binnen 24-48 uur beoordelen.",
     "cta_vault": "Naar Mijn Vault",
     "tagline": "Geavanceerd Aangepast Protocol",
-    "logistics_title": "Systeemlogistiek"
+    "logistics_title": "Systeemlogistiek",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Projectidentiteit",
+    "proposal_field_title_label": "Karakter / Projecttitel",
+    "proposal_field_title_placeholder": "bijv. Master Chief - Mark VI",
+    "proposal_field_scale_label": "Gewenste Schaal",
+    "proposal_field_finish_label": "Afwerkingsprotocol",
+    "proposal_cta_configure": "Details configureren",
+    "proposal_step_narrative_tag": "Bureau Documentatie",
+    "proposal_step_narrative_title": "Narratieve Scope",
+    "proposal_field_desc_label": "Projectbeschrijving",
+    "proposal_field_desc_placeholder": "Beschrijf uw visie, specifieke houdingen of referentiedetails...",
+    "proposal_cta_upload": "Assets uploaden",
+    "proposal_cta_back": "Terug",
+    "proposal_step_visual_tag": "Visueel Bewijs",
+    "proposal_step_visual_title": "Assetoverdracht",
+    "proposal_field_upload_label": "Bestand toevoegen",
+    "proposal_field_upload_hint": "Ondersteunde formaten: JPG, PNG, WEBP (MAX 3)",
+    "proposal_cta_submit": "Opdracht indienen",
+    "error_max_files": "Maximaal 3 referentieafbeeldingen toegestaan",
+    "error_required_fields": "Vul alle verplichte velden in en upload minimaal één afbeelding.",
+    "scales": {
+      "1:12": "Schaal 1:12",
+      "1:10": "Schaal 1:10",
+      "1:6": "Schaal 1:6",
+      "1:4": "Schaal 1:4",
+      "other": "Andere / Op maat"
+    },
+    "finishes": {
+      "raw": "Ruw (Grijze Hars)",
+      "standard": "Geschilderd (Standaard)",
+      "master": "Geschilderd (Master-graad)"
+    }
   },
   "marketing": {
     "trendingTag": "Meest Gewenste Protocol",

@@ -531,7 +531,39 @@
     "success_title": "Protocol Initialized",
     "success_subtitle": "Transmission Complete",
     "success_message": "Your documentation has been encrypted and submitted to our lead curators. We will review the feasibility and complexity within 24-48 hours.",
-    "cta_vault": "Enter My Vault"
+    "cta_vault": "Enter My Vault",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Project Identity",
+    "proposal_field_title_label": "Character / Project Title",
+    "proposal_field_title_placeholder": "e.g. Master Chief - Mark VI",
+    "proposal_field_scale_label": "Desired Scale",
+    "proposal_field_finish_label": "Finish Protocol",
+    "proposal_cta_configure": "Configure Details",
+    "proposal_step_narrative_tag": "Bureau Documentation",
+    "proposal_step_narrative_title": "Narrative Scope",
+    "proposal_field_desc_label": "Project Description",
+    "proposal_field_desc_placeholder": "Describe your vision, specific poses, or reference details...",
+    "proposal_cta_upload": "Upload Assets",
+    "proposal_cta_back": "Back",
+    "proposal_step_visual_tag": "Visual Evidence",
+    "proposal_step_visual_title": "Asset Transmission",
+    "proposal_field_upload_label": "Add File",
+    "proposal_field_upload_hint": "Supported formats: JPG, PNG, WEBP (MAX 3)",
+    "proposal_cta_submit": "Submit Commission",
+    "error_max_files": "Maximum 3 reference images allowed",
+    "error_required_fields": "Please complete all required fields and upload at least one image.",
+    "scales": {
+      "1:12": "1:12 Scale",
+      "1:10": "1:10 Scale",
+      "1:6": "1:6 Scale",
+      "1:4": "1:4 Scale",
+      "other": "Other / Custom"
+    },
+    "finishes": {
+      "raw": "Raw (Grey Resin)",
+      "standard": "Painted (Standard)",
+      "master": "Painted (Master Grade)"
+    }
   },
   "marketing": {
     "trendingTag": "Most Desired Protocol",

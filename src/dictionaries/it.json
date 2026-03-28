@@ -531,7 +531,39 @@
     "success_message": "La tua documentazione è stata crittografata e inviata ai nostri curatori senior. Valuteremo la fattibilità e la complessità entro 24-48 ore.",
     "cta_vault": "Entra nel Mio Vault",
     "tagline": "Protocollo Personalizzato Avanzato",
-    "logistics_title": "Logistica Sistema"
+    "logistics_title": "Logistica Sistema",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Identità Progetto",
+    "proposal_field_title_label": "Titolo Personaggio / Progetto",
+    "proposal_field_title_placeholder": "es. Master Chief - Mark VI",
+    "proposal_field_scale_label": "Scala Desiderata",
+    "proposal_field_finish_label": "Protocollo Finitura",
+    "proposal_cta_configure": "Configura Dettagli",
+    "proposal_step_narrative_tag": "Documentazione Bureau",
+    "proposal_step_narrative_title": "Ambito Narrativo",
+    "proposal_field_desc_label": "Descrizione Progetto",
+    "proposal_field_desc_placeholder": "Descrivi la tua visione, pose specifiche o dettagli di riferimento...",
+    "proposal_cta_upload": "Carica Asset",
+    "proposal_cta_back": "Indietro",
+    "proposal_step_visual_tag": "Evidenza Visiva",
+    "proposal_step_visual_title": "Trasmissione Asset",
+    "proposal_field_upload_label": "Aggiungi File",
+    "proposal_field_upload_hint": "Formati supportati: JPG, PNG, WEBP (MAX 3)",
+    "proposal_cta_submit": "Invia Commissione",
+    "error_max_files": "Massimo 3 immagini di riferimento consentite",
+    "error_required_fields": "Completa tutti i campi richiesti e carica almeno un'immagine.",
+    "scales": {
+      "1:12": "Scala 1:12",
+      "1:10": "Scala 1:10",
+      "1:6": "Scala 1:6",
+      "1:4": "Scala 1:4",
+      "other": "Altro / Personalizzato"
+    },
+    "finishes": {
+      "raw": "Grezzo (Resina Grigia)",
+      "standard": "Dipinto (Standard)",
+      "master": "Dipinto (Livello Master)"
+    }
   },
   "marketing": {
     "trendingTag": "Protocollo di Maggior Desiderio",

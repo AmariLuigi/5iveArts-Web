@@ -531,7 +531,39 @@
     "success_message": "Twoja dokumentacja została zaszyfrowana i przekazana naszym głównym kuratorom. Sprawdzimy wykonalność i złożoność w ciągu 24-48 godzin.",
     "cta_vault": "Wejdź do Mojego Vault",
     "tagline": "Zaawansowany Protokół Niestandardowy",
-    "logistics_title": "Logistyka Systemowa"
+    "logistics_title": "Logistyka Systemowa",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Tożsamość Projektu",
+    "proposal_field_title_label": "Nazwa Postaci / Projektu",
+    "proposal_field_title_placeholder": "np. Master Chief - Mark VI",
+    "proposal_field_scale_label": "Pożądana Skala",
+    "proposal_field_finish_label": "Protokół Wykończenia",
+    "proposal_cta_configure": "Konfiguruj Szczegóły",
+    "proposal_step_narrative_tag": "Dokumentacja Bureau",
+    "proposal_step_narrative_title": "Zakres Narracji",
+    "proposal_field_desc_label": "Opis Projektu",
+    "proposal_field_desc_placeholder": "Opisz swoją wizję, konkretne pozy lub szczegóły...",
+    "proposal_cta_upload": "Prześlij Materiały",
+    "proposal_cta_back": "Wstecz",
+    "proposal_step_visual_tag": "Dowód Wizualny",
+    "proposal_step_visual_title": "Transmisja Materiałów",
+    "proposal_field_upload_label": "Dodaj Plik",
+    "proposal_field_upload_hint": "Obsługiwane formaty: JPG, PNG, WEBP (MAKS 3)",
+    "proposal_cta_submit": "Prześlij Zamówienie",
+    "error_max_files": "Dozwolone maksymalnie 3 zdjęcia referencyjne",
+    "error_required_fields": "Proszę wypełnić wszystkie wymagane pola i przesłać co najmniej jedno zdjęcie.",
+    "scales": {
+      "1:12": "Skala 1:12",
+      "1:10": "Skala 1:10",
+      "1:6": "Skala 1:6",
+      "1:4": "Skala 1:4",
+      "other": "Inna / Niestandardowa"
+    },
+    "finishes": {
+      "raw": "Surowy (Szara Żywica)",
+      "standard": "Malowany (Standard)",
+      "master": "Malowany (Klasa Mistrzowska)"
+    }
   },
   "marketing": {
     "trendingTag": "Najbardziej Pożądany Protokół",

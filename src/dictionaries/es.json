@@ -531,7 +531,39 @@
     "success_message": "Su documentación ha sido encriptada y enviada a nuestros curadores principales. Revisaremos la viabilidad y complejidad en un plazo de 24 a 48 horas.",
     "cta_vault": "Entrar en Mi Vault",
     "tagline": "Protocolo Personalizado Avanzado",
-    "logistics_title": "Logística del Sistema"
+    "logistics_title": "Logística del Sistema",
+    "proposal_step_identity_tag": "Artisan Bureau",
+    "proposal_step_identity_title": "Identidad del Proyecto",
+    "proposal_field_title_label": "Título del Personaje / Proyecto",
+    "proposal_field_title_placeholder": "ej. Master Chief - Mark VI",
+    "proposal_field_scale_label": "Escala Deseada",
+    "proposal_field_finish_label": "Protocolo de Acabado",
+    "proposal_cta_configure": "Configurar Detalles",
+    "proposal_step_narrative_tag": "Documentación del Bureau",
+    "proposal_step_narrative_title": "Alcance Narrativo",
+    "proposal_field_desc_label": "Descripción del Proyecto",
+    "proposal_field_desc_placeholder": "Describe tu visión, poses específicas o detalles de referencia...",
+    "proposal_cta_upload": "Subir Activos",
+    "proposal_cta_back": "Volver",
+    "proposal_step_visual_tag": "Evidencia Visual",
+    "proposal_step_visual_title": "Transmisión de Activos",
+    "proposal_field_upload_label": "Agregar Archivo",
+    "proposal_field_upload_hint": "Formatos soportados: JPG, PNG, WEBP (MÁX 3)",
+    "proposal_cta_submit": "Enviar Comisión",
+    "error_max_files": "Se permiten máximo 3 imágenes de referencia",
+    "error_required_fields": "Completa todos los campos requeridos y sube al menos una imagen.",
+    "scales": {
+      "1:12": "Escala 1:12",
+      "1:10": "Escala 1:10",
+      "1:6": "Escala 1:6",
+      "1:4": "Escala 1:4",
+      "other": "Otra / Personalizada"
+    },
+    "finishes": {
+      "raw": "Bruto (Resina Gris)",
+      "standard": "Pintado (Estándar)",
+      "master": "Pintado (Nivel Maestro)"
+    }
   },
   "marketing": {
     "trendingTag": "Protocolo Más Deseado",
