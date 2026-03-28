@@ -365,7 +365,9 @@
         "deposit": "Deposit",
         "forging": "Forging",
         "finalizing": "Finalizing",
-        "deployment": "Deployment"
+        "deployment": "Deployment",
+        "selectCarrier": "Select Logistics Protocol",
+        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
     },
     "footer": {
         "logistics": "Global Artisan Craftsmanship Logistics Enabled",

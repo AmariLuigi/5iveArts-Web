@@ -365,7 +365,9 @@
         "deposit": "預金",
         "forging": "鍛造",
         "finalizing": "最終段階",
-        "deployment": "配置"
+        "deployment": "配置",
+        "selectCarrier": "Select Logistics Protocol",
+        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
     },
     "footer": {
         "logistics": "アルチザン・グローバル・ロジスティクス稼働中",

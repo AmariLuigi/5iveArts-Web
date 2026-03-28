@@ -365,7 +365,9 @@
         "deposit": "Депозит",
         "forging": "Ковка",
         "finalizing": "Завершение",
-        "deployment": "Развертывание"
+        "deployment": "Развертывание",
+        "selectCarrier": "Select Logistics Protocol",
+        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
     },
     "footer": {
         "logistics": "Включена глобальная логистика артистического мастерства",

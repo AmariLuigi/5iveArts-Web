@@ -39,6 +39,9 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
     const [trackingData, setTrackingData] = useState<any>(null);
     const [loadingTracking, setLoadingTracking] = useState(false);
 
+    const [selectedServiceId, setSelectedServiceId] = useState(order.carrier_service_id || "");
+    const [isUpdatingLogistics, setIsUpdatingLogistics] = useState(false);
+
     // Dynamic Tracking Fetch
     useState(() => {
         if (order.tracking_number && (order.status === 'shipped' || order.status === 'delivered')) {
@@ -84,6 +87,21 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
         let val = s.includes("-") ? s.split("-")[1] : s;
         if (/^\d+$/.test(val)) return "";
         return val.toUpperCase();
+    };
+
+    const handleSelectLogistics = async (serviceId: string) => {
+        if (order.status !== 'quoted' && order.status !== 'analyzing') return;
+        setIsUpdatingLogistics(true);
+        try {
+            await axios.patch(`/api/orders/${order.id}/logistics`, { service_id: serviceId });
+            setSelectedServiceId(serviceId);
+            router.refresh();
+        } catch (err) {
+            console.error("Logistics Update Failed:", err);
+            alert("Protocol selection failed. Please retry.");
+        } finally {
+            setIsUpdatingLogistics(false);
+        }
     };
 
     const handleMarkAsDelivered = async () => {
@@ -490,38 +508,102 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                             </div>
 
                              <div className="pt-8 border-t border-white/5 space-y-4">
-                                <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
+                                 <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
                                     <CreditCard className="w-4 h-4 text-brand-yellow" />
                                     {dict.orders.settlement}
                                 </h3>
                                 
-                                {order.payment_link && (order.status === 'quoted' || order.status === 'ready_to_ship') ? (
+                                {order.payment_link && (order.status === 'quoted' || order.status === 'analyzing' || order.status === 'ready_to_ship') ? (
                                     <div className="space-y-4">
-                                        {(order.status === 'quoted' || order.status === 'in_production' || order.status === 'ready_to_ship') && (
+                                        {(order.status === 'quoted' || order.status === 'analyzing') && (
+                                            <div className="space-y-6 mb-8">
+                                                <div className="flex flex-col gap-1">
+                                                    <span className="text-[10px] uppercase font-black tracking-[0.3em] text-white">
+                                                        {dict.orders.selectCarrier || "Select Shipping Protocol"}
+                                                    </span>
+                                                    <span className="text-[8px] font-bold text-neutral-500 uppercase tracking-widest">
+                                                        {dict.orders.selectCarrierNote || "Selection only fixes future cost."}
+                                                    </span>
+                                                </div>
+                                                
+                                                <div className="grid grid-cols-1 gap-3">
+                                                    {(order.shipping_options || []).map((opt: any) => {
+                                                        const isSelected = String(opt.service_id) === String(selectedServiceId);
+                                                        return (
+                                                            <button
+                                                                key={opt.service_id}
+                                                                type="button"
+                                                                disabled={isUpdatingLogistics}
+                                                                onClick={() => handleSelectLogistics(opt.service_id)}
+                                                                className={`p-4 border text-left transition-all rounded-sm flex flex-col gap-1 ${
+                                                                    isSelected 
+                                                                    ? "bg-brand-yellow/10 border-brand-yellow shadow-[0_0_15px_rgba(255,160,0,0.1)]" 
+                                                                    : "bg-black border-white/5 hover:border-white/20"
+                                                                } ${isUpdatingLogistics ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                            >
+                                                                <div className="flex justify-between items-center">
+                                                                    <div className="flex items-center gap-2">
+                                                                        <div className={`w-2 h-2 rounded-full ${isSelected ? 'bg-brand-yellow' : 'bg-neutral-800'}`} />
+                                                                        <span className="text-[10px] font-black uppercase text-white">{opt.carrier_name}</span>
+                                                                    </div>
+                                                                    <span className="text-[10px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
+                                                                </div>
+                                                                <div className="flex justify-between items-center pl-4">
+                                                                    <span className="text-[8px] font-bold uppercase text-neutral-600">{opt.service_name}</span>
+                                                                    <span className="text-[8px] font-black uppercase text-neutral-700 tracking-widest">{opt.estimated_days} Days Est.</span>
+                                                                </div>
+                                                            </button>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {(order.status === 'quoted' || order.status === 'analyzing' || order.status === 'in_production' || order.status === 'ready_to_ship') && (
                                             <div className="p-4 bg-orange-500/5 border border-orange-500/10 rounded-sm">
                                                 <p className="text-[9px] font-black text-orange-400 uppercase tracking-widest leading-relaxed">
-                                                    CAUTION: Once the first payment is authorized, fabrication begins immediately. Cancellation is prohibited beyond this protocol point.
+                                                    {order.status === 'ready_to_ship' 
+                                                        ? "PROTOCOL LOCK: Final manifest ready for deployment. Settle residue funds to initiate delivery."
+                                                        : "CAUTION: Once the first payment is authorized, fabrication begins immediately. Cancellation is prohibited beyond this point."}
                                                 </p>
                                             </div>
                                         )}
+
                                         <a 
-                                            href={order.payment_link}
-                                            className="w-full flex items-center justify-center gap-2 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest hover:bg-brand-yellow/80 transition-all rounded-sm shadow-[0_0_20px_rgba(255,160,0,0.1)] group"
+                                            href={(order.status === 'quoted' || order.status === 'analyzing') && !selectedServiceId ? "#" : order.payment_link}
+                                            onClick={(e) => {
+                                                if ((order.status === 'quoted' || order.status === 'analyzing') && !selectedServiceId) {
+                                                    e.preventDefault();
+                                                    alert("Please select a Logistics Protocol first.");
+                                                }
+                                            }}
+                                            className={`w-full flex items-center justify-center gap-2 py-4 text-[10px] font-black uppercase tracking-widest transition-all rounded-sm shadow-[0_0_20px_rgba(255,160,0,0.1)] group ${
+                                                ((order.status === 'quoted' || order.status === 'analyzing') && !selectedServiceId)
+                                                ? "bg-neutral-800 text-neutral-500 cursor-not-allowed border border-white/5"
+                                                : "bg-brand-yellow text-black hover:bg-brand-yellow/80 hover:scale-[1.02]"
+                                            }`}
                                         >
                                             <CreditCard className="w-3.5 h-3.5" />
-                                            {order.status === 'quoted' ? "Authorize 50% Deposit" : "Settle Final Balance"}
+                                            {(order.status === 'quoted' || order.status === 'analyzing') ? "Authorize 50% Protocol Deposit" : "Settle Final Balance"}
                                             <ChevronRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
                                         </a>
                                     </div>
                                 ) : (
-                                    <div className="flex items-center gap-3">
-                                        <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
-                                            order.status === 'paid' || order.status === 'shipped' || order.status === 'delivered'
+                                    <div className="flex flex-col gap-4">
+                                        <div className={`px-4 py-2 rounded-[2px] text-[9px] font-black uppercase tracking-widest border ${
+                                            order.status === 'paid' || order.status === 'shipped' || order.status === 'delivered' || order.status === 'in_production' || order.status === 'ready_to_ship'
                                             ? 'bg-green-500/10 text-green-500 border-green-500/20' 
                                             : 'bg-neutral-500/10 text-neutral-500 border-white/5'
                                         }`}>
-                                            {['paid', 'shipped', 'delivered'].includes(order.status) ? dict.orders.transactionSecure : "Pending Approval"}
+                                            {['paid', 'shipped', 'delivered', 'in_production', 'ready_to_ship'].includes(order.status) 
+                                                ? "Transaction Layer Secured" 
+                                                : "Analysis in Progress..."}
                                         </div>
+                                        {order.deposit_pence > 0 && (
+                                            <p className="text-[8px] font-black text-neutral-600 uppercase tracking-widest">
+                                                Partial Settlement: {formatPrice(order.deposit_pence)} Verified
+                                            </p>
+                                        )}
                                     </div>
                                 )}
                             </div>

@@ -365,7 +365,9 @@
         "deposit": "الايداع",
         "forging": "تزوير",
         "finalizing": "النهائي",
-        "deployment": "النشر"
+        "deployment": "النشر",
+        "selectCarrier": "Select Logistics Protocol",
+        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
     },
     "footer": {
         "logistics": "الخدمات اللوجستية العالمية الحرفية نشطة",

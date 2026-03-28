@@ -365,7 +365,9 @@
         "deposit": "Dépôt",
         "forging": "Forgeage",
         "finalizing": "Finalisation",
-        "deployment": "Déploiement"
+        "deployment": "Déploiement",
+        "selectCarrier": "Sélectionner le Protocole Logistique",
+        "selectCarrierNote": "Autorisez votre niveau de transporteur préféré. Note : La sélection fixe les coûts futurs ; le règlement est dû lors de la finalisation."
     },
     "footer": {
         "logistics": "Logistique Artisanale Mondiale Activée",

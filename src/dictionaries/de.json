@@ -365,7 +365,9 @@
         "deposit": "Anzahlung",
         "forging": "Schmieden",
         "finalizing": "Finalisierung",
-        "deployment": "Versand"
+        "deployment": "Versand",
+        "selectCarrier": "Logistikprotokoll auswählen",
+        "selectCarrierNote": "Autorisieren Sie Ihre bevorzugte Versandstufe. Hinweis: Die Auswahl fixiert zukünftige Kosten; die Abrechnung erfolgt bei Fertigstellung."
     },
     "footer": {
         "logistics": "Globale Kunsthandwerkslogistik Aktiviert",

@@ -365,7 +365,9 @@
         "deposit": "Depósito",
         "forging": "Forjado",
         "finalizing": "Finalización",
-        "deployment": "Despliegue"
+        "deployment": "Despliegue",
+        "selectCarrier": "Seleccionar Protocolo Logístico",
+        "selectCarrierNote": "Autorice su nivel de transportista preferido. Nota: La selección fija los costes futuros; la liquidación se realiza al finalizar."
     },
     "footer": {
         "logistics": "Logística Artesanal Global Habilitada",

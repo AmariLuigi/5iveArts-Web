@@ -365,7 +365,9 @@
         "deposit": "Depósito",
         "forging": "Forjamento",
         "finalizing": "Finalização",
-        "deployment": "Implementação"
+        "deployment": "Implementação",
+        "selectCarrier": "Select Logistics Protocol",
+        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
     },
     "footer": {
         "logistics": "Logística de Ofício Artesanal Global Ativada",
