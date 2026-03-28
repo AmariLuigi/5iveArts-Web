@@ -583,5 +583,26 @@
     },
     "products_ui": {
         "inspect": "Artefact Inspecteren"
+    },
+    "admin": {
+        "logistics": {
+            "commandCenter": "Commandocentrum",
+            "selectionProtocol": "Logistiek Selectieprotocol",
+            "queryLogistics": "Paccofacile opvragen",
+            "availableTiers": "Beschikbaar via Externe Intelligentie",
+            "deploymentZone": "Implementatiezone (Zichtbaar voor gebruiker)",
+            "finalizeDeploy": "Voltooien en naar gebruikersdossier sturen",
+            "manualEntry": "Handmatige Activum-invoer (Fallback)",
+            "injectManual": "Handmatig tarief toevoegen",
+            "precisionAdvisory": "Logistiek Precisie-advies",
+            "advisoryNote": "De initiële offerte is berekend op basis van de **Zone-Based Fallback** (alleen postcode). Controleer het adres voordat u de definitieve tarieven verstuurt.",
+            "foundTiers": "{count} potentiële logistieke protocollen gevonden.",
+            "deploySuccess": "Logistieke protocollen succesvol toegevoegd aan gebruikersprofiel.",
+            "noTiers": "Geen realtime-gegevens opgehaald. Klik op Opvragen om te beginnen.",
+            "dropHint": "Sleep tarieven hierheen om te implementeren",
+            "activeTiers": "{count} Actieve tarieven",
+            "availableOptions": "{count} Opties",
+            "rateCents": "Tarief (centen)"
+        }
     }
 }

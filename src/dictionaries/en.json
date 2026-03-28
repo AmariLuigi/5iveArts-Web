@@ -583,5 +583,26 @@
     },
     "products_ui": {
         "inspect": "Inspect Artifact"
+    },
+    "admin": {
+        "logistics": {
+            "commandCenter": "Command Center",
+            "selectionProtocol": "Logistics Selection Protocol",
+            "queryLogistics": "Query Paccofacile",
+            "availableTiers": "Available from External Intelligence",
+            "deploymentZone": "Deployment Zone (User Visible)",
+            "finalizeDeploy": "Finalize & Deploy to User Dossier",
+            "manualEntry": "Manual Asset Entry (Fallback)",
+            "injectManual": "Inject Manual Tier",
+            "precisionAdvisory": "Logistics Precision Advisory",
+            "advisoryNote": "The initial quote was calculated using **Zone-Based Fallback** (Zip only). Please verify the street address details before deploying final tiers.",
+            "foundTiers": "Found {count} potential logistics protocols.",
+            "deploySuccess": "Logistics protocols successfully deployed to User Profile.",
+            "noTiers": "No real-time data fetched. Click Query to begin.",
+            "dropHint": "Drop Tiers Here to Deploy",
+            "activeTiers": "{count} Active Tiers",
+            "availableOptions": "{count} Options",
+            "rateCents": "Rate (Cents)"
+        }
     }
 }

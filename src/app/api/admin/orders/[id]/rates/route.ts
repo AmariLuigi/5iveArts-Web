@@ -6,11 +6,11 @@ import { ShippingAddress } from "@/types";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = getSupabaseAdmin() as any;
-    const { id } = params;
+    const { id } = await params;
 
     const { data: order, error: fetchError } = await supabase
       .from("orders")

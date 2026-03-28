@@ -583,5 +583,26 @@
     },
     "products_ui": {
         "inspect": "Eseri İncele"
+    },
+    "admin": {
+        "logistics": {
+            "commandCenter": "Komuta Merkezi",
+            "selectionProtocol": "Lojistik Seçim Protokolü",
+            "queryLogistics": "Paccofacile Sorgula",
+            "availableTiers": "Harici İstihbarat Kaynaklı",
+            "deploymentZone": "Dağıtım Bölgesi (Kullanıcı Tarafından Görülebilir)",
+            "finalizeDeploy": "Sonuçlandır ve Kullanıcı Dosyasına Gönder",
+            "manualEntry": "Manuel Varlık Girişi (Yedek)",
+            "injectManual": "Manuel Kademe Ekle",
+            "precisionAdvisory": "Lojistik Hassasiyet Danışmanlığı",
+            "advisoryNote": "İlk teklif **Bölge Bazlı Yedek** (yalnızca posta kodu) kullanılarak hesaplanmıştır. Lütfen nihai kademeleri göndermeden önce adres detaylarını doğrulayın.",
+            "foundTiers": "{count} potansiyel lojistik protokolü bulundu.",
+            "deploySuccess": "Lojistik protokolleri başarıyla kullanıcı profiline dağıtıldı.",
+            "noTiers": "Gerçek zamanlı veri alınamadı. Başlamak için Sorgula'ya tıklayın.",
+            "dropHint": "Dağıtmak için Kademeleri Buraya Bırakın",
+            "activeTiers": "{count} Aktif Kademe",
+            "availableOptions": "{count} Seçenek",
+            "rateCents": "Ücret (Kuruş)"
+        }
     }
 }

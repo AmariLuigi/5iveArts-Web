@@ -27,32 +27,25 @@ export async function POST(req: Request) {
       .single();
 
     const shippingAddress = defaultAddress ? {
-        full_name: defaultAddress.full_name,
-        street1: defaultAddress.street1,
-        street2: defaultAddress.street2,
-        city: defaultAddress.city,
-        zip_code: defaultAddress.zip_code,
-        country: defaultAddress.country,
-        phone: defaultAddress.phone,
-        email: user.email
+      full_name: defaultAddress.full_name,
+      street1: defaultAddress.street1,
+      street2: defaultAddress.street2,
+      city: defaultAddress.city,
+      zip_code: defaultAddress.zip_code,
+      country: defaultAddress.country,
+      phone: defaultAddress.phone,
+      email: user.email
     } : null;
 
     // 0.5 Fetch Shipping Rates if address exists
     let shippingOptions: any[] = [];
-    let logisticsWarning = false;
-
     if (shippingAddress) {
-        try {
-            const settings = await getSiteSettings();
-            // Use 100.00 EUR as benchmark for initial estimation
-            shippingOptions = await fetchShippingRates(shippingAddress as ShippingAddress, 10000, settings.logistics); 
-            logisticsWarning = shippingOptions.some(opt => opt.partial_validation);
-        } catch (err: any) {
-            console.error("[POST /api/orders/custom] Logistics fortification failed:", err.message);
-            // We proceed with empty shippingOptions so the order is created
-            // Admin can then use the Command Center to fix the address/rates
-            logisticsWarning = true;
-        }
+      try {
+        const settings = await getSiteSettings();
+        shippingOptions = await fetchShippingRates(shippingAddress as ShippingAddress, 10000, settings.logistics); // Use 100.00 EUR as benchmark for initial estimation
+      } catch (err) {
+        console.error("[POST /api/orders/custom] Paccofacile fetch failed:", err);
+      }
     }
 
     // 1. Create the Custom Order
@@ -64,7 +57,6 @@ export async function POST(req: Request) {
         customer_name: user.user_metadata?.full_name || "Agent",
         shipping_address: shippingAddress,
         shipping_options: shippingOptions,
-        metadata: { logistics_partial_validation: logisticsWarning },
         status: "analyzing",
         is_custom: true,
         scale: scale,

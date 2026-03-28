@@ -583,5 +583,26 @@
     },
     "products_ui": {
         "inspect": "Artefakt Untersuchen"
+    },
+    "admin": {
+        "logistics": {
+            "commandCenter": "Kommandozentrale",
+            "selectionProtocol": "Logistik-Auswahlprotokoll",
+            "queryLogistics": "Paccofacile abfragen",
+            "availableTiers": "Verfügbar über Externe Intelligenz",
+            "deploymentZone": "Einsatzbereich (Für Benutzer sichtbar)",
+            "finalizeDeploy": "Abschließen & im Benutzer-Dossier bereitstellen",
+            "manualEntry": "Manuelle Asset-Eingabe (Fallback)",
+            "injectManual": "Manuellen Tarif einfügen",
+            "precisionAdvisory": "Logistik-Präzisionshinweis",
+            "advisoryNote": "Das erste Angebot wurde per zonenbasierter Ausfallsicherung (nur PLZ) berechnet. Bitte prüfen Sie die Adresse vor der Freigabe.",
+            "foundTiers": "{count} potenzielle Logistikprotokolle gefunden.",
+            "deploySuccess": "Logistikprotokolle erfolgreich im Benutzerprofil bereitgestellt.",
+            "noTiers": "Keine Echtzeitdaten abgerufen. Klicken Sie auf Abfragen, um zu beginnen.",
+            "dropHint": "Tarife zum Bereitstellen hier ablegen",
+            "activeTiers": "{count} Aktive Tarife",
+            "availableOptions": "{count} Optionen",
+            "rateCents": "Tarif (Cents)"
+        }
     }
 }

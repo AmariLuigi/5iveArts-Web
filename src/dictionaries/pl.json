@@ -583,5 +583,26 @@
     },
     "products_ui": {
         "inspect": "Kontroluj Artefakt"
+    },
+    "admin": {
+        "logistics": {
+            "commandCenter": "Centrum Dowodzenia",
+            "selectionProtocol": "Protokół Wyboru Logistyki",
+            "queryLogistics": "Zapytaj Paccofacile",
+            "availableTiers": "Dostępne z zewnętrznej inteligencji",
+            "deploymentZone": "Strefa Wdrożenia (Widoczna dla użytkownika)",
+            "finalizeDeploy": "Sfinalizuj i wdróż do dokumentacji użytkownika",
+            "manualEntry": "Ręczne wprowadzanie zasobów (awaryjne)",
+            "injectManual": "Wprowadź stawkę ręczną",
+            "precisionAdvisory": "Porada dotycząca precyzji logistyki",
+            "advisoryNote": "Początkowa wycena została obliczona przy użyciu **Zone-Based Fallback** (tylko kod pocztowy). Sprawdź adres przed wdrożeniem stawek.",
+            "foundTiers": "Znaleziono {count} potencjalnych protokołów logistycznych.",
+            "deploySuccess": "Protokoły logistyczne pomyślnie wdrożone w profilu użytkownika.",
+            "noTiers": "Nie pobrano danych w czasie rzeczywistym. Kliknij Zapytaj, aby rozpocząć.",
+            "dropHint": "Przeciągnij stawki tutaj, aby wdrożyć",
+            "activeTiers": "{count} Aktywne stawki",
+            "availableOptions": "{count} Opcje",
+            "rateCents": "Stawka (centy)"
+        }
     }
 }

@@ -3,11 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = getSupabaseAdmin() as any;
-    const { id } = params;
+    const { id } = await params;
     const { options } = await req.json();
 
     if (!Array.isArray(options)) {

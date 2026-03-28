@@ -583,5 +583,26 @@
     },
     "products_ui": {
         "inspect": "Inspeccionar Artefacto"
+    },
+    "admin": {
+        "logistics": {
+            "commandCenter": "Centro de Comando",
+            "selectionProtocol": "Protocolo de Selección Logística",
+            "queryLogistics": "Consultar Paccofacile",
+            "availableTiers": "Disponible desde Inteligencia Externa",
+            "deploymentZone": "Zona de Despliegue (Visible para Usuario)",
+            "finalizeDeploy": "Finalizar y Desplegar al Dossier del Usuario",
+            "manualEntry": "Entrada Manual de Activos (Respaldo)",
+            "injectManual": "Inyectar Nivel Manual",
+            "precisionAdvisory": "Aviso de Precisión Logística",
+            "advisoryNote": "La cotización inicial se calculó usando **Zone-Based Fallback** (solo código postal). Verifica la dirección antes de desplegar niveles finales.",
+            "foundTiers": "Encontrados {count} protocolos logísticos potenciales.",
+            "deploySuccess": "Protocolos logísticos desplegados con éxito al perfil de usuario.",
+            "noTiers": "No se han obtenido datos en tiempo reale. Haz clic en Consultar para empezar.",
+            "dropHint": "Arrastra los niveles aquí para desplegar",
+            "activeTiers": "{count} Niveles Activos",
+            "availableOptions": "{count} Opciones",
+            "rateCents": "Tarifa (Céntimos)"
+        }
     }
 }

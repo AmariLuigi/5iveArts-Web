@@ -1,21 +1,21 @@
 import axios from "axios";
 import { ShippingAddress, ShippingRate } from "@/types";
-import { normalizeAddressForCourier } from "./address-utils";
+import provincesIt from "./provinces-it.json";
 
 const BASE_URL = "https://paccofacile.tecnosogima.cloud/live/v1";
 
 /**
  * Fetches real-time shipping rates from Paccofacile.it API.
- * 🛡️ Fortified with Double-Try (Specific -> Zone-Based) logic for 100% reliability.
+ * Replaces the previous Packlink implementation.
  */
 export async function fetchShippingRates(
-  toAddress: ShippingAddress, 
+  toAddress: ShippingAddress,
   subtotalCents: number = 0,
   logisticsSettings?: any
-): Promise<(ShippingRate & { partial_validation?: boolean })[]> {
-  const fromZip = process.env.WAREHOUSE_POSTCODE || "90138"; 
+): Promise<ShippingRate[]> {
+  const fromZip = process.env.WAREHOUSE_POSTCODE || "90138";
   const fromCountry = process.env.WAREHOUSE_COUNTRY || "IT";
-  const fromCity = "Palermo";
+  const fromCity = "Palermo"; // Default warehouse location
   const fromProvince = "PA";
 
   const token = process.env.PACCOFACILE_TOKEN;
@@ -27,76 +27,102 @@ export async function fetchShippingRates(
     return [];
   }
 
-  const norm = normalizeAddressForCourier(toAddress);
+  // Normalize Italy Province (Sigla)
+  let normalizedProvince = toAddress.state;
+  if (toAddress.country === 'IT') {
+    const city = toAddress.city.toLowerCase().trim();
+    const stateInput = toAddress.state?.toUpperCase().trim() || "";
 
-  const fetchQuote = async (dest: any) => {
-    const payload = {
-        shipment_service: {
-          parcels: [{ shipment_type: 1, dim1: 25, dim2: 25, dim3: 25, weight: 0.5 }],
-          accessories: [],
-          package_content_type: "GOODS"
-        },
-        pickup: { iso_code: fromCountry, postal_code: fromZip, city: fromCity, StateOrProvinceCode: fromProvince },
-        destination: dest
-    };
+    // Check if the input is already a valid sigla
+    const sigle = Object.keys(provincesIt);
+    if (!sigle.includes(stateInput)) {
+      // Try to find the sigla by city name
+      const match = sigle.find(s =>
+        city.includes((provincesIt as any)[s].toLowerCase()) ||
+        (provincesIt as any)[s].toLowerCase().includes(city)
+      );
+      if (match) normalizedProvince = match;
+      else if (toAddress.zip_code.startsWith("90")) normalizedProvince = "PA"; // Direct fallback for studio location
+    } else {
+      normalizedProvince = stateInput;
+    }
+  }
 
-    return await axios.post(`${BASE_URL}/service/shipment/quote`, payload, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "api-key": apiKey,
-          "Account-Number": account,
-          "Content-Type": "application/json"
-        },
-        timeout: 10000
-    });
+  // Map input to Paccofacile quote payload
+  const payload = {
+    shipment_service: {
+      parcels: [
+        {
+          shipment_type: 1, // Standard Package
+          dim1: 25,
+          dim2: 25,
+          dim3: 25,
+          weight: 0.5 // Standard weight for small high-quality figures/busts
+        }
+      ],
+      accessories: [],
+      package_content_type: "GOODS"
+    },
+    pickup: {
+      iso_code: fromCountry,
+      postal_code: fromZip,
+      city: fromCity,
+      StateOrProvinceCode: fromProvince
+    },
+    destination: {
+      iso_code: toAddress.country,
+      postal_code: toAddress.zip_code,
+      city: toAddress.city,
+      StateOrProvinceCode: normalizedProvince || toAddress.country
+    }
   };
 
   try {
-    let response;
-    let partialValidation = false;
-
-    // TRY 1: Specific Address
-    try {
-        response = await fetchQuote({
-            iso_code: norm.iso_code,
-            postal_code: norm.postal_code,
-            city: norm.city,
-            StateOrProvinceCode: norm.ProvinceCode
-        });
-    } catch (err: any) {
-        console.warn(`[paccofacile] TRY 1 (Specific) failed for ${norm.iso_code}/${norm.postal_code}. Retrying Zone-Based...`);
-        // TRY 2: Zone-Based Fallback (Country + Zip only)
-        try {
-            response = await fetchQuote({ iso_code: norm.iso_code, postal_code: norm.postal_code });
-            partialValidation = true;
-        } catch (retryErr: any) {
-            console.error(`[paccofacile] BOTH Tries failed for ${norm.iso_code}/${norm.postal_code}.`);
-            throw retryErr; // Propagate to let UI handle "Ask user" logic
-        }
-    }
-
-    const ratesRaw = response?.data?.data?.services_available || [];
-    if (!Array.isArray(ratesRaw) || ratesRaw.length === 0) return [];
-
-    const FREE_SHIPPING_THRESHOLD = logisticsSettings?.free_shipping_threshold_cents ?? 50000;
-    const isFreeShipping = subtotalCents >= FREE_SHIPPING_THRESHOLD;
-    const EU_COUNTRIES = ["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"];
-    const isEU = EU_COUNTRIES.includes(norm.iso_code);
-
-    let minPriceCents = Infinity;
-    let cheapestServiceId: string | null = null;
-    ratesRaw.forEach((s: any) => {
-        const p = Math.round(parseFloat(s.price_total.amount) * 100);
-        if (p < minPriceCents) { minPriceCents = p; cheapestServiceId = String(s.service_id); }
+    const response = await axios.post(`${BASE_URL}/service/shipment/quote`, payload, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "api-key": apiKey,
+        "Account-Number": account,
+        "Content-Type": "application/json"
+      },
+      timeout: 10000
     });
 
-    const rates = ratesRaw.map((service: any) => {
+    const ratesRaw = response.data?.data?.services_available || [];
+    if (!Array.isArray(ratesRaw)) {
+      console.error("[paccofacile] Unexpected response format (not an array).");
+      return [];
+    }
+
+    const FREE_SHIPPING_THRESHOLD = logisticsSettings?.free_shipping_threshold_cents ?? 50000; // 500 EUR default
+    const isFreeShipping = subtotalCents >= FREE_SHIPPING_THRESHOLD;
+
+    const EU_COUNTRIES = [
+      "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU",
+      "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"
+    ];
+    const isEU = EU_COUNTRIES.includes(toAddress.country);
+
+    // Identify the overall cheapest rate for the "Free Shipping" subsidy
+    let minPriceCents = Infinity;
+    let cheapestServiceId: string | null = null;
+
+    ratesRaw.forEach((service: any) => {
+      const priceCents = Math.round(parseFloat(service.price_total.amount) * 100);
+      if (priceCents < minPriceCents) {
+        minPriceCents = priceCents;
+        cheapestServiceId = String(service.service_id);
+      }
+    });
+
+    const mappedRates = ratesRaw.map((service: any) => {
       const priceCents = Math.round(parseFloat(service.price_total.amount) * 100);
       let finalPrice = priceCents;
 
+      // Apply 5iveArts Free Shipping Subsidy Protocol
       if (isFreeShipping && String(service.service_id) === cheapestServiceId) {
-          const subsidyLimit = isEU ? 2500 : 3500;
-          finalPrice = Math.max(0, priceCents - subsidyLimit);
+        const subsidyLimit = isEU ? 2500 : 3500; // 25 EUR for EU, 35 EUR for Rest of World
+        finalPrice = Math.max(0, priceCents - subsidyLimit);
       }
 
       return {
@@ -107,15 +133,18 @@ export async function fetchShippingRates(
         original_price: finalPrice < priceCents ? priceCents : undefined,
         currency: service.price_total.currency,
         estimated_days: service.delivery_date?.delivery_days || 5,
-        partial_validation: partialValidation
-      };
+      } as ShippingRate;
     });
 
-    return rates.sort((a, b) => a.price - b.price);
+    return mappedRates.sort((a, b) => a.price - b.price);
 
   } catch (error: any) {
-    const errorMsg = error.response?.data?.message || error.message;
-    console.error("[paccofacile] Final calculation failure:", errorMsg);
-    throw new Error(`COURIER_REJECTION: ${errorMsg}`);
+    if (axios.isAxiosError(error)) {
+      console.error("[paccofacile] API Error Status:", error.response?.status);
+      console.error("[paccofacile] API Error Body:", JSON.stringify(error.response?.data || {}, null, 2));
+    } else {
+      console.error("[paccofacile] Unknown error:", error);
+    }
+    return [];
   }
 }

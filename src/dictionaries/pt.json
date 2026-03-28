@@ -583,5 +583,26 @@
     },
     "products_ui": {
         "inspect": "Inspecionar Artefato"
+    },
+    "admin": {
+        "logistics": {
+            "commandCenter": "Centro de Comando",
+            "selectionProtocol": "Protocolo de Seleção Logística",
+            "queryLogistics": "Consultar Paccofacile",
+            "availableTiers": "Disponível via Inteligência Externe",
+            "deploymentZone": "Zona de Implementação (Visível para Usuário)",
+            "finalizeDeploy": "Finalizar e Implementar no Dossier do Usuário",
+            "manualEntry": "Entrada Manual de Ativos (Reserva)",
+            "injectManual": "Inserir Tarifa Manual",
+            "precisionAdvisory": "Aviso de Precisão Logística",
+            "advisoryNote": "A cotação inicial foi calculada usando **Zone-Based Fallback** (apenas CEP). Verifique o endereço antes de implementar as tarifas finais.",
+            "foundTiers": "Encontrados {count} potenciais protocolos logísticos.",
+            "deploySuccess": "Protocolos logísticos implementados com sucesso no perfil do usuário.",
+            "noTiers": "Nenhum dado em tempo real obtido. Clique em Consultar para começar.",
+            "dropHint": "Arraste as tarifas aqui para implementar",
+            "activeTiers": "{count} Tarifas Ativas",
+            "availableOptions": "{count} Opções",
+            "rateCents": "Tarifa (Centavos)"
+        }
     }
 }

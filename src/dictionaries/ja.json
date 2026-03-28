@@ -583,5 +583,26 @@
     },
     "products_ui": {
         "inspect": "傑作を検証"
+    },
+    "admin": {
+        "logistics": {
+            "commandCenter": "コマンドセンター",
+            "selectionProtocol": "物流選択プロトコル",
+            "queryLogistics": "Paccofacileに照会",
+            "availableTiers": "外部インテリジェンスから利用可能",
+            "deploymentZone": "デプロイメントゾーン（ユーザーに表示）",
+            "finalizeDeploy": "確定してユーザー資料にデプロイ",
+            "manualEntry": "手動アセット入力 (フォールバック)",
+            "injectManual": "手動ティアの挿入",
+            "precisionAdvisory": "物流精度のアドバイザリー",
+            "advisoryNote": "初回見積もりはゾーンベースのフォールバック（郵便番号のみ）で計算されました。最終ティアをデプロイする前に住所を再確認してください。",
+            "foundTiers": "{count}件の潜在的な物流プロトコルが見つかりました。",
+            "deploySuccess": "物流プロトコルがユーザープロファイルに正常にデプロイされました。",
+            "noTiers": "リアルタイムデータが取得されていません。照会をクリックして開始してください。",
+            "dropHint": "ティアをここにドラッグしてデプロイ",
+            "activeTiers": "{count}件のアクティブなティア",
+            "availableOptions": "{count}個のオプション",
+            "rateCents": "レート（セント）"
+        }
     }
 }
