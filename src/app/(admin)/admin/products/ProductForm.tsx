@@ -457,42 +457,28 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
                 if (autoTranslate) {
                     setIsTranslating(true);
-                    setTranslationProgress(0);
+                    setTranslationProgress(10);
                     abortTranslationRef.current = false;
                     
-                    const languages = ["it", "es", "fr", "de", "nl", "ru", "tr", "pt", "ja", "pl", "ar"];
-                    for (let i = 0; i < languages.length; i++) {
-                        if (abortTranslationRef.current) {
-                            showToast("Translation protocol interrupted", 'error');
-                            break;
+                    try {
+                        const batchRes = await axios.post("/api/admin/ai/batch-translate", {
+                            text: description
+                        });
+                        
+                        if (batchRes.data) {
+                            const newDescriptions = { ...descriptions, ...batchRes.data };
+                            setDescriptions(newDescriptions);
+                            setTranslationProgress(100);
                         }
-
-                        const lang = languages[i];
-                        let retries = 0;
-                        let success = false;
-
-                        while (retries < 2 && !success) { // AUTO-RETRY LOGIC
-                            try {
-                                const transRes = await axios.post("/api/translate", {
-                                    text: description,
-                                    targetLang: lang,
-                                    sourceLang: "en"
-                                });
-                                if (transRes.data.translatedText) {
-                                    newDescriptions[lang] = transRes.data.translatedText;
-                                    success = true;
-                                }
-                            } catch (e) {
-                                retries++;
-                                if (retries < 2) await new Promise(r => setTimeout(r, 1000));
-                            }
-                        }
-
-                        setTranslationProgress(((i + 1) / languages.length) * 100);
+                    } catch (e: any) {
+                        console.error("[AI Forge] Batch translation failed", e);
+                        showToast(`Batch translation failed: ${e.message}`, 'error');
+                        
+                        // Fallback: If batch fails, we could retry sequential, 
+                        // but let's just let the user know for now to save time
                     }
                 }
 
-                setDescriptions(newDescriptions);
                 setIsTranslating(false);
             }
             
