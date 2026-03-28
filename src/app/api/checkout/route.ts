@@ -249,7 +249,8 @@ export async function GET(req: NextRequest) {
       payment_status: session.payment_status,
       customer_email: session.customer_details?.email ?? session.customer_email,
       orderId,
-      isCustom
+      isCustom,
+      paymentType: session.metadata?.payment_type
     });
   } catch (err) {
     console.error("[checkout] session retrieve error:", err);

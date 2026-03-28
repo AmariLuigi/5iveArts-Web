@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
-import { CheckCircle, Package, Truck, Mail, Loader2, ShieldCheck, Eye, EyeOff, AlertTriangle, ChevronRight } from "lucide-react";
+import { CheckCircle, Package, Truck, Mail, Loader2, ShieldCheck, Eye, EyeOff, AlertTriangle, ChevronRight, Sparkles } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import { useCartStore, CartStore } from "@/store/cart";
@@ -31,6 +31,7 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
   const [customerEmail, setCustomerEmail] = useState<string | null>(null);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [isCustom, setIsCustom] = useState(false);
+  const [paymentType, setPaymentType] = useState<"deposit" | "final" | "full">("full");
   const [resending, setResending] = useState(false);
   const [resendSuccess, setResendSuccess] = useState(false);
   const [user, setUser] = useState<any>(null);
@@ -127,6 +128,7 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
           setCustomerEmail(res.data.customer_email);
           setOrderId(res.data.orderId);
           setIsCustom(res.data.isCustom);
+          setPaymentType(res.data.paymentType || (res.data.isCustom ? "deposit" : "full"));
         } else {
           setStatus("error");
         }
@@ -178,6 +180,8 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
     );
   }
 
+  const isFinalBalance = isCustom && paymentType === "final";
+
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-20 animate-in fade-in duration-1000">
       <div className="max-w-2xl w-full text-center">
@@ -193,14 +197,14 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
         </div>
 
         <h1 className="text-5xl md:text-6xl font-black text-white mb-4 uppercase tracking-tighter">
-          {isCustom ? "Commission Protocoled" : dict.success.orderConfirmed}
+          {isFinalBalance ? "Final Protocol Solidified" : isCustom ? "Commission Protocoled" : dict.success.orderConfirmed}
         </h1>
         <p className="text-lg text-neutral-300 mb-2 font-bold uppercase tracking-widest text-[12px]">
-          {isCustom ? "Fabrication Protocol Initiated" : dict.success.thankYou}
+          {isFinalBalance ? "Acquisition Phase: COMPLETE" : isCustom ? "Fabrication Protocol Initiated" : dict.success.thankYou}
         </p>
         <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-14">
           {dict.success.confEmailSent} <span className="text-brand-yellow">{customerEmail}</span>.<br />
-          {isCustom ? "Your project is now being queued in the Artisan Workshop." : dict.success.shippingNote}
+          {isFinalBalance ? "Logistics have been locked. Your artifact is being prepared for extraction." : isCustom ? "Your project is now being queued in the Artisan Workshop." : dict.success.shippingNote}
         </p>
 
         <div className="bg-[#0a0a0a] rounded border border-white/5 p-8 mb-14 text-left relative overflow-hidden">
@@ -227,17 +231,25 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
                 <CheckCircle className="w-4 h-4 text-brand-yellow" />
               </div>
               <div>
-                <p className="font-black text-white text-[11px] uppercase tracking-widest">{isCustom ? "Deposit Secured" : (dict.checkout.deliveryStep.split(". ")[1] || "Confirmation")}</p>
-                <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">{isCustom ? "50% protocol initial investment verified." : dict.success.paymentVerified}</p>
+                <p className="font-black text-white text-[11px] uppercase tracking-widest">
+                    {isFinalBalance ? "Balance Reconciled" : isCustom ? "Deposit Secured" : (dict.checkout.deliveryStep.split(". ")[1] || "Confirmation")}
+                </p>
+                <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">
+                    {isFinalBalance ? "Logistics investment and final artifact balance verified." : isCustom ? "50% protocol initial investment verified." : dict.success.paymentVerified}
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-5">
               <div className="w-10 h-10 rounded-full bg-brand-yellow/10 border border-brand-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Package className="w-4 h-4 text-brand-yellow" />
+                {isFinalBalance ? <Truck className="w-4 h-4 text-brand-yellow" /> : <Package className="w-4 h-4 text-brand-yellow" />}
               </div>
               <div>
-                <p className="font-black text-white text-[11px] uppercase tracking-widest">{isCustom ? "Artisan Forging" : (dict.checkout.shippingStep.split(". ")[1] || "Fulfillment")}</p>
-                <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">{isCustom ? "Your artifact has entered the production queue." : dict.success.fulfillmentNote}</p>
+                <p className="font-black text-white text-[11px] uppercase tracking-widest">
+                    {isFinalBalance ? "Extraction Protocol" : isCustom ? "Artisan Forging" : (dict.checkout.shippingStep.split(". ")[1] || "Fulfillment")}
+                </p>
+                <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">
+                    {isFinalBalance ? "Hand-off to logistical carrier initiated." : isCustom ? "Your artifact has entered the production queue." : dict.success.fulfillmentNote}
+                </p>
               </div>
             </div>
           </div>
