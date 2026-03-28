@@ -532,5 +532,14 @@
     "cta_vault": "Naar Mijn Vault",
     "tagline": "Geavanceerd Aangepast Protocol",
     "logistics_title": "Systeemlogistiek"
+  },
+  "marketing": {
+    "trendingTag": "Meest Gewenste Protocol",
+    "trendingTitle": "Artefacten Onder Observatie",
+    "interestSync": "Real-time Interessesynchronisatie",
+    "activeCitations": "{count} Actieve Citaties"
+  },
+  "products_ui": {
+    "inspect": "Artefact Inspecteren"
   }
 }

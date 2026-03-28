@@ -532,5 +532,14 @@
     "cta_vault": "マイ・ヴォルトへ",
     "tagline": "高度なカスタムプロトコル",
     "logistics_title": "システム物流"
+  },
+  "marketing": {
+    "trendingTag": "最も望まれるプロトコル",
+    "trendingTitle": "監視対象のアーティファクト",
+    "interestSync": "リアルタイム興味同期",
+    "activeCitations": "{count}件の有効な引用"
+  },
+  "products_ui": {
+    "inspect": "傑作を検証"
   }
 }

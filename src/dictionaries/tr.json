@@ -532,5 +532,14 @@
     "cta_vault": "Vault'uma Gir",
     "tagline": "Gelişmiş Özel Protokol",
     "logistics_title": "Sistem Lojistiği"
+  },
+  "marketing": {
+    "trendingTag": "En Çok Arzulanan Protokol",
+    "trendingTitle": "Gözlem Altındaki Eserler",
+    "interestSync": "Gerçek Zamanlı İlgi Senkronizasyonu",
+    "activeCitations": "{count} Aktif Alıntı"
+  },
+  "products_ui": {
+    "inspect": "Eseri İncele"
   }
 }

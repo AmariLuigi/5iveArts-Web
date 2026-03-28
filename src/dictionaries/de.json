@@ -532,5 +532,14 @@
     "cta_vault": "Mein Vault Betreten",
     "tagline": "Erweitertes Custom-Protokoll",
     "logistics_title": "Systemlogistik"
+  },
+  "marketing": {
+    "trendingTag": "Meistgewünschtes Protokoll",
+    "trendingTitle": "Artefakte Unter Beobachtung",
+    "interestSync": "Echtzeit-Interessen-Sync",
+    "activeCitations": "{count} Aktive Erwähnungen"
+  },
+  "products_ui": {
+    "inspect": "Artefakt Untersuchen"
   }
 }

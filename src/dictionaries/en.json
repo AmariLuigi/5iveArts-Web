@@ -532,5 +532,14 @@
     "success_subtitle": "Transmission Complete",
     "success_message": "Your documentation has been encrypted and submitted to our lead curators. We will review the feasibility and complexity within 24-48 hours.",
     "cta_vault": "Enter My Vault"
+  },
+  "marketing": {
+    "trendingTag": "Most Desired Protocol",
+    "trendingTitle": "Artifacts Under Observation",
+    "interestSync": "Real-time Interest Sync",
+    "activeCitations": "{count} Active Citations"
+  },
+  "products_ui": {
+    "inspect": "Inspect Artifact"
   }
 }

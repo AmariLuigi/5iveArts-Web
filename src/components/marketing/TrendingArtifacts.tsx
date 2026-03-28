@@ -38,15 +38,15 @@ export default function TrendingArtifacts({ lang, dict }: TrendingArtifactsProps
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-brand-yellow">
               <TrendingUp className="w-5 h-5" />
-              <span className="text-[11px] font-black uppercase tracking-[0.4em]">Most Desired Protocol</span>
+              <span className="text-[11px] font-black uppercase tracking-[0.4em]">{dict.marketing.trendingTag}</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white leading-none">
-              Artifacts Under <span className="text-brand-yellow">Observation</span>
+              {dict.marketing.trendingTitle}
             </h2>
           </div>
           <div className="flex items-center gap-3 py-2 px-4 bg-white/5 border border-white/10 rounded-full">
             <Sparkles className="w-4 h-4 text-brand-yellow animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Real-time Interest Sync</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{dict.marketing.interestSync}</span>
           </div>
         </div>
 
@@ -63,11 +63,11 @@ export default function TrendingArtifacts({ lang, dict }: TrendingArtifactsProps
                 <div className="absolute -top-3 -right-3 z-10 w-8 h-8 rounded-full bg-brand-yellow text-black flex items-center justify-center font-black text-xs shadow-xl border-4 border-black">
                     #{idx + 1}
                 </div>
-                <MinimalProductCard product={item.product} lang={lang} />
+                <MinimalProductCard product={item.product} lang={lang} dict={dict} />
                 <div className="mt-3 flex items-center justify-center gap-2">
                     <div className="w-1 h-1 rounded-full bg-brand-yellow animate-ping" />
                     <span className="text-[8px] font-black uppercase tracking-[0.2em] text-neutral-500">
-                        {item.count} Active Citations
+                        {dict.marketing.activeCitations.replace('{count}', item.count.toString())}
                     </span>
                 </div>
             </motion.div>

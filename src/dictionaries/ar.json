@@ -532,5 +532,14 @@
     "cta_vault": "الدخول إلى خزانتي",
     "tagline": "بروتوكول التخصيص المتقدم",
     "logistics_title": "لوجستيات النظام"
+  },
+  "marketing": {
+    "trendingTag": "البروتوكول الأكثر رغبة",
+    "trendingTitle": "التحف تحت المراقبة",
+    "interestSync": "مزامنة الاهتمام في الوقت الفعلي",
+    "activeCitations": "{count} استشهادات نشطة"
+  },
+  "products_ui": {
+    "inspect": "فحص التحفة"
   }
 }

@@ -9,9 +9,10 @@ import WishlistToggle from "@/components/ui/WishlistToggle";
 interface MinimalProductCardProps {
   product: Product;
   lang?: string;
+  dict?: any;
 }
 
-export default function MinimalProductCard({ product, lang = "en" }: MinimalProductCardProps) {
+export default function MinimalProductCard({ product, lang = "en", dict }: MinimalProductCardProps) {
   const currentImage = product.images?.[0] || "/images/placeholder.jpg";
   const localizedName = (product as any)[`name_${lang}`] || product.name;
 
@@ -32,7 +33,9 @@ export default function MinimalProductCard({ product, lang = "en" }: MinimalProd
         
         {/* Rapid Selection Overlay */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Inspect Artifact</span>
+           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white">
+             {dict?.products_ui?.inspect || "Inspect Artifact"}
+           </span>
         </div>
       </Link>
 

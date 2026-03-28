@@ -81,6 +81,7 @@ export default function WishlistClient({ lang, dict }: WishlistClientProps) {
                             key={item.product_id}
                             product={item.product}
                             lang={lang}
+                            dict={dict}
                         />
                     )
                 ))}

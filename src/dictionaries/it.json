@@ -532,5 +532,14 @@
     "cta_vault": "Entra nel Mio Vault",
     "tagline": "Protocollo Personalizzato Avanzato",
     "logistics_title": "Logistica Sistema"
+  },
+  "marketing": {
+    "trendingTag": "Protocollo di Maggior Desiderio",
+    "trendingTitle": "Artefatti in Osservazione",
+    "interestSync": "Sincronizzazione Interessi in Tempo Reale",
+    "activeCitations": "{count} Citazioni Attive"
+  },
+  "products_ui": {
+    "inspect": "Ispeziona Artefatto"
   }
 }

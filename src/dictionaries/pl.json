@@ -532,5 +532,14 @@
     "cta_vault": "Wejdź do Mojego Vault",
     "tagline": "Zaawansowany Protokół Niestandardowy",
     "logistics_title": "Logistyka Systemowa"
+  },
+  "marketing": {
+    "trendingTag": "Najbardziej Pożądany Protokół",
+    "trendingTitle": "Artefakty pod Obserwacją",
+    "interestSync": "Synchronizacja Zainteresowań w Czasie Rzeczywistym",
+    "activeCitations": "{count} Aktywne Cytowania"
+  },
+  "products_ui": {
+    "inspect": "Kontroluj Artefakt"
   }
 }
