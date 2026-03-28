@@ -15,9 +15,13 @@ import {
     Box,
     FileText,
     History,
-    Anchor
+    Anchor,
+    Loader2
 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
@@ -30,6 +34,9 @@ interface OrderLogisticsClientProps {
 }
 
 export default function OrderLogisticsClient({ order, orderItems, progressMedia, dict, lang }: OrderLogisticsClientProps) {
+    const router = useRouter();
+    const [loadingDelivery, setLoadingDelivery] = useState(false);
+
     const getStatusColor = (s: string) => {
         switch (s) {
             case "paid": 
@@ -55,6 +62,20 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
         let val = s.includes("-") ? s.split("-")[1] : s;
         if (/^\d+$/.test(val)) return "";
         return val.toUpperCase();
+    };
+
+    const handleMarkAsDelivered = async () => {
+        if (loadingDelivery) return;
+        setLoadingDelivery(true);
+        try {
+            await axios.patch(`/api/orders/${order.id}/deliver`);
+            router.refresh();
+        } catch (err) {
+            console.error("Failed to mark as delivered:", err);
+            alert("Protocol Update Failed: Please contact HQ if delivery is confirmed.");
+        } finally {
+            setLoadingDelivery(false);
+        }
     };
 
     const handleExportInvoice = async () => {
@@ -176,8 +197,18 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                     </div>
 
                     <div className="flex gap-4">
+                        {(order.status === 'shipped' || order.status === 'ready_to_ship') && (
+                            <button 
+                                onClick={handleMarkAsDelivered}
+                                disabled={loadingDelivery}
+                                className="hasbro-btn-primary px-8 py-4 text-[10px] font-black flex items-center gap-2"
+                            >
+                                {loadingDelivery ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
+                                {dict.orders.confirmDelivery || "Mark as Delivered"}
+                            </button>
+                        )}
                         {order.tracking_number && (
-                            <button className="hasbro-btn-primary px-8 py-4 text-[10px] font-black flex items-center gap-2">
+                            <button className="bg-white/5 border border-white/10 px-8 py-4 text-[10px] font-black text-white hover:bg-white/10 transition-all rounded-sm flex items-center gap-2">
                                 <Truck className="w-4 h-4" />
                                 {dict.orders.trackShipment}
                             </button>
@@ -400,11 +431,11 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 ) : (
                                     <div className="flex items-center gap-3">
                                         <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
-                                            order.status === 'paid' || order.status === 'deposit_paid' 
+                                            order.status === 'paid' || order.status === 'deposit_paid' || order.status === 'delivered'
                                             ? 'bg-green-500/10 text-green-500 border-green-500/20' 
                                             : 'bg-neutral-500/10 text-neutral-500 border-white/5'
                                         }`}>
-                                            {order.status === 'paid' || order.status === 'deposit_paid' ? dict.orders.transactionSecure : "Pending Approval"}
+                                            {order.status === 'paid' || order.status === 'deposit_paid' || order.status === 'delivered' ? dict.orders.transactionSecure : "Pending Approval"}
                                         </div>
                                     </div>
                                 )}
