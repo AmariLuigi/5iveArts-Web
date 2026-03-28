@@ -86,13 +86,20 @@ export async function POST(
       cancel_url: `${baseUrl}/account`,
     });
 
-    // 4. Update status to 'quoted' if we just sent the first link
+    // 4. Update order with payment link and status if needed
+    const updateData: any = { 
+        payment_link: session.url,
+        updated_at: new Date().toISOString()
+    };
+
     if (order.status === "analyzing" && type === "deposit") {
-        await supabase
-            .from("orders")
-            .update({ status: "quoted" })
-            .eq("id", orderId);
+        updateData.status = "quoted";
     }
+
+    await supabase
+        .from("orders")
+        .update(updateData)
+        .eq("id", orderId);
 
     return NextResponse.json({ url: session.url });
   } catch (err: any) {

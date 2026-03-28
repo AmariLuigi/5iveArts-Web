@@ -371,16 +371,32 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 </div>
                             </div>
 
-                            <div className="pt-8 border-t border-white/5">
+                            <div className="pt-8 border-t border-white/5 space-y-4">
                                 <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
                                     <CreditCard className="w-4 h-4 text-brand-yellow" />
                                     {dict.orders.settlement}
                                 </h3>
-                                <div className="flex items-center gap-3">
-                                    <div className="bg-green-500/10 text-green-500 border border-green-500/20 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">
-                                        {dict.orders.transactionSecure}
+                                
+                                {order.payment_link && (order.status === 'quoted' || order.status === 'ready_to_ship') ? (
+                                    <a 
+                                        href={order.payment_link}
+                                        className="w-full flex items-center justify-center gap-2 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest hover:bg-brand-yellow/80 transition-all rounded-sm shadow-[0_0_20px_rgba(255,160,0,0.1)] group"
+                                    >
+                                        <CreditCard className="w-3.5 h-3.5" />
+                                        {order.status === 'quoted' ? "Pay 50% Deposit" : "Settle Final Balance"}
+                                        <ChevronRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center gap-3">
+                                        <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
+                                            order.status === 'paid' || order.status === 'deposit_paid' 
+                                            ? 'bg-green-500/10 text-green-500 border-green-500/20' 
+                                            : 'bg-neutral-500/10 text-neutral-500 border-white/5'
+                                        }`}>
+                                            {order.status === 'paid' || order.status === 'deposit_paid' ? dict.orders.transactionSecure : "Pending Approval"}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         </div>
 
