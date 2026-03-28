@@ -4,6 +4,8 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/products";
 import CategoryInsights from "@/components/admin/CategoryInsights";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
     const supabase = getSupabaseAdmin() as any;
 

@@ -3,6 +3,8 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import OrdersListClient from "./OrdersListClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function OrdersAdminPage() {
     const supabase = getSupabaseAdmin() as any;
 
