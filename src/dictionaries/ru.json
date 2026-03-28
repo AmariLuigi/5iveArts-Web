@@ -14,7 +14,7 @@
     "warehouse": "Склад",
     "access": "Доступ",
     "wishlist": "Список желаний",
-    "customOrder": "Custom Orders"
+    "customOrder": "Индивидуальные заказы"
   },
   "home": {
     "title": "5iveArts - Артистическая прецизионность",
@@ -502,24 +502,24 @@
     "preferences": "Системные настройки"
   },
   "custom_order": {
-    "hero_title": "Bespoke Artifacts",
-    "hero_subtitle": "Transform your digital dreams into physical masterpieces with our artisan-led custom commission protocol.",
-    "flow_title": "The Commission Protocol",
-    "step1_title": "1. Asset Submission",
-    "step1_desc": "Upload your character renders or concept art. Our curators review every detail for feasibility.",
+    "hero_title": "Артефакты на заказ",
+    "hero_subtitle": "Превратите свои цифровые мечты в физические шедевры с помощью нашего протокола индивидуальных заказов под руководством профессионалов.",
+    "flow_title": "Протокол заказа",
+    "step1_title": "1. Подача материалов",
+    "step1_desc": "Загрузите рендеры персонажей или концепт-арты. Наши кураторы проверят каждую деталь на осуществимость.",
     "step2_title": "2. Оценка сложности",
-    "step2_desc": "Наши кураторы оценивают геометрическую плотность и сложность окраски для точного расчета стоимости.",
-    "step3_title": "3. The Agreement",
-    "step3_desc": "Receive your custom quote. Secure the production slot with a 50% artifact deposit.",
-    "step4_title": "4. Master Craftsmanship",
-    "step4_desc": "Monitor progress in your private Vault with real-time photo updates from the workshop.",
-    "step5_title": "5. Final Deployment",
-    "step5_desc": "Settle the final balance upon completion. Insured global deployment to your coordinates.",
-    "auth_invite_title": "Ready to Begin Your Commission?",
-    "auth_invite_desc": "Establish a secure connection to our terminal to upload assets and track your artifact's fabrication.",
-    "cta_login": "Log In to Begin",
-    "cta_register": "Create Collector Account",
-    "cta_start": "Propose New Commission",
+    "step2_desc": "Наши кураторы оценят геометрическую плотность и сложность покраски для точного расчета стоимости.",
+    "step3_title": "3. Соглашение",
+    "step3_desc": "Получите индивидуальное предложение. Забронируйте место в производстве, внеся депозит 50%.",
+    "step4_title": "4. Мастерство исполнения",
+    "step4_desc": "Следите за прогрессом в личном сейфе (Vault) с фотоотчетами из мастерской в режиме реального времени.",
+    "step5_title": "5. Финальная доставка",
+    "step5_desc": "Оплатите остаток по завершении. Застрахованная доставка по вашим координатам по всему миру.",
+    "auth_invite_title": "Готовы начать свой заказ?",
+    "auth_invite_desc": "Установите безопасное соединение с нашим терминалом, чтобы загрузить материалы и отслеживать изготовление вашего артефакта.",
+    "cta_login": "Войти, чтобы начать",
+    "cta_register": "Создать профиль коллекционера",
+    "cta_start": "Предложить новый проект",
     "benefit1_title": "Проверенная безопасность",
     "benefit1_desc": "Сквозное шифрование передачи активов и интеграция безопасных платежей для каждого заказа.",
     "benefit2_title": "Прозрачность прогресса",
@@ -529,6 +529,8 @@
     "success_title": "Протокол Инициализирован",
     "success_subtitle": "Передача Завершена",
     "success_message": "Ваша документация была зашифрована и передана нашим ведущим кураторам. Мы проверим осуществимость и сложность в течение 24–48 часов.",
-    "cta_vault": "Войти в Мой Сейф"
+    "cta_vault": "Войти в Мой Сейф",
+    "tagline": "Продвинутый протокол настройки",
+    "logistics_title": "Системная логистика"
   }
 }

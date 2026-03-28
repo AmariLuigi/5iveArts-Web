@@ -14,7 +14,7 @@
     "warehouse": "Armazém",
     "access": "Acesso",
     "wishlist": "Lista de Desejos",
-    "customOrder": "Custom Orders"
+    "customOrder": "Pedidos Personalizados"
   },
   "home": {
     "title": "5iveArts - Precisão Artesanal",
@@ -361,7 +361,7 @@
   },
   "footer": {
     "logistics": "Logística de Ofício Artesanal Global Ativada",
-    "rights": "© 2026 5iveArts Collector Series. Todos os direitos reservados.",
+    "rights": "© 2026 5iveArts Collector Series. Todos os derechos reservados.",
     "privacy": "Privacidade",
     "terms": "Termos",
     "description": "Estúdio boutique de figuras premium em resina pintadas à mão e impressas em 3D. Enviamos coleccionáveis de qualidade museumógica para entusiastas de todo o mundo a partir da nossa oficina em Palermo.",
@@ -502,24 +502,24 @@
     "preferences": "Preferências do Sistema"
   },
   "custom_order": {
-    "hero_title": "Bespoke Artifacts",
-    "hero_subtitle": "Transform your digital dreams into physical masterpieces with our artisan-led custom commission protocol.",
-    "flow_title": "The Commission Protocol",
-    "step1_title": "1. Asset Submission",
-    "step1_desc": "Upload your character renders or concept art. Our curators review every detail for feasibility.",
+    "hero_title": "Artefatos Sob Medida",
+    "hero_subtitle": "Transforme seus sonhos digitais em obras-primas físicas com nosso protocolo de encomenda personalizada liderado por artesãos.",
+    "flow_title": "O Protocolo de Encomenda",
+    "step1_title": "1. Submissão de Ativos",
+    "step1_desc": "Carregue seus renders de personagens ou arte conceitual. Nossos curadores analisam cada detalhe para viabilidade.",
     "step2_title": "2. Avaliação de Complexidade",
     "step2_desc": "Nossos curadores avaliam a densidade geométrica e a complexidade da pintura para um orçamento de precisão.",
-    "step3_title": "3. The Agreement",
-    "step3_desc": "Receive your custom quote. Secure the production slot with a 50% artifact deposit.",
-    "step4_title": "4. Master Craftsmanship",
-    "step4_desc": "Monitor progress in your private Vault with real-time photo updates from the workshop.",
-    "step5_title": "5. Final Deployment",
-    "step5_desc": "Settle the final balance upon completion. Insured global deployment to your coordinates.",
-    "auth_invite_title": "Ready to Begin Your Commission?",
-    "auth_invite_desc": "Establish a secure connection to our terminal to upload assets and track your artifact's fabrication.",
-    "cta_login": "Log In to Begin",
-    "cta_register": "Create Collector Account",
-    "cta_start": "Propose New Commission",
+    "step3_title": "3. O Acordo",
+    "step3_desc": "Receba seu orçamento personalizado. Garanta sua vaga na produção com um depósito de 50%.",
+    "step4_title": "4. Excelência Artesanal",
+    "step4_desc": "Monitore o progresso no seu Vault privado com atualizações de fotos em tempo real da oficina.",
+    "step5_title": "5. Implementação Final",
+    "step5_desc": "Liquide o saldo final após a conclusão. Envio global segurado para as suas coordenadas.",
+    "auth_invite_title": "Pronto para começar sua encomenda?",
+    "auth_invite_desc": "Estabeleça uma ligação segura ao nosso terminal para carregar ativos e acompanhar a fabricação do seu artefato.",
+    "cta_login": "Fazer login para começar",
+    "cta_register": "Criar conta de colecionador",
+    "cta_start": "Propor nova encomenda",
     "benefit1_title": "Segurança Verificada",
     "benefit1_desc": "Transferências de ativos criptografadas de ponta a ponta e integração de pagamentos seguros para cada encomenda.",
     "benefit2_title": "Transparência de Progresso",
@@ -529,6 +529,8 @@
     "success_title": "Protocolo Inicializado",
     "success_subtitle": "Transmissão Concluída",
     "success_message": "Sua documentação foi criptografada e enviada aos nossos curadores chefes. Analisaremos a viabilidade e complexidade em 24 a 48 horas.",
-    "cta_vault": "Entrar no Meu Vault"
+    "cta_vault": "Entrar no Meu Vault",
+    "tagline": "Protocolo Personalizado Avançado",
+    "logistics_title": "Logística do Sistema"
   }
 }

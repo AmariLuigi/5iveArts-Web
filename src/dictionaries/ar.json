@@ -14,7 +14,7 @@
     "warehouse": "المستودع",
     "access": "الوصول",
     "wishlist": "قائمة الرغبات",
-    "customOrder": "Custom Orders"
+    "customOrder": "الطلبات الخاصة"
   },
   "home": {
     "title": "5iveArts - الدقة الفنية",
@@ -361,7 +361,7 @@
   },
   "footer": {
     "logistics": "الخدمات اللوجستية العالمية الحرفية نشطة",
-    "rights": "© 2026 سلسلة مقتني 5iveArts. جميع الحقوق محفوظة.",
+    "rights": "© 2026 5iveArts Collector Series. جميع الحقوق محفوظة.",
     "privacy": "الخصوصية",
     "terms": "الشروط",
     "description": "استوديو بوتيك لصناعة مجسمات الراتنج المطبوعة ثلاثياً والمطلية يدوياً بأسلوب فاخر. نشحن تحفاً بجودة المتاحف للمتحمسين في جميع أنحاء العالم من ورشتنا في باليرمو.",
@@ -502,24 +502,24 @@
     "preferences": "تفضيلات النظام"
   },
   "custom_order": {
-    "hero_title": "Bespoke Artifacts",
-    "hero_subtitle": "Transform your digital dreams into physical masterpieces with our artisan-led custom commission protocol.",
-    "flow_title": "The Commission Protocol",
-    "step1_title": "1. Asset Submission",
-    "step1_desc": "Upload your character renders or concept art. Our curators review every detail for feasibility.",
+    "hero_title": "تحف فنية مخصصة",
+    "hero_subtitle": "حوّل أحلامك الرقمية إلى روائع جسدية من خلال بروتوكول التكليف المخصص الذي يقوده الحرفيون لدينا.",
+    "flow_title": "بروتوكول التكليف",
+    "step1_title": "1. تقديم الأصول",
+    "step1_desc": "قم بتحميل مسودات الشخصيات أو الفنون التصورية. يراجع المنسقون لدينا كل التفاصيل من حيث الجدوى.",
     "step2_title": "2. تقييم التعقيد",
-    "step2_desc": "يقوم المنسقون لدينا بتقييم الكثافة الهندسية وتعقيد الطلاء للحصول على عرض سعر دقيق.",
-    "step3_title": "3. The Agreement",
-    "step3_desc": "Receive your custom quote. Secure the production slot with a 50% artifact deposit.",
-    "step4_title": "4. Master Craftsmanship",
-    "step4_desc": "Monitor progress in your private Vault with real-time photo updates from the workshop.",
-    "step5_title": "5. Final Deployment",
-    "step5_desc": "Settle the final balance upon completion. Insured global deployment to your coordinates.",
-    "auth_invite_title": "Ready to Begin Your Commission?",
-    "auth_invite_desc": "Establish a secure connection to our terminal to upload assets and track your artifact's fabrication.",
-    "cta_login": "Log In to Begin",
-    "cta_register": "Create Collector Account",
-    "cta_start": "Propose New Commission",
+    "step2_desc": "يقيم المنسقون لدينا كثافة الأشكال الهندسية وتعقيد الطلاء للحصول على تسعيرة دقيقة.",
+    "step3_title": "3. الاتفاق",
+    "step3_desc": "استلم تسعيرتك المخصصة. قم بتأمين فترة الإنتاج بإيداع 50% من قيمة التحفة.",
+    "step4_title": "4. مهارة حرفية عالية",
+    "step4_desc": "راقب التقدم في خزانتك الخاصة مع تحديثات الصور في الوقت الفعلي من الورشة.",
+    "step5_title": "5. النشر النهائي",
+    "step5_desc": "سدد الرصيد النهائي عند الإتمام. شحن عالمي مؤمن إلى إحداثياتك.",
+    "auth_invite_title": "هل أنت مستعد لبدء تكليفك؟",
+    "auth_invite_desc": "قم بإنشاء اتصال آمن بمحطتنا لتحميل الأصول وتتبع عملية تصنيع تحفتك الفنية.",
+    "cta_login": "سجل الدخول للبدء",
+    "cta_register": "إنشاء حساب جامع",
+    "cta_start": "اقتراح تكليف جديد",
     "benefit1_title": "أمن معتمد",
     "benefit1_desc": "نقل أصول مشفر من طرف إلى طرف وتكامل دفع آمن لكل عمولة.",
     "benefit2_title": "شفافية التقدم",
@@ -529,6 +529,8 @@
     "success_title": "تم بدء البروتوكول",
     "success_subtitle": "اكتمل البث",
     "success_message": "تم تشفير مستنداتك وإرسالها إلى كبار المنسقين لدينا. سنراجع الجدوى والتعقيد في غضون 24-48 ساعة.",
-    "cta_vault": "الدخول إلى خزانتي"
+    "cta_vault": "الدخول إلى خزانتي",
+    "tagline": "بروتوكول التخصيص المتقدم",
+    "logistics_title": "لوجستيات النظام"
   }
 }

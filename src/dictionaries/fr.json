@@ -502,15 +502,15 @@
     "preferences": "Préférences Système"
   },
   "custom_order": {
-    "hero_title": "Artefacts Sur Mesure",
+    "hero_title": "Artéfacts Sur Mesure",
     "hero_subtitle": "Transformez vos rêves numériques en chefs-d'œuvre physiques grâce à notre protocole de commande artisanale.",
     "flow_title": "Le Protocole de Commande",
     "step1_title": "1. Soumission des Actifs",
-    "step1_desc": "Téléchargez vos rendus de personnages ou vos concepts artistiques. Nos conservateurs examinent chaque détail.",
+    "step1_desc": "Téléchargez vos rendus de personnages ou vos concepts artistiques. Nos conservateurs examinent chaque détail pour la faisabilité.",
     "step2_title": "2. Évaluation de la Complexité",
     "step2_desc": "Nos conservateurs évaluent la densité géométrique et la complexité de la peinture pour un devis de précision.",
     "step3_title": "3. L'Accord",
-    "step3_desc": "Recevez votre devis personnalisé. Sécurisez votre créneau de production avec un dépôt de 50%.",
+    "step3_desc": "Recevez votre devis personnalisé. Sécurisez votre créneau de production avec un dépôt de 50 %.",
     "step4_title": "4. Maîtrise Artisanale",
     "step4_desc": "Suivez les progrès dans votre Vault privé avec des photos en temps réel de l'atelier.",
     "step5_title": "5. Déploiement Final",
@@ -529,6 +529,8 @@
     "success_title": "Protocole Initialisé",
     "success_subtitle": "Transmission Terminée",
     "success_message": "Votre documentation a été cryptée et soumise à nos conservateurs en chef. Nous examinerons la faisabilité et la complexité dans un délai de 24 à 48 heures.",
-    "cta_vault": "Accéder à Mon Vault"
+    "cta_vault": "Accéder à Mon Vault",
+    "tagline": "Protocole Personnalisé Avancé",
+    "logistics_title": "Logistique du Système"
   }
 }

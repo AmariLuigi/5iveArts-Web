@@ -14,7 +14,7 @@
     "warehouse": "Magazzino",
     "access": "Accesso",
     "wishlist": "Lista desideri",
-    "customOrder": "Commissioni"
+    "customOrder": "Ordini Personalizzati"
   },
   "home": {
     "title": "5iveArts - Precisione Artigianale",
@@ -529,6 +529,8 @@
     "success_title": "Protocollo Inizializzato",
     "success_subtitle": "Trasmissione Completata",
     "success_message": "La tua documentazione è stata crittografata e inviata ai nostri curatori senior. Valuteremo la fattibilità e la complessità entro 24-48 ore.",
-    "cta_vault": "Entra nel Mio Vault"
+    "cta_vault": "Entra nel Mio Vault",
+    "tagline": "Protocollo Personalizzato Avanzato",
+    "logistics_title": "Logistica Sistema"
   }
 }

@@ -14,7 +14,7 @@
     "warehouse": "Magazijn",
     "access": "Toegang",
     "wishlist": "Verlanglijst",
-    "customOrder": "Custom Orders"
+    "customOrder": "Aangepaste Bestellingen"
   },
   "home": {
     "title": "5iveArts - Ambachtelijke Precisie",
@@ -502,24 +502,24 @@
     "preferences": "Systeemvoorkeuren"
   },
   "custom_order": {
-    "hero_title": "Bespoke Artifacts",
-    "hero_subtitle": "Transform your digital dreams into physical masterpieces with our artisan-led custom commission protocol.",
-    "flow_title": "The Commission Protocol",
-    "step1_title": "1. Asset Submission",
-    "step1_desc": "Upload your character renders or concept art. Our curators review every detail for feasibility.",
+    "hero_title": "Op Maat Gemaakte Artefacten",
+    "hero_subtitle": "Transformeer uw digitale dromen naar fysieke meesterwerken met ons door ambachtslieden geleid protocol voor aangepaste opdrachten.",
+    "flow_title": "Het Opdrachtenprotocol",
+    "step1_title": "1. Assets Indienen",
+    "step1_desc": "Upload uw karakterrenders of concept art. Onze curatoren beoordelen elk detail op haalbaarheid.",
     "step2_title": "2. Complexiteitsbeoordeling",
-    "step2_desc": "Onze curatoren beoordelen de geometrische dichtheid en de complexiteit van het schilderwerk voor een nauwkeurige offerte.",
-    "step3_title": "3. The Agreement",
-    "step3_desc": "Receive your custom quote. Secure the production slot with a 50% artifact deposit.",
-    "step4_title": "4. Master Craftsmanship",
-    "step4_desc": "Monitor progress in your private Vault with real-time photo updates from the workshop.",
-    "step5_title": "5. Final Deployment",
-    "step5_desc": "Settle the final balance upon completion. Insured global deployment to your coordinates.",
-    "auth_invite_title": "Ready to Begin Your Commission?",
-    "auth_invite_desc": "Establish a secure connection to our terminal to upload assets and track your artifact's fabrication.",
-    "cta_login": "Log In to Begin",
-    "cta_register": "Create Collector Account",
-    "cta_start": "Propose New Commission",
+    "step2_desc": "Onze curatoren beoordelen de geometrische dichtheid en schildercomplexiteit voor een nauwkeurige offerte.",
+    "step3_title": "3. De Overeenkomst",
+    "step3_desc": "Ontvang uw aangepaste offerte. Beveilig het productieslot met een aanbetaling van 50%.",
+    "step4_title": "4. Meesterlijk Vakmanschap",
+    "step4_desc": "Volg de voortgang in uw privéquault met real-time foto-updates vanuit de werkplaats.",
+    "step5_title": "5. Finale Levering",
+    "step5_desc": "Betaal het resterende saldo na voltooiing. Verzekerde wereldwijde levering naar uw coördinaten.",
+    "auth_invite_title": "Klaar om aan uw opdracht te beginnen?",
+    "auth_invite_desc": "Maak een beveiligde verbinding met onze terminal om assets te uploaden en de fabricage van uw artefact te volgen.",
+    "cta_login": "Inloggen om te beginnen",
+    "cta_register": "Verzamelaaraccount aanmaken",
+    "cta_start": "Nieuwe Opdracht Voorstellen",
     "benefit1_title": "Geverifieerde Beveiliging",
     "benefit1_desc": "End-to-end versleutelde overdrachten van activa en veilige betalingsintegratie voor elke opdracht.",
     "benefit2_title": "Transparantie van Voortgang",
@@ -529,6 +529,8 @@
     "success_title": "Protocol Initialisatie",
     "success_subtitle": "Transmissie Voltooid",
     "success_message": "Uw documentatie is versleuteld en verzonden naar onze hoofdcuratoren. We zullen de haalbaarheid en complexiteit binnen 24-48 uur beoordelen.",
-    "cta_vault": "Naar Mijn Vault"
+    "cta_vault": "Naar Mijn Vault",
+    "tagline": "Geavanceerd Aangepast Protocol",
+    "logistics_title": "Systeemlogistiek"
   }
 }

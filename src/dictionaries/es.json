@@ -14,7 +14,7 @@
     "warehouse": "Almacén",
     "access": "Acceso",
     "wishlist": "Lista de deseos",
-    "customOrder": "Encargos"
+    "customOrder": "Pedidos Personalizados"
   },
   "home": {
     "title": "5iveArts - Precisión Artesanal",
@@ -503,23 +503,23 @@
   },
   "custom_order": {
     "hero_title": "Artefactos a Medida",
-    "hero_subtitle": "Transforma tus sueños digitales en obras maestras físicas con nuestro protocolo de comisión artesanal.",
+    "hero_subtitle": "Transforma tus sueños digitales en obras maestras físicas con nuestro protocolo de comisión personalizada dirigido por artesanos.",
     "flow_title": "El Protocolo de Comisión",
     "step1_title": "1. Envío de Activos",
-    "step1_desc": "Sube los renders de tus personajes o arte conceptual. Nuestros curadores revisan cada detalle.",
+    "step1_desc": "Sube tus renders de personajes o arte conceptual. Nuestros curadores revisan cada detalle para determinar su viabilidad.",
     "step2_title": "2. Evaluación de Complejidad",
-    "step2_desc": "Nuestros curadores evalúan la densidad geométrica e la complejidad de la pintura para un presupuesto de precisión.",
+    "step2_desc": "Nuestros curadores evalúan la densidad geométrica y la complejidad de la pintura para un presupuesto de precisión.",
     "step3_title": "3. El Acuerdo",
-    "step3_desc": "Recibe tu presupuesto personalizado. Asegura tu plaza de producción con un depósito del 50%.",
+    "step3_desc": "Recibe tu presupuesto personalizado. Asegura el espacio de producción con un depósito del 50%.",
     "step4_title": "4. Maestría Artesanal",
-    "step4_desc": "Monitorea el progreso en tu Vault privado con fotos en tiempo real desde el taller.",
+    "step4_desc": "Monitorea el progreso en tu Vault privado con actualizaciones fotográficas en tiempo real desde el taller.",
     "step5_title": "5. Despliegue Final",
-    "step5_desc": "Salda el balance final al terminar. Envío global asegurado a tus coordenadas.",
-    "auth_invite_title": "¿Listo para empezar tu encargo?",
-    "auth_invite_desc": "Establece una conexión segura con nuestra terminal para subir archivos y rastrear la fabricación.",
-    "cta_login": "Iniciar Sesión para Empezar",
-    "cta_register": "Crear Cuenta de Coleccionista",
-    "cta_start": "Proponer Nuevo Encargo",
+    "step5_desc": "Liquida el saldo final al completar. Despliegue global asegurado a tus coordenadas.",
+    "auth_invite_title": "¿Listo para comenzar tu comisión?",
+    "auth_invite_desc": "Establece una conexión segura con nuestro terminal para subir activos y rastrear la fabricación de tu artefacto.",
+    "cta_login": "Iniciar sesión para comenzar",
+    "cta_register": "Crear cuenta de coleccionista",
+    "cta_start": "Proponer nueva comisión",
     "benefit1_title": "Seguridad Verificada",
     "benefit1_desc": "Transferencias de activos cifradas de extremo a extremo e integración de pagos seguros para cada encargo.",
     "benefit2_title": "Transparencia de Progreso",
@@ -529,6 +529,8 @@
     "success_title": "Protocolo Inicializado",
     "success_subtitle": "Transmisión Completada",
     "success_message": "Su documentación ha sido encriptada y enviada a nuestros curadores principales. Revisaremos la viabilidad y complejidad en un plazo de 24 a 48 horas.",
-    "cta_vault": "Entrar en Mi Vault"
+    "cta_vault": "Entrar en Mi Vault",
+    "tagline": "Protocolo Personalizado Avanzado",
+    "logistics_title": "Logística del Sistema"
   }
 }

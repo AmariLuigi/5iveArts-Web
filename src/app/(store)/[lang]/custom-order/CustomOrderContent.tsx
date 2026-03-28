@@ -124,7 +124,7 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-yellow/30 bg-black/40 mb-8 backdrop-blur-xl group cursor-default">
               <Sparkles className="w-3.5 h-3.5 text-brand-yellow" />
-              <span className="text-[8px] uppercase font-black tracking-[0.3em] text-brand-yellow italic">Advanced Custom Protocol</span>
+              <span className="text-[8px] uppercase font-black tracking-[0.3em] text-brand-yellow italic">{t.tagline}</span>
             </div>
             
             <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-white italic leading-[0.9] mb-8">
@@ -173,7 +173,7 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
              <div className="max-w-xl">
-               <span className="text-[10px] uppercase font-black tracking-[0.5em] text-neutral-500 mb-4 block">System Logistics</span>
+               <span className="text-[10px] uppercase font-black tracking-[0.5em] text-neutral-500 mb-4 block">{t.logistics_title}</span>
                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white italic">
                  {t.flow_title}
                </h2>
