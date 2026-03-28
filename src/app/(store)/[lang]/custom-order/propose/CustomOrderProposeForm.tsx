@@ -300,19 +300,19 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
             </div>
             
             <div className="space-y-4">
-               <h1 className="text-5xl font-black uppercase tracking-tighter text-white italic">Protocol Initialized</h1>
-               <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-500">Transmission Complete</p>
+               <h1 className="text-5xl font-black uppercase tracking-tighter text-white italic">{dict.custom_order.success_title}</h1>
+               <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-500">{dict.custom_order.success_subtitle}</p>
             </div>
-
+ 
             <p className="text-sm font-bold uppercase tracking-widest text-neutral-400 max-w-sm mx-auto leading-relaxed">
-              Your documentation has been encrypted and submitted to our lead curators. We will review the feasibility and complexity within 24-48 hours.
+              {dict.custom_order.success_message}
             </p>
-
+ 
             <button 
               onClick={() => router.push(`/${lang}/account`)}
               className="hasbro-btn-primary px-12 py-5 text-xs font-black"
             >
-              Enter My Vault
+              {dict.custom_order.cta_vault}
             </button>
           </motion.div>
         )}

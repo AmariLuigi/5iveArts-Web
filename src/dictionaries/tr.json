@@ -524,6 +524,10 @@
     "benefit2_title": "İlerleme Şeffaflığı",
     "benefit2_desc": "Üretim döngüsü boyunca kişisel Vault'unuza eklenen gerçek zamanlı görsel kayıtlar.",
     "benefit3_title": "Zanaatkar Kontrolü",
-    "benefit3_desc": "Prototipinizin müze standartlarını karşıladığından emin olmak için baş küratörlerimizle doğrudan işbirliği."
+    "benefit3_desc": "Prototipinizin müze standartlarını karşıladığından emin olmak için baş küratörlerimizle doğrudan işbirliği.",
+    "success_title": "Protokol Başlatıldı",
+    "success_subtitle": "İletim Tamamlandı",
+    "success_message": "Belgeleriniz şifrelenmiş ve baş küratörlerimize iletilmiştir. Fizibiliteyi ve karmaşıklığı 24-48 saat içinde gözden geçireceğiz.",
+    "cta_vault": "Vault'uma Gir"
   }
 }

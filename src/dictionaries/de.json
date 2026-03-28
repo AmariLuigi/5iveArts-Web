@@ -524,6 +524,10 @@
     "benefit2_title": "Fortschrittstransparenz",
     "benefit2_desc": "Echtzeit-Bildaufzeichnungen, die während des gesamten Fertigungslebenszyklus in Ihren persönlichen Vault eingefügt werden.",
     "benefit3_title": "Handwerkliche Kontrolle",
-    "benefit3_desc": "Direkte Zusammenarbeit mit unseren leitenden Kuratoren, um sicherzustellen, dass Ihr Prototyp Museumsstandards entspricht."
+    "benefit3_desc": "Direkte Zusammenarbeit mit unseren leitenden Kuratoren, um sicherzustellen, dass Ihr Prototyp Museumsstandards entspricht.",
+    "success_title": "Protokoll Initialisiert",
+    "success_subtitle": "Übertragung Abgeschlossen",
+    "success_message": "Ihre Unterlagen wurden verschlüsselt und an unsere leitenden Kuratoren übermittelt. Wir werden die Machbarkeit und Komplexität innerhalb von 24-48 Stunden prüfen.",
+    "cta_vault": "Mein Vault Betreten"
   }
 }

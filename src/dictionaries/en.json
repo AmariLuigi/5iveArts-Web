@@ -524,6 +524,10 @@
     "benefit2_title": "Progress Transparency",
     "benefit2_desc": "Real-time visual records added to your personal vault throughout the fabrication lifecycle.",
     "benefit3_title": "Artisan Control",
-    "benefit3_desc": "Direct collaboration with our lead curators to ensure your prototype meets museum-grade standards."
+    "benefit3_desc": "Direct collaboration with our lead curators to ensure your prototype meets museum-grade standards.",
+    "success_title": "Protocol Initialized",
+    "success_subtitle": "Transmission Complete",
+    "success_message": "Your documentation has been encrypted and submitted to our lead curators. We will review the feasibility and complexity within 24-48 hours.",
+    "cta_vault": "Enter My Vault"
   }
 }

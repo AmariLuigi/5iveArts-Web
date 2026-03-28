@@ -524,6 +524,10 @@
     "benefit2_title": "Transparantie van Voortgang",
     "benefit2_desc": "Real-time visuele verslagen toegevoegd aan uw persoonlijke Vault gedurende de hele fabricagecyclus.",
     "benefit3_title": "Ambachtelijke Controle",
-    "benefit3_desc": "Directe samenwerking met onze curatoren om ervoor te zorgen dat uw prototype aan museumstandaarden voldoet."
+    "benefit3_desc": "Directe samenwerking met onze curatoren om ervoor te zorgen dat uw prototype aan museumstandaarden voldoet.",
+    "success_title": "Protocol Initialisatie",
+    "success_subtitle": "Transmissie Voltooid",
+    "success_message": "Uw documentatie is versleuteld en verzonden naar onze hoofdcuratoren. We zullen de haalbaarheid en complexiteit binnen 24-48 uur beoordelen.",
+    "cta_vault": "Naar Mijn Vault"
   }
 }

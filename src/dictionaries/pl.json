@@ -524,6 +524,10 @@
     "benefit2_title": "Przejrzystość Postępów",
     "benefit2_desc": "Wizualne zapisy w czasie rzeczywistym dodawane do Twojego osobistego Vaulta przez cały cykl produkcyjny.",
     "benefit3_title": "Kontrola Rzemieślnicza",
-    "benefit3_desc": "Bezpośrednia współpraca z naszymi głównymi kuratorami, aby zapewnić, że Twój prototyp spełnia standardy muzealne."
+    "benefit3_desc": "Bezpośrednia współpraca z naszymi głównymi kuratorami, aby zapewnić, że Twój prototyp spełnia standardy muzealne.",
+    "success_title": "Protokół Zainicjowany",
+    "success_subtitle": "Transmisja Zakończona",
+    "success_message": "Twoja dokumentacja została zaszyfrowana i przekazana naszym głównym kuratorom. Sprawdzimy wykonalność i złożoność w ciągu 24-48 godzin.",
+    "cta_vault": "Wejdź do Mojego Vault"
   }
 }

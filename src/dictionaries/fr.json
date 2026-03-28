@@ -524,6 +524,10 @@
     "benefit2_title": "Transparence des Progrès",
     "benefit2_desc": "Enregistrements visuels en temps réel ajoutés à votre Vault personnel tout au long du cycle de fabrication.",
     "benefit3_title": "Contrôle Artisanal",
-    "benefit3_desc": "Collaboration directe avec nos conservateurs en chef pour garantir que votre prototype respecte les normes muséales."
+    "benefit3_desc": "Collaboration directe avec nos conservateurs en chef pour garantir que votre prototype respecte les normes muséales.",
+    "success_title": "Protocole Initialisé",
+    "success_subtitle": "Transmission Terminée",
+    "success_message": "Votre documentation a été cryptée et soumise à nos conservateurs en chef. Nous examinerons la faisabilité et la complexité dans un délai de 24 à 48 heures.",
+    "cta_vault": "Accéder à Mon Vault"
   }
 }
