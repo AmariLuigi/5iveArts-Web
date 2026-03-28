@@ -41,7 +41,7 @@ export async function PATCH(
         "name", "name_en", "name_it", "name_de", "name_fr", "name_es", "name_ru", "name_tr", "name_pt", "name_nl", "name_ja", "name_ar", "name_pl",
         "description", "description_en", "description_it", "description_de", "description_fr", "description_es", "description_ru", "description_tr", "description_pt", "description_nl", "description_ja", "description_ar", "description_pl",
         "price", "images", "videos",
-        "category", "franchise", "subcategory", "status", "tags", "details", "rating", "reviewCount"
+        "category", "franchise", "subcategory", "status", "tags", "details", "rating", "reviewCount", "complexity_factor"
     ];
 
     const safePayload: Record<string, any> = {};
@@ -49,6 +49,9 @@ export async function PATCH(
         if (body[field] !== undefined) {
              safePayload[field] = body[field];
         }
+    }
+    if (body.complexityFactor !== undefined) {
+        safePayload.complexity_factor = body.complexityFactor;
     }
 
     // Safety: don't call update with empty obj

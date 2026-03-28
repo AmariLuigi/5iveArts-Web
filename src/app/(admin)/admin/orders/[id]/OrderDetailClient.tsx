@@ -19,19 +19,25 @@ import {
     Clipboard,
     CheckCircle2,
     Loader2,
-    Users
+    Users,
+    Sparkles,
+    Image as ImageIcon,
+    Plus
 } from "lucide-react";
 import Link from "next/link";
 
 interface OrderDetailClientProps {
     order: any;
     orderItems: any[];
+    initialProgressMedia: any[];
 }
 
-export default function OrderDetailClient({ order, orderItems }: OrderDetailClientProps) {
+export default function OrderDetailClient({ order, orderItems, initialProgressMedia }: OrderDetailClientProps) {
     const router = useRouter();
     const [status, setStatus] = useState(order.status);
     const [trackingNumber, setTrackingNumber] = useState(order.tracking_number || "");
+    const [progressMedia, setProgressMedia] = useState(initialProgressMedia);
+    const [isUploading, setIsUploading] = useState(false);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -134,18 +140,49 @@ export default function OrderDetailClient({ order, orderItems }: OrderDetailClie
                                         <option value="delivered">Delivered</option>
                                         <option value="cancelled">Cancelled</option>
                                         <option value="refunded">Refunded</option>
+                                        {/* Custom Workflow Statuses */}
+                                        <option value="analyzing">Analyzing (Custom)</option>
+                                        <option value="quoted">Quoted (Custom)</option>
+                                        <option value="deposit_paid">Deposit Paid (Custom)</option>
+                                        <option value="in_production">In Production (Custom)</option>
+                                        <option value="ready_to_ship">Ready to Ship (Custom)</option>
                                     </select>
                                 </div>
 
                                 <div className="space-y-3">
                                     <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Tracking Number</label>
-                                    <input
-                                        type="text"
-                                        value={trackingNumber}
-                                        onChange={(e) => setTrackingNumber(e.target.value)}
-                                        placeholder="Enter tracking ID..."
-                                        className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black tracking-widest text-white placeholder:text-neutral-800 focus:outline-none focus:border-brand-yellow/30"
-                                    />
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="text"
+                                            value={trackingNumber}
+                                            onChange={(e) => setTrackingNumber(e.target.value)}
+                                            placeholder="Enter tracking ID..."
+                                            className="flex-1 bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black tracking-widest text-white placeholder:text-neutral-800 focus:outline-none focus:border-brand-yellow/30"
+                                        />
+                                        {order.is_custom && status === "analyzing" && (
+                                            <button
+                                                type="button"
+                                                onClick={async () => {
+                                                    try {
+                                                        const res = await axios.post("/api/admin/ai/analyze-complexity", {
+                                                            imageUrl: orderItems[0]?.product?.images?.[0] || "",
+                                                            finishType: orderItems[0]?.selectedFinish?.toUpperCase() || "PAINTED"
+                                                        });
+                                                        if (res.data.complexity_factor) {
+                                                            setMessage({ type: 'success', text: `AI Quoted: ${res.data.complexity_factor.toFixed(2)}x factor` });
+                                                            // Logic to apply this would go here (e.g. updating the order metadata)
+                                                        }
+                                                    } catch (err) {
+                                                        setMessage({ type: 'error', text: 'AI Quote Failed' });
+                                                    }
+                                                }}
+                                                className="p-4 bg-brand-yellow/10 border border-brand-yellow/20 rounded-sm hover:bg-brand-yellow/20 transition-all group"
+                                                title="AI Quote Analysis"
+                                            >
+                                                <Sparkles className="w-4 h-4 text-brand-yellow group-hover:scale-110 transition-all" />
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
@@ -215,6 +252,84 @@ export default function OrderDetailClient({ order, orderItems }: OrderDetailClie
                                     </tr>
                                 </tfoot>
                             </table>
+                        </div>
+                    </div>
+
+                    {/* Order Journey (Progress Photos) */}
+                    <div className="space-y-6">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-white/40 flex items-center gap-2">
+                                <ImageIcon className="w-4 h-4 text-brand-yellow" />
+                                Fabrication Journey
+                            </h3>
+                            <label className="cursor-pointer bg-white/5 border border-white/10 px-4 py-2 rounded-sm text-[8px] font-black uppercase tracking-widest text-brand-yellow hover:bg-brand-yellow/10 transition-all flex items-center gap-2">
+                                <Plus className="w-3 h-3" />
+                                {isUploading ? "Stabilizing..." : "Add Record"}
+                                <input 
+                                    type="file" 
+                                    className="hidden" 
+                                    accept="image/*"
+                                    disabled={isUploading}
+                                    onChange={async (e) => {
+                                        const file = e.target.files?.[0];
+                                        if (!file) return;
+                                        
+                                        setIsUploading(true);
+                                        setMessage(null);
+                                        try {
+                                            const fileExt = file.name.split('.').pop();
+                                            const fileName = `${order.id}/${Date.now()}.${fileExt}`;
+                                            const { error: uploadError } = await supabase.storage
+                                                .from('order-progress')
+                                                .upload(fileName, file);
+                                            
+                                            if (uploadError) throw uploadError;
+                                            
+                                            const { data: { publicUrl } } = supabase.storage
+                                                .from('order-progress')
+                                                .getPublicUrl(fileName);
+                                            
+                                            await (supabase as any).from("order_progress_media").insert({
+                                                order_id: order.id,
+                                                url: publicUrl,
+                                                stage: status === "in_production" ? "Painting" : "Printing"
+                                            });
+                                            
+                                            const { data: newMedia } = await (supabase as any)
+                                                .from("order_progress_media")
+                                                .select("*")
+                                                .eq("order_id", order.id)
+                                                .order("created_at", { ascending: true });
+                                            
+                                            setProgressMedia(newMedia || []);
+                                            setMessage({ type: 'success', text: "Progress record stabilized" });
+                                        } catch (err: any) {
+                                            console.error(err);
+                                            setMessage({ type: 'error', text: `Record failed: ${err.message}` });
+                                        } finally {
+                                            setIsUploading(false);
+                                        }
+                                    }}
+                                />
+                            </label>
+                        </div>
+
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {progressMedia.map((m) => (
+                                <div key={m.id} className="hasbro-card aspect-square relative group overflow-hidden">
+                                    <img src={m.url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={m.stage} />
+                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
+                                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-brand-yellow mb-1">{m.stage}</span>
+                                        <span className="text-[7px] text-white/40">{new Date(m.created_at).toLocaleDateString()}</span>
+                                    </div>
+                                </div>
+                            ))}
+                            {progressMedia.length === 0 && (
+                                <div className="col-span-full py-12 border-2 border-dashed border-white/5 rounded-sm flex flex-col items-center justify-center text-neutral-700">
+                                    <ImageIcon className="w-8 h-8 mb-3 opacity-20" />
+                                    <span className="text-[10px] uppercase font-black tracking-widest">No visual records captured yet</span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

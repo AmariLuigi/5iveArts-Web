@@ -1,25 +1,28 @@
 import { Product, ProductScale, ProductFinish } from "@/types";
 
 export const SCALE_CONFIG: Record<ProductScale, { multiplier: number; size: string }> = {
-  "1/9": { multiplier: 1.5, size: "20cm" },
-  "1/6": { multiplier: 2.5, size: "30cm" },
-  "1/4": { multiplier: 5.0, size: "45cm" },
+  "1/9": { multiplier: 1.0, size: "20cm" },
+  "1/6": { multiplier: 1.7, size: "30cm" },
+  "1/4": { multiplier: 3.2, size: "45cm" },
 };
 
 const FINISH_CONFIG: Record<ProductFinish, { multiplier: number }> = {
   painted: { multiplier: 1.0 },
-  raw: { multiplier: 0.6 },
+  raw: { multiplier: 0.2941 }, // Ratio of 25.00 / 85.00 (approx) for base ref 1/9
 };
 
 export function calculatePrice(
   basePrice: number, 
   scale: ProductScale, 
   finish: ProductFinish, 
-  pricingSettings?: any
+  pricingSettings?: any,
+  complexityFactor: number = 1.0
 ): number {
   const scaleMult = pricingSettings?.scales?.[scale]?.multiplier ?? SCALE_CONFIG[scale].multiplier;
   const finishMult = pricingSettings?.finishes?.[finish]?.multiplier ?? FINISH_CONFIG[finish].multiplier;
-  return Math.round(basePrice * scaleMult * finishMult);
+  
+  // New Formula: (BasePrice * ScaleMultiplier * FinishMultiplier) * ComplexityFactor
+  return Math.round((basePrice * scaleMult * finishMult) * complexityFactor);
 }
 
 import { getSupabasePublic } from "./supabase";
@@ -37,7 +40,10 @@ export async function fetchProductsFromDb(): Promise<Product[]> {
     return [];
   }
 
-  return (data as any) as Product[];
+  return (data as any[]).map(p => ({
+    ...p,
+    complexityFactor: p.complexity_factor
+  })) as Product[];
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
@@ -50,7 +56,11 @@ export async function getProductById(id: string): Promise<Product | undefined> {
     .single();
 
   if (error || !data) return undefined;
-  return data as Product;
+  const p = data as any;
+  return {
+    ...p,
+    complexityFactor: p.complexity_factor
+  } as Product;
 }
 
 export function formatPrice(cents: number): string {

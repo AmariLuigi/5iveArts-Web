@@ -24,16 +24,26 @@ import autoTable from "jspdf-autotable";
 interface OrderLogisticsClientProps {
     order: any;
     orderItems: any[];
+    progressMedia: any[];
     dict: any;
     lang: string;
 }
 
-export default function OrderLogisticsClient({ order, orderItems, dict, lang }: OrderLogisticsClientProps) {
+export default function OrderLogisticsClient({ order, orderItems, progressMedia, dict, lang }: OrderLogisticsClientProps) {
     const getStatusColor = (s: string) => {
         switch (s) {
-            case "paid": return "text-blue-400 border-blue-400/20 bg-blue-400/5";
-            case "processing": return "text-orange-400 border-orange-400/20 bg-orange-400/5";
-            case "shipped": return "text-purple-400 border-purple-400/20 bg-purple-400/5";
+            case "paid": 
+            case "deposit_paid":
+                return "text-blue-400 border-blue-400/20 bg-blue-400/5";
+            case "processing":
+            case "analyzing":
+            case "quoted":
+                return "text-orange-400 border-orange-400/20 bg-orange-400/5";
+            case "in_production":
+                return "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5";
+            case "shipped": 
+            case "ready_to_ship":
+                return "text-purple-400 border-purple-400/20 bg-purple-400/5";
             case "delivered": return "text-green-400 border-green-400/20 bg-green-400/5";
             case "cancelled": return "text-red-400 border-red-400/20 bg-red-400/5";
             default: return "text-neutral-400 border-neutral-400/20 bg-neutral-400/5";
@@ -178,7 +188,7 @@ export default function OrderLogisticsClient({ order, orderItems, dict, lang }: 
                     {/* Main Content Area */}
                     <div className="lg:col-span-2 space-y-12">
                         
-                        {/* Deployment Timeline (Mocked for aesthetics) */}
+                        {/* Deployment Timeline */}
                         <div className="bg-[#0a0a0a] border border-white/5 p-8 rounded relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-6 opacity-5">
                                 <History className="w-32 h-32 text-brand-yellow" />
@@ -186,49 +196,85 @@ export default function OrderLogisticsClient({ order, orderItems, dict, lang }: 
                             
                             <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white mb-10 flex items-center gap-3">
                                 <Anchor className="w-4 h-4 text-brand-yellow" />
-                                {dict.orders.lifecycle}
+                                {order.is_custom ? "Custom Fabrication Protocol" : dict.orders.lifecycle}
                             </h3>
 
-                            <div className="space-y-10 relative">
-                                {/* Timeline Line */}
-                                <div className="absolute left-4 top-2 bottom-2 w-px bg-white/10" />
+                            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+                                {/* Connector Line (Desktop) */}
+                                <div className="hidden md:block absolute top-4 left-[10%] right-[10%] h-px bg-white/10 z-0" />
+                                
+                                {(() => {
+                                    const customStages = [
+                                        { id: 'analyzing', label: 'Analysis', icon: ShieldCheck, active: ['analyzing', 'quoted', 'deposit_paid', 'in_production', 'ready_to_ship', 'shipped', 'delivered'] },
+                                        { id: 'deposit_paid', label: 'Deposit', icon: CreditCard, active: ['deposit_paid', 'in_production', 'ready_to_ship', 'shipped', 'delivered'] },
+                                        { id: 'in_production', label: 'Forging', icon: Box, active: ['in_production', 'ready_to_ship', 'shipped', 'delivered'] },
+                                        { id: 'ready_to_ship', label: 'Finalizing', icon: CheckCircle2, active: ['ready_to_ship', 'shipped', 'delivered'] },
+                                        { id: 'shipped', label: 'Deployment', icon: Truck, active: ['shipped', 'delivered'] }
+                                    ];
 
-                                <div className="flex gap-8 relative">
-                                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center shrink-0 z-10 shadow-[0_0_20px_rgba(34,197,94,0.3)]">
-                                        <CheckCircle2 className="w-4 h-4 text-black" />
-                                    </div>
-                                    <div>
-                                        <p className="text-[11px] font-black text-white uppercase tracking-widest">{dict.orders.pConfirmed}</p>
-                                        <p className="text-[9px] text-neutral-500 font-bold uppercase mt-1">{dict.orders.pConfirmedDesc}</p>
-                                        <p className="text-[8px] text-neutral-600 mt-2 font-black italic">{new Date(order.created_at).toLocaleTimeString()}</p>
-                                    </div>
-                                </div>
+                                    const stdStages = [
+                                        { id: 'paid', label: 'Confirmed', icon: CheckCircle2, active: ['paid', 'processing', 'shipped', 'delivered'] },
+                                        { id: 'processing', label: 'Preparing', icon: Box, active: ['processing', 'shipped', 'delivered'] },
+                                        { id: 'shipped', label: 'In Transit', icon: Truck, active: ['shipped', 'delivered'] },
+                                        { id: 'delivered', label: 'Received', icon: MapPin, active: ['delivered'] }
+                                    ];
 
-                                <div className="flex gap-8 relative">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border ${
-                                        order.status !== 'paid' ? 'bg-brand-yellow border-brand-yellow shadow-[0_0_20px_rgba(255,160,0,0.3)]' : 'bg-black border-white/20'
-                                    }`}>
-                                        <Box className={`w-4 h-4 ${order.status !== 'paid' ? 'text-black' : 'text-neutral-600'}`} />
-                                    </div>
-                                    <div>
-                                        <p className={`text-[11px] font-black uppercase tracking-widest ${order.status !== 'paid' ? 'text-white' : 'text-neutral-700'}`}>{dict.orders.prepPhase}</p>
-                                        <p className="text-[9px] text-neutral-500 font-bold uppercase mt-1">{dict.orders.prepPhaseDesc}</p>
-                                    </div>
-                                </div>
+                                    const stages = order.is_custom ? customStages : stdStages;
 
-                                <div className="flex gap-8 relative">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border ${
-                                        order.status === 'shipped' || order.status === 'delivered' ? 'bg-brand-yellow border-brand-yellow shadow-[0_0_20px_rgba(255,160,0,0.3)]' : 'bg-black border-white/20'
-                                    }`}>
-                                        <Truck className={`w-4 h-4 ${order.status === 'shipped' || order.status === 'delivered' ? 'text-black' : 'text-neutral-600'}`} />
-                                    </div>
-                                    <div>
-                                        <p className={`text-[11px] font-black uppercase tracking-widest ${order.status === 'shipped' || order.status === 'delivered' ? 'text-white' : 'text-neutral-700'}`}>{dict.orders.inTransit}</p>
-                                        <p className="text-[9px] text-neutral-500 font-bold uppercase mt-1">{dict.orders.inTransitDesc}</p>
-                                    </div>
-                                </div>
+                                    return stages.map((s, i) => {
+                                        const isPast = s.active.includes(order.status);
+                                        const isCurrent = order.status === s.id;
+                                        const Icon = s.icon;
+
+                                        return (
+                                            <div key={s.id} className="flex md:flex-col items-center gap-4 md:gap-3 relative z-10 group">
+                                                <div className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-500 ${
+                                                    isPast ? 'bg-brand-yellow border-brand-yellow shadow-[0_0_15px_rgba(255,160,0,0.3)]' : 'bg-black border-white/10'
+                                                }`}>
+                                                    <Icon className={`w-3.5 h-3.5 ${isPast ? 'text-black' : 'text-neutral-700'}`} />
+                                                </div>
+                                                <div className="flex flex-col md:items-center text-left md:text-center">
+                                                    <span className={`text-[9px] font-black uppercase tracking-widest ${isPast ? 'text-white' : 'text-neutral-700'}`}>{s.label}</span>
+                                                    {isCurrent && (
+                                                        <span className="text-[7px] text-brand-yellow font-black uppercase tracking-widest animate-pulse mt-1">Status Active</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        );
+                                    });
+                                })()}
                             </div>
                         </div>
+
+                        {/* Progress Gallery (Order Journal) */}
+                        {progressMedia.length > 0 && (
+                            <div className="space-y-6">
+                                <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
+                                    <History className="w-4 h-4 text-brand-yellow" />
+                                    Fabrication Journal
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {progressMedia.map((media) => (
+                                        <div key={media.id} className="group relative aspect-[4/5] bg-neutral-900 overflow-hidden border border-white/5">
+                                            <img 
+                                                src={media.url} 
+                                                alt={media.stage} 
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                                            <div className="absolute bottom-0 left-0 p-6 w-full">
+                                                <div className="flex items-center justify-between">
+                                                    <div>
+                                                        <p className="text-[10px] font-black text-brand-yellow uppercase tracking-widest mb-1">{media.stage}</p>
+                                                        <p className="text-[8px] text-white/40 font-bold uppercase tracking-widest">{new Date(media.created_at).toLocaleDateString()}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Manifest Table */}
                         <div className="space-y-6">

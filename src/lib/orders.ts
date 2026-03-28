@@ -65,6 +65,10 @@ export async function processCompletedCheckout(
         };
 
         console.log("[orders] Attempting DB insert for session:", session.id);
+        const paymentType = session.metadata?.payment_type || "full";
+        const isCustom = session.metadata?.is_custom === "true";
+        const status = paymentType === "deposit" ? "deposit_paid" : "paid";
+
         const { data: order, error: orderError } = await (supabase as any)
             .from("orders")
             .insert({
@@ -75,7 +79,7 @@ export async function processCompletedCheckout(
                         : null,
                 customer_email: email,
                 customer_name: customerName,
-                status: "paid",
+                status,
                 subtotal_pence: subtotalPence,
                 shipping_pence: shippingPence,
                 total_pence: totalPence,
@@ -83,6 +87,11 @@ export async function processCompletedCheckout(
                 shipping_service_name: session.metadata?.shipping_service_name ?? null,
                 shipping_address: shippingAddress,
                 user_id: session.metadata?.user_id || null,
+                is_custom: isCustom,
+                scale: session.metadata?.scale || null,
+                complexity_factor: parseFloat(session.metadata?.complexity_factor || "1.0"),
+                deposit_pence: paymentType === "deposit" ? totalPence : (paymentType === "full" ? totalPence : 0),
+                final_payment_pence: paymentType === "deposit" || paymentType === "final" ? totalPence : 0,
             })
             .select("id")
             .single();

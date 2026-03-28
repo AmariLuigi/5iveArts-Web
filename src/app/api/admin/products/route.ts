@@ -54,6 +54,7 @@ export async function POST(req: NextRequest) {
         status: body.status,
         tags: Array.isArray(body.tags) ? body.tags : [],
         details: Array.isArray(body.details) ? body.details : [],
+        complexity_factor: body.complexityFactor,
     };
 
     const { data, error } = await supabase

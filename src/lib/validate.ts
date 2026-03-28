@@ -155,7 +155,13 @@ export async function validateCartItems(raw: unknown): Promise<ValidationResult<
       return { data: null, error: `Invalid quantity for product ${productId}` };
     }
 
-    const serverPrice = calculatePrice(serverProduct.price, scale, finish);
+    const serverPrice = calculatePrice(
+      serverProduct.price, 
+      scale, 
+      finish, 
+      undefined, 
+      serverProduct.complexityFactor
+    );
 
     items.push({
       product: serverProduct,

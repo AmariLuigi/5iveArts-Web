@@ -89,38 +89,51 @@ export async function POST(req: NextRequest) {
   // Use the server-authoritative price, ignoring the client-supplied rawRate.price
   const shippingPrice = matchedRate.price;
 
+  const isCustom = b.isCustom === true;
+  const paymentType = isCustom ? "deposit" : "full";
+
   // ── Build Stripe line items (prices come from the server validated items) ──
-  const productLineItems = items.map((item) => ({
-    price_data: {
-      currency: "eur",
-      unit_amount: item.priceAtSelection,
-      product_data: {
-        name: `${item.product.name} (${item.selectedScale} / ${item.selectedFinish})`,
-        description: item.product.description.slice(0, 200),
-        metadata: {
-          product_id: item.product.id,
-          scale: item.selectedScale,
-          finish: item.selectedFinish,
+  const productLineItems = items.map((item) => {
+    let unitAmount = item.priceAtSelection;
+    if (isCustom) {
+      unitAmount = Math.round(unitAmount * 0.5);
+    }
+
+    return {
+      price_data: {
+        currency: "eur",
+        unit_amount: unitAmount,
+        product_data: {
+          name: `${item.product.name} (${item.selectedScale} / ${item.selectedFinish})${isCustom ? " [Deposit 50%]" : ""}`,
+          description: item.product.description.slice(0, 200),
+          metadata: {
+            product_id: item.product.id,
+            scale: item.selectedScale,
+            finish: item.selectedFinish,
+            is_custom: String(isCustom),
+          },
         },
       },
-    },
-    quantity: item.quantity,
-  }));
+      quantity: item.quantity,
+    };
+  });
 
   // Shipping as a separate line item (using validated server price)
-  const shippingLineItem = {
-    price_data: {
-      currency: "eur",
-      unit_amount: shippingPrice,
-      product_data: {
-        name: `Shipping: ${matchedRate.carrier_name} — ${matchedRate.service_name}`,
-        description: `Est. ${matchedRate.estimated_days} day(s)`,
+  // Only include shipping if NOT a custom deposit (paid at the end for custom)
+  const lineItems = [...productLineItems];
+  if (!isCustom) {
+    lineItems.push({
+      price_data: {
+        currency: "eur",
+        unit_amount: shippingPrice,
+        product_data: {
+          name: `Shipping: ${matchedRate.carrier_name} — ${matchedRate.service_name}`,
+          description: `Est. ${matchedRate.estimated_days} day(s)`,
+        },
       },
-    },
-    quantity: 1,
-  };
-
-  const lineItems = [...productLineItems, shippingLineItem];
+      quantity: 1,
+    } as any);
+  }
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
@@ -136,9 +149,9 @@ export async function POST(req: NextRequest) {
       line_items: lineItems,
       customer_email: address.email,
       metadata: {
-        shipping_service_id: rawRate.service_id,
-        shipping_service_name: `${matchedRate.carrier_name} — ${matchedRate.service_name}`,
-        shipping_pence: String(shippingPrice),
+        shipping_service_id: isCustom ? "" : rawRate.service_id,
+        shipping_service_name: isCustom ? "TBD (Paid on delivery)" : `${matchedRate.carrier_name} — ${matchedRate.service_name}`,
+        shipping_pence: isCustom ? "0" : String(shippingPrice),
         ship_to_name: address.full_name,
         ship_to_street: address.street1,
         ship_to_city: address.city,
@@ -148,6 +161,10 @@ export async function POST(req: NextRequest) {
         ship_to_phone: address.phone,
         user_id: user?.id || "",
         user_email: user?.email || "",
+        is_custom: String(isCustom),
+        payment_type: paymentType,
+        scale: items[0]?.selectedScale || "", // Multi-item custom orders might be rare, but we take first for now
+        complexity_factor: String(items[0]?.product.complexityFactor || "1.0"),
       },
       return_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     });

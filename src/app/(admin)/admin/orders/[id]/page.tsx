@@ -33,10 +33,22 @@ export default async function OrderDetailPage({ params }: Props) {
         console.error(`[admin] Error fetching items for order ${id}:`, itemsError);
     }
 
+    // Fetch progress media
+    const { data: progressMedia, error: mediaError } = await supabase
+        .from("order_progress_media")
+        .select("*")
+        .eq("order_id", id)
+        .order("created_at", { ascending: true });
+
+    if (mediaError) {
+        console.error(`[admin] Error fetching media for order ${id}:`, mediaError);
+    }
+
     return (
         <OrderDetailClient
             order={order}
             orderItems={orderItems || []}
+            initialProgressMedia={progressMedia || []}
         />
     );
 }

@@ -21,6 +21,7 @@ export interface Product {
   tags: string[];
   rating?: number;
   reviewCount?: number;
+  complexityFactor?: number;
 }
 
 export interface CartItem {

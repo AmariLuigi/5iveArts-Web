@@ -61,10 +61,22 @@ export default async function OrderLogisticsPage({ params }: Props) {
         console.error(`[account] Error fetching items for order ${id}:`, itemsError);
     }
 
+    // Fetch progress media
+    const { data: progressMedia, error: mediaError } = await (supabase as any)
+        .from("order_progress_media")
+        .select("*")
+        .eq("order_id", id)
+        .order("created_at", { ascending: true });
+
+    if (mediaError) {
+        console.error(`[account] Error fetching media for order ${id}:`, mediaError);
+    }
+
     return (
         <OrderLogisticsClient
             order={order}
             orderItems={orderItems || []}
+            progressMedia={progressMedia || []}
             dict={dict}
             lang={lang}
         />

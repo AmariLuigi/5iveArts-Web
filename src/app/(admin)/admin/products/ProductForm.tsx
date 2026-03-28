@@ -82,6 +82,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         pl: initialData?.description_pl || null,
     });
     const [price, setPrice] = useState(initialData?.price || 8999);
+    const [complexityFactor, setComplexityFactor] = useState(initialData?.complexityFactor || 1.0);
+    const [isAnalyzingComplexity, setIsAnalyzingComplexity] = useState(false);
     const [category, setCategory] = useState(initialData?.category || "figures");
     const [franchise, setFranchise] = useState(initialData?.franchise || "");
     const [subcategory, setSubcategory] = useState(initialData?.subcategory || "");
@@ -505,6 +507,31 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         }
     };
 
+    const analyzeComplexity = async () => {
+        if (images.length === 0) {
+            showToast("No assets detected for vision analysis", 'error');
+            return;
+        }
+        
+        setIsAnalyzingComplexity(true);
+        try {
+            const res = await axios.post("/api/admin/ai/analyze-complexity", {
+                imageUrl: images[0],
+                finishType: "PAINTED" // Default for manual listing analysis
+            });
+            
+            if (res.data.complexity_factor) {
+                setComplexityFactor(res.data.complexity_factor);
+                showToast(`Complexity Protocol: ${res.data.complexity_factor.toFixed(2)}x factor applied`, 'success');
+            }
+        } catch (err: any) {
+            console.error("Complexity Analysis Error:", err);
+            showToast("Complexity analysis protocol failed", 'error');
+        } finally {
+            setIsAnalyzingComplexity(false);
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -536,6 +563,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             tags,
             images,
             videos,
+            complexityFactor: Number(complexityFactor),
             updated_at: new Date().toISOString()
         };
 
@@ -826,6 +854,37 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             />
                             <p className="text-[9px] font-black uppercase text-neutral-700">{formatPrice(price)} (Base 1/12 Ref Multiplier)</p>
                         </div>
+
+                        <div className="space-y-3">
+                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Complexity Factor</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    min="1.0"
+                                    max="1.3"
+                                    required
+                                    value={complexityFactor}
+                                    onChange={(e) => setComplexityFactor(Number(e.target.value))}
+                                    className="flex-1 bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black text-white focus:outline-none focus:border-brand-yellow/30"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={analyzeComplexity}
+                                    disabled={isAnalyzingComplexity || images.length === 0}
+                                    className="p-4 bg-white/5 hover:bg-white/10 transition-all rounded-sm border border-white/5 group flex items-center justify-center min-w-[3rem]"
+                                    title="AI Complexity Insight"
+                                >
+                                    {isAnalyzingComplexity ? (
+                                        <Loader2 className="w-4 h-4 animate-spin text-brand-yellow" />
+                                    ) : (
+                                        <Sparkles className="w-4 h-4 text-brand-yellow group-hover:scale-110 transition-transform" />
+                                    )}
+                                </button>
+                            </div>
+                            <p className="text-[9px] font-black uppercase text-neutral-700">Multiplier applied: {complexityFactor.toFixed(2)}x total</p>
+                        </div>
+
                         <div className="space-y-3 relative">
                             <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Classification</label>
 
