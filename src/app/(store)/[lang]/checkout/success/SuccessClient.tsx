@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
-import { CheckCircle, Package, Truck, Mail, Loader2, ShieldCheck, Eye, EyeOff, AlertTriangle } from "lucide-react";
+import { CheckCircle, Package, Truck, Mail, Loader2, ShieldCheck, Eye, EyeOff, AlertTriangle, ChevronRight } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import { useCartStore, CartStore } from "@/store/cart";
@@ -29,8 +29,12 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
   const sessionId = searchParams.get("session_id");
   const [status, setStatus] = useState<"loading" | "complete" | "error">("loading");
   const [customerEmail, setCustomerEmail] = useState<string | null>(null);
+  const [orderId, setOrderId] = useState<string | null>(null);
+  const [isCustom, setIsCustom] = useState(false);
   const [resending, setResending] = useState(false);
   const [resendSuccess, setResendSuccess] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   // Signup states
   const [password, setPassword] = useState("");
@@ -38,8 +42,6 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [signupError, setSignupError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
 
   const handleResendEmail = async () => {
     if (!sessionId || resending) return;
@@ -123,6 +125,8 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
         if (res.data.status === "complete") {
           setStatus("complete");
           setCustomerEmail(res.data.customer_email);
+          setOrderId(res.data.orderId);
+          setIsCustom(res.data.isCustom);
         } else {
           setStatus("error");
         }
@@ -189,21 +193,21 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
         </div>
 
         <h1 className="text-5xl md:text-6xl font-black text-white mb-4 uppercase tracking-tighter">
-          {dict.success.orderConfirmed}
+          {isCustom ? "Commission Protocoled" : dict.success.orderConfirmed}
         </h1>
         <p className="text-lg text-neutral-300 mb-2 font-bold uppercase tracking-widest text-[12px]">
-          {dict.success.thankYou}
+          {isCustom ? "Fabrication Protocol Initiated" : dict.success.thankYou}
         </p>
         <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-14">
           {dict.success.confEmailSent} <span className="text-brand-yellow">{customerEmail}</span>.<br />
-          {dict.success.shippingNote}
+          {isCustom ? "Your project is now being queued in the Artisan Workshop." : dict.success.shippingNote}
         </p>
 
         <div className="bg-[#0a0a0a] rounded border border-white/5 p-8 mb-14 text-left relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1 h-full bg-brand-yellow/50" />
           <div className="flex justify-between items-center mb-10 pb-4 border-b border-white/5">
             <h2 className="font-black text-white uppercase tracking-[0.3em] text-[11px]">
-              {dict.success.logisticsLog}
+              {isCustom ? "Fabrication Journal" : dict.success.logisticsLog}
             </h2>
             <button
               onClick={handleResendEmail}
@@ -220,11 +224,11 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
           <div className="space-y-6">
             <div className="flex items-start gap-5">
               <div className="w-10 h-10 rounded-full bg-brand-yellow/10 border border-brand-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Mail className="w-4 h-4 text-brand-yellow" />
+                <CheckCircle className="w-4 h-4 text-brand-yellow" />
               </div>
               <div>
-                <p className="font-black text-white text-[11px] uppercase tracking-widest">{dict.checkout.deliveryStep.split(". ")[1] || "Confirmation"}</p>
-                <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">{dict.success.paymentVerified}</p>
+                <p className="font-black text-white text-[11px] uppercase tracking-widest">{isCustom ? "Deposit Secured" : (dict.checkout.deliveryStep.split(". ")[1] || "Confirmation")}</p>
+                <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">{isCustom ? "50% protocol initial investment verified." : dict.success.paymentVerified}</p>
               </div>
             </div>
             <div className="flex items-start gap-5">
@@ -232,8 +236,8 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
                 <Package className="w-4 h-4 text-brand-yellow" />
               </div>
               <div>
-                <p className="font-black text-white text-[11px] uppercase tracking-widest">{dict.checkout.shippingStep.split(". ")[1] || "Fulfillment"}</p>
-                <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">{dict.success.fulfillmentNote}</p>
+                <p className="font-black text-white text-[11px] uppercase tracking-widest">{isCustom ? "Artisan Forging" : (dict.checkout.shippingStep.split(". ")[1] || "Fulfillment")}</p>
+                <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">{isCustom ? "Your artifact has entered the production queue." : dict.success.fulfillmentNote}</p>
               </div>
             </div>
           </div>
@@ -242,13 +246,14 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
         {(signupSuccess || (user && !checkingAuth)) ? (
           <div className="bg-brand-yellow/5 border border-brand-yellow/20 rounded p-8 mb-14 text-center animate-in zoom-in duration-500">
             <ShieldCheck className="w-12 h-12 text-brand-yellow mx-auto mb-4" />
-            <h3 className="text-white font-black uppercase tracking-widest text-sm mb-2">{dict.success.vaultEstablished}</h3>
-            <p className="text-brand-yellow text-[10px] font-bold uppercase tracking-[0.2em] mb-6">{dict.success.orderLinked}</p>
+            <h3 className="text-white font-black uppercase tracking-widest text-sm mb-2">Vault Entry Permitted</h3>
+            <p className="text-brand-yellow text-[10px] font-bold uppercase tracking-[0.2em] mb-6">Your fabrication records are archived in your account.</p>
             <Link 
-              href={`/${lang}/account`}
-              className="inline-block text-[10px] font-black uppercase tracking-widest text-white border-b border-brand-yellow/50 pb-1 hover:text-brand-yellow transition-colors"
+              href={orderId ? `/${lang}/account/orders/${orderId}` : `/${lang}/account`}
+              className="inline-block text-[10px] font-black uppercase tracking-widest text-white border-b border-brand-yellow/50 pb-1 hover:text-brand-yellow transition-all flex items-center gap-2 mx-auto w-fit"
             >
-              {dict.success.goWarehouse}
+              {isCustom ? "View Fabrication Protocol" : dict.success.goWarehouse}
+              <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
         ) : !checkingAuth ? (

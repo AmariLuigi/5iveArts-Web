@@ -190,14 +190,18 @@ export async function GET(req: NextRequest) {
   try {
     const session = await getStripe().checkout.sessions.retrieve(sessionId);
 
+    let orderId: string | null = session.metadata?.order_id || null;
+    let isCustom = session.metadata?.is_custom === "true";
+
     // ── Safe Reconciliation Fallback ──────────────────────────────────────────
     // If the session is complete/paid, ensure it's recorded in the database.
     // This acts as a fallback for when webhooks are slow OR missed (e.g. local dev).
     if (session.status === "complete" || session.payment_status === "paid") {
       const { processCompletedCheckout } = await import("@/lib/orders");
       try {
-        await processCompletedCheckout(session);
-        console.log(`[api/checkout] Reconciled session: ${session.id}`);
+        const { orderId: reconciledId } = await processCompletedCheckout(session);
+        orderId = reconciledId;
+        console.log(`[api/checkout] Reconciled session: ${session.id} -> Order: ${orderId}`);
       } catch (err) {
         // Log but don't fail the status check; let the UI show "paid" but maybe without order ID
         console.error("[api/checkout] Reconciliation failed:", err);
@@ -208,6 +212,8 @@ export async function GET(req: NextRequest) {
       status: session.status,
       payment_status: session.payment_status,
       customer_email: session.customer_details?.email ?? session.customer_email,
+      orderId,
+      isCustom
     });
   } catch (err) {
     console.error("[checkout] session retrieve error:", err);
