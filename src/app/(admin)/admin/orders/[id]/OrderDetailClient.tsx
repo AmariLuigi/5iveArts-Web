@@ -760,13 +760,13 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                 <tfoot className="bg-white/[0.02]">
                                     <tr className="border-t border-white/5">
                                         <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font-black tracking-widest text-neutral-600">Subtotal (Adjusted)</td>
-                                        <td className="px-6 py-4 text-right text-xs font-black text-white">{formatPrice(order.subtotal_pence)}</td>
+                                        <td className="px-6 py-4 text-right text-xs font-black text-white">{formatPrice(Math.round(basePrice * complexity))}</td>
                                     </tr>
                                     <tr>
-                                        <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font_black tracking_widest text-neutral-600 border-t border-white/[0.02]">Logistics Tier</td>
-                                        <td className="px-6 py-4 text-right text-xs font-black text-white border-t border-white/[0.02]">{formatPrice(order.shipping_pence)}</td>
+                                        <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font-black tracking-widest text-neutral-600 border-t border-white/[0.02]">Logistics Tier</td>
+                                        <td className="px-6 py-4 text-right text-xs font-black text-white border-t border-white/[0.02]">{formatPrice(order.shipping_pence || 0)}</td>
                                     </tr>
-                                    {order.is_custom && (
+                                    {order.is_custom && order.deposit_pence > 0 && (
                                         <tr>
                                             <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font-black tracking-widest text-neutral-600 border-t border-white/[0.02]">Initial Deposit Paid</td>
                                             <td className="px-6 py-4 text-right text-xs font-black text-neutral-400 border-t border-white/[0.02]">-{formatPrice(order.deposit_pence || 0)}</td>
@@ -774,10 +774,14 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                     )}
                                     <tr className="border-t border-brand-yellow/10">
                                         <td colSpan={2} className="px-6 py-5 text-[10px] uppercase font-black tracking-widest text-brand-yellow">
-                                            {order.is_custom && order.status === 'ready_to_ship' ? "Balance Due" : "Grand Total"}
+                                            {order.is_custom && (status === 'ready_to_ship' || status === 'delivered') ? "Balance Due" : "Grand Total"}
                                         </td>
                                         <td className="px-6 py-5 text-right text-xl font-black text-brand-yellow tracking-tighter">
-                                            {formatPrice(order.is_custom && (status === 'ready_to_ship' || status === 'delivered') ? (order.total_pence - (order.deposit_pence || 0)) : order.total_pence)}
+                                            {formatPrice(
+                                                order.is_custom && (status === 'ready_to_ship' || status === 'delivered') 
+                                                ? (Math.round(basePrice * complexity) + (order.shipping_pence || 0)) - (order.deposit_pence || 0)
+                                                : (Math.round(basePrice * complexity) + (order.shipping_pence || 0))
+                                            )}
                                         </td>
                                     </tr>
                                 </tfoot>
