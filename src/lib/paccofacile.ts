@@ -51,7 +51,20 @@ export async function fetchShippingRates(
       iso_code: toAddress.country,
       postal_code: toAddress.zip_code,
       city: toAddress.city,
-      StateOrProvinceCode: toAddress.state || toAddress.country // Fallback to country ISO if state is missing
+      StateOrProvinceCode: (() => {
+        // Paccofacile requires 2-letter province codes (e.g., 'PA') for Italy.
+        // If it's missing or set to country ISO, try to infer it.
+        if (toAddress.country === 'IT') {
+          const cityLow = toAddress.city.toLowerCase();
+          if (cityLow.includes('palermo')) return 'PA';
+          if (cityLow.includes('milano')) return 'MI';
+          if (cityLow.includes('roma')) return 'RM';
+          if (cityLow.includes('napoli')) return 'NA';
+          if (toAddress.state && toAddress.state.length === 2) return toAddress.state;
+          return ""; // Sending empty is safer than 'IT' for Italy if unknown
+        }
+        return toAddress.state || toAddress.country;
+      })()
     }
   };
 

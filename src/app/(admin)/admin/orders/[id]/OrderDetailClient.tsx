@@ -26,6 +26,7 @@ import {
     Copy,
     Check,
     History,
+    RefreshCcw,
     Box
 } from "lucide-react";
 import Link from "next/link";
@@ -479,10 +480,33 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
 
                         {/* Universal Logistics Protocol Selector */}
                         <div className="hasbro-card p-8 border-white/5 bg-white/[0.01] space-y-8">
-                            <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-white/40 mb-2 flex items-center gap-2">
-                                <Truck className="w-4 h-4 text-brand-yellow" />
-                                Logistics Selection Protocol
-                            </h3>
+                            <div className="flex items-center justify-between mb-2">
+                                <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-white/40 flex items-center gap-2">
+                                    <Truck className="w-4 h-4 text-brand-yellow" />
+                                    Logistics Selection Protocol
+                                </h3>
+                                <button
+                                    type="button"
+                                    onClick={async () => {
+                                        setLoading(true);
+                                        setMessage(null);
+                                        try {
+                                            const res = await axios.post(`/api/admin/orders/${order.id}/rates`);
+                                            setMessage({ type: 'success', text: `Snapshot updated with ${res.data.options?.length || 0} tiers` });
+                                            router.refresh();
+                                        } catch (err: any) {
+                                            setMessage({ type: 'error', text: err.response?.data?.error || 'Snap failed' });
+                                        } finally {
+                                            setLoading(false);
+                                        }
+                                    }}
+                                    disabled={loading}
+                                    className="text-[8px] uppercase font-black tracking-widest text-brand-yellow hover:text-white transition-colors flex items-center gap-1.5 px-3 py-1.5 border border-brand-yellow/20 hover:border-brand-yellow/60 rounded-sm bg-brand-yellow/5"
+                                >
+                                    {loading ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <RefreshCcw className="w-2.5 h-2.5" />}
+                                    Snap Logistics Snapshot
+                                </button>
+                            </div>
                             
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {(order.shipping_options || []).map((opt: any) => (
