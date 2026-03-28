@@ -540,6 +540,20 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
 
                         {/* Universal Logistics Protocol Selector - Command Center */}
                         <div className="hasbro-card p-10 border-white/5 bg-white/[0.01] space-y-12">
+                            {order.metadata?.logistics_partial_validation && (
+                                <div className="p-4 bg-orange-500/10 border border-orange-500/30 rounded-sm flex items-center gap-4">
+                                    <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center shrink-0">
+                                        <Truck className="w-5 h-5 text-orange-500" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="text-[10px] uppercase font-black tracking-widest text-orange-400">Logistics Precision Advisory</p>
+                                        <p className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-1 italic">
+                                            The initial quote was calculated using **Zone-Based Fallback** (Zip only). Please verify the street address details before deploying final tiers.
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="flex items-center justify-between">
                                 <div>
                                     <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">Command Center</span>

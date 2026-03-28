@@ -39,12 +39,19 @@ export async function POST(req: Request) {
 
     // 0.5 Fetch Shipping Rates if address exists
     let shippingOptions: any[] = [];
+    let logisticsWarning = false;
+
     if (shippingAddress) {
         try {
             const settings = await getSiteSettings();
-            shippingOptions = await fetchShippingRates(shippingAddress as ShippingAddress, 10000, settings.logistics); // Use 100.00 EUR as benchmark for initial estimation
-        } catch (err) {
-            console.error("[POST /api/orders/custom] Paccofacile fetch failed:", err);
+            // Use 100.00 EUR as benchmark for initial estimation
+            shippingOptions = await fetchShippingRates(shippingAddress as ShippingAddress, 10000, settings.logistics); 
+            logisticsWarning = shippingOptions.some(opt => opt.partial_validation);
+        } catch (err: any) {
+            console.error("[POST /api/orders/custom] Logistics fortification failed:", err.message);
+            // We proceed with empty shippingOptions so the order is created
+            // Admin can then use the Command Center to fix the address/rates
+            logisticsWarning = true;
         }
     }
 
@@ -57,6 +64,7 @@ export async function POST(req: Request) {
         customer_name: user.user_metadata?.full_name || "Agent",
         shipping_address: shippingAddress,
         shipping_options: shippingOptions,
+        metadata: { logistics_partial_validation: logisticsWarning },
         status: "analyzing",
         is_custom: true,
         scale: scale,
