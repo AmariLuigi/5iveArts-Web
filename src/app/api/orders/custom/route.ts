@@ -26,8 +26,8 @@ export async function POST(req: Request) {
         status: "analyzing",
         is_custom: true,
         scale: scale,
-        total_pence: 0, // Set later by Admin
-        subtotal_pence: 0,
+        total_pence: 1, // Minimum 1 pence placeholder for proposal state
+        subtotal_pence: 1,
         shipping_pence: 0,
         stripe_session_id: null, // Successfully unblocked by migration 008 (DROP NOT NULL)
         // Using metadata to store custom project details if needed
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
         order_id: (order as any).id,
         product_name: `Custom Commission: ${title}`,
         quantity: 1,
-        product_price_pence: 0,
+        product_price_pence: 1, // Using 1 pence as placeholder to satisfy DB check constraints until quoted
         product_id: "CUSTOM-PROTO",
         // We'll store description in metadata or just it's fine for now
       });
