@@ -278,7 +278,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                         <button
                                             key={opt.service_id}
                                             onClick={() => {
-                                                const shippingPence = Math.round(opt.price * 100);
+                                                const shippingPence = Math.round(opt.price);
                                                 axios.patch(`/api/admin/orders/${order.id}`, {
                                                     shipping_pence: shippingPence,
                                                     shipping_service_id: opt.service_id,
@@ -296,7 +296,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                         >
                                             <div className="flex justify-between items-center">
                                                 <span className="text-[10px] font-black uppercase text-white">{opt.carrier_name}</span>
-                                                <span className="text-[10px] font-black text-brand-yellow">{formatPrice(opt.price * 100)}</span>
+                                                <span className="text-[10px] font-black text-brand-yellow">{formatPrice(opt.price)}</span>
                                             </div>
                                             <span className="text-[8px] font-bold uppercase text-neutral-500">{opt.service_name}</span>
                                         </button>
