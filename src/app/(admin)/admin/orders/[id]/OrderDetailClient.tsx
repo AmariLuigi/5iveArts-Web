@@ -22,7 +22,9 @@ import {
     Users,
     Sparkles,
     Image as ImageIcon,
-    Plus
+    Plus,
+    Copy,
+    Check
 } from "lucide-react";
 import Link from "next/link";
 
@@ -40,8 +42,24 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
     const [isUploading, setIsUploading] = useState(false);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+    
+    // Custom Quote State
+    const [totalPrice, setTotalPrice] = useState(order.total_pence || 0);
+    const [complexity, setComplexity] = useState(order.complexity_factor || 1.0);
+    const [isGeneratingLink, setIsGeneratingLink] = useState(false);
+    const [lastCopied, setLastCopied] = useState<string | null>(null);
 
     const supabase = createClient();
+
+    const copyToClipboard = async (text: string, type: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setLastCopied(type);
+            setTimeout(() => setLastCopied(null), 2000);
+        } catch (err) {
+            console.error("Failed to copy:", err);
+        }
+    };
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,7 +69,9 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
         try {
             await axios.patch(`/api/admin/orders/${order.id}`, {
                 status,
-                tracking_number: trackingNumber || null
+                tracking_number: trackingNumber || null,
+                total_pence: totalPrice,
+                complexity_factor: complexity
             });
             setMessage({ type: "success", text: "Order updated successfully" });
             router.refresh();
@@ -84,6 +104,12 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                     </Link>
                     <ChevronRight className="w-3 h-3 text-neutral-900" />
                     <span className="text-[10px] uppercase font-black tracking-widest text-brand-yellow">Order Details</span>
+                    {order.is_custom && (
+                        <>
+                           <ChevronRight className="w-3 h-3 text-neutral-900" />
+                           <span className="bg-brand-yellow/10 text-brand-yellow px-2 py-0.5 rounded-[2px] text-[8px] font-black uppercase tracking-widest border border-brand-yellow/20">Artisan Commission</span>
+                        </>
+                    )}
                 </div>
 
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -203,6 +229,99 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                             </div>
                         </form>
                     </div>
+
+                    {order.is_custom && (
+                        <div className="hasbro-card p-8 border-brand-yellow/10 bg-brand-yellow/[0.01]">
+                            <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-brand-yellow mb-8 flex items-center gap-2">
+                                <Sparkles className="w-4 h-4" />
+                                Artisan Bureau Control
+                            </h3>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Commission Total (Pence)</label>
+                                    <div className="relative">
+                                        <input 
+                                            type="number"
+                                            value={totalPrice}
+                                            onChange={(e) => setTotalPrice(Number(e.target.value))}
+                                            className="w-full bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-brand-yellow/30"
+                                        />
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 font-black text-[10px]">
+                                            {formatPrice(totalPrice)}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="space-y-3">
+                                    <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Complexity Factor</label>
+                                    <input 
+                                        type="number" 
+                                        step="0.1"
+                                        value={complexity}
+                                        onChange={(e) => setComplexity(Number(e.target.value))}
+                                        className="w-full bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-brand-yellow/30"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-wrap gap-4 pt-8 border-t border-white/5">
+                                <button 
+                                    onClick={handleUpdate}
+                                    disabled={loading}
+                                    className="px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white transition-all rounded-sm flex items-center gap-2"
+                                >
+                                    Save Base Pricing
+                                </button>
+                                
+                                <button 
+                                    onClick={async () => {
+                                        if (totalPrice <= 0) {
+                                            setMessage({ type: 'error', text: 'Set a total price before generating a link' });
+                                            return;
+                                        }
+                                        setIsGeneratingLink(true);
+                                        try {
+                                          const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'deposit' });
+                                          const url = res.data.url;
+                                          copyToClipboard(url, 'deposit');
+                                          setMessage({ type: 'success', text: 'Deposit link copied to clipboard' });
+                                          router.refresh();
+                                        } catch (err) {
+                                          setMessage({ type: 'error', text: 'Failed to generate link' });
+                                        } finally {
+                                          setIsGeneratingLink(false);
+                                        }
+                                    }}
+                                    disabled={isGeneratingLink || status !== 'analyzing'}
+                                    className="px-6 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest hover:bg-brand-yellow/80 hover:scale-105 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
+                                >
+                                    {lastCopied === 'deposit' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                    Request 50% Deposit
+                                </button>
+
+                                <button 
+                                    onClick={async () => {
+                                      setIsGeneratingLink(true);
+                                      try {
+                                        const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'final' });
+                                        const url = res.data.url;
+                                        copyToClipboard(url, 'final');
+                                        setMessage({ type: 'success', text: 'Final balance link copied to clipboard' });
+                                      } catch (err) {
+                                        setMessage({ type: 'error', text: 'Failed to generate link' });
+                                      } finally {
+                                        setIsGeneratingLink(false);
+                                      }
+                                    }}
+                                    disabled={isGeneratingLink || status !== 'ready_to_ship'}
+                                    className="px-6 py-4 bg-white/10 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white hover:bg-white/20 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
+                                >
+                                    {lastCopied === 'final' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                    Request Final Balance
+                                </button>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Items List */}
                     <div className="space-y-6">

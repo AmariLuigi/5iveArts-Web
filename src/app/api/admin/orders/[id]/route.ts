@@ -40,8 +40,8 @@ export async function PATCH(
     const { id } = await params;
     const body = await req.json();
 
-    // Allow updating status, tracking_number, and label_url
-    const { status, tracking_number, label_url } = body;
+    // Allow updating status, tracking_number, label_url, and custom fields
+    const { status, tracking_number, label_url, total_pence, complexity_factor } = body;
 
     const { data, error } = await supabase
         .from("orders")
@@ -49,6 +49,8 @@ export async function PATCH(
             status,
             tracking_number,
             label_url,
+            total_pence,
+            complexity_factor,
             updated_at: new Date().toISOString()
         })
         .eq("id", id)

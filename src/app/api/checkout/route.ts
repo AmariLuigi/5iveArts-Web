@@ -135,7 +135,8 @@ export async function POST(req: NextRequest) {
     } as any);
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+  let baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.5ivearts.com";
+  if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
 
   // ── Create Stripe Checkout Session with embedded UI ───────────────────────
   try {

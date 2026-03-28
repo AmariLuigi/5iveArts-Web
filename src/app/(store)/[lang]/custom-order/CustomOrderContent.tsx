@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { 
   Sparkles, 
@@ -93,17 +94,23 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
     }
   } as const;
 
+  const protocolRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="min-h-screen bg-black overflow-hidden">
       {/* Hero Section */}
       <section className="relative h-[85vh] flex items-center justify-center pt-20">
         <div className="absolute inset-0 z-0">
-          <Image 
-            src="/images/custom-order-hero.png" 
-            alt="Custom Commission Workshop" 
-            fill 
-            className="object-cover opacity-60 grayscale brightness-75 scale-105"
+          <Image
+            src="/custom_hero.png"
+            alt="Custom Order Bureau"
+            fill
             priority
+            className="object-cover opacity-60 grayscale brightness-75 scale-105"
+            style={{ 
+               maskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)',
+               WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)'
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black z-10" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60 z-10" />
@@ -144,22 +151,25 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
             )}
 
             {isLoggedIn && (
-              <button className="hasbro-btn-primary px-16 py-6 text-sm font-black group shadow-[0_0_50px_rgba(255,159,0,0.1)]">
+              <Link 
+                href={`/${lang}/custom-order/propose`}
+                className="hasbro-btn-primary px-16 py-6 text-sm font-black group shadow-[0_0_50px_rgba(255,159,0,0.1)]"
+              >
                 <span className="flex items-center gap-4">
                    <Wand2 className="w-5 h-5" />
                    {t.cta_start}
                 </span>
-              </button>
+              </Link>
             )}
           </motion.div>
         </div>
 
         {/* Floating background elements */}
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/95 to-transparent z-10" />
+        <div className="absolute bottom-0 left-0 w-full h-80 bg-gradient-to-t from-black via-black/80 to-transparent z-10" />
       </section>
 
       {/* Process Flow Section */}
-      <section className="py-32 px-4 relative">
+      <section ref={protocolRef} className="relative py-32 px-4 bg-black z-30 overflow-hidden scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
              <div className="max-w-xl">

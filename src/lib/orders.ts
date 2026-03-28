@@ -12,18 +12,31 @@ export async function processCompletedCheckout(
 
     const supabase = getSupabaseAdmin() as any;
 
-    // 1. Check if order exists
-    const { data: existing } = await supabase
+    // 1. Check if order exists (by Stripe Session ID)
+    const { data: existingBySession } = await supabase
         .from("orders")
-        .select("id")
+        .select("id, status, is_custom")
         .eq("stripe_session_id", session.id)
         .maybeSingle();
 
-    const alreadyProcessed = !!existing;
-    let orderId = existing?.id;
+    // 2. Check if this is an installment for an EXISTING custom order
+    const existingOrderId = session.metadata?.order_id;
+    let orderToUpdate = null;
 
-    // 2. If it exists and we DON'T need to force an email, we can exit early
-    if (alreadyProcessed && !forceEmail) {
+    if (existingOrderId && !existingBySession) {
+        const { data: order } = await supabase
+            .from("orders")
+            .select("*")
+            .eq("id", existingOrderId)
+            .maybeSingle();
+        orderToUpdate = order;
+    }
+
+    const alreadyProcessedBySession = !!existingBySession;
+    let orderId = existingBySession?.id || (orderToUpdate?.id);
+
+    // 3. If it exists by session and we DON'T need to force an email, we can exit early
+    if (alreadyProcessedBySession && !forceEmail) {
         console.log("[orders] Order already recorded for session:", session.id);
         return { orderId, alreadyProcessed: true };
     }
@@ -40,10 +53,8 @@ export async function processCompletedCheckout(
         shippingDetails?.name ?? session.metadata?.ship_to_name ?? "Unknown";
     const totalPence = fullSession.amount_total ?? 0;
 
-    // 4. Record the order if it doesn't exist yet
-    if (!alreadyProcessed) {
-        // Since we pass shipping as a line item, fullSession.shipping_cost might be empty.
-        // We prioritize our custom metadata if available.
+    // 4. Record the order if it doesn't exist yet OR update existing if it's an installment
+    if (!alreadyProcessedBySession) {
         const shippingPence = 
             parseInt(session.metadata?.shipping_pence || "0", 10) || 
             fullSession.shipping_cost?.amount_total || 0;
@@ -52,76 +63,95 @@ export async function processCompletedCheckout(
         const addr = shippingDetails?.address;
         const email = session.customer_details?.email ?? session.customer_email ?? session.metadata?.email ?? "";
 
-        const shippingAddress = {
-            full_name: customerName,
-            street1: addr?.line1 ?? (session.metadata?.ship_to_street || ""),
-            street2: addr?.line2 || null,
-            city: addr?.city ?? (session.metadata?.ship_to_city || ""),
-            state: addr?.state ?? (session.metadata?.ship_to_state || ""),
-            zip_code: addr?.postal_code ?? (session.metadata?.ship_to_zip || ""),
-            country: addr?.country ?? (session.metadata?.ship_to_country || ""),
-            phone: session.metadata?.ship_to_phone || "",
-            email: email,
-        };
-
-        console.log("[orders] Attempting DB insert for session:", session.id);
         const paymentType = session.metadata?.payment_type || "full";
-        const isCustom = session.metadata?.is_custom === "true";
+        const isCustom = session.metadata?.is_custom === "true" || !!orderToUpdate?.is_custom;
         const status = paymentType === "deposit" ? "deposit_paid" : "paid";
 
-        const { data: order, error: orderError } = await (supabase as any)
-            .from("orders")
-            .insert({
-                stripe_session_id: session.id,
-                stripe_payment_intent:
-                    typeof session.payment_intent === "string"
-                        ? session.payment_intent
-                        : null,
-                customer_email: email,
-                customer_name: customerName,
+        if (orderToUpdate) {
+            // Installment update for existing custom order
+            console.log("[orders] Updating existing order installment:", orderId, "Stage:", paymentType);
+            const updateData: any = {
                 status,
-                subtotal_pence: subtotalPence,
-                shipping_pence: shippingPence,
-                total_pence: totalPence,
-                packlink_service_id: session.metadata?.shipping_service_id ?? null,
-                shipping_service_name: session.metadata?.shipping_service_name ?? null,
-                shipping_address: shippingAddress,
-                user_id: session.metadata?.user_id || null,
-                is_custom: isCustom,
-                scale: session.metadata?.scale || null,
-                complexity_factor: parseFloat(session.metadata?.complexity_factor || "1.0"),
-                deposit_pence: paymentType === "deposit" ? totalPence : (paymentType === "full" ? totalPence : 0),
-                final_payment_pence: paymentType === "deposit" || paymentType === "final" ? totalPence : 0,
-            })
-            .select("id")
-            .single();
+                stripe_payment_intent: typeof session.payment_intent === "string" ? session.payment_intent : null,
+            };
 
-        if (orderError || !order) {
-            console.error("[orders] Failed to insert order:", orderError);
-            throw new Error(`DB insert failed: ${orderError?.message}`);
-        }
+            if (paymentType === "deposit") {
+                updateData.deposit_pence = totalPence;
+            } else if (paymentType === "final") {
+                updateData.final_payment_pence = totalPence;
+                updateData.shipping_pence = shippingPence; // Usually final payment includes shipping
+                updateData.total_pence = (orderToUpdate.deposit_pence || 0) + totalPence;
+            }
 
-        orderId = (order as any).id;
-        console.log("[orders] Order persisted:", orderId);
+            await supabase
+                .from("orders")
+                .update(updateData)
+                .eq("id", orderId);
 
-        // ── Increment Coupon Usage ────────────────────────────────────────────────
-        if (session.metadata?.coupon_id) {
-            await supabase.rpc('increment_coupon_usage', { coupon_id: session.metadata.coupon_id });
-        }
+        } else {
+            // Fresh checkout order
+            const shippingAddress = {
+                full_name: customerName,
+                street1: addr?.line1 ?? (session.metadata?.ship_to_street || ""),
+                street2: addr?.line2 || null,
+                city: addr?.city ?? (session.metadata?.ship_to_city || ""),
+                state: addr?.state ?? (session.metadata?.ship_to_state || ""),
+                zip_code: addr?.postal_code ?? (session.metadata?.ship_to_zip || ""),
+                country: addr?.country ?? (session.metadata?.ship_to_country || ""),
+                phone: session.metadata?.ship_to_phone || "",
+                email: email,
+            };
 
-        // Record line items
-        for (const item of lineItems) {
-            const product = item.price?.product as Stripe.Product | undefined;
-            const productId = product?.metadata?.product_id;
-            if (!productId) continue;
+            console.log("[orders] Attempting DB insert for session:", session.id);
+            const { data: order, error: orderError } = await (supabase as any)
+                .from("orders")
+                .insert({
+                    stripe_session_id: session.id,
+                    stripe_payment_intent:
+                        typeof session.payment_intent === "string"
+                            ? session.payment_intent
+                            : null,
+                    customer_email: email,
+                    customer_name: customerName,
+                    status,
+                    subtotal_pence: subtotalPence,
+                    shipping_pence: shippingPence,
+                    total_pence: totalPence,
+                    packlink_service_id: session.metadata?.shipping_service_id ?? null,
+                    shipping_service_name: session.metadata?.shipping_service_name ?? null,
+                    shipping_address: shippingAddress,
+                    user_id: session.metadata?.user_id || null,
+                    is_custom: isCustom,
+                    scale: session.metadata?.scale || null,
+                    complexity_factor: parseFloat(session.metadata?.complexity_factor || "1.0"),
+                    deposit_pence: paymentType === "deposit" || paymentType === "full" ? totalPence : 0,
+                    final_payment_pence: paymentType === "final" || paymentType === "full" ? totalPence : 0,
+                })
+                .select("id")
+                .single();
 
-            await supabase.from("order_items").insert({
-                order_id: orderId,
-                product_id: productId,
-                product_name: item.description ?? "",
-                product_price_pence: item.price?.unit_amount || 0,
-                quantity: item.quantity ?? 1,
-            } as any);
+            if (orderError || !order) {
+                console.error("[orders] Failed to insert order:", orderError);
+                throw new Error(`DB insert failed: ${orderError?.message}`);
+            }
+
+            orderId = (order as any).id;
+            console.log("[orders] Order persisted:", orderId);
+
+            // Record line items (only for NEW orders, installments are linked to existing items)
+            for (const item of lineItems) {
+                const product = item.price?.product as Stripe.Product | undefined;
+                const productId = product?.metadata?.product_id;
+                if (!productId) continue;
+
+                await supabase.from("order_items").insert({
+                    order_id: orderId,
+                    product_id: productId,
+                    product_name: item.description ?? "",
+                    product_price_pence: item.price?.unit_amount || 0,
+                    quantity: item.quantity ?? 1,
+                } as any);
+            }
         }
     }
 
@@ -130,7 +160,7 @@ export async function processCompletedCheckout(
         await triggerOrderEmail(session, orderId, customerName, totalPence, lineItems);
     }
 
-    return { orderId, alreadyProcessed };
+    return { orderId, alreadyProcessed: alreadyProcessedBySession };
 }
 
 async function triggerOrderEmail(
