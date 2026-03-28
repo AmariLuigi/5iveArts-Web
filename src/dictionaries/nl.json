@@ -13,7 +13,8 @@
     "vault": "Kluis",
     "warehouse": "Magazijn",
     "access": "Toegang",
-    "wishlist": "Verlanglijst"
+    "wishlist": "Verlanglijst",
+    "customOrder": "Custom Orders"
   },
   "home": {
     "title": "5iveArts - Ambachtelijke Precisie",
@@ -498,5 +499,25 @@
     "description": "Ons systeem gebruikt essentiële cookies om de siteprestaties te stabiliseren en verkeerspatronen laag voor laag te analyseren.",
     "accept": "Batch Accepteren",
     "preferences": "Systeemvoorkeuren"
+  },
+  "custom_order": {
+    "hero_title": "Bespoke Artifacts",
+    "hero_subtitle": "Transform your digital dreams into physical masterpieces with our artisan-led custom commission protocol.",
+    "flow_title": "The Commission Protocol",
+    "step1_title": "1. Asset Submission",
+    "step1_desc": "Upload your character renders or concept art. Our curators review every detail for feasibility.",
+    "step2_title": "2. Neural Analysis",
+    "step2_desc": "Our AI Vision protocol evaluates geometric density and painting complexity for precision pricing.",
+    "step3_title": "3. The Agreement",
+    "step3_desc": "Receive your custom quote. Secure the production slot with a 50% artifact deposit.",
+    "step4_title": "4. Master Craftsmanship",
+    "step4_desc": "Monitor progress in your private Vault with real-time photo updates from the workshop.",
+    "step5_title": "5. Final Deployment",
+    "step5_desc": "Settle the final balance upon completion. Insured global deployment to your coordinates.",
+    "auth_invite_title": "Ready to Begin Your Commission?",
+    "auth_invite_desc": "Establish a secure connection to our terminal to upload assets and track your artifact's fabrication.",
+    "cta_login": "Log In to Begin",
+    "cta_register": "Create Collector Account",
+    "cta_start": "Propose New Commission"
   }
 }

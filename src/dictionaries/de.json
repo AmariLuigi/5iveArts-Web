@@ -13,7 +13,8 @@
     "vault": "Tresor",
     "warehouse": "Lagerhaus",
     "access": "Zugang",
-    "wishlist": "Wunschliste"
+    "wishlist": "Wunschliste",
+    "customOrder": "Auftragsarbeiten"
   },
   "home": {
     "title": "5iveArts - Artisan-Präzision",
@@ -498,5 +499,25 @@
     "description": "Unser System verwendet essentielle Cookies, um die Website-Leistung zu stabilisieren und Verkehrsmuster Schicht für Schicht zu analysieren.",
     "accept": "Charge Akzeptieren",
     "preferences": "Systemeinstellungen"
+  },
+  "custom_order": {
+    "hero_title": "Maßgefertigte Artefakte",
+    "hero_subtitle": "Verwandeln Sie Ihre digitalen Träume in physische Meisterwerke mit unserem handwerklichen Auftragsprotokoll.",
+    "flow_title": "Das Auftragsprotokoll",
+    "step1_title": "1. Einreichung von Assets",
+    "step1_desc": "Laden Sie Ihre Charakter-Render oder Concept Art hoch. Unsere Kuratoren prüfen jedes Detail.",
+    "step2_title": "2. Neurale Analyse",
+    "step2_desc": "Unser AI Vision-Protokoll bewertet die geometrische Dichte und die Komplexität der Bemalung.",
+    "step3_title": "3. Die Vereinbarung",
+    "step3_desc": "Erhalten Sie Ihr individuelles Angebot. Sichern Sie sich Ihren Produktionsplatz mit einer Anzahlung von 50%.",
+    "step4_title": "4. Meisterliche Handwerkskunst",
+    "step4_desc": "Verfolgen Sie den Fortschritt in Ihrem privaten Vault mit Echtzeit-Fotos aus der Werkstatt.",
+    "step5_title": "5. Finale Auslieferung",
+    "step5_desc": "Begleichen Sie den Restbetrag nach Fertigstellung. Versicherter weltweiter Versand an Ihre Koordinaten.",
+    "auth_invite_title": "Bereit für Ihren Auftrag?",
+    "auth_invite_desc": "Stellen Sie eine sichere Verbindung zu unserem Terminal her, um Assets hochzuladen und die Fertigung zu verfolgen.",
+    "cta_login": "Anmelden, um zu beginnen",
+    "cta_register": "Sammlerkonto erstellen",
+    "cta_start": "Neuen Auftrag vorschlagen"
   }
 }

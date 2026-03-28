@@ -13,7 +13,8 @@
     "vault": "Coffre",
     "warehouse": "Entrepôt",
     "access": "Accès",
-    "wishlist": "Liste de souhaits"
+    "wishlist": "Liste de souhaits",
+    "customOrder": "Commandes Spéciales"
   },
   "home": {
     "title": "5iveArts - Artisanat de Precision",
@@ -498,5 +499,25 @@
     "description": "Notre système utilise des cookies essentiels pour stabiliser les performances du site et analyser les modèles de trafic couche par couche.",
     "accept": "Accepter le Lot",
     "preferences": "Préférences Système"
+  },
+  "custom_order": {
+    "hero_title": "Artefacts Sur Mesure",
+    "hero_subtitle": "Transformez vos rêves numériques en chefs-d'œuvre physiques grâce à notre protocole de commande artisanale.",
+    "flow_title": "Le Protocole de Commande",
+    "step1_title": "1. Soumission des Actifs",
+    "step1_desc": "Téléchargez vos rendus de personnages ou vos concepts artistiques. Nos conservateurs examinent chaque détail.",
+    "step2_title": "2. Analyse Neurale",
+    "step2_desc": "Notre protocole AI Vision évalue la densité géométrique et la complexité de la peinture.",
+    "step3_title": "3. L'Accord",
+    "step3_desc": "Recevez votre devis personnalisé. Sécurisez votre créneau de production avec un dépôt de 50%.",
+    "step4_title": "4. Maîtrise Artisanale",
+    "step4_desc": "Suivez les progrès dans votre Vault privé avec des photos en temps réel de l'atelier.",
+    "step5_title": "5. Déploiement Final",
+    "step5_desc": "Réglez le solde final à la fin. Expédition mondiale assurée vers vos coordonnées.",
+    "auth_invite_title": "Prêt à commencer votre commande ?",
+    "auth_invite_desc": "Établissez une connexion sécurisée avec notre terminal pour télécharger des fichiers et suivre la fabrication.",
+    "cta_login": "Se connecter pour commencer",
+    "cta_register": "Créer un compte collectionneur",
+    "cta_start": "Proposer une nouvelle commande"
   }
 }

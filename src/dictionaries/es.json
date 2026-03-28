@@ -13,7 +13,8 @@
     "vault": "Bóveda",
     "warehouse": "Almacén",
     "access": "Acceso",
-    "wishlist": "Lista de deseos"
+    "wishlist": "Lista de deseos",
+    "customOrder": "Encargos"
   },
   "home": {
     "title": "5iveArts - Precisión Artesanal",
@@ -498,5 +499,25 @@
     "description": "Nuestro sistema utiliza cookies esenciales para estabilizar el rendimiento del sitio y analizar los patrones de tráfico capa por capa.",
     "accept": "Aceptar Lote",
     "preferences": "Preferencias del Sistema"
+  },
+  "custom_order": {
+    "hero_title": "Artefactos a Medida",
+    "hero_subtitle": "Transforma tus sueños digitales en obras maestras físicas con nuestro protocolo de comisión artesanal.",
+    "flow_title": "El Protocolo de Comisión",
+    "step1_title": "1. Envío de Activos",
+    "step1_desc": "Sube los renders de tus personajes o arte conceptual. Nuestros curadores revisan cada detalle.",
+    "step2_title": "2. Análisis Neuronal",
+    "step2_desc": "Nuestro protocolo AI Vision evalúa la densidad geométrica y la complejidad de la pintura.",
+    "step3_title": "3. El Acuerdo",
+    "step3_desc": "Recibe tu presupuesto personalizado. Asegura tu plaza de producción con un depósito del 50%.",
+    "step4_title": "4. Maestría Artesanal",
+    "step4_desc": "Monitorea el progreso en tu Vault privado con fotos en tiempo real desde el taller.",
+    "step5_title": "5. Despliegue Final",
+    "step5_desc": "Salda el balance final al terminar. Envío global asegurado a tus coordenadas.",
+    "auth_invite_title": "¿Listo para empezar tu encargo?",
+    "auth_invite_desc": "Establece una conexión segura con nuestra terminal para subir archivos y rastrear la fabricación.",
+    "cta_login": "Iniciar Sesión para Empezar",
+    "cta_register": "Crear Cuenta de Coleccionista",
+    "cta_start": "Proponer Nuevo Encargo"
   }
 }

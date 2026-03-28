@@ -103,6 +103,9 @@ export default function Navbar({ dict, lang }: NavbarProps) {
             <Link href={`/${lang}/shipping`} className="hover:text-brand-yellow transition-all">
               {dict.nav.shipping}
             </Link>
+            <Link href={`/${lang}/custom-order`} className="px-3 py-1 bg-brand-yellow/10 border border-brand-yellow/20 rounded-full text-brand-yellow hover:bg-brand-yellow/20 transition-all">
+              {dict.nav.customOrder}
+            </Link>
           </nav>
 
           {/* Global Terminal: Cart + Lang + User */}
@@ -232,6 +235,9 @@ export default function Navbar({ dict, lang }: NavbarProps) {
             <Link href={`/${lang}/products`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.products}</Link>
             <Link href={`/${lang}/faq`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.faq}</Link>
             <Link href={`/${lang}/shipping`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.shipping}</Link>
+            <Link href={`/${lang}/custom-order`} onClick={() => setMenuOpen(false)} className="text-brand-yellow font-black border-t border-brand-yellow/10 pt-4 mt-2">
+              {dict.nav.customOrder}
+            </Link>
           </div>
         </nav>
       )}

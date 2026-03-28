@@ -13,7 +13,8 @@
     "vault": "Caveau",
     "warehouse": "Magazzino",
     "access": "Accesso",
-    "wishlist": "Lista desideri"
+    "wishlist": "Lista desideri",
+    "customOrder": "Commissioni"
   },
   "home": {
     "title": "5iveArts - Precisione Artigianale",
@@ -498,5 +499,25 @@
     "description": "Il nostro sistema utilizza i cookie essenziali per stabilizzare le prestazioni del sito e analizzare i pattern di traffico strato dopo strato.",
     "accept": "Accetta Lotto",
     "preferences": "Preferenze di Sistema"
+  },
+  "custom_order": {
+    "hero_title": "Artefatti su Misura",
+    "hero_subtitle": "Trasforma i tuoi sogni digitali in capolavori fisici con il nostro protocollo di commissione artigianale.",
+    "flow_title": "Il Protocollo di Commissione",
+    "step1_title": "1. Invio Asset",
+    "step1_desc": "Carica i render del personaggio o i concept art. I nostri curatori esaminano ogni dettaglio per la fattibilità.",
+    "step2_title": "2. Analisi Neurale",
+    "step2_desc": "Il nostro protocollo AI Vision valuta la densità geometrica e la complessità della pittura per un prezzo di precisione.",
+    "step3_title": "3. L'Accordo",
+    "step3_desc": "Ricevi il tuo preventivo personalizzato. Assicura lo slot di produzione con un deposito del 50%.",
+    "step4_title": "4. Maestro Artigiano",
+    "step4_desc": "Monitora i progressi nel tuo Vault privato con aggiornamenti fotografici in tempo reale dal laboratorio.",
+    "step5_title": "5. Dispiegamento Finale",
+    "step5_desc": "Salda il bilancio finale al completamento. Spedizione globale assicurata verso le tue coordinate.",
+    "auth_invite_title": "Pronto a Iniziare la Tua Commissione?",
+    "auth_invite_desc": "Stabilisci una connessione sicura con il nostro terminale per caricare gli asset e tracciare la fabbricazione.",
+    "cta_login": "Accedi per Iniziare",
+    "cta_register": "Crea Account Collezionista",
+    "cta_start": "Proponi Nuova Commissione"
   }
 }
