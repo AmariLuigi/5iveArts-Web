@@ -366,8 +366,9 @@
         "forging": "Smeden",
         "finalizing": "Afronding",
         "deployment": "Inzet",
-        "selectCarrier": "Select Logistics Protocol",
-        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
+        "selectCarrier": "Selecteer Logistiek Protocol",
+        "selectCarrierNote": "Autoriseer uw voorkeur voor de transporteur. Let op: selectie fixeert toekomstige kosten; verrekening vindt plaats bij afronding.",
+        "daysEst": "dagen (geschat)"
     },
     "footer": {
         "logistics": "Wereldwijde Ambachtelijke Vakmanschap Logistiek Ingeschakeld",
@@ -602,7 +603,8 @@
             "dropHint": "Sleep tarieven hierheen om te implementeren",
             "activeTiers": "{count} Actieve tarieven",
             "availableOptions": "{count} Opties",
-            "rateCents": "Tarief (centen)"
+            "rateCents": "Tarief (centen)",
+            "deliveryEst": "Levering (dagen)"
         }
     }
 }

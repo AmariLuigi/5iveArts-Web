@@ -367,7 +367,8 @@
         "finalizing": "Finalisation",
         "deployment": "Déploiement",
         "selectCarrier": "Sélectionner le Protocole Logistique",
-        "selectCarrierNote": "Autorisez votre niveau de transporteur préféré. Note : La sélection fixe les coûts futurs ; le règlement est dû lors de la finalisation."
+        "selectCarrierNote": "Autorisez votre niveau de transporteur préféré. Note : La sélection fixe les coûts futurs ; le règlement est dû lors de la finalisation.",
+        "daysEst": "jours est."
     },
     "footer": {
         "logistics": "Logistique Artisanale Mondiale Activée",
@@ -602,7 +603,8 @@
             "dropHint": "Déposez les paliers ici pour les déployer",
             "activeTiers": "{count} Paliers Actifs",
             "availableOptions": "{count} Options",
-            "rateCents": "Tarif (Centimes)"
+            "rateCents": "Tarif (Centimes)",
+            "deliveryEst": "Livraison est. (jours)"
         }
     }
 }

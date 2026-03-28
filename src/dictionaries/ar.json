@@ -366,8 +366,9 @@
         "forging": "تزوير",
         "finalizing": "النهائي",
         "deployment": "النشر",
-        "selectCarrier": "Select Logistics Protocol",
-        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
+        "selectCarrier": "اختر بروتوكول اللوجستيات",
+        "selectCarrierNote": "قم بتفويض فئة الناقل المفضلة لديك. ملاحظة: الاختيار يثبت التكاليف المستقبلية؛ التسوية مستحقة عند الانتهاء.",
+        "daysEst": "أيام تقديرية"
     },
     "footer": {
         "logistics": "الخدمات اللوجستية العالمية الحرفية نشطة",
@@ -602,7 +603,8 @@
             "dropHint": "اسحب الفئات هنا للنشر",
             "activeTiers": "{count} فئات نشطة",
             "availableOptions": "{count} خيارات",
-            "rateCents": "السعر (بالقروش)"
+            "rateCents": "السعر (بالقروش)",
+            "deliveryEst": "تقدير وقت التسليم (أيام)"
         }
     }
 }

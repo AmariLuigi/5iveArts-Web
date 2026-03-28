@@ -28,12 +28,12 @@ export async function POST(
 
     const settings = await getSiteSettings();
     const subtotal = order.subtotal_pence || 10000;
-    
+
     // Recalculate rates
     const options = await fetchShippingRates(order.shipping_address as ShippingAddress, subtotal, settings.logistics);
 
     if (options.length === 0) {
-        return NextResponse.json({ error: "No tiers found for destination." }, { status: 502 });
+      return NextResponse.json({ error: "No tiers found for destination." }, { status: 502 });
     }
 
     return NextResponse.json({ options });

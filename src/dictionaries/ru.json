@@ -366,8 +366,9 @@
         "forging": "Ковка",
         "finalizing": "Завершение",
         "deployment": "Развертывание",
-        "selectCarrier": "Select Logistics Protocol",
-        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
+        "selectCarrier": "Выбрать логистический протокол",
+        "selectCarrierNote": "Авторизуйте предпочтительный уровень перевозчика. Примечание: выбор фиксирует будущие расходы; расчет производится при завершении.",
+        "daysEst": "дн. (прибл.)"
     },
     "footer": {
         "logistics": "Включена глобальная логистика артистического мастерства",
@@ -602,7 +603,8 @@
             "dropHint": "Перетащите тарифы сюда для развертывания",
             "activeTiers": "{count} Активных тарифов",
             "availableOptions": "{count} Вариантов",
-            "rateCents": "Ставка (Центы)"
+            "rateCents": "Ставка (Центы)",
+            "deliveryEst": "Доставка (Дней)"
         }
     }
 }

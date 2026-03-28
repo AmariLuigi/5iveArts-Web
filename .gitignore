@@ -76,3 +76,4 @@ analytics_delta.sql
 analytics_init.sql
 lhreport.json
 inspect_remote_db.mjs
+.env*.local

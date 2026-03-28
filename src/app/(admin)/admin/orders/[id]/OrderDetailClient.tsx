@@ -61,7 +61,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
     // Logistics Selection Command Center States
     const [allTiers, setAllTiers] = useState<any[]>([]);
     const [selectedTiers, setSelectedTiers] = useState<any[]>(order.shipping_options || []);
-    const [manualTier, setManualTier] = useState({ carrier_name: "Manual Logistic Protocol", service_name: "Insured Courier", price: 0 });
+    const [manualTier, setManualTier] = useState({ carrier_name: "Manual Logistic Protocol", service_name: "Insured Courier", price: 0, estimated_days: 7 });
     const [isFetchingRates, setIsFetchingRates] = useState(false);
     const [isDeploying, setIsDeploying] = useState(false);
 
@@ -112,7 +112,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
 
     const handleAddManual = () => {
         const id = `manual-${Date.now()}`;
-        const tier = { ...manualTier, service_id: id, estimated_days: 7, currency: "EUR" };
+        const tier = { ...manualTier, service_id: id, currency: "EUR" };
         setSelectedTiers([...selectedTiers, tier]);
     };
 
@@ -602,7 +602,10 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                                         <span className="text-[10px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
                                                     </div>
                                                     <div className="flex justify-between items-center mt-1">
-                                                        <span className="text-[8px] font-bold uppercase text-neutral-600">{opt.service_name}</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-[8px] font-bold uppercase text-neutral-600">{opt.service_name}</span>
+                                                            <span className="text-[8px] font-black text-brand-yellow/60 uppercase">({opt.estimated_days} Days)</span>
+                                                        </div>
                                                         {!isSelected && (
                                                             <button 
                                                                 onClick={() => handleAddTier(opt)}
@@ -625,14 +628,23 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                     {/* Manual Rate Entry Protocol */}
                                     <div className="pt-6 border-t border-white/5 space-y-4">
                                         <h4 className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Manual Asset Entry (Fallback)</h4>
-                                        <div className="grid grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-3 gap-4">
                                             <div className="space-y-1">
                                                 <span className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest">Rate (Cents)</span>
                                                 <input 
                                                     type="number" 
-                                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-2 text-[10px] font-black"
+                                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-2 text-[10px] font-black placeholder:text-neutral-800"
                                                     value={manualTier.price}
                                                     onChange={(e) => setManualTier({ ...manualTier, price: parseInt(e.target.value) || 0 })}
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <span className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest">Delivery Est. (Days)</span>
+                                                <input 
+                                                    type="number" 
+                                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-2 text-[10px] font-black placeholder:text-neutral-800"
+                                                    value={manualTier.estimated_days}
+                                                    onChange={(e) => setManualTier({ ...manualTier, estimated_days: parseInt(e.target.value) || 0 })}
                                                 />
                                             </div>
                                             <div className="flex items-end">
@@ -678,6 +690,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                                 </div>
                                                 <div className="flex justify-between items-center mt-1">
                                                     <span className="text-[9px] font-bold uppercase text-neutral-400">{opt.service_name}</span>
+                                                    <span className="text-[8px] font-black text-brand-yellow uppercase tracking-widest">{opt.estimated_days} Days Est.</span>
                                                 </div>
                                                 <button 
                                                     onClick={() => handleRemoveTier(opt.service_id)}

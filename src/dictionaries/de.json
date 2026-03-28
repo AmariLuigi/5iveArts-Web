@@ -367,7 +367,8 @@
         "finalizing": "Finalisierung",
         "deployment": "Versand",
         "selectCarrier": "Logistikprotokoll auswählen",
-        "selectCarrierNote": "Autorisieren Sie Ihre bevorzugte Versandstufe. Hinweis: Die Auswahl fixiert zukünftige Kosten; die Abrechnung erfolgt bei Fertigstellung."
+        "selectCarrierNote": "Autorisieren Sie Ihre bevorzugte Versandstufe. Hinweis: Die Auswahl fixiert zukünftige Kosten; die Abrechnung erfolgt bei Fertigstellung.",
+        "daysEst": "Tage (gesch.)"
     },
     "footer": {
         "logistics": "Globale Kunsthandwerkslogistik Aktiviert",
@@ -602,7 +603,8 @@
             "dropHint": "Tarife zum Bereitstellen hier ablegen",
             "activeTiers": "{count} Aktive Tarife",
             "availableOptions": "{count} Optionen",
-            "rateCents": "Tarif (Cents)"
+            "rateCents": "Tarif (Cents)",
+            "deliveryEst": "Lieferung gesch. (Tage)"
         }
     }
 }

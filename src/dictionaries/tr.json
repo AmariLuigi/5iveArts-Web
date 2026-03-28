@@ -366,8 +366,9 @@
         "forging": "Dövme",
         "finalizing": "Sonuçlandırma",
         "deployment": "Dağıtım",
-        "selectCarrier": "Select Logistics Protocol",
-        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
+        "selectCarrier": "Lojistik Protokolü Seçin",
+        "selectCarrierNote": "Tercih ettiğiniz taşıyıcı kademesini yetkilendirin. Not: Seçim gelecekteki maliyetleri sabitler; ödeme sonuçlandırma aşamasında yapılır.",
+        "daysEst": "tahmini gün"
     },
     "footer": {
         "logistics": "Zanaatkar Küresel Lojistik Etkin",
@@ -602,7 +603,8 @@
             "dropHint": "Dağıtmak için Kademeleri Buraya Bırakın",
             "activeTiers": "{count} Aktif Kademe",
             "availableOptions": "{count} Seçenek",
-            "rateCents": "Ücret (Kuruş)"
+            "rateCents": "Ücret (Kuruş)",
+            "deliveryEst": "Tahm. Teslimat (gün)"
         }
     }
 }

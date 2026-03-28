@@ -366,8 +366,9 @@
         "forging": "Kucie",
         "finalizing": "Finalizacja",
         "deployment": "Wdrożenie",
-        "selectCarrier": "Select Logistics Protocol",
-        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
+        "selectCarrier": "Wybierz protokół logistyczny",
+        "selectCarrierNote": "Autoryzuj preferowany poziom przewoźnika. Uwaga: Wybór ustala przyszłe koszty; rozliczenie następuje przy finalizacji.",
+        "daysEst": "dni (szac.)"
     },
     "footer": {
         "logistics": "Globalna Logistyka Rzemieślnicza Aktywna",
@@ -602,7 +603,8 @@
             "dropHint": "Przeciągnij stawki tutaj, aby wdrożyć",
             "activeTiers": "{count} Aktywne stawki",
             "availableOptions": "{count} Opcje",
-            "rateCents": "Stawka (centy)"
+            "rateCents": "Stawka (centy)",
+            "deliveryEst": "Czas dostawy (dni)"
         }
     }
 }

@@ -367,7 +367,8 @@
         "finalizing": "Finalizzazione",
         "deployment": "Spedizione",
         "selectCarrier": "Seleziona Protocollo Logistico",
-        "selectCarrierNote": "Autorizza il livello di corriere preferito. Nota: La selezione fissa i costi futuri; il saldo è dovuto alla finalizzazione."
+        "selectCarrierNote": "Autorizza il livello di corriere preferito. Nota: La selezione fissa i costi futuri; il saldo è dovuto alla finalizzazione.",
+        "daysEst": "gg Stimati"
     },
     "footer": {
         "logistics": "Logistica Artigianale Globale Abilitata",
@@ -602,7 +603,8 @@
             "dropHint": "Trascina i Tier qui per il Deployment",
             "activeTiers": "{count} Tier Attivi",
             "availableOptions": "{count} Opzioni",
-            "rateCents": "Tariffa (Centesimi)"
+            "rateCents": "Tariffa (Centesimi)",
+            "deliveryEst": "Consegna Stimata (Giorni)"
         }
     }
 }

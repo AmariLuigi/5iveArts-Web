@@ -367,7 +367,8 @@
         "finalizing": "Finalizing",
         "deployment": "Deployment",
         "selectCarrier": "Select Logistics Protocol",
-        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
+        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization.",
+        "daysEst": "Days Est."
     },
     "footer": {
         "logistics": "Global Artisan Craftsmanship Logistics Enabled",
@@ -602,7 +603,8 @@
             "dropHint": "Drop Tiers Here to Deploy",
             "activeTiers": "{count} Active Tiers",
             "availableOptions": "{count} Options",
-            "rateCents": "Rate (Cents)"
+            "rateCents": "Rate (Cents)",
+            "deliveryEst": "Delivery Est. (Days)"
         }
     }
 }

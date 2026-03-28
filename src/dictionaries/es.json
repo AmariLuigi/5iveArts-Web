@@ -366,8 +366,9 @@
         "forging": "Forjado",
         "finalizing": "Finalización",
         "deployment": "Despliegue",
-        "selectCarrier": "Seleccionar Protocolo Logístico",
-        "selectCarrierNote": "Autorice su nivel de transportista preferido. Nota: La selección fija los costes futuros; la liquidación se realiza al finalizar."
+        "selectCarrier": "Seleccionar Protocollo Logístico",
+        "selectCarrierNote": "Autorice su nivel de transportista preferido. Nota: La selección fija los costes futuros; la liquidación se realiza al finalizar.",
+        "daysEst": "días est."
     },
     "footer": {
         "logistics": "Logística Artesanal Global Habilitada",
@@ -602,7 +603,8 @@
             "dropHint": "Arrastra los niveles aquí para desplegar",
             "activeTiers": "{count} Niveles Activos",
             "availableOptions": "{count} Opciones",
-            "rateCents": "Tarifa (Céntimos)"
+            "rateCents": "Tarifa (Céntimos)",
+            "deliveryEst": "Entrega est. (días)"
         }
     }
 }

@@ -366,8 +366,9 @@
         "forging": "Forjamento",
         "finalizing": "Finalização",
         "deployment": "Implementação",
-        "selectCarrier": "Select Logistics Protocol",
-        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
+        "selectCarrier": "Selecionar Protocolo de Logística",
+        "selectCarrierNote": "Autorize o seu nível de transportadora preferido. Nota: A seleção fixa os custos futuros; a liquidação é devida no momento da finalização.",
+        "daysEst": "dias est."
     },
     "footer": {
         "logistics": "Logística de Ofício Artesanal Global Ativada",
@@ -602,7 +603,8 @@
             "dropHint": "Arraste as tarifas aqui para implementar",
             "activeTiers": "{count} Tarifas Ativas",
             "availableOptions": "{count} Opções",
-            "rateCents": "Tarifa (Centavos)"
+            "rateCents": "Tarifa (Centavos)",
+            "deliveryEst": "Entrega est. (dias)"
         }
     }
 }

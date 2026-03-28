@@ -550,7 +550,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                                                 </div>
                                                                 <div className="flex justify-between items-center pl-4">
                                                                     <span className="text-[8px] font-bold uppercase text-neutral-600">{opt.service_name}</span>
-                                                                    <span className="text-[8px] font-black uppercase text-neutral-700 tracking-widest">{opt.estimated_days} Days Est.</span>
+                                                                    <span className="text-[8px] font-black uppercase text-neutral-700 tracking-widest">{opt.estimated_days} {dict.orders.daysEst}</span>
                                                                 </div>
                                                             </button>
                                                         );

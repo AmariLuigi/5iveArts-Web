@@ -366,8 +366,9 @@
         "forging": "鍛造",
         "finalizing": "最終段階",
         "deployment": "配置",
-        "selectCarrier": "Select Logistics Protocol",
-        "selectCarrierNote": "Authorize your preferred carrier tier. Note: Selection fixes future costs; settlement is due upon finalization."
+        "selectCarrier": "物流プロトコルを選択",
+        "selectCarrierNote": "希望する配送業者のティアを承認してください。注：選択により将来のコストが固定されます。決済は最終段階で行われます。",
+        "daysEst": "到着予定日数"
     },
     "footer": {
         "logistics": "アルチザン・グローバル・ロジスティクス稼働中",
@@ -602,7 +603,8 @@
             "dropHint": "ティアをここにドラッグしてデプロイ",
             "activeTiers": "{count}件のアクティブなティア",
             "availableOptions": "{count}個のオプション",
-            "rateCents": "レート（セント）"
+            "rateCents": "レート（セント）",
+            "deliveryEst": "到着目安 (日)"
         }
     }
 }
