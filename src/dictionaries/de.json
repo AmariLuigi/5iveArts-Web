@@ -360,7 +360,12 @@
         "shipping": "Logistikzuschlag",
         "totalContribution": "Gesamtbeitrag zum Portfolio",
         "depositPaid": "Anzahlung geleistet (50%)",
-        "remainingBalance": "Ausstehender Betrag (Protokoll)"
+        "remainingBalance": "Ausstehender Betrag (Protokoll)",
+        "analysis": "Analyse",
+        "deposit": "Anzahlung",
+        "forging": "Schmieden",
+        "finalizing": "Finalisierung",
+        "deployment": "Versand"
     },
     "footer": {
         "logistics": "Globale Kunsthandwerkslogistik Aktiviert",

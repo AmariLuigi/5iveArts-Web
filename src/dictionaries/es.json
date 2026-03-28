@@ -360,7 +360,12 @@
         "shipping": "Recargo Logístico",
         "totalContribution": "Contribución Total del Portafolio",
         "depositPaid": "Depósito liquidado (50%)",
-        "remainingBalance": "Saldo pendiente (Protocolo)"
+        "remainingBalance": "Saldo pendiente (Protocolo)",
+        "analysis": "Análisis",
+        "deposit": "Depósito",
+        "forging": "Forjado",
+        "finalizing": "Finalización",
+        "deployment": "Despliegue"
     },
     "footer": {
         "logistics": "Logística Artesanal Global Habilitada",

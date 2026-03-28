@@ -33,8 +33,8 @@ export async function PATCH(
     }
 
     // 3. Verify status is eligible for delivery confirmation
-    if (order.status !== 'shipped' && order.status !== 'ready_to_ship' && order.status !== 'delivered') {
-       return NextResponse.json({ error: "Order is not in a deliverable state" }, { status: 400 });
+    if (order.status !== 'shipped') {
+       return NextResponse.json({ error: "Order is not in a deliverable state. Confirmation is only possible after shipment." }, { status: 400 });
     }
 
     // 4. Update status to delivered using Admin client (bypass RLS for internal state sync)

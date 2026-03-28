@@ -360,7 +360,12 @@
         "shipping": "الرسوم اللوجستية",
         "totalContribution": "إجمالي المساهمة في المحفظة",
         "depositPaid": "تم تسوية العربون (50%)",
-        "remainingBalance": "الرصيد المتبقي (البروتوكول)"
+        "remainingBalance": "الرصيد المتبقي (البروتوكول)",
+        "analysis": "التحليل",
+        "deposit": "الايداع",
+        "forging": "تزوير",
+        "finalizing": "النهائي",
+        "deployment": "النشر"
     },
     "footer": {
         "logistics": "الخدمات اللوجستية العالمية الحرفية نشطة",

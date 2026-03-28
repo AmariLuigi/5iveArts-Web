@@ -40,6 +40,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
     const getStatusColor = (s: string) => {
         switch (s) {
             case "paid": 
+                return "text-blue-400 border-blue-400/20 bg-blue-400/5";
             case "deposit_paid":
                 return "text-blue-400 border-blue-400/20 bg-blue-400/5";
             case "processing":
@@ -49,8 +50,9 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
             case "in_production":
                 return "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5";
             case "shipped": 
-            case "ready_to_ship":
                 return "text-purple-400 border-purple-400/20 bg-purple-400/5";
+            case "ready_to_ship":
+                return "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5";
             case "delivered": return "text-green-400 border-green-400/20 bg-green-400/5";
             case "cancelled": return "text-red-400 border-red-400/20 bg-red-400/5";
             default: return "text-neutral-400 border-neutral-400/20 bg-neutral-400/5";
@@ -197,23 +199,23 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                     </div>
 
                     <div className="flex gap-4">
-                        {(order.status === 'shipped' || order.status === 'ready_to_ship' || order.status === 'paid') && (
+                        {(order.status === 'shipped') && (
                             <button 
                                 onClick={handleMarkAsDelivered}
                                 disabled={loadingDelivery}
-                                className="hasbro-btn-primary px-8 py-4 text-[10px] font-black flex items-center gap-2"
+                                className="hasbro-btn-primary px-8 py-4 text-[10px] font-black flex items-center gap-2 shadow-[0_4px_15px_rgba(234,179,8,0.3)] animate-glow"
                             >
                                 {loadingDelivery ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                                 {dict.orders.confirmDelivery || "Mark as Delivered"}
                             </button>
                         )}
-                        {order.tracking_number && (
+                        {order.tracking_number && (order.status === 'shipped' || order.status === 'delivered') && (
                             <button className="bg-white/5 border border-white/10 px-8 py-4 text-[10px] font-black text-white hover:bg-white/10 transition-all rounded-sm flex items-center gap-2">
                                 <Truck className="w-4 h-4" />
                                 {dict.orders.trackShipment}
                             </button>
                         )}
-                        {(!order.is_custom || (order.status !== 'analyzing' && order.status !== 'quoted')) && (
+                        {(!order.is_custom || (order.status !== 'analyzing' && order.status !== 'quoted' && order.status !== 'in_production')) && (
                             <button 
                                 onClick={handleExportInvoice}
                                 className="bg-white/5 border border-white/10 px-8 py-4 text-[10px] font-black text-white hover:bg-white/10 transition-all rounded-sm flex items-center gap-2"
@@ -247,11 +249,11 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 
                                 {(() => {
                                     const customStages = [
-                                        { id: 'analyzing', label: 'Analysis', icon: ShieldCheck, active: ['analyzing', 'quoted', 'deposit_paid', 'in_production', 'ready_to_ship', 'shipped', 'delivered', 'paid'] },
-                                        { id: 'deposit_paid', label: 'Deposit', icon: CreditCard, active: ['deposit_paid', 'in_production', 'ready_to_ship', 'shipped', 'delivered', 'paid'] },
-                                        { id: 'in_production', label: 'Forging', icon: Box, active: ['in_production', 'ready_to_ship', 'shipped', 'delivered', 'paid'] },
-                                        { id: 'ready_to_ship', label: 'Finalizing', icon: CheckCircle2, active: ['ready_to_ship', 'shipped', 'delivered', 'paid'] },
-                                        { id: 'shipped', label: 'Deployment', icon: Truck, active: ['shipped', 'delivered', 'paid'] }
+                                        { id: 'analyzing', label: 'Analysis', icon: ShieldCheck, active: ['analyzing', 'quoted', 'in_production', 'ready_to_ship', 'paid', 'shipped', 'delivered'] },
+                                        { id: 'in_production', label: 'Forging', icon: Box, active: ['in_production', 'ready_to_ship', 'paid', 'shipped', 'delivered'] },
+                                        { id: 'ready_to_ship', label: 'Finalizing', icon: History, active: ['ready_to_ship', 'paid', 'shipped', 'delivered'] },
+                                        { id: 'paid', label: 'Deployment', icon: Package, active: ['paid', 'shipped', 'delivered'] },
+                                        { id: 'shipped', label: 'Delivering', icon: Truck, active: ['shipped', 'delivered'] }
                                     ];
 
                                     const stdStages = [
@@ -413,29 +415,38 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 </div>
                             </div>
 
-                            <div className="pt-8 border-t border-white/5 space-y-4">
+                             <div className="pt-8 border-t border-white/5 space-y-4">
                                 <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
                                     <CreditCard className="w-4 h-4 text-brand-yellow" />
                                     {dict.orders.settlement}
                                 </h3>
                                 
                                 {order.payment_link && (order.status === 'quoted' || order.status === 'ready_to_ship') ? (
-                                    <a 
-                                        href={order.payment_link}
-                                        className="w-full flex items-center justify-center gap-2 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest hover:bg-brand-yellow/80 transition-all rounded-sm shadow-[0_0_20px_rgba(255,160,0,0.1)] group"
-                                    >
-                                        <CreditCard className="w-3.5 h-3.5" />
-                                        {order.status === 'quoted' ? "Pay 50% Deposit" : "Settle Final Balance"}
-                                        <ChevronRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
-                                    </a>
+                                    <div className="space-y-4">
+                                        {(order.status === 'quoted' || order.status === 'in_production' || order.status === 'ready_to_ship') && (
+                                            <div className="p-4 bg-orange-500/5 border border-orange-500/10 rounded-sm">
+                                                <p className="text-[9px] font-black text-orange-400 uppercase tracking-widest leading-relaxed">
+                                                    CAUTION: Once the first payment is authorized, fabrication begins immediately. Cancellation is prohibited beyond this protocol point.
+                                                </p>
+                                            </div>
+                                        )}
+                                        <a 
+                                            href={order.payment_link}
+                                            className="w-full flex items-center justify-center gap-2 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest hover:bg-brand-yellow/80 transition-all rounded-sm shadow-[0_0_20px_rgba(255,160,0,0.1)] group"
+                                        >
+                                            <CreditCard className="w-3.5 h-3.5" />
+                                            {order.status === 'quoted' ? "Authorize 50% Deposit" : "Settle Final Balance"}
+                                            <ChevronRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                                        </a>
+                                    </div>
                                 ) : (
                                     <div className="flex items-center gap-3">
                                         <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
-                                            order.status === 'paid' || order.status === 'deposit_paid' || order.status === 'delivered'
+                                            order.status === 'paid' || order.status === 'shipped' || order.status === 'delivered'
                                             ? 'bg-green-500/10 text-green-500 border-green-500/20' 
                                             : 'bg-neutral-500/10 text-neutral-500 border-white/5'
                                         }`}>
-                                            {order.status === 'paid' || order.status === 'deposit_paid' || order.status === 'delivered' ? dict.orders.transactionSecure : "Pending Approval"}
+                                            {['paid', 'shipped', 'delivered'].includes(order.status) ? dict.orders.transactionSecure : "Pending Approval"}
                                         </div>
                                     </div>
                                 )}

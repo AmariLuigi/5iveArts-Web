@@ -360,7 +360,12 @@
         "itemDetails": "Item Details",
         "subtotal": "Acquisition Subtotal",
         "shipping": "Logistics Surcharge",
-        "totalContribution": "Total Portfolio Contribution"
+        "totalContribution": "Total Portfolio Contribution",
+        "analysis": "Analysis",
+        "deposit": "Deposit",
+        "forging": "Forging",
+        "finalizing": "Finalizing",
+        "deployment": "Deployment"
     },
     "footer": {
         "logistics": "Global Artisan Craftsmanship Logistics Enabled",

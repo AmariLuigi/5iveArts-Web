@@ -360,7 +360,12 @@
         "shipping": "Sobretaxa de Logística",
         "totalContribution": "Contribuição Total do Portfólio",
         "depositPaid": "Depósito liquidado (50%)",
-        "remainingBalance": "Saldo devedor (Protocolo)"
+        "remainingBalance": "Saldo devedor (Protocolo)",
+        "analysis": "Análise",
+        "deposit": "Depósito",
+        "forging": "Forjamento",
+        "finalizing": "Finalização",
+        "deployment": "Implementação"
     },
     "footer": {
         "logistics": "Logística de Ofício Artesanal Global Ativada",

@@ -31,14 +31,20 @@ export async function POST(
       return NextResponse.json({ error: "Payment links are only for custom orders" }, { status: 400 });
     }
 
-    const totalPence = order.total_pence;
-    if (totalPence <= 0) {
-      return NextResponse.json({ error: "Order price must be set before generating a payment link" }, { status: 400 });
-    }
-
     // 2. Calculate Amount
     let amount = 0;
     let description = "";
+
+    // -- Phase Enforcement --
+    if (type === 'deposit') {
+      if (order.status !== 'analyzing' && order.status !== 'quoted') {
+        return NextResponse.json({ error: `Deposit links can only be generated during Analysis/Quoted phase. Current status: ${order.status}` }, { status: 400 });
+      }
+    } else if (type === 'final') {
+      if (order.status !== 'ready_to_ship') {
+        return NextResponse.json({ error: `Final residue links can only be generated during the Finalization phase. Current status: ${order.status}` }, { status: 400 });
+      }
+    }
 
     const subtotal = order.subtotal_pence || order.total_pence || 0;
     const shipping = order.shipping_pence || 0;

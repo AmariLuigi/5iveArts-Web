@@ -360,7 +360,12 @@
         "shipping": "Logistieke Toeslag",
         "totalContribution": "Totale Portefeuillebijdrage",
         "depositPaid": "Aanbetaling voldaan (50%)",
-        "remainingBalance": "Openstaand bedrag (Protocol)"
+        "remainingBalance": "Openstaand bedrag (Protocol)",
+        "analysis": "Analyse",
+        "deposit": "Aanbetaling",
+        "forging": "Smeden",
+        "finalizing": "Afronding",
+        "deployment": "Inzet"
     },
     "footer": {
         "logistics": "Wereldwijde Ambachtelijke Vakmanschap Logistiek Ingeschakeld",

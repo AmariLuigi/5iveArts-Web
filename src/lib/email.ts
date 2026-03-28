@@ -11,6 +11,15 @@ interface OrderConfirmationParams {
   items: Array<{ name: string; quantity: number }>;
 }
 
+interface OrderStageUpdateParams {
+  to: string | string[];
+  orderId: string;
+  customerName: string;
+  stage: 'forging' | 'finalized' | 'shipped';
+  previewUrl?: string; // For finalized stage
+  trackingNumber?: string; // For shipped stage
+}
+
 export async function sendOrderConfirmationEmail({
   to,
   orderId,
@@ -76,5 +85,86 @@ export async function sendOrderConfirmationEmail({
     }
   } catch (err) {
     console.error("[email] Failed to send email:", err);
+  }
+}
+export async function sendOrderStageUpdateEmail({
+  to,
+  orderId,
+  customerName,
+  stage,
+  previewUrl,
+  trackingNumber,
+}: OrderStageUpdateParams) {
+  if (!process.env.RESEND_API_KEY) {
+    console.warn("[email] RESEND_API_KEY is not set. Skipping email.");
+    return;
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+  const fromName = process.env.RESEND_FROM_NAME || "5iveArts";
+
+  let subject = "";
+  let title = "";
+  let message = "";
+  let highlight = "";
+
+  switch (stage) {
+    case 'forging':
+      subject = `Fabrication Initiated: Artifact #${orderId.slice(0, 8).toUpperCase()}`;
+      title = "Forging Protocol Active";
+      message = "Your commission has entered the artisan queue. Our forges are now hot as we begin the materialization of your artifact.";
+      highlight = "Production Phase: MATERIALIZATION";
+      break;
+    case 'finalized':
+      subject = `Artifact Finalized: Review Required #${orderId.slice(0, 8).toUpperCase()}`;
+      title = "Protocol: Finalization";
+      message = "Curation is complete. Your artifact has been finalized and is awaiting deployment preparation.";
+      highlight = "Status: READY FOR DEPLOYMENT";
+      break;
+    case 'shipped':
+      subject = `Artifact Deployed: Tracking #${orderId.slice(0, 8).toUpperCase()}`;
+      title = "Deployment Protocol Initiated";
+      message = "Your artifact has cleared the bureau and is currently in transit to your coordinates.";
+      highlight = `Tracking Credentials: ${trackingNumber || "PENDING"}`;
+      break;
+  }
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: `${fromName} <${fromEmail}>`,
+      to,
+      subject,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border: 1px solid #111; border-radius: 4px;">
+          <h1 style="color: #eab308; font-size: 24px; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 30px; font-weight: 900;">${title}</h1>
+          <p style="font-size: 12px; line-height: 1.6; color: #a3a3a3; text-transform: uppercase; letter-spacing: 0.1em;">Hi ${escapeHtml(customerName)},</p>
+          <p style="font-size: 12px; line-height: 1.6; color: #a3a3a3;">${message}</p>
+          
+          <div style="background-color: #0c0c0c; border: 1px solid #1a1a1a; padding: 25px; margin: 30px 0;">
+             <p style="margin: 0; font-size: 10px; font-weight: bold; color: #eab308; text-transform: uppercase; letter-spacing: 0.2em;">${highlight}</p>
+          </div>
+
+          ${previewUrl ? `
+          <div style="margin: 30px 0; border: 1px solid #1a1a1a; padding: 10px; border-radius: 2px;">
+            <img src="${previewUrl}" alt="Artifact Preview" style="width: 100%; height: auto; display: block;" />
+          </div>
+          ` : ''}
+          
+          <div style="text-align: center; margin-top: 40px;">
+            <a href="https://5ivearts.com/account" style="display: inline-block; padding: 15px 30px; background-color: #eab308; color: #000000; text-decoration: none; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; border-radius: 2px;">View Protocol Journal</a>
+          </div>
+          
+          <hr style="border: 0; border-top: 1px solid #1a1a1a; margin: 40px 0;" />
+          <p style="text-align: center; color: #eab308; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em;">
+            5iveArts — Handcrafted Excellence
+          </p>
+        </div>
+      `,
+    });
+
+    if (error) console.error("[email] Resend stage update error:", error);
+  } catch (err) {
+    console.error("[email] Failed to send stage update email:", err);
   }
 }

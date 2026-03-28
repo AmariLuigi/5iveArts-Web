@@ -360,7 +360,12 @@
         "shipping": "Логистический сбор",
         "totalContribution": "Общий вклад в портфель",
         "depositPaid": "Депозит внесен (50%)",
-        "remainingBalance": "Остаток к оплате (Протокол)"
+        "remainingBalance": "Остаток к оплате (Протокол)",
+        "analysis": "Анализ",
+        "deposit": "Депозит",
+        "forging": "Ковка",
+        "finalizing": "Завершение",
+        "deployment": "Развертывание"
     },
     "footer": {
         "logistics": "Включена глобальная логистика артистического мастерства",

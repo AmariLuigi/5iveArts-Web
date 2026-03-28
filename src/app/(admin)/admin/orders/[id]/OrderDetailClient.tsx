@@ -25,7 +25,8 @@ import {
     Plus,
     Copy,
     Check,
-    History
+    History,
+    Box
 } from "lucide-react";
 import Link from "next/link";
 import CustomSelect from "@/components/ui/CustomSelect";
@@ -64,6 +65,24 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
         }
     };
 
+    const handleStageTransition = async (nextStatus: string, additionalData: any = {}) => {
+        setLoading(true);
+        setMessage(null);
+        try {
+            await axios.patch(`/api/admin/orders/${order.id}`, {
+                status: nextStatus,
+                ...additionalData
+            });
+            setStatus(nextStatus);
+            setMessage({ type: "success", text: `Protocol Shift: ${nextStatus.toUpperCase()}` });
+            router.refresh();
+        } catch (err: any) {
+            setMessage({ type: "error", text: `Transition failed: ${err.response?.data?.error || err.message}` });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -92,6 +111,10 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
         switch (s) {
             case "paid": return "text-blue-400 border-blue-400/20 bg-blue-400/5";
             case "processing": return "text-orange-400 border-orange-400/20 bg-orange-400/5";
+            case "analyzing": return "text-orange-400 border-orange-400/20 bg-orange-400/5";
+            case "quoted": return "text-orange-400 border-orange-400/20 bg-orange-400/5";
+            case "in_production": return "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5";
+            case "ready_to_ship": return "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5";
             case "shipped": return "text-purple-400 border-purple-400/20 bg-purple-400/5";
             case "delivered": return "text-green-400 border-green-400/20 bg-green-400/5";
             case "cancelled": return "text-red-400 border-red-400/20 bg-red-400/5";
@@ -148,243 +171,246 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {/* Left Col: Order Info */}
+                {/* Main Content Area */}
                 <div className="lg:col-span-2 space-y-10">
-                    {/* Status Update Form */}
-                    <div className="hasbro-card p-8">
-                        <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-white mb-8 flex items-center gap-2">
-                            <TagIcon className="w-4 h-4 text-brand-yellow" />
-                            Quick Management
-                        </h3>
-
-                        <form onSubmit={handleUpdate} className="space-y-8">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div className="space-y-3">
-                                    <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Fulfillment Status</label>
-                                    <CustomSelect
-                                        value={status}
-                                        onChange={(val: string) => setStatus(val)}
-                                        options={[
-                                            { code: "unpaid", name: "Unpaid" },
-                                            { code: "paid", name: "Paid" },
-                                            { code: "processing", name: "Processing" },
-                                            { code: "shipped", name: "Shipped" },
-                                            { code: "delivered", name: "Delivered" },
-                                            { code: "cancelled", name: "Cancelled" },
-                                            { code: "refunded", name: "Refunded" },
-                                            { code: "analyzing", name: "Analyzing (Custom)" },
-                                            { code: "quoted", name: "Quoted (Custom)" },
-                                            { code: "deposit_paid", name: "Deposit Paid (Custom)" },
-                                            { code: "in_production", name: "In Production (Custom)" },
-                                            { code: "ready_to_ship", name: "Ready to Ship (Custom)" }
-                                        ]}
-                                    />
+                    
+                    {/* Phase segmented management */}
+                    {order.is_custom && (
+                        <div className="space-y-10">
+                            {/* Phase 1: Analysis Protocol */}
+                            {(status === 'analyzing' || status === 'quoted') && (
+                                <div className="hasbro-card p-10 border-orange-500/20 bg-orange-500/[0.02] relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 p-8 opacity-5">
+                                        <Sparkles className="w-40 h-40 text-orange-500" />
+                                    </div>
+                                    <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-orange-400 mb-10 flex items-center gap-3">
+                                        <Sparkles className="w-5 h-5" />
+                                        Phase 01: Analysis Protocol
+                                    </h3>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                        <div className="space-y-6">
+                                            <div className="space-y-3">
+                                                <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Baseline Artifact Value</label>
+                                                <div className="relative">
+                                                    <input 
+                                                        type="number"
+                                                        value={basePrice}
+                                                        onChange={(e) => setBasePrice(Number(e.target.value))}
+                                                        className="w-full bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-orange-500/30"
+                                                    />
+                                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 font-black text-[10px]">{formatPrice(basePrice)}</span>
+                                                </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Complexity Factor</label>
+                                                <div className="flex gap-4">
+                                                    <input 
+                                                        type="number" step="0.05" value={complexity}
+                                                        onChange={(e) => setComplexity(Number(e.target.value))}
+                                                        className="flex-1 bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white"
+                                                    />
+                                                    <button 
+                                                        onClick={async () => {
+                                                            setLoading(true);
+                                                            try {
+                                                                const res = await axios.post("/api/admin/ai/analyze-complexity", {
+                                                                    imageUrl: progressMedia[0]?.url || "",
+                                                                    finishType: orderItems[0]?.selectedFinish?.toUpperCase() || "PAINTED"
+                                                                });
+                                                                if (res.data.complexity_factor) setComplexity(Number(res.data.complexity_factor.toFixed(2)));
+                                                            } finally { setLoading(false); }
+                                                        }}
+                                                        disabled={loading}
+                                                        className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-sm hover:bg-orange-500/20 transition-all text-orange-400"
+                                                    >
+                                                        <Sparkles className="w-4 h-4" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-6">
+                                              <div className="p-6 bg-black/40 border border-white/5 rounded-sm space-y-4">
+                                                <p className="text-[9px] font-black uppercase tracking-widest text-neutral-500">Calculated Prototype Quote</p>
+                                                <p className="text-3xl font-black text-white italic tracking-tighter">{formatPrice(Math.round(basePrice * complexity))}</p>
+                                                <p className="text-[8px] font-bold text-neutral-700 uppercase tracking-[0.2em]">+ {formatPrice(order.shipping_pence || 0)} Logistics Contribution</p>
+                                              </div>
+                                              
+                                              <button 
+                                                onClick={async () => {
+                                                    if (basePrice < 100) return;
+                                                    setIsGeneratingLink(true);
+                                                    try {
+                                                        const adjusted = Math.round(basePrice * complexity);
+                                                        await axios.patch(`/api/admin/orders/${order.id}`, {
+                                                            total_pence: adjusted + (order.shipping_pence || 0),
+                                                            subtotal_pence: adjusted,
+                                                            base_price_pence: basePrice,
+                                                            complexity_factor: complexity,
+                                                            status: 'quoted'
+                                                        });
+                                                        const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'deposit' });
+                                                        copyToClipboard(res.data.url, 'deposit');
+                                                        router.refresh();
+                                                    } finally { setIsGeneratingLink(false); }
+                                                }}
+                                                disabled={isGeneratingLink}
+                                                className="w-full hasbro-btn-primary py-5 text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(234,179,8,0.2)]"
+                                              >
+                                                <CreditCard className="w-4 h-4" />
+                                                {lastCopied === 'deposit' ? "Link Copied to Bureau" : "Request 50% Protocol Deposit"}
+                                              </button>
+                                        </div>
+                                    </div>
                                 </div>
+                            )}
 
-                                <div className="space-y-3">
-                                    <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Tracking Number</label>
-                                    <div className="flex gap-2">
+                            {/* Phase 2: Forging Protocol */}
+                            {status === 'in_production' && (
+                                <div className="hasbro-card p-10 border-brand-yellow/20 bg-brand-yellow/[0.02] relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 p-8 opacity-5">
+                                        <History className="w-40 h-40 text-brand-yellow" />
+                                    </div>
+                                    <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-4 flex items-center gap-3">
+                                        <Box className="w-5 h-5" />
+                                        Phase 02: Forging Protocol
+                                    </h3>
+                                    <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-10">Production is active. Capture visual artifacts to update the collectors journal.</p>
+                                    
+                                    <div className="flex flex-wrap gap-4">
+                                        <button 
+                                            onClick={() => handleStageTransition('ready_to_ship')}
+                                            disabled={loading}
+                                            className="px-10 py-5 bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white hover:bg-white/10 transition-all rounded-sm flex items-center gap-3"
+                                        >
+                                            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+                                            Complete Production Phase
+                                            <ChevronRight className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Phase 3: Finalization Protocol */}
+                            {status === 'ready_to_ship' && (
+                                <div className="hasbro-card p-10 border-brand-yellow/30 bg-brand-yellow/[0.05] relative overflow-hidden">
+                                     <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-4 flex items-center gap-3">
+                                        <CheckCircle2 className="w-5 h-5" />
+                                        Phase 03: Finalization
+                                    </h3>
+                                    <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-10 italic">Artifact materialized. Secure the final balance before deployment initiation.</p>
+                                    
+                                    <div className="flex flex-wrap gap-4">
+                                        <button 
+                                            onClick={async () => {
+                                                setIsGeneratingLink(true);
+                                                try {
+                                                    const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'final' });
+                                                    copyToClipboard(res.data.url, 'final');
+                                                } finally { setIsGeneratingLink(false); }
+                                            }}
+                                            disabled={isGeneratingLink}
+                                            className="px-10 py-5 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all rounded-sm flex items-center gap-3 shadow-[0_10px_30px_rgba(234,179,8,0.2)]"
+                                        >
+                                            <CreditCard className="w-4 h-4" />
+                                            {lastCopied === 'final' ? "Residue Link Copied" : "Request Final Balance"}
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Phase 4: Deployment Protocol */}
+                            {status === 'paid' && (
+                                <div className="hasbro-card p-10 border-purple-500/20 bg-purple-500/[0.02] relative overflow-hidden">
+                                     <div className="absolute top-0 right-0 p-8 opacity-5">
+                                        <Truck className="w-40 h-40 text-purple-500" />
+                                    </div>
+                                    <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-purple-400 mb-8 flex items-center gap-3">
+                                        <Truck className="w-5 h-5" />
+                                        Phase 04: Deployment
+                                    </h3>
+                                    
+                                    <div className="space-y-8 max-w-md">
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Carrier Tracking Identification</label>
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="text"
+                                                    value={trackingNumber}
+                                                    onChange={(e) => setTrackingNumber(e.target.value)}
+                                                    placeholder="Enter Tracking ID..."
+                                                    className="flex-1 bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-purple-500/30"
+                                                />
+                                                <button 
+                                                    onClick={() => handleStageTransition('shipped', { tracking_number: trackingNumber })}
+                                                    disabled={!trackingNumber || loading}
+                                                    className="px-8 bg-purple-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-purple-500 transition-all rounded-sm disabled:opacity-30"
+                                                >
+                                                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Deploy Artifact"}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {!order.is_custom && (
+                         <div className="hasbro-card p-8">
+                            <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-white mb-8 flex items-center gap-2">
+                                <TagIcon className="w-4 h-4 text-brand-yellow" />
+                                Quick Management
+                            </h3>
+
+                            <form onSubmit={handleUpdate} className="space-y-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Fulfillment Status</label>
+                                        <CustomSelect
+                                            value={status}
+                                            onChange={(val: string) => setStatus(val)}
+                                            options={[
+                                                { code: "paid", name: "Paid" },
+                                                { code: "processing", name: "Processing" },
+                                                { code: "shipped", name: "Shipped" },
+                                                { code: "delivered", name: "Delivered" },
+                                                { code: "cancelled", name: "Cancelled" },
+                                                { code: "refunded", name: "Refunded" }
+                                            ]}
+                                        />
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Tracking Number</label>
                                         <input
                                             type="text"
                                             value={trackingNumber}
                                             onChange={(e) => setTrackingNumber(e.target.value)}
                                             placeholder="Enter tracking ID..."
-                                            className="flex-1 bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white placeholder:text-neutral-800 focus:outline-none focus:border-brand-yellow/30"
+                                            className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white placeholder:text-neutral-800 focus:outline-none focus:border-brand-yellow/30"
                                         />
-                                        {order.is_custom && status === "analyzing" && (
-                                            <button
-                                                type="button"
-                                                onClick={async () => {
-                                                    try {
-                                                        const res = await axios.post("/api/admin/ai/analyze-complexity", {
-                                                            imageUrl: progressMedia[0]?.url || "",
-                                                            finishType: orderItems[0]?.selectedFinish?.toUpperCase() || "PAINTED"
-                                                        });
-                                                        if (res.data.complexity_factor) {
-                                                            setComplexity(Number(res.data.complexity_factor.toFixed(2)));
-                                                            setMessage({ type: 'success', text: `AI Quoted: ${res.data.complexity_factor.toFixed(2)}x factor` });
-                                                        }
-                                                    } catch (err) {
-                                                        setMessage({ type: 'error', text: 'AI Quote Failed' });
-                                                    }
-                                                }}
-                                                className="p-4 bg-brand-yellow/10 border border-brand-yellow/20 rounded-sm hover:bg-brand-yellow/20 transition-all group"
-                                                title="AI Quote Analysis"
-                                            >
-                                                <Sparkles className="w-4 h-4 text-brand-yellow group-hover:scale-110 transition-all" />
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                                {message && (
-                                    <p className={`text-[10px] font-black uppercase tracking-widest ${message.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
-                                        {message.text}
-                                    </p>
-                                )}
-                                <button
-                                    type="submit"
-                                    disabled={loading}
-                                    className="hasbro-btn-primary px-10 py-4 font-black text-[10px] uppercase tracking-widest disabled:opacity-50 flex items-center gap-2"
-                                >
-                                    {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                                    Stabilize Current Quote
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div className="space-y-12">
-                        {order.is_custom && (
-                            <div className="hasbro-card p-8 border-brand-yellow/10 bg-brand-yellow/[0.01]">
-                                <div className="flex items-center justify-between mb-8">
-                                    <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-brand-yellow flex items-center gap-2">
-                                        <Sparkles className="w-4 h-4" />
-                                        Artisan Bureau Control
-                                    </h3>
-                                    <span className="text-[8px] font-black uppercase tracking-widest text-neutral-600 bg-white/5 px-2 py-1 border border-white/10 rounded-sm">
-                                        Initial Artifact Base: {formatPrice(order.base_price_pence || order.subtotal_pence || 0)}
-                                    </span>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Fundamental Quote (Base Price)</label>
-                                        <div className="relative">
-                                            <input 
-                                                type="number"
-                                                value={basePrice}
-                                                onChange={(e) => setBasePrice(Number(e.target.value))}
-                                                className="w-full bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-brand-yellow/30"
-                                            />
-                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 font-black text-[10px]">
-                                                {formatPrice(basePrice)}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Project Protocol (Scale)</label>
-                                        <div className="bg-black/40 border border-white/5 p-4 rounded-sm text-xs font-black uppercase text-brand-yellow tracking-widest">
-                                            {order.scale || "Standard (1:12)"}
-                                        </div>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Complexity Factor</label>
-                                        <div className="flex gap-4">
-                                            <input 
-                                                type="number" 
-                                                step="0.05"
-                                                value={complexity}
-                                                onChange={(e) => setComplexity(Number(e.target.value))}
-                                                className="flex-1 bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-brand-yellow/30"
-                                            />
-                                            <div className="w-24 bg-white/5 border border-white/5 flex items-center justify-center text-[10px] font-black text-brand-yellow">
-                                                {Math.round(complexity * 100)}%
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Adjusted Subtotal (Quoted)</label>
-                                        <div className="bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-neutral-500">
-                                            {formatPrice(Math.round(basePrice * complexity))}
-                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="flex flex-wrap gap-4 pt-8 border-t border-white/5">
-                                    <button 
-                                        onClick={async () => {
-                                            setLoading(true);
-                                            try {
-                                                const artifactTotal = Math.round(basePrice * complexity);
-                                                const shippingPence = order.shipping_pence || 0;
-                                                const grandTotal = artifactTotal + shippingPence;
-                                                
-                                                await axios.patch(`/api/admin/orders/${order.id}`, {
-                                                    total_pence: grandTotal,
-                                                    subtotal_pence: artifactTotal,
-                                                    base_price_pence: basePrice,
-                                                    complexity_factor: complexity,
-                                                    status: status,
-                                                    shipping_pence: shippingPence
-                                                });
-                                                
-                                                setMessage({ type: 'success', text: `Grand Protocol Sync: ${formatPrice(grandTotal)} (Inc. Shipping)` });
-                                                router.refresh();
-                                            } catch (err: any) {
-                                                setMessage({ type: 'error', text: 'Pricing sync failed' });
-                                            } finally {
-                                                setLoading(false);
-                                            }
-                                        }}
+                                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                                    {message && (
+                                        <p className={`text-[10px] font-black uppercase tracking-widest ${message.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+                                            {message.text}
+                                        </p>
+                                    )}
+                                    <button
+                                        type="submit"
                                         disabled={loading}
-                                        className="px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white transition-all rounded-sm flex items-center gap-2"
+                                        className="hasbro-btn-primary px-10 py-4 font-black text-[10px] uppercase tracking-widest disabled:opacity-50 flex items-center gap-2"
                                     >
-                                        <History className="w-3.5 h-3.5" />
-                                        Sync Grand Protocol ({formatPrice(Math.round(basePrice * complexity) + (order.shipping_pence || 0))})
-                                    </button>
-
-                                    <button 
-                                        onClick={async () => {
-                                            if (basePrice < 100) {
-                                                setMessage({ type: 'error', text: 'Set a baseline first' });
-                                                return;
-                                            }
-                                            
-                                            setIsGeneratingLink(true);
-                                            try {
-                                              const adjustedAtCurrent = Math.round(basePrice * complexity);
-                                              // Always sync state before generating link
-                                              await axios.patch(`/api/admin/orders/${order.id}`, {
-                                                  total_pence: adjustedAtCurrent + (order.shipping_pence || 0),
-                                                  subtotal_pence: adjustedAtCurrent,
-                                                  base_price_pence: basePrice,
-                                                  complexity_factor: complexity,
-                                                  status: status
-                                              });
-
-                                              const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'deposit' });
-                                              copyToClipboard(res.data.url, 'deposit');
-                                              setMessage({ type: 'success', text: 'Deposit Link Generated' });
-                                              router.refresh();
-                                            } catch (err: any) {
-                                              setMessage({ type: 'error', text: 'Vault generation failed' });
-                                            } finally {
-                                              setIsGeneratingLink(false);
-                                            }
-                                        }}
-                                        disabled={isGeneratingLink || (status !== 'analyzing' && status !== 'quoted')}
-                                        className="px-6 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking_widest hover:bg-brand-yellow/80 hover:scale-105 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
-                                    >
-                                        {lastCopied === 'deposit' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                                        Request 50% Deposit
-                                    </button>
-
-                                    <button 
-                                        onClick={async () => {
-                                          setIsGeneratingLink(true);
-                                          try {
-                                            const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'final' });
-                                            copyToClipboard(res.data.url, 'final');
-                                            setMessage({ type: 'success', text: 'Final balance link ready' });
-                                            router.refresh();
-                                          } catch (err) {
-                                            setMessage({ type: 'error', text: 'Failed to generate link' });
-                                          } finally {
-                                            setIsGeneratingLink(false);
-                                          }
-                                        }}
-                                        disabled={isGeneratingLink || status !== 'ready_to_ship'}
-                                        className="px-6 py-4 bg-white/10 border border-white/20 text-[10px] font-black uppercase tracking_widest text-white hover:bg-white/20 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
-                                    >
-                                        {lastCopied === 'final' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                                        Request Final Balance
+                                        {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                                        Update Order Logistics
                                     </button>
                                 </div>
-                            </div>
-                        )}
+                            </form>
+                        </div>
+                    )}
 
                         {/* Universal Logistics Protocol Selector */}
                         <div className="hasbro-card p-8 border-white/5 bg-white/[0.01] space-y-8">
@@ -577,7 +603,6 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                             )}
                         </div>
                     </div>
-                </div>
 
                 {/* Right Col: Customer Info */}
                 <div className="space-y-8">

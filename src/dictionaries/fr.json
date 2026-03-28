@@ -360,7 +360,12 @@
         "shipping": "Surcharge Logistique",
         "totalContribution": "Contribution Totale au Portfolio",
         "depositPaid": "Acompte réglé (50%)",
-        "remainingBalance": "Solde restant (Protocole)"
+        "remainingBalance": "Solde restant (Protocole)",
+        "analysis": "Analyse",
+        "deposit": "Dépôt",
+        "forging": "Forgeage",
+        "finalizing": "Finalisation",
+        "deployment": "Déploiement"
     },
     "footer": {
         "logistics": "Logistique Artisanale Mondiale Activée",

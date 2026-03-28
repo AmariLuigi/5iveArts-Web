@@ -1,6 +1,6 @@
 import { getStripe } from "@/lib/stripe";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import { sendOrderConfirmationEmail } from "@/lib/email";
+import { sendOrderConfirmationEmail, sendOrderStageUpdateEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/products";
 import Stripe from "stripe";
 
@@ -87,6 +87,16 @@ export async function processCompletedCheckout(
                 .from("orders")
                 .update(updateData)
                 .eq("id", orderId);
+
+            // Send stage update email for installments
+            if (isCustom) {
+                await sendOrderStageUpdateEmail({
+                    to: email,
+                    orderId: orderId,
+                    customerName: customerName,
+                    stage: paymentType === 'deposit' ? 'forging' : 'shipped', // 'shipped' here implies deployment prep started
+                });
+            }
 
         } else {
             // Fresh checkout order

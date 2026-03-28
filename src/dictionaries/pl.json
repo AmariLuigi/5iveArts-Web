@@ -360,7 +360,12 @@
         "shipping": "Opłata Logistyczna",
         "totalContribution": "Całkowity Wkład do Portfolio",
         "depositPaid": "Zaliczka opłacona (50%)",
-        "remainingBalance": "Pozostała kwota (Protokół)"
+        "remainingBalance": "Pozostała kwota (Protokół)",
+        "analysis": "Analiza",
+        "deposit": "Kaucja",
+        "forging": "Kucie",
+        "finalizing": "Finalizacja",
+        "deployment": "Wdrożenie"
     },
     "footer": {
         "logistics": "Globalna Logistyka Rzemieślnicza Aktywna",

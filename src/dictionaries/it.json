@@ -360,7 +360,12 @@
         "shipping": "Supplemento Logistica",
         "totalContribution": "Contributo Totale Portfolio",
         "depositPaid": "Acconto versato (50%)",
-        "remainingBalance": "Saldo rimanente (Protocollo)"
+        "remainingBalance": "Saldo rimanente (Protocollo)",
+        "analysis": "Analisi",
+        "deposit": "Deposito",
+        "forging": "Forgiatura",
+        "finalizing": "Finalizzazione",
+        "deployment": "Spedizione"
     },
     "footer": {
         "logistics": "Logistica Artigianale Globale Abilitata",

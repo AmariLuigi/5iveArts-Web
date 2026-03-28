@@ -360,7 +360,12 @@
         "shipping": "物流手数料",
         "totalContribution": "ポートフォリオ総計",
         "depositPaid": "入金済み (50%)",
-        "remainingBalance": "未払残高 (プロトコル)"
+        "remainingBalance": "未払残高 (プロトコル)",
+        "analysis": "解析",
+        "deposit": "預金",
+        "forging": "鍛造",
+        "finalizing": "最終段階",
+        "deployment": "配置"
     },
     "footer": {
         "logistics": "アルチザン・グローバル・ロジスティクス稼働中",

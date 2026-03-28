@@ -360,7 +360,12 @@
         "shipping": "Lojistik Ücreti",
         "totalContribution": "Toplam Portföy Katkısı",
         "depositPaid": "Depozito ödendi (50%)",
-        "remainingBalance": "Kalan bakiye (Protokol)"
+        "remainingBalance": "Kalan bakiye (Protokol)",
+        "analysis": "Analiz",
+        "deposit": "Mevduat",
+        "forging": "Dövme",
+        "finalizing": "Sonuçlandırma",
+        "deployment": "Dağıtım"
     },
     "footer": {
         "logistics": "Zanaatkar Küresel Lojistik Etkin",
