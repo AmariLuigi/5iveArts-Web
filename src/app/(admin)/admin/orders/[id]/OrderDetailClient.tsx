@@ -52,8 +52,27 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
     const [complexity, setComplexity] = useState(order.complexity_factor || 1.0);
     const [isGeneratingLink, setIsGeneratingLink] = useState(false);
     const [lastCopied, setLastCopied] = useState<string | null>(null);
+    const [trackingData, setTrackingData] = useState<any>(null);
+    const [loadingTracking, setLoadingTracking] = useState(false);
 
     const supabase = createClient();
+
+    useState(() => {
+        if (order.tracking_number && (status === 'shipped' || status === 'delivered')) {
+            const fetchTracking = async () => {
+                setLoadingTracking(true);
+                try {
+                    const res = await axios.get(`/api/orders/${order.id}/tracking`);
+                    setTrackingData(res.data);
+                } catch (err) {
+                    console.error("Tracking fetch failed:", err);
+                } finally {
+                    setLoadingTracking(false);
+                }
+            };
+            fetchTracking();
+        }
+    });
 
     const copyToClipboard = async (text: string, type: string) => {
         try {
@@ -353,6 +372,52 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                     </div>
                                 </div>
                             )}
+                        </div>
+                    )}
+
+                    {/* Live Tracking Intelligence */}
+                    {(status === 'shipped' || status === 'delivered') && trackingData && (
+                        <div className="hasbro-card p-10 border-blue-500/20 bg-blue-500/[0.02] relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-8 opacity-5">
+                                <Truck className="w-40 h-40 text-blue-500" />
+                            </div>
+                            <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-blue-400 mb-8 flex items-center gap-3">
+                                <Truck className="w-5 h-5" />
+                                In-Transit Intelligence
+                            </h3>
+
+                            <div className="space-y-4 max-w-2xl">
+                                <div className="flex flex-wrap gap-8 items-center py-4 border-y border-white/5 mb-8">
+                                    <div>
+                                        <p className="text-[8px] font-black uppercase text-neutral-600 tracking-widest mb-1">Carrier Network</p>
+                                        <p className="text-[10px] font-black text-white uppercase">{trackingData.carrier}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[8px] font-black uppercase text-neutral-600 tracking-widest mb-1">Last Transmission</p>
+                                        <p className="text-[10px] font-black text-brand-yellow uppercase">{new Date(trackingData.lastUpdated).toLocaleString()}</p>
+                                    </div>
+                                    {order.carrier_delivered && (
+                                            <div className="ml-auto px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full">
+                                            <p className="text-[8px] font-black uppercase text-green-500 tracking-widest animate-pulse">Carrier Reports Delivered</p>
+                                            </div>
+                                    )}
+                                </div>
+
+                                <div className="space-y-6">
+                                    {trackingData.movements.slice(0, 5).map((move: any, idx: number) => (
+                                        <div key={idx} className="flex gap-4">
+                                            <div className="flex flex-col items-center">
+                                                <div className={`w-1.5 h-1.5 rounded-full ${idx === 0 ? 'bg-brand-yellow' : 'bg-neutral-800'}`} />
+                                                {idx !== Math.min(trackingData.movements.length, 5) - 1 && <div className="w-px h-full bg-white/5" />}
+                                            </div>
+                                            <div>
+                                                <p className="text-[9px] font-black text-white uppercase tracking-widest leading-none mb-1">{move.description}</p>
+                                                <p className="text-[8px] text-neutral-600 uppercase font-black tracking-widest">{move.location} — {new Date(move.timestamp).toLocaleString()}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     )}
 

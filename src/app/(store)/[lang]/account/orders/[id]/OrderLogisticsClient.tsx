@@ -36,6 +36,26 @@ interface OrderLogisticsClientProps {
 export default function OrderLogisticsClient({ order, orderItems, progressMedia, dict, lang }: OrderLogisticsClientProps) {
     const router = useRouter();
     const [loadingDelivery, setLoadingDelivery] = useState(false);
+    const [trackingData, setTrackingData] = useState<any>(null);
+    const [loadingTracking, setLoadingTracking] = useState(false);
+
+    // Dynamic Tracking Fetch
+    useState(() => {
+        if (order.tracking_number && (order.status === 'shipped' || order.status === 'delivered')) {
+            const fetchTracking = async () => {
+                setLoadingTracking(true);
+                try {
+                    const res = await axios.get(`/api/orders/${order.id}/tracking`);
+                    setTrackingData(res.data);
+                } catch (err) {
+                    console.error("Tracking fetch failed:", err);
+                } finally {
+                    setLoadingTracking(false);
+                }
+            };
+            fetchTracking();
+        }
+    });
 
     const getStatusColor = (s: string) => {
         switch (s) {
@@ -185,6 +205,11 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                             <span className={`px-4 py-1.5 rounded-full border text-[10px] font-black uppercase tracking-[0.3em] ${getStatusColor(order.status)}`}>
                                 {(dict.orders as any)[order.status] || order.status}
                             </span>
+                            {order.carrier_delivered && order.status !== 'delivered' && (
+                                <span className="bg-green-500/10 text-green-500 border border-green-500/30 px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest animate-pulse">
+                                    Marked as Delivered by Carrier
+                                </span>
+                            )}
                         </div>
                         <div className="flex flex-wrap items-center gap-6 text-neutral-500">
                             <div className="flex items-center gap-2">
@@ -203,7 +228,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                             <button 
                                 onClick={handleMarkAsDelivered}
                                 disabled={loadingDelivery}
-                                className="hasbro-btn-primary px-8 py-4 text-[10px] font-black flex items-center gap-2 shadow-[0_4px_15px_rgba(234,179,8,0.3)] animate-glow"
+                                className={`hasbro-btn-primary px-8 py-4 text-[10px] font-black flex items-center gap-2 shadow-[0_4px_15px_rgba(234,179,8,0.3)] ${order.carrier_delivered ? 'ring-2 ring-green-500 ring-offset-2 ring-offset-black' : 'animate-glow'}`}
                             >
                                 {loadingDelivery ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                                 {dict.orders.confirmDelivery || "Mark as Delivered"}
@@ -289,6 +314,55 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 })()}
                             </div>
                         </div>
+
+                        {/* Tracking Data Timeline */}
+                        {trackingData && (
+                            <div className="space-y-6">
+                                <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
+                                    <Truck className="w-4 h-4 text-brand-yellow" />
+                                    Carrier Tracking Protocol
+                                </h3>
+                                <div className="bg-[#0a0a0a] border border-white/5 p-8 rounded space-y-8">
+                                    <div className="flex items-center justify-between pb-6 border-b border-white/5">
+                                        <div className="flex flex-col">
+                                            <span className="text-[8px] font-black text-neutral-600 uppercase tracking-widest mb-1">Carrier Network</span>
+                                            <span className="text-[11px] font-black text-white uppercase">{trackingData.carrier}</span>
+                                        </div>
+                                        <div className="flex flex-col text-right">
+                                            <span className="text-[8px] font-black text-neutral-600 uppercase tracking-widest mb-1">Latest Vault Update</span>
+                                            <span className="text-[11px] font-black text-brand-yellow uppercase">{new Date(trackingData.lastUpdated).toLocaleTimeString()}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="space-y-6">
+                                        {trackingData.movements.map((move: any, idx: number) => (
+                                            <div key={idx} className="flex gap-6 group">
+                                                <div className="flex flex-col items-center">
+                                                    <div className={`w-2 h-2 rounded-full ${idx === 0 ? 'bg-brand-yellow animate-pulse shadow-[0_0_10px_rgba(255,160,0,0.5)]' : 'bg-neutral-800'} z-10 transition-colors`} />
+                                                    {idx !== trackingData.movements.length - 1 && (
+                                                        <div className="w-px h-full bg-white/5 group-hover:bg-white/10 transition-colors" />
+                                                    )}
+                                                </div>
+                                                <div className="pb-6">
+                                                    <div className="flex flex-wrap items-baseline gap-3 mb-1">
+                                                        <span className="text-[9px] font-black text-white tracking-widest uppercase">{new Date(move.timestamp).toLocaleDateString()}</span>
+                                                        <span className="text-[8px] font-black text-neutral-600 uppercase tracking-widest underline decoration-brand-yellow/30">{move.location}</span>
+                                                    </div>
+                                                    <p className="text-[10px] font-bold text-neutral-400 leading-relaxed uppercase tracking-widest">{move.description}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {trackingData.movements.length === 0 && (
+                                        <div className="py-12 flex flex-col items-center justify-center text-neutral-700 italic">
+                                            <Loader2 className="w-6 h-6 mb-3 animate-spin opacity-20" />
+                                            <span className="text-[10px] uppercase font-black tracking-widest">Handshaking with Carrier API...</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Progress Gallery (Order Journal) */}
                         {progressMedia.length > 0 && (
