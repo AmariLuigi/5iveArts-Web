@@ -117,9 +117,18 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
         doc.setFont("helvetica", "bold");
         doc.text(`${dict.orders.subtotal}: ${formatPrice(order.subtotal_pence)}`, 140, finalY);
         doc.text(`${dict.orders.shipping}: ${formatPrice(order.shipping_pence)}`, 140, finalY + 7);
+        
+        if (order.is_custom) {
+            doc.text(`${dict.orders.depositPaid || "Paid Deposit"}: ${formatPrice(order.deposit_pence || 0)}`, 140, finalY + 14);
+            const remaining = order.total_pence - (order.deposit_pence || 0) - (order.final_payment_pence || 0);
+            if (remaining > 0) {
+                doc.text(`${dict.orders.remainingBalance || "Remainder"}: ${formatPrice(remaining)}`, 140, finalY + 21);
+            }
+        }
+
         doc.setFontSize(14);
         doc.setTextColor(255, 159, 0);
-        doc.text(`${dict.orders.totalContribution.toUpperCase()}: ${formatPrice(order.total_pence)}`, 140, finalY + 17);
+        doc.text(`${dict.orders.totalContribution.toUpperCase()}: ${formatPrice(order.total_pence)}`, 140, finalY + (order.is_custom ? 30 : 17));
 
         // Security Footer
         doc.setFontSize(8);
