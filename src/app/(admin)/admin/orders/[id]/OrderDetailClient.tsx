@@ -294,7 +294,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                           const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'deposit' });
                                           const url = res.data.url;
                                           copyToClipboard(url, 'deposit');
-                                          setMessage({ type: 'success', text: 'Deposit link (50%) copied to clipboard' });
+                                          setMessage({ type: 'success', text: 'Payment Link Generated & Collector Vault Updated' });
                                           router.refresh();
                                         } catch (err: any) {
                                           setMessage({ type: 'error', text: `Failed to generate link: ${err.response?.data?.error || err.message}` });
@@ -316,7 +316,8 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                         const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'final' });
                                         const url = res.data.url;
                                         copyToClipboard(url, 'final');
-                                        setMessage({ type: 'success', text: 'Final balance link copied to clipboard' });
+                                        setMessage({ type: 'success', text: 'Final Balance Link Generated & Vault Updated' });
+                                        router.refresh();
                                       } catch (err) {
                                         setMessage({ type: 'error', text: 'Failed to generate link' });
                                       } finally {
