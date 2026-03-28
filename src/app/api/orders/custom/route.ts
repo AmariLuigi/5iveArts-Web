@@ -45,7 +45,7 @@ export async function POST(req: Request) {
         product_name: `Custom Commission: ${title}`,
         quantity: 1,
         product_price_pence: 1, // Using 1 pence as placeholder to satisfy DB check constraints until quoted
-        product_id: "CUSTOM-PROTO",
+        product_id: null,      // Decoupled from products table as this is a new artisan proposal
         // We'll store description in metadata or just it's fine for now
       });
 
