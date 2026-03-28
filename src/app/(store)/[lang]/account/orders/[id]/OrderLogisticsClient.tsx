@@ -555,6 +555,14 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                                             </button>
                                                         );
                                                     })}
+                                                    {(!order.shipping_options || order.shipping_options.length === 0) && (
+                                                        <div className="p-8 border border-dashed border-white/5 rounded-sm bg-white/[0.01] text-center">
+                                                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-600 mb-2">Logistics In Analysis</p>
+                                                            <p className="text-[8px] font-bold uppercase tracking-widest text-neutral-700 italic">
+                                                                Awaiting custom shipment tiers to be finalized by the studio. Check back soon.
+                                                            </p>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         )}

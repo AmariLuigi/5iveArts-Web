@@ -27,7 +27,9 @@ import {
     Check,
     History,
     RefreshCcw,
-    Box
+    Box,
+    X,
+    ChevronDown
 } from "lucide-react";
 import Link from "next/link";
 import CustomSelect from "@/components/ui/CustomSelect";
@@ -55,6 +57,64 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
     const [lastCopied, setLastCopied] = useState<string | null>(null);
     const [trackingData, setTrackingData] = useState<any>(null);
     const [loadingTracking, setLoadingTracking] = useState(false);
+
+    // Logistics Selection Command Center States
+    const [allTiers, setAllTiers] = useState<any[]>([]);
+    const [selectedTiers, setSelectedTiers] = useState<any[]>(order.shipping_options || []);
+    const [manualTier, setManualTier] = useState({ carrier_name: "Manual Logistic Protocol", service_name: "Insured Courier", price: 0 });
+    const [isFetchingRates, setIsFetchingRates] = useState(false);
+    const [isDeploying, setIsDeploying] = useState(false);
+
+    const handleQueryLogistics = async () => {
+        setIsFetchingRates(true);
+        setMessage(null);
+        try {
+            const res = await axios.post(`/api/admin/orders/${order.id}/rates`);
+            const tiers = res.data.options || [];
+            setAllTiers(tiers);
+            
+            // Auto-select TOP 3 Cheapest if none selected
+            if (selectedTiers.length === 0 && tiers.length > 0) {
+                const auto = [...tiers].sort((a,b) => a.price - b.price).slice(0, 3);
+                setSelectedTiers(auto);
+            }
+            setMessage({ type: 'success', text: `Found ${tiers.length} potential logistics protocols.` });
+        } catch (err: any) {
+            setMessage({ type: 'error', text: err.response?.data?.error || 'Logistics sync failed' });
+        } finally {
+            setIsFetchingRates(false);
+        }
+    };
+
+    const handleDeployLogistics = async () => {
+        setIsDeploying(true);
+        setMessage(null);
+        try {
+            await axios.patch(`/api/admin/orders/${order.id}/shipping-options`, { options: selectedTiers });
+            setMessage({ type: 'success', text: 'Logistics protocols successfully deployed to User Profile.' });
+            router.refresh();
+        } catch (err: any) {
+            setMessage({ type: 'error', text: 'Deployment failed.' });
+        } finally {
+            setIsDeploying(false);
+        }
+    };
+
+    const handleAddTier = (tier: any) => {
+        if (!selectedTiers.find(t => t.service_id === tier.service_id)) {
+            setSelectedTiers([...selectedTiers, tier]);
+        }
+    };
+
+    const handleRemoveTier = (serviceId: string) => {
+        setSelectedTiers(selectedTiers.filter(t => t.service_id !== serviceId));
+    };
+
+    const handleAddManual = () => {
+        const id = `manual-${Date.now()}`;
+        const tier = { ...manualTier, service_id: id, estimated_days: 7, currency: "EUR" };
+        setSelectedTiers([...selectedTiers, tier]);
+    };
 
     const supabase = createClient();
 
@@ -478,83 +538,159 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                         </div>
                     )}
 
-                        {/* Universal Logistics Protocol Selector */}
-                        <div className="hasbro-card p-8 border-white/5 bg-white/[0.01] space-y-8">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-white/40 flex items-center gap-2">
-                                    <Truck className="w-4 h-4 text-brand-yellow" />
-                                    Logistics Selection Protocol
-                                </h3>
+                        {/* Universal Logistics Protocol Selector - Command Center */}
+                        <div className="hasbro-card p-10 border-white/5 bg-white/[0.01] space-y-12">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow mb-2 block">Command Center</span>
+                                    <h3 className="text-2xl font-black uppercase tracking-tighter text-white flex items-center gap-3 italic">
+                                        <Truck className="w-6 h-6 text-brand-yellow" />
+                                        Logistics Selection Protocol
+                                    </h3>
+                                </div>
                                 <button
                                     type="button"
-                                    onClick={async () => {
-                                        setLoading(true);
-                                        setMessage(null);
-                                        try {
-                                            const res = await axios.post(`/api/admin/orders/${order.id}/rates`);
-                                            setMessage({ type: 'success', text: `Snapshot updated with ${res.data.options?.length || 0} tiers` });
-                                            router.refresh();
-                                        } catch (err: any) {
-                                            setMessage({ type: 'error', text: err.response?.data?.error || 'Snap failed' });
-                                        } finally {
-                                            setLoading(false);
-                                        }
-                                    }}
-                                    disabled={loading}
-                                    className="text-[8px] uppercase font-black tracking-widest text-brand-yellow hover:text-white transition-colors flex items-center gap-1.5 px-3 py-1.5 border border-brand-yellow/20 hover:border-brand-yellow/60 rounded-sm bg-brand-yellow/5"
+                                    onClick={handleQueryLogistics}
+                                    disabled={isFetchingRates}
+                                    className="hasbro-btn-primary px-8 py-4 text-[10px] font-black uppercase tracking-widest flex items-center gap-3 disabled:opacity-50"
                                 >
-                                    {loading ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <RefreshCcw className="w-2.5 h-2.5" />}
-                                    Snap Logistics Snapshot
+                                    {isFetchingRates ? <Loader2 className="w-4 h-4 animate-spin text-black" /> : <RefreshCcw className="w-4 h-4 text-black/50" />}
+                                    Query Paccofacile
                                 </button>
                             </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {(order.shipping_options || []).map((opt: any) => (
-                                    <button
-                                        key={opt.service_id}
-                                        type="button"
-                                        onClick={async () => {
-                                            const shippingPence = Math.round(opt.price);
-                                            setMessage(null);
-                                            setLoading(true);
-                                            try {
-                                                const artifactTotal = order.subtotal_pence || Math.round(basePrice * complexity);
-                                                await axios.patch(`/api/admin/orders/${order.id}`, {
-                                                    shipping_pence: shippingPence,
-                                                    carrier_service_id: opt.service_id,
-                                                    shipping_service_name: `${opt.carrier_name} — ${opt.service_name}`,
-                                                    total_pence: artifactTotal + shippingPence
-                                                });
-                                                setMessage({ type: 'success', text: `Logistics sync: ${opt.service_name} selected` });
-                                                router.refresh();
-                                            } catch (err: any) {
-                                                setMessage({ type: 'error', text: 'Logistics sync failed' });
-                                            } finally {
-                                                setLoading(false);
-                                            }
-                                        }}
-                                        disabled={loading}
-                                        className={`p-4 border text-left transition-all rounded-sm flex flex-col gap-1 ${
-                                            (order.carrier_service_id || order.shipping_service_id) === opt.service_id 
-                                            ? "bg-brand-yellow/10 border-brand-yellow/50" 
-                                            : "bg-black/40 border-white/5 hover:border-white/20"
-                                        } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                    >
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-[10px] font-black uppercase text-white">{opt.carrier_name}</span>
-                                            <span className="text-[10px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center mt-auto">
-                                            <span className="text-[8px] font-bold uppercase text-neutral-500">{opt.service_name}</span>
-                                            <span className="text-[8px] font-black uppercase text-neutral-600 tracking-widest">{opt.estimated_days} Days Est.</span>
-                                        </div>
-                                    </button>
-                                ))}
-                                {(!order.shipping_options || order.shipping_options.length === 0) && (
-                                    <div className="col-span-full p-8 border border-dashed border-white/5 text-center">
-                                        <p className="text-[10px] uppercase font-black text-neutral-600 italic">No logistical snapshots available for this deployment</p>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                {/* Panel A: Available Tier - Source */}
+                                <div className="space-y-6">
+                                    <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                                        <h4 className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Available from External Intelligence</h4>
+                                        <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.2em]">{allTiers.length} Options</span>
                                     </div>
-                                )}
+                                    
+                                    <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                                        {allTiers.map((opt: any) => {
+                                            const isSelected = selectedTiers.some(t => t.service_id === opt.service_id);
+                                            return (
+                                                <div 
+                                                    key={opt.service_id}
+                                                    draggable
+                                                    onDragStart={(e) => {
+                                                        e.dataTransfer.setData("tier", JSON.stringify(opt));
+                                                    }}
+                                                    className={`p-4 border transition-all rounded-sm flex flex-col gap-1 cursor-grab active:cursor-grabbing group ${
+                                                        isSelected 
+                                                        ? "bg-brand-yellow/5 border-brand-yellow/20 opacity-50" 
+                                                        : "bg-black border-white/5 hover:border-brand-yellow/30 hover:bg-brand-yellow/[0.02]"
+                                                    }`}
+                                                >
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-[10px] font-black uppercase text-white">{opt.carrier_name}</span>
+                                                        <span className="text-[10px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
+                                                    </div>
+                                                    <div className="flex justify-between items-center mt-1">
+                                                        <span className="text-[8px] font-bold uppercase text-neutral-600">{opt.service_name}</span>
+                                                        {!isSelected && (
+                                                            <button 
+                                                                onClick={() => handleAddTier(opt)}
+                                                                className="text-[8px] font-black text-brand-yellow opacity-0 group-hover:opacity-100 transition-opacity"
+                                                            >
+                                                                + Deploy
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                        {allTiers.length === 0 && (
+                                            <div className="p-12 border border-dashed border-white/5 text-center">
+                                                <p className="text-[10px] uppercase font-black text-neutral-700 italic">No real-time data fetched. Click Query to begin.</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Manual Rate Entry Protocol */}
+                                    <div className="pt-6 border-t border-white/5 space-y-4">
+                                        <h4 className="text-[10px] uppercase font-black tracking-widest text-neutral-500">Manual Asset Entry (Fallback)</h4>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-1">
+                                                <span className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest">Rate (Cents)</span>
+                                                <input 
+                                                    type="number" 
+                                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-2 text-[10px] font-black"
+                                                    value={manualTier.price}
+                                                    onChange={(e) => setManualTier({ ...manualTier, price: parseInt(e.target.value) || 0 })}
+                                                />
+                                            </div>
+                                            <div className="flex items-end">
+                                                <button 
+                                                    onClick={handleAddManual}
+                                                    className="w-full py-2 border border-brand-yellow/30 text-[9px] font-black uppercase tracking-widest hover:bg-brand-yellow/10 transition-colors"
+                                                >
+                                                    Inject Manual Tier
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Panel B: Deployment Queue - Target */}
+                                <div className="space-y-6">
+                                    <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                                        <h4 className="text-[10px] uppercase font-black tracking-widest text-brand-yellow italic underline underline-offset-4">Deployment Zone (User Visible)</h4>
+                                        <span className="text-[8px] font-black text-brand-yellow uppercase tracking-[0.2em]">{selectedTiers.length} Active Tiers</span>
+                                    </div>
+
+                                    <div 
+                                        onDragOver={(e) => e.preventDefault()}
+                                        onDrop={(e) => {
+                                            e.preventDefault();
+                                            try {
+                                                const tier = JSON.parse(e.dataTransfer.getData("tier"));
+                                                handleAddTier(tier);
+                                            } catch (err) {}
+                                        }}
+                                        className={`space-y-3 min-h-[400px] border-2 border-dashed transition-all p-4 ${
+                                            selectedTiers.length === 0 ? "border-brand-yellow/10 bg-brand-yellow/[0.01]" : "border-white/5 bg-transparent"
+                                        }`}
+                                    >
+                                        {selectedTiers.map((opt: any) => (
+                                            <div 
+                                                key={opt.service_id}
+                                                className="p-5 bg-brand-yellow/5 border border-brand-yellow/20 rounded-sm flex flex-col gap-1 relative group"
+                                            >
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-[11px] font-black uppercase text-white">{opt.carrier_name}</span>
+                                                    <span className="text-[11px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center mt-1">
+                                                    <span className="text-[9px] font-bold uppercase text-neutral-400">{opt.service_name}</span>
+                                                </div>
+                                                <button 
+                                                    onClick={() => handleRemoveTier(opt.service_id)}
+                                                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                                                >
+                                                    <X className="w-3 h-3" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        {selectedTiers.length === 0 && (
+                                            <div className="h-full flex flex-col items-center justify-center opacity-30 gap-4 mt-20">
+                                                <Truck className="w-12 h-12" />
+                                                <p className="text-[10px] uppercase font-black tracking-[0.2em]">Drop Tiers Here to Deploy</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        onClick={handleDeployLogistics}
+                                        disabled={selectedTiers.length === 0 || isDeploying}
+                                        className="w-full hasbro-btn-primary py-6 text-xs font-black uppercase flex items-center justify-center gap-4 disabled:opacity-50"
+                                    >
+                                        {isDeploying ? <Loader2 className="w-5 h-5 animate-spin" /> : <ChevronRight className="w-5 h-5 text-black/50" />}
+                                        Finalize & Deploy to User Dossier
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

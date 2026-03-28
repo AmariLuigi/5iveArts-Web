@@ -33,18 +33,10 @@ export async function POST(
     const options = await fetchShippingRates(order.shipping_address as ShippingAddress, subtotal, settings.logistics);
 
     if (options.length === 0) {
-        return NextResponse.json({ error: "Failed to fetch any shipping tiers from Paccofacile. Check logs." }, { status: 502 });
+        return NextResponse.json({ error: "No tiers found for destination." }, { status: 502 });
     }
 
-    // Update order with new options
-    const { error: updateError } = await supabase
-      .from("orders")
-      .update({ shipping_options: options })
-      .eq("id", id);
-
-    if (updateError) throw updateError;
-
-    return NextResponse.json({ success: true, options });
+    return NextResponse.json({ options });
   } catch (err: any) {
     console.error("[POST /api/admin/orders/[id]/rates] Error:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ShippingAddress, ShippingRate } from "@/types";
+import provincesIt from "./provinces-it.json";
 
 const BASE_URL = "https://paccofacile.tecnosogima.cloud/live/v1";
 
@@ -24,6 +25,27 @@ export async function fetchShippingRates(
   if (!token || !apiKey || !account) {
     console.error("[paccofacile] Missing credentials in environment variables.");
     return [];
+  }
+
+  // Normalize Italy Province (Sigla)
+  let normalizedProvince = toAddress.state;
+  if (toAddress.country === 'IT') {
+    const city = toAddress.city.toLowerCase().trim();
+    const stateInput = toAddress.state?.toUpperCase().trim() || "";
+    
+    // Check if the input is already a valid sigla
+    const sigle = Object.keys(provincesIt);
+    if (!sigle.includes(stateInput)) {
+        // Try to find the sigla by city name
+        const match = sigle.find(s => 
+           city.includes((provincesIt as any)[s].toLowerCase()) || 
+           (provincesIt as any)[s].toLowerCase().includes(city)
+        );
+        if (match) normalizedProvince = match;
+        else if (toAddress.zip_code.startsWith("90")) normalizedProvince = "PA"; // Direct fallback for studio location
+    } else {
+        normalizedProvince = stateInput;
+    }
   }
 
   // Map input to Paccofacile quote payload
@@ -51,20 +73,7 @@ export async function fetchShippingRates(
       iso_code: toAddress.country,
       postal_code: toAddress.zip_code,
       city: toAddress.city,
-      StateOrProvinceCode: (() => {
-        // Paccofacile requires 2-letter province codes (e.g., 'PA') for Italy.
-        // If it's missing or set to country ISO, try to infer it.
-        if (toAddress.country === 'IT') {
-          const cityLow = toAddress.city.toLowerCase();
-          if (cityLow.includes('palermo')) return 'PA';
-          if (cityLow.includes('milano')) return 'MI';
-          if (cityLow.includes('roma')) return 'RM';
-          if (cityLow.includes('napoli')) return 'NA';
-          if (toAddress.state && toAddress.state.length === 2) return toAddress.state;
-          return ""; // Sending empty is safer than 'IT' for Italy if unknown
-        }
-        return toAddress.state || toAddress.country;
-      })()
+      StateOrProvinceCode: normalizedProvince || toAddress.country
     }
   };
 
