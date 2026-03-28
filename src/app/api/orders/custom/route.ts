@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         total_pence: 0, // Set later by Admin
         subtotal_pence: 0,
         shipping_pence: 0,
-        stripe_session_id: `PROPOSAL-${Math.random().toString(36).substring(2, 10)}`, // Required by DB but generated later for payment
+        stripe_session_id: null, // Successfully unblocked by migration 008 (DROP NOT NULL)
         // Using metadata to store custom project details if needed
       })
       .select()
