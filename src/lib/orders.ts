@@ -65,7 +65,7 @@ export async function processCompletedCheckout(
 
         const paymentType = session.metadata?.payment_type || "full";
         const isCustom = session.metadata?.is_custom === "true" || !!orderToUpdate?.is_custom;
-        const status = paymentType === "deposit" ? "deposit_paid" : "paid";
+        const status = paymentType === "deposit" ? "in_production" : "paid";
 
         if (orderToUpdate) {
             // Installment update for existing custom order
