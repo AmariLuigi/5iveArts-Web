@@ -123,13 +123,12 @@ export default function MultiLanguageEditor({
         try {
             setTranslateProgress(`Translating to ${SUPPORTED_LANGUAGES.find(l => l.code === targetLang)?.name}...`);
 
-            const response = await axios.post("/api/translate", {
+            const response = await axios.post("/api/admin/ai/batch-translate", {
                 text: sourceText,
-                targetLang,
-                sourceLang,
+                languages: [targetLang]
             });
 
-            const { translatedText } = response.data;
+            const translatedText = response.data[targetLang];
 
             if (translatedText) {
                 // Update the target language description
@@ -176,34 +175,31 @@ export default function MultiLanguageEditor({
         setShowTranslateDropdown(false);
 
         try {
-            const newDescriptions = { ...descriptions };
+            const missingLangs = SUPPORTED_LANGUAGES
+                .filter(lang => lang.code !== sourceLang && !descriptions[lang.code]?.trim())
+                .map(lang => lang.code);
 
-            for (const lang of SUPPORTED_LANGUAGES) {
-                if (lang.code === sourceLang) continue; // Skip source language
-                if (newDescriptions[lang.code]?.trim()) continue; // Skip already filled
-
-                setTranslateProgress(`Translating to ${lang.name}...`);
-
-                const response = await axios.post("/api/translate", {
-                    text: sourceText,
-                    targetLang: lang.code,
-                    sourceLang,
-                });
-
-                const { translatedText } = response.data;
-                if (translatedText) {
-                    newDescriptions[lang.code] = translatedText;
-                }
-
-                // Small delay to avoid rate limiting
-                await new Promise(resolve => setTimeout(resolve, 500));
+            if (missingLangs.length === 0) {
+                setIsTranslating(false);
+                return;
             }
 
-            onChange(newDescriptions);
-            setIsDirty(true);
+            setTranslateProgress(`Synthesizing ${missingLangs.length} languages...`);
+
+            const response = await axios.post("/api/admin/ai/batch-translate", {
+                text: sourceText,
+                languages: missingLangs
+            });
+
+            if (response.data) {
+                const newDescriptions = { ...descriptions, ...response.data };
+                onChange(newDescriptions);
+                setIsDirty(true);
+            }
+
         } catch (error: any) {
             console.error("[AutoTranslate] Error:", error);
-            setTranslateError(error.response?.data?.error || "Translation failed");
+            setTranslateError(error.response?.data?.error || "Batch synthesis failed");
         } finally {
             setIsTranslating(false);
             setTranslateProgress(null);
