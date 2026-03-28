@@ -390,7 +390,8 @@
     "days1_3": "1-3 gün",
     "days3_5": "3-5 gün",
     "days4_7": "4-7 gün",
-    "days7_14": "7-14 gün"
+    "days7_14": "7-14 gün",
+    "carrierActive": "Küresel Kurye Ağı Aktif"
   },
   "hero": {
     "slides": [

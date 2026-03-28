@@ -390,7 +390,8 @@
     "days1_3": "1-3 Giorni",
     "days3_5": "3-5 Giorni",
     "days4_7": "4-7 Giorni",
-    "days7_14": "7-14 Giorni"
+    "days7_14": "7-14 Giorni",
+    "carrierActive": "Rete Globale Corrieri Attiva"
   },
   "hero": {
     "slides": [

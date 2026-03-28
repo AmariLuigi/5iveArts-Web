@@ -89,7 +89,7 @@ export default async function ShippingPage({
                     </h3>
                     <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-brand-yellow animate-pulse" />
-                        <span className="text-[8px] font-black uppercase tracking-widest text-neutral-500">Global Carrier Network Active</span>
+                        <span className="text-[8px] font-black uppercase tracking-widest text-neutral-500">{s.carrierActive}</span>
                     </div>
                 </div>
                 <div className="overflow-x-auto">

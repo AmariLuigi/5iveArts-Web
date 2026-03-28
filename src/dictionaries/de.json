@@ -390,7 +390,8 @@
     "days1_3": "1-3 Tage",
     "days3_5": "3-5 Tage",
     "days4_7": "4-7 Tage",
-    "days7_14": "7-14 Tage"
+    "days7_14": "7-14 Tage",
+    "carrierActive": "Globales Kuriernetzwerk Aktiv"
   },
   "hero": {
     "slides": [

@@ -390,7 +390,8 @@
     "days1_3": "1-3 Días",
     "days3_5": "3-5 Días",
     "days4_7": "4-7 Días",
-    "days7_14": "7-14 Días"
+    "days7_14": "7-14 Días",
+    "carrierActive": "Red Global de Transportistas Activa"
   },
   "hero": {
     "slides": [
