@@ -173,13 +173,15 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 {dict.orders.trackShipment}
                             </button>
                         )}
-                        <button 
-                            onClick={handleExportInvoice}
-                            className="bg-white/5 border border-white/10 px-8 py-4 text-[10px] font-black text-white hover:bg-white/10 transition-all rounded-sm flex items-center gap-2"
-                        >
-                            <FileText className="w-4 h-4" />
-                            {dict.orders.exportInvoice}
-                        </button>
+                        {(!order.is_custom || (order.status !== 'analyzing' && order.status !== 'quoted')) && (
+                            <button 
+                                onClick={handleExportInvoice}
+                                className="bg-white/5 border border-white/10 px-8 py-4 text-[10px] font-black text-white hover:bg-white/10 transition-all rounded-sm flex items-center gap-2"
+                            >
+                                <FileText className="w-4 h-4" />
+                                {dict.orders.exportInvoice}
+                            </button>
+                        )}
                     </div>
                 </div>
 
