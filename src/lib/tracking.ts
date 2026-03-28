@@ -176,49 +176,62 @@ class InpostProvider implements TrackingProvider {
   }
 
   async track(trackingNumber: string): Promise<TrackingData> {
-    // Note: The InPost V1 API requires trackingNumbers as a query parameter (array)
+    // Note: The InPost V1 API requires trackingNumbers as a query parameter (list)
     const url = `https://api.inpost-group.com/tracking/v1/parcels`;
     
-    const response = await axios.get(url, {
-      params: {
-        trackingNumbers: trackingNumber
-      },
-      headers: {
-        "Content-Type": "application/json",
-        "x-inpost-event-version": "V1",
-        // Fallback for authenticated environments
-        ...(process.env.INPOST_TOKEN ? { "Authorization": `Bearer ${process.env.INPOST_TOKEN}` } : {})
+    try {
+      const response = await axios.get(url, {
+        params: {
+          // Explicitly passing as array to match OpenAPI "List" requirement
+          trackingNumbers: [trackingNumber]
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "x-inpost-event-version": "V1",
+          "User-Agent": "5iveArts-Logistics-Platform/1.0",
+          // Fallback for authenticated environments
+          ...(process.env.INPOST_TOKEN ? { "Authorization": `Bearer ${process.env.INPOST_TOKEN}` } : {})
+        }
+      });
+
+      const data = response.data;
+      // The response returns a "parcels" array wrapping the results
+      const parcel = data.parcels?.find((p: any) => p.trackingNumber === trackingNumber) || data.parcels?.[0];
+      
+      if (!parcel) {
+        throw new Error(`InPost tracking search for ${trackingNumber} yielded no results in the response payload.`);
       }
-    });
 
-    const data = response.data;
-    // The response returns a "parcels" array wrapping the results
-    const parcel = data.parcels?.find((p: any) => p.trackingNumber === trackingNumber) || data.parcels?.[0];
-    
-    if (!parcel) {
-      throw new Error(`InPost tracking search for ${trackingNumber} yielded no results.`);
+      const movements: TrackingMovement[] = (parcel.events || []).map((e: any) => ({
+        timestamp: e.eventTimestamp,
+        location: e.location?.city ? `${e.location.city}${e.location.country ? `, ${e.location.country}` : ''}` : (e.location?.name || "Hub"),
+        description: this.getFriendlyDescription(e.eventCode, e.status),
+        status: this.mapStatus(e.eventCode, e.status)
+      }));
+
+      // Sort by latest first
+      movements.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+      const latest = movements[0];
+
+      return {
+        trackingNumber,
+        carrier: this.name,
+        status: latest?.status || "unknown",
+        latestLocation: latest?.location || "Unknown",
+        lastUpdated: new Date().toISOString(),
+        movements
+      };
+    } catch (err: any) {
+      // Extensive logging for Vercel diagnostic pass
+      console.error(`[tracking] InPost API Handshake Error for ${trackingNumber}:`, {
+        status: err.response?.status,
+        statusText: err.response?.statusText,
+        responseData: err.response?.data,
+        msg: err.message
+      });
+      throw err; // Re-throw so the root handler can capture it
     }
-
-    const movements: TrackingMovement[] = (parcel.events || []).map((e: any) => ({
-      timestamp: e.eventTimestamp,
-      location: e.location?.city ? `${e.location.city}${e.location.country ? `, ${e.location.country}` : ''}` : (e.location?.name || "Hub"),
-      description: this.getFriendlyDescription(e.eventCode, e.status),
-      status: this.mapStatus(e.eventCode, e.status)
-    }));
-
-    // Sort by latest first
-    movements.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-
-    const latest = movements[0];
-
-    return {
-      trackingNumber,
-      carrier: this.name,
-      status: latest?.status || "unknown",
-      latestLocation: latest?.location || "Unknown",
-      lastUpdated: new Date().toISOString(),
-      movements
-    };
   }
 
   private getFriendlyDescription(code: string, status: string): string {
@@ -262,12 +275,15 @@ const providers: TrackingProvider[] = [
 
 export async function getTrackingInfo(carrierName: string, trackingNumber: string): Promise<TrackingData | null> {
   const provider = providers.find(p => p.isCompatible(carrierName, trackingNumber));
-  if (!provider) return null;
+  if (!provider) {
+    console.warn(`[tracking] No compatible provider found for carrier: "${carrierName}"`);
+    return null;
+  }
   
   try {
     return await provider.track(trackingNumber);
-  } catch (err) {
-    console.error(`[tracking] ${provider.name} failed for ${trackingNumber}:`, err);
+  } catch (err: any) {
+    console.error(`[tracking] Provider "${provider.name}" failed to retrieve tracking for ${trackingNumber}:`, err.message);
     return null;
   }
 }
