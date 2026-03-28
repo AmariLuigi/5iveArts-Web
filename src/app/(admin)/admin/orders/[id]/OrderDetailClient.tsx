@@ -253,6 +253,12 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                     </div>
                                 </div>
                                 <div className="space-y-3">
+                                    <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Project Protocol (Scale)</label>
+                                    <div className="bg-black/40 border border-white/5 p-4 rounded-sm text-xs font-black uppercase text-brand-yellow tracking-widest">
+                                        {order.scale || "Standard (1:12)"}
+                                    </div>
+                                </div>
+                                <div className="space-y-3">
                                     <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Complexity Factor</label>
                                     <input 
                                         type="number" 
@@ -266,11 +272,28 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
 
                             <div className="flex flex-wrap gap-4 pt-8 border-t border-white/5">
                                 <button 
-                                    onClick={handleUpdate}
+                                    onClick={async () => {
+                                        const finalCalculated = Math.round(totalPrice * complexity);
+                                        setLoading(true);
+                                        try {
+                                            await axios.patch(`/api/admin/orders/${order.id}`, {
+                                                total_pence: finalCalculated,
+                                                complexity_factor: complexity,
+                                                status: status
+                                            });
+                                            setTotalPrice(finalCalculated);
+                                            setMessage({ type: 'success', text: `Final Price sync complete: ${formatPrice(finalCalculated)}` });
+                                            router.refresh();
+                                        } catch (err: any) {
+                                            setMessage({ type: 'error', text: 'Pricing sync failed' });
+                                        } finally {
+                                            setLoading(false);
+                                        }
+                                    }}
                                     disabled={loading}
-                                    className="px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white transition-all rounded-sm flex items-center gap-2"
+                                    className="px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white transition-all rounded-sm flex items-center gap-2"
                                 >
-                                    Save Base Pricing
+                                    Set Final Price ({formatPrice(totalPrice * complexity)})
                                 </button>
                                 
                                 <button 
