@@ -26,6 +26,7 @@ import {
     TrendingDown,
     AlertTriangle
 } from "lucide-react";
+import CustomSelect from "@/components/ui/CustomSelect";
 import type { OverviewData } from "@/types/analytics";
 
 interface DashboardCardProps {
@@ -234,21 +235,15 @@ export default function AnalyticsDashboard() {
                 {/* Controls */}
                 <div className="flex flex-wrap items-center gap-4">
                     {/* Date Range */}
-                    <div className="relative">
-                        <select
-                            value={days}
-                            onChange={(e) => setDays(Number(e.target.value))}
-                            className="appearance-none bg-neutral-900 border border-white/10 text-[10px] uppercase font-bold 
-                                tracking-widest text-neutral-300 px-4 py-2.5 pr-8 rounded-sm cursor-pointer
-                                hover:border-brand-yellow/30 focus:border-brand-yellow/50 focus:outline-none transition-colors"
-                        >
-                            {DATE_RANGE_OPTIONS.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
-                        <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500 pointer-events-none" />
+                    <div className="relative min-w-[160px]">
+                        <CustomSelect
+                            value={days.toString()}
+                            onChange={(val: string) => setDays(Number(val))}
+                            options={DATE_RANGE_OPTIONS.map(opt => ({
+                                code: opt.value.toString(),
+                                name: opt.label
+                            }))}
+                        />
                     </div>
 
                     {/* Auto Refresh Toggle */}

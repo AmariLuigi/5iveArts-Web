@@ -4,6 +4,7 @@ import { useState } from "react";
 import { formatPrice } from "@/lib/products";
 import { ChevronRight, Filter, Search, Inbox, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import CustomSelect from "@/components/ui/CustomSelect";
 
 interface OrdersListClientProps {
     initialOrders: any[];
@@ -57,25 +58,22 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
                 </div>
                 
                 <div className="relative group min-w-[160px]">
-                    <Filter className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${statusFilter !== 'all' ? 'text-brand-yellow' : 'text-neutral-600'}`} />
-                    <select
+                    <CustomSelect
                         value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                        className="bg-white/5 border border-white/5 py-3 pl-12 pr-10 text-[10px] uppercase font-black tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all rounded-sm w-full appearance-none cursor-pointer"
-                    >
-                        <option value="all" className="bg-[#0a0a0a]">All Protocols</option>
-                        <option value="paid" className="bg-[#0a0a0a]">Paid</option>
-                        <option value="processing" className="bg-[#0a0a0a]">Processing</option>
-                        <option value="shipped" className="bg-[#0a0a0a]">Shipped</option>
-                        <option value="delivered" className="bg-[#0a0a0a]">Delivered</option>
-                        <option value="cancelled" className="bg-[#0a0a0a]">Cancelled</option>
-                        {/* Custom Workflow Statuses */}
-                        <option value="analyzing" className="bg-[#0a0a0a]">Analyzing (Custom)</option>
-                        <option value="quoted" className="bg-[#0a0a0a]">Quoted (Custom)</option>
-                        <option value="in_production" className="bg-[#0a0a0a]">In Production (Custom)</option>
-                        <option value="ready_to_ship" className="bg-[#0a0a0a]">Ready to Ship (Custom)</option>
-                    </select>
-                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 text-neutral-600 pointer-events-none" />
+                        onChange={(val: string) => setStatusFilter(val)}
+                        options={[
+                            { code: "all", name: "All Protocols" },
+                            { code: "paid", name: "Paid" },
+                            { code: "processing", name: "Processing" },
+                            { code: "shipped", name: "Shipped" },
+                            { code: "delivered", name: "Delivered" },
+                            { code: "cancelled", name: "Cancelled" },
+                            { code: "analyzing", name: "Analyzing (Custom)" },
+                            { code: "quoted", name: "Quoted (Custom)" },
+                            { code: "in_production", name: "In Production (Custom)" },
+                            { code: "ready_to_ship", name: "Ready to Ship (Custom)" }
+                        ]}
+                    />
                 </div>
             </div>
 

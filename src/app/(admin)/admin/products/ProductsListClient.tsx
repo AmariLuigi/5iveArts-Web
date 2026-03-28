@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import CustomSelect from "@/components/ui/CustomSelect";
 
 interface ProductsListClientProps {
     initialProducts: DbProduct[];
@@ -98,50 +99,40 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
                 <div className="flex gap-4 w-full md:w-auto">
                     {/* Status Filter */}
                     <div className="relative group min-w-[140px] flex-1 md:flex-none">
-                        <Filter className={`absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors ${statusFilter !== 'all' ? 'text-brand-yellow' : 'text-neutral-600'}`} />
-                        <select
+                        <CustomSelect
                             value={statusFilter}
-                            onChange={(e) => setStatusFilter(e.target.value)}
-                            className="bg-white/5 border border-white/5 py-3 pl-10 pr-8 text-[9px] uppercase font-black tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all rounded-sm w-full appearance-none cursor-pointer"
-                        >
-                            <option value="all" className="bg-[#0a0a0a]">All Visibility</option>
-                            <option value="published" className="bg-[#0a0a0a]">Published</option>
-                            <option value="draft" className="bg-[#0a0a0a]">Drafts</option>
-                            <option value="archived" className="bg-[#0a0a0a]">Archived</option>
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-2.5 h-2.5 text-neutral-600 pointer-events-none" />
+                            onChange={(val: string) => setStatusFilter(val)}
+                            options={[
+                                { code: "all", name: "All Visibility" },
+                                { code: "published", name: "Published" },
+                                { code: "draft", name: "Drafts" },
+                                { code: "archived", name: "Archived" }
+                            ]}
+                        />
                     </div>
 
                     {/* Category Filter */}
                     <div className="relative group min-w-[140px] flex-1 md:flex-none">
-                        <Box className={`absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors ${categoryFilter !== 'all' ? 'text-brand-yellow' : 'text-neutral-600'}`} />
-                        <select
+                        <CustomSelect
                             value={categoryFilter}
-                            onChange={(e) => setCategoryFilter(e.target.value)}
-                            className="bg-white/5 border border-white/5 py-3 pl-10 pr-8 text-[9px] uppercase font-black tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all rounded-sm w-full appearance-none cursor-pointer"
-                        >
-                            <option value="all" className="bg-[#0a0a0a]">All Chapters</option>
-                            {categories.map(cat => (
-                                <option key={cat} value={cat} className="bg-[#0a0a0a]">{cat}</option>
-                            ))}
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-2.5 h-2.5 text-neutral-600 pointer-events-none" />
+                            onChange={(val: string) => setCategoryFilter(val)}
+                            options={[
+                                { code: "all", name: "All Chapters" },
+                                ...categories.map(cat => ({ code: cat, name: cat }))
+                            ]}
+                        />
                     </div>
 
                     {/* Origin/Tag Filter */}
                     <div className="relative group min-w-[140px] flex-1 md:flex-none">
-                        <Tag className={`absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors ${tagFilter !== 'all' ? 'text-brand-yellow' : 'text-neutral-600'}`} />
-                        <select
+                        <CustomSelect
                             value={tagFilter}
-                            onChange={(e) => setTagFilter(e.target.value)}
-                            className="bg-white/5 border border-white/5 py-3 pl-10 pr-8 text-[9px] uppercase font-black tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all rounded-sm w-full appearance-none cursor-pointer"
-                        >
-                            <option value="all" className="bg-[#0a0a0a]">All Origins</option>
-                            {allTags.map(tag => (
-                                <option key={tag} value={tag} className="bg-[#0a0a0a]">{tag}</option>
-                            ))}
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-2.5 h-2.5 text-neutral-600 pointer-events-none" />
+                            onChange={(val: string) => setTagFilter(val)}
+                            options={[
+                                { code: "all", name: "All Origins" },
+                                ...allTags.map(tag => ({ code: tag, name: tag }))
+                            ]}
+                        />
                     </div>
                 </div>
             </div>

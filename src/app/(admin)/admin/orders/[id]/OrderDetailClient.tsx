@@ -28,6 +28,7 @@ import {
     History
 } from "lucide-react";
 import Link from "next/link";
+import CustomSelect from "@/components/ui/CustomSelect";
 
 interface OrderDetailClientProps {
     order: any;
@@ -160,25 +161,24 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-3">
                                     <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Fulfillment Status</label>
-                                    <select
+                                    <CustomSelect
                                         value={status}
-                                        onChange={(e) => setStatus(e.target.value)}
-                                        className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
-                                    >
-                                        <option value="unpaid">Unpaid</option>
-                                        <option value="paid">Paid</option>
-                                        <option value="processing">Processing</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="cancelled">Cancelled</option>
-                                        <option value="refunded">Refunded</option>
-                                        {/* Custom Workflow Statuses */}
-                                        <option value="analyzing">Analyzing (Custom)</option>
-                                        <option value="quoted">Quoted (Custom)</option>
-                                        <option value="deposit_paid">Deposit Paid (Custom)</option>
-                                        <option value="in_production">In Production (Custom)</option>
-                                        <option value="ready_to_ship">Ready to Ship (Custom)</option>
-                                    </select>
+                                        onChange={(val: string) => setStatus(val)}
+                                        options={[
+                                            { code: "unpaid", name: "Unpaid" },
+                                            { code: "paid", name: "Paid" },
+                                            { code: "processing", name: "Processing" },
+                                            { code: "shipped", name: "Shipped" },
+                                            { code: "delivered", name: "Delivered" },
+                                            { code: "cancelled", name: "Cancelled" },
+                                            { code: "refunded", name: "Refunded" },
+                                            { code: "analyzing", name: "Analyzing (Custom)" },
+                                            { code: "quoted", name: "Quoted (Custom)" },
+                                            { code: "deposit_paid", name: "Deposit Paid (Custom)" },
+                                            { code: "in_production", name: "In Production (Custom)" },
+                                            { code: "ready_to_ship", name: "Ready to Ship (Custom)" }
+                                        ]}
+                                    />
                                 </div>
 
                                 <div className="space-y-3">
