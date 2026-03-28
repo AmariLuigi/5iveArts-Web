@@ -24,7 +24,8 @@ import {
     Image as ImageIcon,
     Plus,
     Copy,
-    Check
+    Check,
+    History
 } from "lucide-react";
 import Link from "next/link";
 
@@ -43,8 +44,9 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     
-    // Custom Quote State
-    const [totalPrice, setTotalPrice] = useState(order.total_pence || 0);
+    // Custom Quote State - base_price_pence is the absolute baseline (85.00)
+    // subtotal_pence is the resulting adjusted subtotal (102.00)
+    const [basePrice, setBasePrice] = useState(order.base_price_pence || order.subtotal_pence || order.total_pence || 0);
     const [complexity, setComplexity] = useState(order.complexity_factor || 1.0);
     const [isGeneratingLink, setIsGeneratingLink] = useState(false);
     const [lastCopied, setLastCopied] = useState<string | null>(null);
@@ -67,13 +69,16 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
         setMessage(null);
 
         try {
+            const adjustedSubtotal = Math.round(basePrice * complexity);
             await axios.patch(`/api/admin/orders/${order.id}`, {
                 status,
                 tracking_number: trackingNumber || null,
-                total_pence: totalPrice,
-                complexity_factor: complexity
+                base_price_pence: basePrice,
+                complexity_factor: complexity,
+                subtotal_pence: adjustedSubtotal,
+                total_pence: order.is_custom ? (adjustedSubtotal + (order.shipping_pence || 0)) : order.total_pence
             });
-            setMessage({ type: "success", text: "Order updated successfully" });
+            setMessage({ type: "success", text: "Order state stabilized" });
             router.refresh();
         } catch (err: any) {
             console.error("[handleUpdate] Error:", err);
@@ -160,6 +165,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                         onChange={(e) => setStatus(e.target.value)}
                                         className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/30"
                                     >
+                                        <option value="unpaid">Unpaid</option>
                                         <option value="paid">Paid</option>
                                         <option value="processing">Processing</option>
                                         <option value="shipped">Shipped</option>
@@ -183,7 +189,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                             value={trackingNumber}
                                             onChange={(e) => setTrackingNumber(e.target.value)}
                                             placeholder="Enter tracking ID..."
-                                            className="flex-1 bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black tracking-widest text-white placeholder:text-neutral-800 focus:outline-none focus:border-brand-yellow/30"
+                                            className="flex-1 bg-white/[0.02] border border-white/5 rounded-sm p-4 text-xs font-black uppercase tracking-widest text-white placeholder:text-neutral-800 focus:outline-none focus:border-brand-yellow/30"
                                         />
                                         {order.is_custom && status === "analyzing" && (
                                             <button
@@ -224,194 +230,219 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                     className="hasbro-btn-primary px-10 py-4 font-black text-[10px] uppercase tracking-widest disabled:opacity-50 flex items-center gap-2"
                                 >
                                     {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                                    Update Order State
+                                    Stabilize Current Quote
                                 </button>
                             </div>
                         </form>
                     </div>
 
-                    {order.is_custom && (
-                        <div className="hasbro-card p-8 border-brand-yellow/10 bg-brand-yellow/[0.01]">
-                            <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-brand-yellow mb-8 flex items-center gap-2">
-                                <Sparkles className="w-4 h-4" />
-                                Artisan Bureau Control
-                            </h3>
+                    <div className="space-y-12">
+                        {order.is_custom && (
+                            <div className="hasbro-card p-8 border-brand-yellow/10 bg-brand-yellow/[0.01]">
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-brand-yellow flex items-center gap-2">
+                                        <Sparkles className="w-4 h-4" />
+                                        Artisan Bureau Control
+                                    </h3>
+                                    <span className="text-[8px] font-black uppercase tracking-widest text-neutral-600 bg-white/5 px-2 py-1 border border-white/10 rounded-sm">
+                                        Initial Artifact Base: {formatPrice(order.base_price_pence || order.subtotal_pence || 0)}
+                                    </span>
+                                </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                                <div className="space-y-3">
-                                    <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Commission Total (Pence)</label>
-                                    <div className="relative">
-                                        <input 
-                                            type="number"
-                                            value={totalPrice}
-                                            onChange={(e) => setTotalPrice(Number(e.target.value))}
-                                            className="w-full bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-brand-yellow/30"
-                                        />
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 font-black text-[10px]">
-                                            {formatPrice(totalPrice)}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Fundamental Quote (Base Price)</label>
+                                        <div className="relative">
+                                            <input 
+                                                type="number"
+                                                value={basePrice}
+                                                onChange={(e) => setBasePrice(Number(e.target.value))}
+                                                className="w-full bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-brand-yellow/30"
+                                            />
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 font-black text-[10px]">
+                                                {formatPrice(basePrice)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Project Protocol (Scale)</label>
+                                        <div className="bg-black/40 border border-white/5 p-4 rounded-sm text-xs font-black uppercase text-brand-yellow tracking-widest">
+                                            {order.scale || "Standard (1:12)"}
+                                        </div>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Complexity Factor</label>
+                                        <div className="flex gap-4">
+                                            <input 
+                                                type="number" 
+                                                step="0.05"
+                                                value={complexity}
+                                                onChange={(e) => setComplexity(Number(e.target.value))}
+                                                className="flex-1 bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-brand-yellow/30"
+                                            />
+                                            <div className="w-24 bg-white/5 border border-white/5 flex items-center justify-center text-[10px] font-black text-brand-yellow">
+                                                {Math.round(complexity * 100)}%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Adjusted Subtotal (Quoted)</label>
+                                        <div className="bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-neutral-500">
+                                            {formatPrice(Math.round(basePrice * complexity))}
                                         </div>
                                     </div>
                                 </div>
-                                <div className="space-y-3">
-                                    <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Project Protocol (Scale)</label>
-                                    <div className="bg-black/40 border border-white/5 p-4 rounded-sm text-xs font-black uppercase text-brand-yellow tracking-widest">
-                                        {order.scale || "Standard (1:12)"}
-                                    </div>
-                                </div>
-                                <div className="space-y-3">
-                                    <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Complexity Factor</label>
-                                    <input 
-                                        type="number" 
-                                        step="0.1"
-                                        value={complexity}
-                                        onChange={(e) => setComplexity(Number(e.target.value))}
-                                        className="w-full bg-black border border-white/10 rounded-sm p-4 text-xs font-black uppercase text-white focus:border-brand-yellow/30"
-                                    />
-                                </div>
-                            </div>
 
-                            {/* Shipping Option Selector */}
-                            <div className="pt-8 border-t border-white/5 space-y-6">
-                                <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">Select Logistics Protocol (Packlink)</label>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {(order.shipping_options || []).map((opt: any) => (
-                                        <button
-                                            key={opt.service_id}
-                                            type="button"
-                                            onClick={async () => {
-                                                const shippingPence = Math.round(opt.price);
-                                                setMessage(null);
-                                                setLoading(true);
-                                                try {
-                                                    await axios.patch(`/api/admin/orders/${order.id}`, {
-                                                        shipping_pence: shippingPence,
-                                                        packlink_service_id: opt.service_id,
-                                                        shipping_service_name: `${opt.carrier_name} — ${opt.service_name}`
-                                                    });
-                                                    setMessage({ type: 'success', text: `Logistics sync: ${opt.service_name} selected` });
-                                                    router.refresh();
-                                                } catch (err: any) {
-                                                    setMessage({ type: 'error', text: 'Logistics sync failed' });
-                                                } finally {
-                                                    setLoading(false);
-                                                }
-                                            }}
-                                            disabled={loading}
-                                            className={`p-4 border text-left transition-all rounded-sm flex flex-col gap-1 ${
-                                                (order.packlink_service_id || order.shipping_service_id) === opt.service_id 
-                                                ? "bg-brand-yellow/10 border-brand-yellow/50" 
-                                                : "bg-black/40 border-white/5 hover:border-white/20"
-                                            } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                        >
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-[10px] font-black uppercase text-white">{opt.carrier_name}</span>
-                                                <span className="text-[10px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
-                                            </div>
-                                            <div className="flex justify-between items-center mt-auto">
-                                                <span className="text-[8px] font-bold uppercase text-neutral-500">{opt.service_name}</span>
-                                                <span className="text-[8px] font-black uppercase text-neutral-600 tracking-widest">{opt.estimated_days} Days Est.</span>
-                                            </div>
-                                        </button>
-                                    ))}
-                                    {(!order.shipping_options || order.shipping_options.length === 0) && (
-                                        <div className="col-span-full p-8 border border-dashed border-white/5 text-center">
-                                            <p className="text-[10px] uppercase font-black text-neutral-600">No logistics profiles generated on entry</p>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
+                                <div className="flex flex-wrap gap-4 pt-8 border-t border-white/5">
+                                    <button 
+                                        onClick={async () => {
+                                            setLoading(true);
+                                            try {
+                                                const artifactTotal = Math.round(basePrice * complexity);
+                                                const shippingPence = order.shipping_pence || 0;
+                                                const grandTotal = artifactTotal + shippingPence;
+                                                
+                                                await axios.patch(`/api/admin/orders/${order.id}`, {
+                                                    total_pence: grandTotal,
+                                                    subtotal_pence: artifactTotal,
+                                                    base_price_pence: basePrice,
+                                                    complexity_factor: complexity,
+                                                    status: status,
+                                                    shipping_pence: shippingPence
+                                                });
+                                                
+                                                setMessage({ type: 'success', text: `Grand Protocol Sync: ${formatPrice(grandTotal)} (Inc. Shipping)` });
+                                                router.refresh();
+                                            } catch (err: any) {
+                                                setMessage({ type: 'error', text: 'Pricing sync failed' });
+                                            } finally {
+                                                setLoading(false);
+                                            }
+                                        }}
+                                        disabled={loading}
+                                        className="px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white transition-all rounded-sm flex items-center gap-2"
+                                    >
+                                        <History className="w-3.5 h-3.5" />
+                                        Sync Grand Protocol ({formatPrice(Math.round(basePrice * complexity) + (order.shipping_pence || 0))})
+                                    </button>
 
-                            <div className="flex flex-wrap gap-4 pt-8 border-t border-white/5">
-                                <button 
-                                    onClick={async () => {
-                                        const artifactTotal = Math.round(totalPrice * complexity);
-                                        const shippingPence = order.shipping_pence || 0;
-                                        const grandTotal = artifactTotal + shippingPence;
-                                        
-                                        setLoading(true);
-                                        try {
-                                            await axios.patch(`/api/admin/orders/${order.id}`, {
-                                                total_pence: grandTotal,
-                                                subtotal_pence: artifactTotal,
-                                                complexity_factor: complexity,
-                                                status: status,
-                                                shipping_pence: shippingPence
-                                            });
-                                            setTotalPrice(artifactTotal);
-                                            setMessage({ type: 'success', text: `Grand Protocol Sync: ${formatPrice(grandTotal)} (Inc. Shipping)` });
-                                            router.refresh();
-                                        } catch (err: any) {
-                                            setMessage({ type: 'error', text: 'Pricing sync failed' });
-                                        } finally {
-                                            setLoading(false);
-                                        }
-                                    }}
-                                    disabled={loading}
-                                    className="px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white transition-all rounded-sm flex items-center gap-2"
-                                >
-                                    Sync Grand Protocol ({formatPrice(Math.round(totalPrice * complexity) + (order.shipping_pence || 0))})
-                                </button>
-                                
-                                <button 
-                                    onClick={async () => {
-                                        if (totalPrice < 100) { // Enforce 1 EUR minimum for safety
-                                            setMessage({ type: 'error', text: 'Set a total price (min 100 pence) before generating a link' });
-                                            return;
-                                        }
-                                        
-                                        setIsGeneratingLink(true);
-                                        try {
-                                          // Proactively save if the admin adjusted the price
-                                          if (totalPrice !== order.total_pence || complexity !== order.complexity_factor) {
+                                    <button 
+                                        onClick={async () => {
+                                            if (basePrice < 100) {
+                                                setMessage({ type: 'error', text: 'Set a baseline first' });
+                                                return;
+                                            }
+                                            
+                                            setIsGeneratingLink(true);
+                                            try {
+                                              const adjustedAtCurrent = Math.round(basePrice * complexity);
+                                              // Always sync state before generating link
                                               await axios.patch(`/api/admin/orders/${order.id}`, {
-                                                  total_pence: totalPrice,
+                                                  total_pence: adjustedAtCurrent + (order.shipping_pence || 0),
+                                                  subtotal_pence: adjustedAtCurrent,
+                                                  base_price_pence: basePrice,
                                                   complexity_factor: complexity,
                                                   status: status
                                               });
+
+                                              const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'deposit' });
+                                              copyToClipboard(res.data.url, 'deposit');
+                                              setMessage({ type: 'success', text: 'Deposit Link Generated' });
+                                              router.refresh();
+                                            } catch (err: any) {
+                                              setMessage({ type: 'error', text: 'Vault generation failed' });
+                                            } finally {
+                                              setIsGeneratingLink(false);
+                                            }
+                                        }}
+                                        disabled={isGeneratingLink || (status !== 'analyzing' && status !== 'quoted')}
+                                        className="px-6 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking_widest hover:bg-brand-yellow/80 hover:scale-105 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
+                                    >
+                                        {lastCopied === 'deposit' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                        Request 50% Deposit
+                                    </button>
+
+                                    <button 
+                                        onClick={async () => {
+                                          setIsGeneratingLink(true);
+                                          try {
+                                            const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'final' });
+                                            copyToClipboard(res.data.url, 'final');
+                                            setMessage({ type: 'success', text: 'Final balance link ready' });
+                                            router.refresh();
+                                          } catch (err) {
+                                            setMessage({ type: 'error', text: 'Failed to generate link' });
+                                          } finally {
+                                            setIsGeneratingLink(false);
                                           }
+                                        }}
+                                        disabled={isGeneratingLink || status !== 'ready_to_ship'}
+                                        className="px-6 py-4 bg-white/10 border border-white/20 text-[10px] font-black uppercase tracking_widest text-white hover:bg-white/20 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
+                                    >
+                                        {lastCopied === 'final' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                        Request Final Balance
+                                    </button>
+                                </div>
+                            </div>
+                        )}
 
-                                          const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'deposit' });
-                                          const url = res.data.url;
-                                          copyToClipboard(url, 'deposit');
-                                          setMessage({ type: 'success', text: 'Payment Link Generated & Collector Vault Updated' });
-                                          router.refresh();
-                                        } catch (err: any) {
-                                          setMessage({ type: 'error', text: `Failed to generate link: ${err.response?.data?.error || err.message}` });
-                                        } finally {
-                                          setIsGeneratingLink(false);
-                                        }
-                                    }}
-                                    disabled={isGeneratingLink || (status !== 'analyzing' && status !== 'quoted')}
-                                    className="px-6 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest hover:bg-brand-yellow/80 hover:scale-105 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
-                                >
-                                    {lastCopied === 'deposit' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                                    Request 50% Deposit
-                                </button>
-
-                                <button 
-                                    onClick={async () => {
-                                      setIsGeneratingLink(true);
-                                      try {
-                                        const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'final' });
-                                        const url = res.data.url;
-                                        copyToClipboard(url, 'final');
-                                        setMessage({ type: 'success', text: 'Final Balance Link Generated & Vault Updated' });
-                                        router.refresh();
-                                      } catch (err) {
-                                        setMessage({ type: 'error', text: 'Failed to generate link' });
-                                      } finally {
-                                        setIsGeneratingLink(false);
-                                      }
-                                    }}
-                                    disabled={isGeneratingLink || status !== 'ready_to_ship'}
-                                    className="px-6 py-4 bg-white/10 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white hover:bg-white/20 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
-                                >
-                                    {lastCopied === 'final' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                                    Request Final Balance
-                                </button>
+                        {/* Universal Logistics Protocol Selector */}
+                        <div className="hasbro-card p-8 border-white/5 bg-white/[0.01] space-y-8">
+                            <h3 className="text-[10px] uppercase font-black tracking-[0.3em] text-white/40 mb-2 flex items-center gap-2">
+                                <Truck className="w-4 h-4 text-brand-yellow" />
+                                Logistics Selection Protocol
+                            </h3>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {(order.shipping_options || []).map((opt: any) => (
+                                    <button
+                                        key={opt.service_id}
+                                        type="button"
+                                        onClick={async () => {
+                                            const shippingPence = Math.round(opt.price);
+                                            setMessage(null);
+                                            setLoading(true);
+                                            try {
+                                                const artifactTotal = order.subtotal_pence || Math.round(basePrice * complexity);
+                                                await axios.patch(`/api/admin/orders/${order.id}`, {
+                                                    shipping_pence: shippingPence,
+                                                    packlink_service_id: opt.service_id,
+                                                    shipping_service_name: `${opt.carrier_name} — ${opt.service_name}`,
+                                                    total_pence: artifactTotal + shippingPence
+                                                });
+                                                setMessage({ type: 'success', text: `Logistics sync: ${opt.service_name} selected` });
+                                                router.refresh();
+                                            } catch (err: any) {
+                                                setMessage({ type: 'error', text: 'Logistics sync failed' });
+                                            } finally {
+                                                setLoading(false);
+                                            }
+                                        }}
+                                        disabled={loading}
+                                        className={`p-4 border text-left transition-all rounded-sm flex flex-col gap-1 ${
+                                            (order.packlink_service_id || order.shipping_service_id) === opt.service_id 
+                                            ? "bg-brand-yellow/10 border-brand-yellow/50" 
+                                            : "bg-black/40 border-white/5 hover:border-white/20"
+                                        } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-[10px] font-black uppercase text-white">{opt.carrier_name}</span>
+                                            <span className="text-[10px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center mt-auto">
+                                            <span className="text-[8px] font-bold uppercase text-neutral-500">{opt.service_name}</span>
+                                            <span className="text-[8px] font-black uppercase text-neutral-600 tracking-widest">{opt.estimated_days} Days Est.</span>
+                                        </div>
+                                    </button>
+                                ))}
+                                {(!order.shipping_options || order.shipping_options.length === 0) && (
+                                    <div className="col-span-full p-8 border border-dashed border-white/5 text-center">
+                                        <p className="text-[10px] uppercase font-black text-neutral-600 italic">No logistical snapshots available for this deployment</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    )}
+                    </div>
 
                     {/* Items List */}
                     <div className="space-y-6">
@@ -448,16 +479,26 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                 </tbody>
                                 <tfoot className="bg-white/[0.02]">
                                     <tr className="border-t border-white/5">
-                                        <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font-black tracking-widest text-neutral-600">Subtotal</td>
+                                        <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font-black tracking-widest text-neutral-600">Subtotal (Adjusted)</td>
                                         <td className="px-6 py-4 text-right text-xs font-black text-white">{formatPrice(order.subtotal_pence)}</td>
                                     </tr>
                                     <tr>
-                                        <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font-black tracking-widest text-neutral-600 border-t border-white/[0.02]">Shipping</td>
+                                        <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font_black tracking_widest text-neutral-600 border-t border-white/[0.02]">Logistics Tier</td>
                                         <td className="px-6 py-4 text-right text-xs font-black text-white border-t border-white/[0.02]">{formatPrice(order.shipping_pence)}</td>
                                     </tr>
+                                    {order.is_custom && (
+                                        <tr>
+                                            <td colSpan={2} className="px-6 py-4 text-[10px] uppercase font-black tracking-widest text-neutral-600 border-t border-white/[0.02]">Initial Deposit Paid</td>
+                                            <td className="px-6 py-4 text-right text-xs font-black text-neutral-400 border-t border-white/[0.02]">-{formatPrice(order.deposit_pence || 0)}</td>
+                                        </tr>
+                                    )}
                                     <tr className="border-t border-brand-yellow/10">
-                                        <td colSpan={2} className="px-6 py-5 text-[10px] uppercase font-black tracking-widest text-brand-yellow">Grand Total</td>
-                                        <td className="px-6 py-5 text-right text-xl font-black text-brand-yellow tracking-tighter">{formatPrice(order.total_pence)}</td>
+                                        <td colSpan={2} className="px-6 py-5 text-[10px] uppercase font-black tracking-widest text-brand-yellow">
+                                            {order.is_custom && order.status === 'ready_to_ship' ? "Balance Due" : "Grand Total"}
+                                        </td>
+                                        <td className="px-6 py-5 text-right text-xl font-black text-brand-yellow tracking-tighter">
+                                            {formatPrice(order.is_custom && (status === 'ready_to_ship' || status === 'delivered') ? (order.total_pence - (order.deposit_pence || 0)) : order.total_pence)}
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -498,13 +539,11 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                                 .from('order-progress')
                                                 .getPublicUrl(fileName);
                                             
-                                            // Create the record via the admin API
                                             const res = await axios.post(`/api/admin/orders/${order.id}/progress`, {
                                                 url: publicUrl,
                                                 stage: status === "in_production" ? "Painting" : "Printing"
                                             });
                                             
-                                            // Fetch the updated list
                                             const { data: newMedia } = await axios.get(`/api/admin/orders/${order.id}/progress`);
                                             
                                             setProgressMedia(newMedia || []);
@@ -557,7 +596,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-500 hover:text-white transition-colors">
                                     <Mail className="w-3.5 h-3.5" />
-                                    <span className="text-[10px] font-bold tracking-widest lowercase">{order.customer_email}</span>
+                                    <span className="text-[10px] font-bold tracking_widest lowercase">{order.customer_email}</span>
                                 </div>
                             </div>
                         </div>

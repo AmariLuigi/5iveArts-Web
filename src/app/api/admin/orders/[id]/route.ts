@@ -47,6 +47,7 @@ export async function PATCH(
         label_url, 
         total_pence, 
         subtotal_pence,
+        base_price_pence,
         complexity_factor,
         shipping_pence,
         packlink_service_id,
@@ -62,6 +63,7 @@ export async function PATCH(
             label_url,
             total_pence,
             subtotal_pence: subtotal_pence !== undefined ? subtotal_pence : total_pence,
+            base_price_pence,
             complexity_factor,
             shipping_pence,
             packlink_service_id,
@@ -77,15 +79,18 @@ export async function PATCH(
         return NextResponse.json({ error: "Failed to update order" }, { status: 400 });
     }
 
-    // Update the line item price to match the quote for traceability
-    const lineItemPrice = subtotal_pence !== undefined ? subtotal_pence : total_pence;
-    if (lineItemPrice !== undefined) {
-        await supabase
-            .from("order_items")
-            .update({ 
-                product_price_pence: lineItemPrice 
-            })
-            .eq("order_id", id);
+    // Update the line item price for custom orders only
+    // This synchronization ensures the single artifact item reflects the latest quote
+    if (updatedOrder.is_custom && (subtotal_pence !== undefined || total_pence !== undefined)) {
+        const lineItemPrice = subtotal_pence !== undefined ? subtotal_pence : total_pence;
+        if (lineItemPrice !== undefined) {
+            await supabase
+                .from("order_items")
+                .update({ 
+                    product_price_pence: lineItemPrice 
+                })
+                .eq("order_id", id);
+        }
     }
 
     return NextResponse.json(updatedOrder);

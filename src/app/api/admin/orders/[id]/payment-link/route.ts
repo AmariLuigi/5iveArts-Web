@@ -40,20 +40,25 @@ export async function POST(
     let amount = 0;
     let description = "";
 
+    const subtotal = order.subtotal_pence || order.total_pence || 0;
+    const shipping = order.shipping_pence || 0;
+    const depositPaid = order.deposit_pence || 0;
+
     if (type === 'deposit') {
-      amount = Math.round(totalPence * 0.5);
+      // Deposit is 50% of the quote (subtotal), excluding shipping which only applies to the final invoice
+      amount = Math.round(subtotal * 0.5);
       description = `Artisan Bureau: Custom Prototype Deposit (50%) - Order #${orderId.slice(0, 8).toUpperCase()}`;
     } else {
-      // Final payment includes the remaining 50% + shipping
-      const depositPaid = order.deposit_pence || 0;
-      amount = totalPence - depositPaid + (order.shipping_pence || 0);
+      // Final payment includes the remaining half of the subtotal (New Subtotal - what was already paid) + Logistics
+      // This formula handles complexity adjustments naturally: (Final Quoted Subtotal - Deposit) + Fixed Logistics
+      amount = (subtotal - depositPaid) + shipping;
       description = `Artisan Bureau: Project Final Completion & Logistics - Order #${orderId.slice(0, 8).toUpperCase()}`;
     }
 
     // Stripe Minimum Amount Check (0.50 EUR)
     if (amount < 50) {
       return NextResponse.json({ 
-        error: `Stripe requires a minimum payment of 0.50 EUR (50 cents). Current calculated ${type} is ${amount} cents. Please update the order price first.` 
+        error: `Stripe requires a minimum payment of 0.50 EUR (50 cents). Current calculated ${type} is ${amount} cents. Please update the order quote first.` 
       }, { status: 400 });
     }
 

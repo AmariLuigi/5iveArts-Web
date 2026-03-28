@@ -46,6 +46,7 @@ export default async function OrderDetailPage({ params }: Props) {
 
     return (
         <OrderDetailClient
+            key={order.updated_at || order.id}
             order={order}
             orderItems={orderItems || []}
             initialProgressMedia={progressMedia || []}

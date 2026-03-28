@@ -140,9 +140,44 @@ export async function POST(req: NextRequest) {
 
   // ── Create Stripe Checkout Session with embedded UI ───────────────────────
   try {
-    // Check if user is logged in to link order automatically
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
+
+    // ── Pre-create Order for Logistics Persistence ──────────────────────────
+    // This ensures we capture the full 'shipping_options' snapshot even if checkout is abandoned.
+    // Standard acquisitions start as 'unpaid' status.
+    const { data: order, error: orderError } = await (supabase as any)
+      .from("orders")
+      .insert({
+        user_id: user?.id || null,
+        customer_email: address.email,
+        customer_name: address.full_name,
+        shipping_address: address,
+        shipping_options: serverRates,
+        status: isCustom ? "analyzing" : "unpaid",
+        is_custom: isCustom,
+        subtotal_pence: subtotalCents,
+        shipping_pence: isCustom ? 0 : shippingPrice,
+        total_pence: subtotalCents + (isCustom ? 0 : shippingPrice),
+        packlink_service_id: isCustom ? null : matchedRate.service_id,
+        shipping_service_name: isCustom ? null : `${matchedRate.carrier_name} — ${matchedRate.service_name}`,
+      })
+      .select("id")
+      .single();
+
+    if (orderError) throw orderError;
+
+    // Record individual items for this order draft
+    // (Actual payment confirmation happens in webhook/fallback via metadata link)
+    for (const item of items) {
+       await (supabase as any).from("order_items").insert({
+          order_id: order.id,
+          product_id: item.product.id,
+          product_name: `${item.product.name} (${item.selectedScale} / ${item.selectedFinish})`,
+          product_price_pence: isCustom ? Math.round(item.priceAtSelection * 0.5) : item.priceAtSelection,
+          quantity: item.quantity
+       });
+    }
 
     const session = await getStripe().checkout.sessions.create({
       mode: "payment",
@@ -150,6 +185,7 @@ export async function POST(req: NextRequest) {
       line_items: lineItems,
       customer_email: address.email,
       metadata: {
+        order_id: order.id,
         shipping_service_id: isCustom ? "" : rawRate.service_id,
         shipping_service_name: isCustom ? "TBD (Paid on delivery)" : `${matchedRate.carrier_name} — ${matchedRate.service_name}`,
         shipping_pence: isCustom ? "0" : String(shippingPrice),
@@ -164,7 +200,7 @@ export async function POST(req: NextRequest) {
         user_email: user?.email || "",
         is_custom: String(isCustom),
         payment_type: paymentType,
-        scale: items[0]?.selectedScale || "", // Multi-item custom orders might be rare, but we take first for now
+        scale: items[0]?.selectedScale || "", 
         complexity_factor: String(items[0]?.product.complexityFactor || "1.0"),
       },
       return_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
