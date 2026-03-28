@@ -280,11 +280,12 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                             type="button"
                                             onClick={async () => {
                                                 const shippingPence = Math.round(opt.price);
+                                                setMessage(null);
                                                 setLoading(true);
                                                 try {
                                                     await axios.patch(`/api/admin/orders/${order.id}`, {
                                                         shipping_pence: shippingPence,
-                                                        shipping_service_id: opt.service_id,
+                                                        packlink_service_id: opt.service_id,
                                                         shipping_service_name: `${opt.carrier_name} — ${opt.service_name}`
                                                     });
                                                     setMessage({ type: 'success', text: `Logistics sync: ${opt.service_name} selected` });
@@ -297,7 +298,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                             }}
                                             disabled={loading}
                                             className={`p-4 border text-left transition-all rounded-sm flex flex-col gap-1 ${
-                                                order.shipping_service_id === opt.service_id 
+                                                (order.packlink_service_id || order.shipping_service_id) === opt.service_id 
                                                 ? "bg-brand-yellow/10 border-brand-yellow/50" 
                                                 : "bg-black/40 border-white/5 hover:border-white/20"
                                             } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -587,7 +588,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                             </h3>
                             <div className="flex items-center gap-3 text-[10px] font-black text-white tracking-widest">
                                 <div className="bg-white/5 px-3 py-2 border border-white/5 flex items-center gap-2 w-full uppercase">
-                                    {order.shipping_service_name || order.shipping_service_id || "Standard Carrier"}
+                                    {order.shipping_service_name || order.packlink_service_id || order.shipping_service_id || "Standard Carrier"}
                                     {order.tracking_number && (
                                         <CheckCircle2 className="w-3.5 h-3.5 text-brand-yellow ml-auto" />
                                     )}

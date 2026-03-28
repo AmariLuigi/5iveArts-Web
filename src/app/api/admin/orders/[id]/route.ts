@@ -49,7 +49,7 @@ export async function PATCH(
         subtotal_pence,
         complexity_factor,
         shipping_pence,
-        shipping_service_id,
+        packlink_service_id,
         shipping_service_name
     } = body;
 
@@ -64,7 +64,7 @@ export async function PATCH(
             subtotal_pence: subtotal_pence !== undefined ? subtotal_pence : total_pence,
             complexity_factor,
             shipping_pence,
-            shipping_service_id,
+            packlink_service_id,
             shipping_service_name,
             updated_at: new Date().toISOString()
         })
