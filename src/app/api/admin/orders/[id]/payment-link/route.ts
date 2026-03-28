@@ -50,8 +50,11 @@ export async function POST(
       description = `Artisan Bureau: Project Final Completion & Logistics - Order #${orderId.slice(0, 8).toUpperCase()}`;
     }
 
-    if (amount <= 0) {
-      return NextResponse.json({ error: "Payment amount must be greater than zero" }, { status: 400 });
+    // Stripe Minimum Amount Check (0.50 EUR)
+    if (amount < 50) {
+      return NextResponse.json({ 
+        error: `Stripe requires a minimum payment of 0.50 EUR (50 cents). Current calculated ${type} is ${amount} cents. Please update the order price first.` 
+      }, { status: 400 });
     }
 
     let baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.5ivearts.com";

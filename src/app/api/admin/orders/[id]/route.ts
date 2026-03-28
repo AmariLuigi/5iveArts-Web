@@ -43,13 +43,15 @@ export async function PATCH(
     // Allow updating status, tracking_number, label_url, and custom fields
     const { status, tracking_number, label_url, total_pence, complexity_factor } = body;
 
-    const { data, error } = await supabase
+    // Sync total_pence to subtotal and order_items for custom commissions
+    const { data: updatedOrder, error } = await supabase
         .from("orders")
         .update({
             status,
             tracking_number,
             label_url,
             total_pence,
+            subtotal_pence: total_pence,
             complexity_factor,
             updated_at: new Date().toISOString()
         })
@@ -62,5 +64,15 @@ export async function PATCH(
         return NextResponse.json({ error: "Failed to update order" }, { status: 400 });
     }
 
-    return NextResponse.json(data);
+    // Update the line item price to match the quote for traceability
+    if (total_pence !== undefined) {
+        await supabase
+            .from("order_items")
+            .update({ 
+                product_price_pence: total_pence 
+            })
+            .eq("order_id", id);
+    }
+
+    return NextResponse.json(updatedOrder);
 }

@@ -16,6 +16,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    // 0. Fetch User Default Address if available
+    const { data: defaultAddress } = await (supabase.from("user_addresses") as any)
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("is_default", true)
+      .single();
+
+    const shippingAddress = defaultAddress ? {
+        full_name: defaultAddress.full_name,
+        street1: defaultAddress.street1,
+        street2: defaultAddress.street2,
+        city: defaultAddress.city,
+        zip_code: defaultAddress.zip_code,
+        country: defaultAddress.country,
+        phone: defaultAddress.phone,
+        email: user.email
+    } : null;
+
     // 1. Create the Custom Order
     const { data: order, error: orderError } = await (supabase as any)
       .from("orders")
@@ -23,6 +41,7 @@ export async function POST(req: Request) {
         user_id: user.id,
         customer_email: user.email,
         customer_name: user.user_metadata?.full_name || "Agent",
+        shipping_address: shippingAddress,
         status: "analyzing",
         is_custom: true,
         scale: scale,

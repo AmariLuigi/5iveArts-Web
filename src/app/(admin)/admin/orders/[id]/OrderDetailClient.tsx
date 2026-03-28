@@ -191,12 +191,12 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                                 onClick={async () => {
                                                     try {
                                                         const res = await axios.post("/api/admin/ai/analyze-complexity", {
-                                                            imageUrl: orderItems[0]?.product?.images?.[0] || "",
+                                                            imageUrl: progressMedia[0]?.url || "",
                                                             finishType: orderItems[0]?.selectedFinish?.toUpperCase() || "PAINTED"
                                                         });
                                                         if (res.data.complexity_factor) {
+                                                            setComplexity(Number(res.data.complexity_factor.toFixed(2)));
                                                             setMessage({ type: 'success', text: `AI Quoted: ${res.data.complexity_factor.toFixed(2)}x factor` });
-                                                            // Logic to apply this would go here (e.g. updating the order metadata)
                                                         }
                                                     } catch (err) {
                                                         setMessage({ type: 'error', text: 'AI Quote Failed' });
@@ -275,24 +275,34 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                 
                                 <button 
                                     onClick={async () => {
-                                        if (totalPrice <= 0) {
-                                            setMessage({ type: 'error', text: 'Set a total price before generating a link' });
+                                        if (totalPrice < 100) { // Enforce 1 EUR minimum for safety
+                                            setMessage({ type: 'error', text: 'Set a total price (min 100 pence) before generating a link' });
                                             return;
                                         }
+                                        
                                         setIsGeneratingLink(true);
                                         try {
+                                          // Proactively save if the admin adjusted the price
+                                          if (totalPrice !== order.total_pence || complexity !== order.complexity_factor) {
+                                              await axios.patch(`/api/admin/orders/${order.id}`, {
+                                                  total_pence: totalPrice,
+                                                  complexity_factor: complexity,
+                                                  status: status
+                                              });
+                                          }
+
                                           const res = await axios.post(`/api/admin/orders/${order.id}/payment-link`, { type: 'deposit' });
                                           const url = res.data.url;
                                           copyToClipboard(url, 'deposit');
-                                          setMessage({ type: 'success', text: 'Deposit link copied to clipboard' });
+                                          setMessage({ type: 'success', text: 'Deposit link (50%) copied to clipboard' });
                                           router.refresh();
-                                        } catch (err) {
-                                          setMessage({ type: 'error', text: 'Failed to generate link' });
+                                        } catch (err: any) {
+                                          setMessage({ type: 'error', text: `Failed to generate link: ${err.response?.data?.error || err.message}` });
                                         } finally {
                                           setIsGeneratingLink(false);
                                         }
                                     }}
-                                    disabled={isGeneratingLink || status !== 'analyzing'}
+                                    disabled={isGeneratingLink || (status !== 'analyzing' && status !== 'quoted')}
                                     className="px-6 py-4 bg-brand-yellow text-black text-[10px] font-black uppercase tracking-widest hover:bg-brand-yellow/80 hover:scale-105 transition-all rounded-sm disabled:opacity-30 flex items-center gap-2"
                                 >
                                     {lastCopied === 'deposit' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
