@@ -63,7 +63,7 @@ OUTPUT FORMAT: Return ONLY JSON.
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "nvidia/llama-3.2-11b-vision-instruct",
+        model: "google/gemma-3-27b-it", // Matching the working generate/route.ts model
         messages: [
           {
             role: "user",
@@ -79,25 +79,51 @@ OUTPUT FORMAT: Return ONLY JSON.
     });
 
     if (!response.ok) {
-        const error = await response.json();
-        return NextResponse.json({ error: error.message || "AI Complexity Check Failed" }, { status: response.status });
+        const errorText = await response.text();
+        console.error("[AI Complexity] NVIDIA Error:", errorText);
+        return NextResponse.json({ error: `NVIDIA API Error: ${response.status}`, details: errorText }, { status: response.status });
     }
 
-    const result = await response.json();
-    const content = result.choices[0]?.message?.content || "";
+    const responseText = await response.text();
+    let content = "";
+
+    try {
+        const result = JSON.parse(responseText);
+        content = result.choices[0]?.message?.content || "";
+    } catch (e: any) {
+        // Fallback: If the response itself is text (rare but happens with some providers)
+        console.error("[AI Complexity] Response is not valid JSON:", responseText);
+        // Sometimes NVIDIA returns the body as a stream even if not asked, or includes headers in the body
+        // We'll try to find the content block manually if needed, but for now just error with details
+        return NextResponse.json({ 
+            error: "Invalid AI Provider Response (Not JSON)", 
+            details: responseText,
+            parse_error: e.message 
+        }, { status: 500 });
+    }
     
     // Extraction (robust JSON parsing)
-    const firstCurly = content.indexOf('{');
-    const lastCurly = content.lastIndexOf('}');
-    
-    if (firstCurly === -1) {
-        throw new Error("Invalid AI Response: No JSON detected in content");
-    }
-    
-    const jsonStr = content.substring(firstCurly, lastCurly + 1);
-    const analysisResult = JSON.parse(jsonStr);
+    try {
+        const firstCurly = content.indexOf('{');
+        const lastCurly = content.lastIndexOf('}');
+        
+        if (firstCurly === -1 || lastCurly === -1) {
+            console.error("[AI Complexity] Raw content with no JSON:", content);
+            throw new Error(`Invalid AI Response Structure: ${content.slice(0, 100)}...`);
+        }
+        
+        const jsonStr = content.substring(firstCurly, lastCurly + 1);
+        const analysisResult = JSON.parse(jsonStr);
 
-    return NextResponse.json(analysisResult);
+        return NextResponse.json(analysisResult);
+    } catch (parseErr: any) {
+        console.error("[AI Complexity] Parse error. Raw content:", content);
+        return NextResponse.json({ 
+            error: "Failed to parse AI response content", 
+            details: content,
+            parse_error: parseErr.message 
+        }, { status: 500 });
+    }
 
   } catch (error: any) {
     console.error("[AI Complexity] Fatal Error:", error);
