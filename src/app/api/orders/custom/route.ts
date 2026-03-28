@@ -1,5 +1,8 @@
 import { createClient } from "@/lib/supabase-server";
 import { NextResponse } from "next/server";
+import { fetchPacklinkRates } from "@/lib/packlink";
+import { getSiteSettings } from "@/lib/settings";
+import { ShippingAddress } from "@/types";
 
 export async function POST(req: Request) {
   try {
@@ -34,6 +37,17 @@ export async function POST(req: Request) {
         email: user.email
     } : null;
 
+    // 0.5 Fetch Shipping Rates if address exists
+    let shippingOptions: any[] = [];
+    if (shippingAddress) {
+        try {
+            const settings = await getSiteSettings();
+            shippingOptions = await fetchPacklinkRates(shippingAddress as ShippingAddress, 10000, settings.logistics); // Use 100.00 EUR as benchmark for initial estimation
+        } catch (err) {
+            console.error("[POST /api/orders/custom] Packlink fetch failed:", err);
+        }
+    }
+
     // 1. Create the Custom Order
     const { data: order, error: orderError } = await (supabase as any)
       .from("orders")
@@ -42,6 +56,7 @@ export async function POST(req: Request) {
         customer_email: user.email,
         customer_name: user.user_metadata?.full_name || "Agent",
         shipping_address: shippingAddress,
+        shipping_options: shippingOptions,
         status: "analyzing",
         is_custom: true,
         scale: scale,
