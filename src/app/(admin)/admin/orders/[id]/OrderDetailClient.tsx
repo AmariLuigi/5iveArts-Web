@@ -306,7 +306,10 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                                 <span className="text-[10px] font-black uppercase text-white">{opt.carrier_name}</span>
                                                 <span className="text-[10px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
                                             </div>
-                                            <span className="text-[8px] font-bold uppercase text-neutral-500">{opt.service_name}</span>
+                                            <div className="flex justify-between items-center mt-auto">
+                                                <span className="text-[8px] font-bold uppercase text-neutral-500">{opt.service_name}</span>
+                                                <span className="text-[8px] font-black uppercase text-neutral-600 tracking-widest">{opt.estimated_days} Days Est.</span>
+                                            </div>
                                         </button>
                                     ))}
                                     {(!order.shipping_options || order.shipping_options.length === 0) && (
