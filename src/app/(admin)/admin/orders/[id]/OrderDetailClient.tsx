@@ -277,26 +277,34 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                     {(order.shipping_options || []).map((opt: any) => (
                                         <button
                                             key={opt.service_id}
-                                            onClick={() => {
+                                            type="button"
+                                            onClick={async () => {
                                                 const shippingPence = Math.round(opt.price);
-                                                axios.patch(`/api/admin/orders/${order.id}`, {
-                                                    shipping_pence: shippingPence,
-                                                    shipping_service_id: opt.service_id,
-                                                    shipping_service_name: `${opt.carrier_name} — ${opt.service_name}`
-                                                }).then(() => {
+                                                setLoading(true);
+                                                try {
+                                                    await axios.patch(`/api/admin/orders/${order.id}`, {
+                                                        shipping_pence: shippingPence,
+                                                        shipping_service_id: opt.service_id,
+                                                        shipping_service_name: `${opt.carrier_name} — ${opt.service_name}`
+                                                    });
                                                     setMessage({ type: 'success', text: `Logistics sync: ${opt.service_name} selected` });
                                                     router.refresh();
-                                                });
+                                                } catch (err: any) {
+                                                    setMessage({ type: 'error', text: 'Logistics sync failed' });
+                                                } finally {
+                                                    setLoading(false);
+                                                }
                                             }}
+                                            disabled={loading}
                                             className={`p-4 border text-left transition-all rounded-sm flex flex-col gap-1 ${
                                                 order.shipping_service_id === opt.service_id 
                                                 ? "bg-brand-yellow/10 border-brand-yellow/50" 
                                                 : "bg-black/40 border-white/5 hover:border-white/20"
-                                            }`}
+                                            } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             <div className="flex justify-between items-center">
                                                 <span className="text-[10px] font-black uppercase text-white">{opt.carrier_name}</span>
-                                                <span className="text-[10px] font-black text-brand-yellow">{formatPrice(opt.price)}</span>
+                                                <span className="text-[10px] font-black text-brand-yellow font-mono">{formatPrice(opt.price)}</span>
                                             </div>
                                             <span className="text-[8px] font-bold uppercase text-neutral-500">{opt.service_name}</span>
                                         </button>
