@@ -289,17 +289,14 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                                 .from('order-progress')
                                                 .getPublicUrl(fileName);
                                             
-                                            await (supabase as any).from("order_progress_media").insert({
-                                                order_id: order.id,
+                                            // Create the record via the admin API
+                                            const res = await axios.post(`/api/admin/orders/${order.id}/progress`, {
                                                 url: publicUrl,
                                                 stage: status === "in_production" ? "Painting" : "Printing"
                                             });
                                             
-                                            const { data: newMedia } = await (supabase as any)
-                                                .from("order_progress_media")
-                                                .select("*")
-                                                .eq("order_id", order.id)
-                                                .order("created_at", { ascending: true });
+                                            // Fetch the updated list
+                                            const { data: newMedia } = await axios.get(`/api/admin/orders/${order.id}/progress`);
                                             
                                             setProgressMedia(newMedia || []);
                                             setMessage({ type: 'success', text: "Progress record stabilized" });
