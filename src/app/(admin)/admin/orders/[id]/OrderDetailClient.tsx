@@ -539,6 +539,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                     )}
 
                         {/* Universal Logistics Protocol Selector - Command Center */}
+                        {status !== 'in_production' && status !== 'ready_to_ship' && status !== 'shipped' && status !== 'delivered' && (
                         <div className="hasbro-card p-10 border-white/5 bg-white/[0.01] space-y-12">
                             {order.metadata?.logistics_partial_validation && (
                                 <div className="p-4 bg-orange-500/10 border border-orange-500/30 rounded-sm flex items-center gap-4">
@@ -720,6 +721,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                                 </div>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     {/* Items List */}
