@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase-server";
 import { NextResponse } from "next/server";
-import { fetchPacklinkRates } from "@/lib/packlink";
+import { fetchShippingRates } from "@/lib/paccofacile";
 import { getSiteSettings } from "@/lib/settings";
 import { ShippingAddress } from "@/types";
 
@@ -42,9 +42,9 @@ export async function POST(req: Request) {
     if (shippingAddress) {
         try {
             const settings = await getSiteSettings();
-            shippingOptions = await fetchPacklinkRates(shippingAddress as ShippingAddress, 10000, settings.logistics); // Use 100.00 EUR as benchmark for initial estimation
+            shippingOptions = await fetchShippingRates(shippingAddress as ShippingAddress, 10000, settings.logistics); // Use 100.00 EUR as benchmark for initial estimation
         } catch (err) {
-            console.error("[POST /api/orders/custom] Packlink fetch failed:", err);
+            console.error("[POST /api/orders/custom] Paccofacile fetch failed:", err);
         }
     }
 

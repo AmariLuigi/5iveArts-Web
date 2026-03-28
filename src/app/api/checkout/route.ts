@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
   const address = addressResult.data;
 
   // ── Calculate server-authoritative shipping price ─────────────────────────
-  const { fetchPacklinkRates } = await import("@/lib/packlink");
+  const { fetchShippingRates } = await import("@/lib/paccofacile");
   const { getSiteSettings } = await import("@/lib/settings");
 
   const subtotalCents = items.reduce(
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
   const settings = await getSiteSettings();
 
   // We must re-fetch/calculate the rates server-side to prevent price tampering
-  const serverRates = await fetchPacklinkRates(address, subtotalCents, settings.logistics);
+  const serverRates = await fetchShippingRates(address, subtotalCents, settings.logistics);
 
   const matchedRate = serverRates.find((r) => r.service_id === rawRate.service_id);
 
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
         subtotal_pence: subtotalCents,
         shipping_pence: isCustom ? 0 : shippingPrice,
         total_pence: subtotalCents + (isCustom ? 0 : shippingPrice),
-        packlink_service_id: isCustom ? null : matchedRate.service_id,
+        carrier_service_id: isCustom ? null : matchedRate.service_id,
         shipping_service_name: isCustom ? null : `${matchedRate.carrier_name} — ${matchedRate.service_name}`,
       })
       .select("id")

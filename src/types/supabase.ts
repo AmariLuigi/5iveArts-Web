@@ -63,7 +63,7 @@ export interface Database {
           subtotal_pence: number;
           shipping_pence: number;
           total_pence: number;
-          packlink_service_id: string | null;
+          carrier_service_id: string | null;
           packlink_shipment_id: string | null;
           tracking_number: string | null;
           label_url: string | null;
@@ -82,7 +82,7 @@ export interface Database {
           updated_at?: string;
           stripe_payment_intent?: string | null;
           status?: Database["public"]["Tables"]["orders"]["Row"]["status"];
-          packlink_service_id?: string | null;
+          carrier_service_id?: string | null;
           packlink_shipment_id?: string | null;
           tracking_number?: string | null;
           label_url?: string | null;

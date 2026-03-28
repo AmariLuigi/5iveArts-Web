@@ -96,10 +96,76 @@ class PosteItalianeProvider implements TrackingProvider {
   }
 }
 
+/**
+ * Paccofacile.it Provider
+ */
+class PaccofacileProvider implements TrackingProvider {
+  name = "Paccofacile.it";
+
+  isCompatible(carrierName: string, trackingNumber: string): boolean {
+    const name = carrierName?.toLowerCase() || "";
+    return name.includes("paccofacile");
+  }
+
+  async track(shipmentId: string): Promise<TrackingData> {
+    const baseUrl = "https://paccofacile.tecnosogima.cloud/live/v1";
+    const token = process.env.PACCOFACILE_TOKEN;
+    const apiKey = process.env.PACCOFACILE_API_KEY;
+    const account = process.env.PACCOFACILE_ACCOUNT_NUMBER;
+
+    if (!token || !apiKey || !account) {
+      throw new Error("Paccofacile credentials missing");
+    }
+
+    const response = await axios.get(`${baseUrl}/service/shipment/${shipmentId}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "api-key": apiKey,
+        "Account-Number": account,
+        "Content-Type": "application/json"
+      }
+    });
+
+    const data = response.data?.data;
+    if (!data) throw new Error("Shipment not found on Paccofacile");
+
+    // Map Paccofacile fields to our internal TrackingData format
+    // Note: Documentation doesn't show a dedicated history array, 
+    // so we provide the latest status from the shipment detail.
+    const trackingNumbers = data.tracking_numbers || [];
+    const mainTracking = trackingNumbers[0] || shipmentId;
+    
+    // Status mapping (educated guesses based on typical aggregator APIs)
+    const statusStr = (data.status || "unknown").toLowerCase();
+    let status: TrackingStatus = "unknown";
+    
+    if (statusStr.includes("consegnat") || statusStr === "delivered") status = "delivered";
+    else if (statusStr.includes("transito") || statusStr === "shipped") status = "in_transit";
+    else if (statusStr.includes("consegna") || statusStr === "out_for_delivery") status = "out_for_delivery";
+    else if (statusStr.includes("proble") || statusStr === "exception") status = "exception";
+
+    return {
+      trackingNumber: mainTracking,
+      carrier: data.carrier_code || this.name,
+      status: status,
+      latestLocation: "Contact Carrier",
+      lastUpdated: new Date().toISOString(),
+      movements: [
+        {
+          timestamp: new Date().toISOString(),
+          location: "See Paccofacile Dashboard",
+          description: `Current Status: ${data.status || 'Registered'}`,
+          status: status
+        }
+      ]
+    };
+  }
+}
+
 // Registry for future expansion
 const providers: TrackingProvider[] = [
   new PosteItalianeProvider(),
-  // More will be added here
+  new PaccofacileProvider(),
 ];
 
 export async function getTrackingInfo(carrierName: string, trackingNumber: string): Promise<TrackingData | null> {

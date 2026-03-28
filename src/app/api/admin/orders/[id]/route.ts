@@ -50,7 +50,7 @@ export async function PATCH(
         base_price_pence,
         complexity_factor,
         shipping_pence,
-        packlink_service_id,
+        carrier_service_id,
         shipping_service_name
     } = body;
 
@@ -66,7 +66,7 @@ export async function PATCH(
             base_price_pence,
             complexity_factor,
             shipping_pence,
-            packlink_service_id,
+            carrier_service_id,
             shipping_service_name,
             updated_at: new Date().toISOString()
         })

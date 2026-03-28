@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { fetchPacklinkRates } from "@/lib/packlink";
+import { fetchShippingRates } from "@/lib/paccofacile";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { validateShippingAddress, sanitizeNumber } from "@/lib/validate";
 import { getSiteSettings } from "@/lib/settings";
@@ -35,18 +35,18 @@ export async function POST(req: NextRequest) {
 
   const subtotalPence = sanitizeNumber(b.subtotalPence, 0, 1_000_000) ?? 0;
 
-  // ── Fetch dynamic Packlink rates ──────────────────────────────────────────
+  // ── Fetch dynamic Paccofacile rates ──────────────────────────────────────
   const settings = await getSiteSettings();
-  const rates = await fetchPacklinkRates(addressResult.data, subtotalPence, settings.logistics);
+  const rates = await fetchShippingRates(addressResult.data, subtotalPence, settings.logistics);
 
   if (rates.length === 0) {
-    console.warn(`[shipping] No Packlink services found for ${addressResult.data.country}/${addressResult.data.zip_code}.`);
+    console.warn(`[shipping] No Paccofacile services found for ${addressResult.data.country}/${addressResult.data.zip_code}.`);
     return NextResponse.json(
       { error: "No shipping services available for this destination. Please verify your address." },
       { status: 404 }
     );
   }
 
-  console.log(`[shipping] Packlink returned ${rates.length} services for ${addressResult.data.country}/${addressResult.data.zip_code}.`);
+  console.log(`[shipping] Paccofacile returned ${rates.length} services for ${addressResult.data.country}/${addressResult.data.zip_code}.`);
   return NextResponse.json(rates);
 }

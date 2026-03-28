@@ -127,7 +127,7 @@ export async function processCompletedCheckout(
                     subtotal_pence: subtotalPence,
                     shipping_pence: shippingPence,
                     total_pence: totalPence,
-                    packlink_service_id: session.metadata?.shipping_service_id ?? null,
+                    carrier_service_id: session.metadata?.shipping_service_id ?? null,
                     shipping_service_name: session.metadata?.shipping_service_name ?? null,
                     shipping_address: shippingAddress,
                     user_id: session.metadata?.user_id || null,
