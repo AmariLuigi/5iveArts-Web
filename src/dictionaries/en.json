@@ -1,579 +1,579 @@
 {
-  "nav": {
-    "products": "Products",
-    "faq": "FAQ",
-    "shipping": "Shipping",
-    "cart": "Cart",
-    "login": "Login",
-    "admin": "Admin",
-    "discovery": "Discovery",
-    "terminal": "Terminal Access",
-    "regional": "Regional Projection",
-    "switchRegion": "Switch Region",
-    "vault": "Vault",
-    "warehouse": "Warehouse",
-    "access": "Access",
-    "wishlist": "Wishlist",
-    "customOrder": "Custom Orders"
-  },
-  "home": {
-    "title": "5iveArts - Artisan Precision",
-    "hero_title": "ARTISAN PRECISION",
-    "hero_subtitle": "Every figure is a unique piece, sculpted with passion and finished with meticulous care.",
-    "cta_button": "EXPLORE COLLECTION",
-    "featured_products": "FEATURED PRODUCTS",
-    "explore_all": "Explore All"
-  },
-  "homepage": {
-    "featuredHeading": "Premium 3D-Printed Resin Figure Collections",
-    "viewAll": "View All Pieces",
-    "testimonialsHeading": "Trusted by Global Collectors",
-    "reviewsLabel": "Verified Reviews",
-    "collectorChoice": "Collector's Choice",
-    "premiumSeries": "Premium Series",
-    "collectorsVault": "Collector's Vault",
-    "satisfactionRate": "Satisfaction Rate",
-    "countriesServed": "Countries Served",
-    "yearsExperience": "Years Experience"
-  },
-  "products": {
-    "title": "Model Arsenal",
-    "subtitle": "Browse our collection of handcrafted figures.",
-    "all": "All Masterpieces",
-    "categories": "Categories",
-    "filter": "Filter",
-    "viewDetails": "VIEW DETAILS",
-    "addToCart": "Add to Cart",
-    "scale": "Scale",
-    "finish": "Finish",
-    "painted": "Hand-Painted",
-    "raw": "Raw Resin",
-    "description": "Description",
-    "shippingInfo": "Shipping & Handling",
-    "customerReviews": "Customer Reviews",
-    "specifications": "Specifications",
-    "returnPolicy": "Return Policy",
-    "securePayment": "Secure Payment",
-    "insuredShipping": "Insured Shipping",
-    "price": "Price",
-    "details": "View Details",
-    "startingFrom": "Starting From",
-    "deploymentConfig": "Deployment Configuration",
-    "selectPrototype": "Select Prototype & Finish"
-  },
-  "cart": {
-    "title": "Vault Cart",
-    "empty": "Your cart is empty",
-    "emptyMessage": "Looks like you haven't added any figures yet.",
-    "returnToShop": "Return to Shop",
-    "subtotal": "Subtotal",
-    "shippingCost": "Shipping",
-    "total": "Total",
-    "checkout": "Proceed to Checkout",
-    "remove": "Remove",
-    "item": "item",
-    "items": "items",
-    "secureCheckout": "Secure Checkout",
-    "insuredShipping": "Insured Global Shipping",
-    "thirtyDayReturns": "30-Day Returns",
-    "orderSummary": "Order Summary",
-    "calculatedAtCheckout": "Calculated at checkout",
-    "estimatedTotal": "Estimated Total",
-    "proceedToCheckout": "Proceed to Checkout",
-    "continueShopping": "Continue Shopping",
-    "freeShipping": "Free shipping over {amount}",
-    "shipping": "Shipping",
-    "emptyArsenal": "Empty Arsenal",
-    "checkoutFlow": "Checkout Flow",
-    "yourCart": "Your Cart",
-    "clearCart": "Clear Cart",
-    "returnShop": "Return to Shop",
-    "grandTotal": "Grand Total",
-    "calculatingLogistics": "Calculating Logistics..."
-  },
-  "auth": {
-    "verification": "Identity Verification",
-    "terminal": "Access Terminal",
-    "portal": "Secure portal for 5iveArts Collectors",
-    "login": "Log In",
-    "register": "Register",
-    "emailLabel": "Neural Link (Email)",
-    "passwordLabel": "Security Key (Password)",
-    "verifyBtn": "Verify Session",
-    "registerBtn": "Establish Link",
-    "tunnel": "End-to-End Encrypted Tunnel",
-    "guidelines": "By accessing the terminal, you agree to our Protocol Guidelines",
-    "backHome": "Back to Public HQ",
-    "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
-    "title": "Warehouse Access",
-    "subtitle": "Access your assets and logistics reports.",
-    "loginBtn": "Establish Connection"
-  },
-  "faq": {
-    "infoCenter": "Information Center",
-    "title": "F.A.Q & Contact",
-    "subtitle": "Everything you need to know about our artisan process, logistics, and collector protocols.",
-    "questions": [
-      {
-        "q": "How are the figures made?",
-        "a": "Every figure starts as a high-resolution 3D print (0.025mm layer height) using industrial-grade resin. Once cured, our artists spend hours hand-painting each piece with professional acrylics and airbrush techniques, finishing with a museum-quality UV-resistant varnish."
-      },
-      {
-        "q": "Do you ship internationally?",
-        "a": "Yes! We ship from our studio in Italy to collectors worldwide. We use insured global couriers to ensure your masterpiece arrives safely."
-      },
-      {
-        "q": "How long does production take?",
-        "a": "Since each piece is made-to-order or hand-finished, please allow 7-14 days for production before shipment. We don't rush the art."
-      },
-      {
-        "q": "What is your return policy?",
-        "a": "We offer a 30-day return policy for items that arrive damaged or significantly different from the description. Because these are handmade art pieces, we cannot accept returns for 'change of mind'."
-      }
+    "nav": {
+        "products": "Products",
+        "faq": "FAQ",
+        "shipping": "Shipping",
+        "cart": "Cart",
+        "login": "Login",
+        "admin": "Admin",
+        "discovery": "Discovery",
+        "terminal": "Terminal Access",
+        "regional": "Regional Projection",
+        "switchRegion": "Switch Region",
+        "vault": "Vault",
+        "warehouse": "Warehouse",
+        "access": "Access",
+        "wishlist": "Wishlist",
+        "customOrder": "Custom Orders"
+    },
+    "home": {
+        "title": "5iveArts - Artisan Precision",
+        "hero_title": "ARTISAN PRECISION",
+        "hero_subtitle": "Every figure is a unique piece, sculpted with passion and finished with meticulous care.",
+        "cta_button": "EXPLORE COLLECTION",
+        "featured_products": "FEATURED PRODUCTS",
+        "explore_all": "Explore All"
+    },
+    "homepage": {
+        "featuredHeading": "Premium 3D-Printed Resin Figure Collections",
+        "viewAll": "View All Pieces",
+        "testimonialsHeading": "Trusted by Global Collectors",
+        "reviewsLabel": "Verified Reviews",
+        "collectorChoice": "Collector's Choice",
+        "premiumSeries": "Premium Series",
+        "collectorsVault": "Collector's Vault",
+        "satisfactionRate": "Satisfaction Rate",
+        "countriesServed": "Countries Served",
+        "yearsExperience": "Years Experience"
+    },
+    "products": {
+        "title": "Model Arsenal",
+        "subtitle": "Browse our collection of handcrafted figures.",
+        "all": "All Masterpieces",
+        "categories": "Categories",
+        "filter": "Filter",
+        "viewDetails": "VIEW DETAILS",
+        "addToCart": "Add to Cart",
+        "scale": "Scale",
+        "finish": "Finish",
+        "painted": "Hand-Painted",
+        "raw": "Raw Resin",
+        "description": "Description",
+        "shippingInfo": "Shipping & Handling",
+        "customerReviews": "Customer Reviews",
+        "specifications": "Specifications",
+        "returnPolicy": "Return Policy",
+        "securePayment": "Secure Payment",
+        "insuredShipping": "Insured Shipping",
+        "price": "Price",
+        "details": "View Details",
+        "startingFrom": "Starting From",
+        "deploymentConfig": "Deployment Configuration",
+        "selectPrototype": "Select Prototype & Finish"
+    },
+    "cart": {
+        "title": "Vault Cart",
+        "empty": "Your cart is empty",
+        "emptyMessage": "Looks like you haven't added any figures yet.",
+        "returnToShop": "Return to Shop",
+        "subtotal": "Subtotal",
+        "shippingCost": "Shipping",
+        "total": "Total",
+        "checkout": "Proceed to Checkout",
+        "remove": "Remove",
+        "item": "item",
+        "items": "items",
+        "secureCheckout": "Secure Checkout",
+        "insuredShipping": "Insured Global Shipping",
+        "thirtyDayReturns": "30-Day Returns",
+        "orderSummary": "Order Summary",
+        "calculatedAtCheckout": "Calculated at checkout",
+        "estimatedTotal": "Estimated Total",
+        "proceedToCheckout": "Proceed to Checkout",
+        "continueShopping": "Continue Shopping",
+        "freeShipping": "Free shipping over {amount}",
+        "shipping": "Shipping",
+        "emptyArsenal": "Empty Arsenal",
+        "checkoutFlow": "Checkout Flow",
+        "yourCart": "Your Cart",
+        "clearCart": "Clear Cart",
+        "returnShop": "Return to Shop",
+        "grandTotal": "Grand Total",
+        "calculatingLogistics": "Calculating Logistics..."
+    },
+    "auth": {
+        "verification": "Identity Verification",
+        "terminal": "Access Terminal",
+        "portal": "Secure portal for 5iveArts Collectors",
+        "login": "Log In",
+        "register": "Register",
+        "emailLabel": "Neural Link (Email)",
+        "passwordLabel": "Security Key (Password)",
+        "verifyBtn": "Verify Session",
+        "registerBtn": "Establish Link",
+        "tunnel": "End-to-End Encrypted Tunnel",
+        "guidelines": "By accessing the terminal, you agree to our Protocol Guidelines",
+        "backHome": "Back to Public HQ",
+        "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
+        "title": "Warehouse Access",
+        "subtitle": "Access your assets and logistics reports.",
+        "loginBtn": "Establish Connection"
+    },
+    "faq": {
+        "infoCenter": "Information Center",
+        "title": "F.A.Q & Contact",
+        "subtitle": "Everything you need to know about our artisan process, logistics, and collector protocols.",
+        "questions": [
+            {
+                "q": "How are the figures made?",
+                "a": "Every figure starts as a high-resolution 3D print (0.025mm layer height) using industrial-grade resin. Once cured, our artists spend hours hand-painting each piece with professional acrylics and airbrush techniques, finishing with a museum-quality UV-resistant varnish."
+            },
+            {
+                "q": "Do you ship internationally?",
+                "a": "Yes! We ship from our studio in Italy to collectors worldwide. We use insured global couriers to ensure your masterpiece arrives safely."
+            },
+            {
+                "q": "How long does production take?",
+                "a": "Since each piece is made-to-order or hand-finished, please allow 7-14 days for production before shipment. We don't rush the art."
+            },
+            {
+                "q": "What is your return policy?",
+                "a": "We offer a 30-day return policy for items that arrive damaged or significantly different from the description. Because these are handmade art pieces, we cannot accept returns for 'change of mind'."
+            }
+        ],
+        "stillHaveQuestions": "Still have questions?",
+        "curatorsMessage": "Our curators are on standby to assist with custom commissions and protocol support.",
+        "emailUs": "Email Us",
+        "liveChat": "Live Chat",
+        "offline": "Offline"
+    },
+    "errors": {
+        "invalidLogin": "Access Denied. Ensure your security key is correct and your identity link is verified.",
+        "confirmationSent": "Confirmation email sent. Please check your inbox to activate your terminal.",
+        "stripeLoadError": "Failed to load payment form. Please refresh and try again.",
+        "unexpectedError": "An unexpected error occurred. Please try again.",
+        "signupFailed": "Signup failed. Please try again.",
+        "genericError": "Something went wrong",
+        "verifyStatusError": "We couldn't verify your payment status. If you received a confirmation email, your order is being processed.",
+        "maxFeatured": "Maximum 3 allowed."
+    },
+    "success": {
+        "orderConfirmed": "Order Confirmed",
+        "thankYou": "Thank you for your acquisition from 5iveArts",
+        "confEmailSent": "A confirmation email has been dispatched to",
+        "shippingNote": "Your figure will be carefully packed and shipped with live tracking.",
+        "logisticsLog": "Security & Logistics Log",
+        "syncComplete": "Sync Complete & Email Dispatched",
+        "resendEmail": "Didn't receive email? Resend",
+        "paymentVerified": "Payment verified.",
+        "fulfillmentNote": "Your figure is now being prepared with custom foam padding.",
+        "vaultEstablished": "Vault Established",
+        "orderLinked": "Your order is now permanently linked to your secure account.",
+        "goWarehouse": "Go to my Warehouse",
+        "secureCollection": "Secure your Collection",
+        "createAccount": "CREATE ACCOUNT",
+        "securing": "Securing...",
+        "returnHQ": "Return to HQ"
+    },
+    "checkout": {
+        "gateway": "Secure Gateway",
+        "checkout": "Checkout",
+        "chooseSaved": "Access Saved Routes",
+        "useThis": "Authorize Route",
+        "newAddress": "Establish New Protocol",
+        "saveToVault": "Register this dispatch route in my secure vault",
+        "verifying": "Verifying Secure Transaction…",
+        "loadingForm": "Loading payment protocols...",
+        "processing": "Processing payment…",
+        "payNow": "Authorize Payment",
+        "securedBy": "Secured by Stripe Intelligence",
+        "encryptionNote": "Your connection is encrypted with RSA-4096 and AES-256 standards. We never store raw payment data on our servers.",
+        "deliveryStep": "1. Delivery",
+        "shippingStep": "2. Shipping",
+        "paymentStep": "3. Payment",
+        "recipientName": "Recipient Name *",
+        "collectorPlaceholder": "Name of Collector",
+        "emailAddress": "Email Address *",
+        "vault": "Vault",
+        "streetAddress": "Street Address *",
+        "addressLine1": "Address Line 1",
+        "suite": "Suite / Unit / Floor",
+        "optional": "Optional",
+        "postcode": "Zip / Postcode *",
+        "zipPlaceholder": "Zip / Postcode",
+        "selectCountryFirst": "(Select country first)",
+        "city": "City *",
+        "detecting": "(Detecting…)",
+        "autoFilled": "(Auto-filled)",
+        "enterManually": "(Enter manually)",
+        "state": "State / Province *",
+        "phoneLabel": "Phone Connection *",
+        "invalidFormat": "(Invalid Format)",
+        "validNumber": "(Valid Number)",
+        "includeCode": "(Include + code)",
+        "continueBtn": "Continue to Shipping Options",
+        "recalculating": "Recalculating Global Logistics…",
+        "backBtn": "Back to Delivery",
+        "changeShipping": "Change Shipping Option",
+        "connecting": "Connecting to secure payment gateway. Handshaking with PCI-DSS protocols...",
+        "syncing": "Syncing Transaction Layer",
+        "orderReview": "Order Review",
+        "subtotal": "Merchandise Subtotal",
+        "logistics": "Logistics & Handling",
+        "tbd": "TBD",
+        "grandTotal": "Grand Total",
+        "initGateway": "Initializing Gateway…",
+        "proceedBtn": "Proceed to Payment",
+        "emptyArsenalTitle": "Empty Arsenal",
+        "emptyArsenalDesc": "Looks like you haven't added any figures to your collection yet.",
+        "returnShop": "Return to Shop",
+        "deliveryEstimate": "Delivery:",
+        "businessDay": "business day",
+        "businessDays": "business days"
+    },
+    "product_detail": {
+        "handPaintedTag": "Hand-Painted & 3D Printed",
+        "customerReviews": "customer reviews",
+        "selectScale": "Select Scale (Approx. Height)",
+        "selectFinish": "Select Finish",
+        "handPainted": "Hand-Painted",
+        "rawKit": "Base Kit (Grey Resin)",
+        "museumGrade": "Museum-grade finish",
+        "primed": "Ready for custom work",
+        "description": "Description",
+        "specifications": "Features & Specifications",
+        "encryptedCheckout": "Encrypted Checkout via Stripe",
+        "insuredShipping": "Insured Global Shipping",
+        "confirmed": "Confirmed",
+        "addToCollection": "Add to Arsenal",
+        "instantCheckout": "Instant Buy",
+        "features": [
+            "High-Resolution Industrial Resin",
+            "Professional Artisan Hand-Painting",
+            "Museum-Grade UV-Resistant Varnish",
+            "Precision Detail Capture (0.025mm)"
+        ],
+        "readMore": "Read More",
+        "readLess": "Read Less"
+    },
+    "trust": [
+        {
+            "label": "Secure Checkout",
+            "sub": "Powered by Stripe"
+        },
+        {
+            "label": "Insured Global Shipping",
+            "sub": "Worldwide delivery"
+        },
+        {
+            "label": "Handcrafted",
+            "sub": "Every figure unique"
+        },
+        {
+            "label": "30-Day Returns",
+            "sub": "Hassle-free"
+        }
     ],
-    "stillHaveQuestions": "Still have questions?",
-    "curatorsMessage": "Our curators are on standby to assist with custom commissions and protocol support.",
-    "emailUs": "Email Us",
-    "liveChat": "Live Chat",
-    "offline": "Offline"
-  },
-  "errors": {
-    "invalidLogin": "Access Denied. Ensure your security key is correct and your identity link is verified.",
-    "confirmationSent": "Confirmation email sent. Please check your inbox to activate your terminal.",
-    "stripeLoadError": "Failed to load payment form. Please refresh and try again.",
-    "unexpectedError": "An unexpected error occurred. Please try again.",
-    "signupFailed": "Signup failed. Please try again.",
-    "genericError": "Something went wrong",
-    "verifyStatusError": "We couldn't verify your payment status. If you received a confirmation email, your order is being processed.",
-    "maxFeatured": "Maximum 3 allowed."
-  },
-  "success": {
-    "orderConfirmed": "Order Confirmed",
-    "thankYou": "Thank you for your acquisition from 5iveArts",
-    "confEmailSent": "A confirmation email has been dispatched to",
-    "shippingNote": "Your figure will be carefully packed and shipped with live tracking.",
-    "logisticsLog": "Security & Logistics Log",
-    "syncComplete": "Sync Complete & Email Dispatched",
-    "resendEmail": "Didn't receive email? Resend",
-    "paymentVerified": "Payment verified.",
-    "fulfillmentNote": "Your figure is now being prepared with custom foam padding.",
-    "vaultEstablished": "Vault Established",
-    "orderLinked": "Your order is now permanently linked to your secure account.",
-    "goWarehouse": "Go to my Warehouse",
-    "secureCollection": "Secure your Collection",
-    "createAccount": "CREATE ACCOUNT",
-    "securing": "Securing...",
-    "returnHQ": "Return to HQ"
-  },
-  "checkout": {
-    "gateway": "Secure Gateway",
-    "checkout": "Checkout",
-    "chooseSaved": "Access Saved Routes",
-    "useThis": "Authorize Route",
-    "newAddress": "Establish New Protocol",
-    "saveToVault": "Register this dispatch route in my secure vault",
-    "verifying": "Verifying Secure Transaction…",
-    "loadingForm": "Loading payment protocols...",
-    "processing": "Processing payment…",
-    "payNow": "Authorize Payment",
-    "securedBy": "Secured by Stripe Intelligence",
-    "encryptionNote": "Your connection is encrypted with RSA-4096 and AES-256 standards. We never store raw payment data on our servers.",
-    "deliveryStep": "1. Delivery",
-    "shippingStep": "2. Shipping",
-    "paymentStep": "3. Payment",
-    "recipientName": "Recipient Name *",
-    "collectorPlaceholder": "Name of Collector",
-    "emailAddress": "Email Address *",
-    "vault": "Vault",
-    "streetAddress": "Street Address *",
-    "addressLine1": "Address Line 1",
-    "suite": "Suite / Unit / Floor",
-    "optional": "Optional",
-    "postcode": "Zip / Postcode *",
-    "zipPlaceholder": "Zip / Postcode",
-    "selectCountryFirst": "(Select country first)",
-    "city": "City *",
-    "detecting": "(Detecting…)",
-    "autoFilled": "(Auto-filled)",
-    "enterManually": "(Enter manually)",
-    "state": "State / Province *",
-    "phoneLabel": "Phone Connection *",
-    "invalidFormat": "(Invalid Format)",
-    "validNumber": "(Valid Number)",
-    "includeCode": "(Include + code)",
-    "continueBtn": "Continue to Shipping Options",
-    "recalculating": "Recalculating Global Logistics…",
-    "backBtn": "Back to Delivery",
-    "changeShipping": "Change Shipping Option",
-    "connecting": "Connecting to secure payment gateway. Handshaking with PCI-DSS protocols...",
-    "syncing": "Syncing Transaction Layer",
-    "orderReview": "Order Review",
-    "subtotal": "Merchandise Subtotal",
-    "logistics": "Logistics & Handling",
-    "tbd": "TBD",
-    "grandTotal": "Grand Total",
-    "initGateway": "Initializing Gateway…",
-    "proceedBtn": "Proceed to Payment",
-    "emptyArsenalTitle": "Empty Arsenal",
-    "emptyArsenalDesc": "Looks like you haven't added any figures to your collection yet.",
-    "returnShop": "Return to Shop",
-    "deliveryEstimate": "Delivery:",
-    "businessDay": "business day",
-    "businessDays": "business days"
-  },
-  "product_detail": {
-    "handPaintedTag": "Hand-Painted & 3D Printed",
-    "customerReviews": "customer reviews",
-    "selectScale": "Select Scale (Approx. Height)",
-    "selectFinish": "Select Finish",
-    "handPainted": "Hand-Painted",
-    "rawKit": "Base Kit (Grey Resin)",
-    "museumGrade": "Museum-grade finish",
-    "primed": "Ready for custom work",
-    "description": "Description",
-    "specifications": "Features & Specifications",
-    "encryptedCheckout": "Encrypted Checkout via Stripe",
-    "insuredShipping": "Insured Global Shipping",
-    "confirmed": "Confirmed",
-    "addToCollection": "Add to Arsenal",
-    "instantCheckout": "Instant Buy",
-    "features": [
-      "High-Resolution Industrial Resin",
-      "Professional Artisan Hand-Painting",
-      "Museum-Grade UV-Resistant Varnish",
-      "Precision Detail Capture (0.025mm)"
-    ],
-    "readMore": "Read More",
-    "readLess": "Read Less"
-  },
-  "trust": [
-    {
-      "label": "Secure Checkout",
-      "sub": "Powered by Stripe"
+    "account": {
+        "portal": "Secure Warehouse Portal",
+        "title": "My Account",
+        "databaseFor": "Accessing database for:",
+        "security": "Security",
+        "decommission": "Decommission Session",
+        "activeAssets": "Active Assets",
+        "totalAcquisitions": "Total acquisitions recorded",
+        "status": "Account Status",
+        "verifiedCollector": "Verified Collector",
+        "level1Encryption": "Level 1 Encryption",
+        "history": "Acquisition History",
+        "verificationRequired": "Verification Required",
+        "verificationDesc": "Please verify your identity to access all features",
+        "resendLink": "Resend Link",
+        "neuralLinkError": "Neural Link Error",
+        "syncFailed": "Sync failed with central order vault.",
+        "noAssets": "No assets registered in the vault yet.",
+        "browseCollection": "Browse Collection",
+        "recorded": "Recorded:",
+        "investment": "Investment",
+        "prepPhaseActive": "Prep Phase",
+        "inTransit": "In Transit:",
+        "fullLogistics": "Full Logistics Data",
+        "settings": {
+            "title": "Security Vault",
+            "subtitle": "Manage your collector identity and access protocols.",
+            "identityVerification": "Identity Verification",
+            "verified": "Verified",
+            "pending": "Verification Pending",
+            "guestProtected": "Your access is currently in a 'Guest-Protected' state. Some order fulfillment data requires a verified identity.",
+            "requestLink": "Request New Verification Link",
+            "addresses": "Dispatch Destinations",
+            "addAddress": "Register New Protocol",
+            "noAddresses": "No destinations registered in the vault.",
+            "default": "Primary Route",
+            "setDefault": "Set as Primary",
+            "edit": "Modify",
+            "delete": "Decommission",
+            "confirmDelete": "Are you sure you want to decommission this dispatch route?"
+        },
+        "wishlist": {
+            "title": "My Curator Wishlist",
+            "subtitle": "Artifacts Under Observation",
+            "emptyTitle": "Your Wishlist is Empty",
+            "emptyDescription": "Scout our artifacts and bookmark those that resonate with your curator style for future acquisition."
+        }
     },
-    {
-      "label": "Insured Global Shipping",
-      "sub": "Worldwide delivery"
+    "orders": {
+        "orderNum": "Order #",
+        "recorded": "Recorded:",
+        "investment": "Investment",
+        "quantity": "Quantity:",
+        "qty": "Qty:",
+        "prepPhase": "Prep Phase Active",
+        "inTransit": "In Transit:",
+        "logisticsData": "Full Logistics Data",
+        "warehouse": "My Warehouse",
+        "operation": "Operation #",
+        "logged": "Logged:",
+        "verifiedAcquisition": "Verified Acquisition",
+        "trackShipment": "TRACK SHIPMENT",
+        "exportInvoice": "Export Official Manifest",
+        "depositPaid": "Deposit Settled (50%)",
+        "remainingBalance": "Outstanding Balance (Protocol)",
+        "lifecycle": "Deployment Timeline",
+        "paymentConfirmed": "Payment Confirmed",
+        "fundsVerified": "Acquisition funds verified and secured.",
+        "prepPhaseActive": "Prep Phase",
+        "isolationNote": "Figure isolation and protective foam in place.",
+        "shipped": "Shipped",
+        "logisticsSuccess": "Logistics secured and in transit to destination.",
+        "delivered": "Delivered",
+        "acquired": "Masterpiece has been acquired and secured.",
+        "deploymentZone": "Deployment Zone",
+        "carrierProtocol": "Carrier Protocol",
+        "class": "Class: Registered Tracking",
+        "settlement": "Settlement",
+        "transactionSecure": "Transaction Secure",
+        "discrepancy": "Logistics Discrepancy?",
+        "contactHQ": "CONTACT DEPLOYMENT HQ",
+        "sku": "SKU:",
+        "backToWarehouse": "My Warehouse",
+        "reportTitle": "Full Logistics Report",
+        "paid": "Paid",
+        "processing": "Processing",
+        "cancelled": "Cancelled",
+        "pConfirmed": "Payment Confirmed",
+        "pConfirmedDesc": "Acquisition funds verified and secured.",
+        "prepPhaseDesc": "Figure isolation and protective foam integration.",
+        "inTransitDesc": "Warehouse vault exit. Logistics handover.",
+        "manifest": "Asset Manifest",
+        "itemDetails": "Item Details",
+        "subtotal": "Acquisition Subtotal",
+        "shipping": "Logistics Surcharge",
+        "totalContribution": "Total Portfolio Contribution"
     },
-    {
-      "label": "Handcrafted",
-      "sub": "Every figure unique"
+    "footer": {
+        "logistics": "Global Artisan Craftsmanship Logistics Enabled",
+        "rights": "© 2026 5iveArts Collector Series. All rights reserved.",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "description": "Boutique studio for premium hand-painted and 3D-printed resin figures. We ship museum-grade collectibles to enthusiasts worldwide from our Palermo workshop.",
+        "seoAbout": "5iveArts is a premier boutique studio specializing in the creation of premium 3D-printed resin figures and hand-painted collectibles. Our artisan series focuses on extreme detail, utilizing 0.025mm layer heights to ensure museum-grade quality for every figure we produce. With a global shipping network, we serve a dedicated community of collectors who value the intersection of industrial precision and handcrafted art. Every piece in our series is unique, finished with professional airbrushing and UV-resistant varnishes to protect your investment for years to come."
     },
-    {
-      "label": "30-Day Returns",
-      "sub": "Hassle-free"
+    "shipping": {
+        "protocol": "Logistics Protocol",
+        "title": "Global Shipping",
+        "subtitle": "Secure, insured, and tracked delivery for every masterpiece in the collection.",
+        "insuredTitle": "Insured Fulfillment",
+        "insuredText": "Every figure is packed using custom-fit high-density foam and double-walled collector boxes. We insure every shipment against loss or damage during transit.",
+        "freeTierTitle": "Free Shipping Tier",
+        "freeTierText": "We reward serious collectors. All orders over {amount} automatically qualify for FREE STANDARD SHIPPING, regardless of your location.",
+        "dynamicTitle": "Dynamic Logistics",
+        "dynamicText": "We use Packlink PRO to provide real-time, insured shipping rates from premium carriers like UPS, DHL, and FedEx. Your specific rate is calculated during checkout based on your exact location and the parcel's dimensions.",
+        "zonesTitle": "Estimated Transit Times",
+        "region": "Region",
+        "standard": "Standard",
+        "express": "Express",
+        "estTime": "Est. Time",
+        "trackingInfo": "Live Global Tracking Provided on All Orders",
+        "italy": "Italy",
+        "eu": "European Union",
+        "uk": "United Kingdom",
+        "global": "Global / Rest of World",
+        "days1_3": "1-3 Days",
+        "days3_5": "3-5 Days",
+        "days4_7": "4-7 Days",
+        "days7_14": "7-14 Days",
+        "carrierActive": "Global Carrier Network Active"
+    },
+    "hero": {
+        "slides": [
+            {
+                "tagline": "Premium Resin Precision",
+                "headline": "3D-Printed",
+                "headlineHighlight": "Masterpieces",
+                "subtext": "High-resolution resin figures at 0.025 mm layer height — museum-grade detail in every artisan-crafted piece."
+            },
+            {
+                "tagline": "Handcrafted Artisan Detail",
+                "headline": "Expertly",
+                "headlineHighlight": "Hand-Painted",
+                "subtext": "Unique shading and professional airbrush techniques bring your favorite characters to life, one unique creation at a time."
+            }
+        ],
+        "cta": "Shop Now",
+        "trust": {
+            "quality": "Certified Quality",
+            "handFinished": "Hand Finished",
+            "logistics": "Global Logistics"
+        }
+    },
+    "features": {
+        "handPainted": {
+            "title": "Hand Painted",
+            "text": "Every figure is hand-painted with professional acrylics"
+        },
+        "threeDPrinted": {
+            "title": "3D Printed",
+            "text": "High-resolution 0.025mm layer heights"
+        },
+        "fastShipping": {
+            "title": "Fast Shipping",
+            "text": "Insured global delivery with tracking"
+        },
+        "secureCheckout": {
+            "title": "Secure Checkout",
+            "text": "Payments handled securely by Stripe"
+        }
+    },
+    "ctaSection": {
+        "heading": "Ready to own a piece of art?",
+        "subtext": "Explore the full collection of hand-painted and 3D printed action figures. Each is made-to-order with care.",
+        "button": "Explore the Shop"
+    },
+    "privacy_policy": {
+        "title": "Privacy Policy",
+        "lastUpdated": "Last updated: March 2026",
+        "sections": [
+            {
+                "title": "1. Information We Collect",
+                "content": "We collect information you provide directly to us, including your name, email address, shipping address, and payment information when you make a purchase."
+            },
+            {
+                "title": "2. How We Use Your Information",
+                "content": "We use the information we collect to process transactions, send you order confirmations, and communicate with you about your orders."
+            },
+            {
+                "title": "3. Information Sharing",
+                "content": "We do not sell or share your personal information with third parties except as necessary to fulfill your orders and process payments."
+            },
+            {
+                "title": "4. Data Security",
+                "content": "We implement appropriate security measures to protect your personal information from unauthorized access or disclosure."
+            },
+            {
+                "title": "5. Contact Us",
+                "content": "If you have any questions about this Privacy Policy, please contact us at privacy@5ivearts.com"
+            }
+        ]
+    },
+    "terms_of_service": {
+        "title": "Terms of Service",
+        "lastUpdated": "Last updated: March 2026",
+        "sections": [
+            {
+                "title": "1. Acceptance of Terms",
+                "content": "By accessing and using this website, you accept and agree to be bound by the terms and provisions of this agreement."
+            },
+            {
+                "title": "2. Products and Services",
+                "content": "All products displayed on this website are 3D printed collectibles. Please note that slight variations in color and finish may occur due to the nature of 3D printing processes."
+            },
+            {
+                "title": "3. Pricing and Payment",
+                "content": "Prices are subject to change without notice. We reserve the right to refuse or cancel any orders placed for products listed at an incorrect price."
+            },
+            {
+                "title": "4. Shipping and Delivery",
+                "content": "Shipping costs and delivery times vary by location. We are not responsible for delays caused by customs or carrier issues."
+            },
+            {
+                "title": "5. Intellectual Property",
+                "content": "All content on this website, including designs and images of products, is protected by intellectual property rights."
+            },
+            {
+                "title": "6. Contact Us",
+                "content": "If you have any questions about these Terms, please contact us at legal@5ivearts.com"
+            }
+        ]
+    },
+    "cookie_banner": {
+        "tag": "Photopolymer Unit",
+        "title": "We're curing local cookies.",
+        "description": "Our system uses essential cookies to stabilize site performance and analyze traffic patterns layer by layer.",
+        "accept": "Accept Batch",
+        "preferences": "System Preferences"
+    },
+    "custom_order": {
+        "tagline": "Advanced Custom Protocol",
+        "logistics_title": "System Logistics",
+        "hero_title": "Bespoke Artifacts",
+        "hero_subtitle": "Transform your digital dreams into physical masterpieces with our artisan-led custom commission protocol.",
+        "flow_title": "The Commission Protocol",
+        "step1_title": "1. Asset Submission",
+        "step1_desc": "Upload your character renders or concept art. Our curators review every detail for feasibility.",
+        "step2_title": "2. Complexity Appraisal",
+        "step2_desc": "Our curators evaluate geometric density and painting complexity for a precision quote.",
+        "step3_title": "3. The Agreement",
+        "step3_desc": "Receive your custom quote. Secure the production slot with a 50% artifact deposit.",
+        "step4_title": "4. Master Craftsmanship",
+        "step4_desc": "Monitor progress in your private Vault with real-time photo updates from the workshop.",
+        "step5_title": "5. Final Deployment",
+        "step5_desc": "Settle the final balance upon completion. Insured global deployment to your coordinates.",
+        "auth_invite_title": "Ready to Begin Your Commission?",
+        "auth_invite_desc": "Establish a secure connection to our terminal to upload assets and track your artifact's fabrication.",
+        "cta_login": "Log In to Begin",
+        "cta_register": "Create Collector Account",
+        "cta_start": "Propose New Commission",
+        "benefit1_title": "Verified Security",
+        "benefit1_desc": "End-to-end encrypted asset transfers and secure payment integration for every commission.",
+        "benefit2_title": "Progress Transparency",
+        "benefit2_desc": "Real-time visual records added to your personal vault throughout the fabrication lifecycle.",
+        "benefit3_title": "Artisan Control",
+        "benefit3_desc": "Direct collaboration with our lead curators to ensure your prototype meets museum-grade standards.",
+        "success_title": "Protocol Initialized",
+        "success_subtitle": "Transmission Complete",
+        "success_message": "Your documentation has been encrypted and submitted to our lead curators. We will review the feasibility and complexity within 24-48 hours.",
+        "cta_vault": "Enter My Vault",
+        "proposal_step_identity_tag": "Artisan Bureau",
+        "proposal_step_identity_title": "Project Identity",
+        "proposal_field_title_label": "Character / Project Title",
+        "proposal_field_title_placeholder": "e.g. Master Chief - Mark VI",
+        "proposal_field_scale_label": "Desired Scale",
+        "proposal_field_finish_label": "Finish Protocol",
+        "proposal_cta_configure": "Configure Details",
+        "proposal_step_narrative_tag": "Bureau Documentation",
+        "proposal_step_narrative_title": "Narrative Scope",
+        "proposal_field_desc_label": "Project Description",
+        "proposal_field_desc_placeholder": "Describe your vision, specific poses, or reference details...",
+        "proposal_cta_upload": "Upload Assets",
+        "proposal_cta_back": "Back",
+        "proposal_step_visual_tag": "Visual Evidence",
+        "proposal_step_visual_title": "Asset Transmission",
+        "proposal_field_upload_label": "Add File",
+        "proposal_field_upload_hint": "Supported formats: JPG, PNG, WEBP (MAX 3)",
+        "proposal_cta_submit": "Submit Commission",
+        "error_max_files": "Maximum 3 reference images allowed",
+        "error_required_fields": "Please complete all required fields and upload at least one image.",
+        "scales": {
+            "1:12": "1:12 Scale",
+            "1:10": "1:10 Scale",
+            "1:6": "1:6 Scale",
+            "1:4": "1:4 Scale",
+            "other": "Other / Custom"
+        },
+        "finishes": {
+            "raw": "Raw (Grey Resin)",
+            "standard": "Painted (Standard)",
+            "master": "Painted (Master Grade)"
+        }
+    },
+    "marketing": {
+        "trendingTag": "Most Desired Protocol",
+        "trendingTitle": "Artifacts Under Observation",
+        "interestSync": "Real-time Interest Sync",
+        "activeCitations": "{count} Active Citations"
+    },
+    "products_ui": {
+        "inspect": "Inspect Artifact"
     }
-  ],
-  "account": {
-    "portal": "Secure Warehouse Portal",
-    "title": "My Account",
-    "databaseFor": "Accessing database for:",
-    "security": "Security",
-    "decommission": "Decommission Session",
-    "activeAssets": "Active Assets",
-    "totalAcquisitions": "Total acquisitions recorded",
-    "status": "Account Status",
-    "verifiedCollector": "Verified Collector",
-    "level1Encryption": "Level 1 Encryption",
-    "history": "Acquisition History",
-    "verificationRequired": "Verification Required",
-    "verificationDesc": "Please verify your identity to access all features",
-    "resendLink": "Resend Link",
-    "neuralLinkError": "Neural Link Error",
-    "syncFailed": "Sync failed with central order vault.",
-    "noAssets": "No assets registered in the vault yet.",
-    "browseCollection": "Browse Collection",
-    "recorded": "Recorded:",
-    "investment": "Investment",
-    "prepPhaseActive": "Prep Phase",
-    "inTransit": "In Transit:",
-    "fullLogistics": "Full Logistics Data",
-    "settings": {
-      "title": "Security Vault",
-      "subtitle": "Manage your collector identity and access protocols.",
-      "identityVerification": "Identity Verification",
-      "verified": "Verified",
-      "pending": "Verification Pending",
-      "guestProtected": "Your access is currently in a 'Guest-Protected' state. Some order fulfillment data requires a verified identity.",
-      "requestLink": "Request New Verification Link",
-      "addresses": "Dispatch Destinations",
-      "addAddress": "Register New Protocol",
-      "noAddresses": "No destinations registered in the vault.",
-      "default": "Primary Route",
-      "setDefault": "Set as Primary",
-      "edit": "Modify",
-      "delete": "Decommission",
-      "confirmDelete": "Are you sure you want to decommission this dispatch route?"
-    },
-    "wishlist": {
-      "title": "My Curator Wishlist",
-      "subtitle": "Artifacts Under Observation",
-      "emptyTitle": "Your Wishlist is Empty",
-      "emptyDescription": "Scout our artifacts and bookmark those that resonate with your curator style for future acquisition."
-    }
-  },
-  "orders": {
-    "orderNum": "Order #",
-    "recorded": "Recorded:",
-    "investment": "Investment",
-    "quantity": "Quantity:",
-    "qty": "Qty:",
-    "prepPhase": "Prep Phase Active",
-    "inTransit": "In Transit:",
-    "logisticsData": "Full Logistics Data",
-    "warehouse": "My Warehouse",
-    "operation": "Operation #",
-    "logged": "Logged:",
-    "verifiedAcquisition": "Verified Acquisition",
-    "trackShipment": "TRACK SHIPMENT",
-    "exportInvoice": "Export Official Manifest",
-    "depositPaid": "Deposit Settled (50%)",
-    "remainingBalance": "Outstanding Balance (Protocol)",
-    "lifecycle": "Deployment Timeline",
-    "paymentConfirmed": "Payment Confirmed",
-    "fundsVerified": "Acquisition funds verified and secured.",
-    "prepPhaseActive": "Prep Phase",
-    "isolationNote": "Figure isolation and protective foam in place.",
-    "shipped": "Shipped",
-    "logisticsSuccess": "Logistics secured and in transit to destination.",
-    "delivered": "Delivered",
-    "acquired": "Masterpiece has been acquired and secured.",
-    "deploymentZone": "Deployment Zone",
-    "carrierProtocol": "Carrier Protocol",
-    "class": "Class: Registered Tracking",
-    "settlement": "Settlement",
-    "transactionSecure": "Transaction Secure",
-    "discrepancy": "Logistics Discrepancy?",
-    "contactHQ": "CONTACT DEPLOYMENT HQ",
-    "sku": "SKU:",
-    "backToWarehouse": "My Warehouse",
-    "reportTitle": "Full Logistics Report",
-    "paid": "Paid",
-    "processing": "Processing",
-    "cancelled": "Cancelled",
-    "pConfirmed": "Payment Confirmed",
-    "pConfirmedDesc": "Acquisition funds verified and secured.",
-    "prepPhaseDesc": "Figure isolation and protective foam integration.",
-    "inTransitDesc": "Warehouse vault exit. Logistics handover.",
-    "manifest": "Asset Manifest",
-    "itemDetails": "Item Details",
-    "subtotal": "Acquisition Subtotal",
-    "shipping": "Logistics Surcharge",
-    "totalContribution": "Total Portfolio Contribution"
-  },
-  "footer": {
-    "logistics": "Global Artisan Craftsmanship Logistics Enabled",
-    "rights": "© 2026 5iveArts Collector Series. All rights reserved.",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "description": "Boutique studio for premium hand-painted and 3D-printed resin figures. We ship museum-grade collectibles to enthusiasts worldwide from our Palermo workshop.",
-    "seoAbout": "5iveArts is a premier boutique studio specializing in the creation of premium 3D-printed resin figures and hand-painted collectibles. Our artisan series focuses on extreme detail, utilizing 0.025mm layer heights to ensure museum-grade quality for every figure we produce. With a global shipping network, we serve a dedicated community of collectors who value the intersection of industrial precision and handcrafted art. Every piece in our series is unique, finished with professional airbrushing and UV-resistant varnishes to protect your investment for years to come."
-  },
-  "shipping": {
-    "protocol": "Logistics Protocol",
-    "title": "Global Shipping",
-    "subtitle": "Secure, insured, and tracked delivery for every masterpiece in the collection.",
-    "insuredTitle": "Insured Fulfillment",
-    "insuredText": "Every figure is packed using custom-fit high-density foam and double-walled collector boxes. We insure every shipment against loss or damage during transit.",
-    "freeTierTitle": "Free Shipping Tier",
-    "freeTierText": "We reward serious collectors. All orders over {amount} automatically qualify for FREE STANDARD SHIPPING, regardless of your location.",
-    "dynamicTitle": "Dynamic Logistics",
-    "dynamicText": "We use Packlink PRO to provide real-time, insured shipping rates from premium carriers like UPS, DHL, and FedEx. Your specific rate is calculated during checkout based on your exact location and the parcel's dimensions.",
-    "zonesTitle": "Estimated Transit Times",
-    "region": "Region",
-    "standard": "Standard",
-    "express": "Express",
-    "estTime": "Est. Time",
-    "trackingInfo": "Live Global Tracking Provided on All Orders",
-    "italy": "Italy",
-    "eu": "European Union",
-    "uk": "United Kingdom",
-    "global": "Global / Rest of World",
-    "days1_3": "1-3 Days",
-    "days3_5": "3-5 Days",
-    "days4_7": "4-7 Days",
-    "days7_14": "7-14 Days",
-    "carrierActive": "Global Carrier Network Active"
-  },
-  "hero": {
-    "slides": [
-      {
-        "tagline": "Premium Resin Precision",
-        "headline": "3D-Printed",
-        "headlineHighlight": "Masterpieces",
-        "subtext": "High-resolution resin figures at 0.025 mm layer height — museum-grade detail in every artisan-crafted piece."
-      },
-      {
-        "tagline": "Handcrafted Artisan Detail",
-        "headline": "Expertly",
-        "headlineHighlight": "Hand-Painted",
-        "subtext": "Unique shading and professional airbrush techniques bring your favorite characters to life, one unique creation at a time."
-      }
-    ],
-    "cta": "Shop Now",
-    "trust": {
-      "quality": "Certified Quality",
-      "handFinished": "Hand Finished",
-      "logistics": "Global Logistics"
-    }
-  },
-  "features": {
-    "handPainted": {
-      "title": "Hand Painted",
-      "text": "Every figure is hand-painted with professional acrylics"
-    },
-    "threeDPrinted": {
-      "title": "3D Printed",
-      "text": "High-resolution 0.025mm layer heights"
-    },
-    "fastShipping": {
-      "title": "Fast Shipping",
-      "text": "Insured global delivery with tracking"
-    },
-    "secureCheckout": {
-      "title": "Secure Checkout",
-      "text": "Payments handled securely by Stripe"
-    }
-  },
-  "ctaSection": {
-    "heading": "Ready to own a piece of art?",
-    "subtext": "Explore the full collection of hand-painted and 3D printed action figures. Each is made-to-order with care.",
-    "button": "Explore the Shop"
-  },
-  "privacy_policy": {
-    "title": "Privacy Policy",
-    "lastUpdated": "Last updated: March 2026",
-    "sections": [
-      {
-        "title": "1. Information We Collect",
-        "content": "We collect information you provide directly to us, including your name, email address, shipping address, and payment information when you make a purchase."
-      },
-      {
-        "title": "2. How We Use Your Information",
-        "content": "We use the information we collect to process transactions, send you order confirmations, and communicate with you about your orders."
-      },
-      {
-        "title": "3. Information Sharing",
-        "content": "We do not sell or share your personal information with third parties except as necessary to fulfill your orders and process payments."
-      },
-      {
-        "title": "4. Data Security",
-        "content": "We implement appropriate security measures to protect your personal information from unauthorized access or disclosure."
-      },
-      {
-        "title": "5. Contact Us",
-        "content": "If you have any questions about this Privacy Policy, please contact us at privacy@5ivearts.com"
-      }
-    ]
-  },
-  "terms_of_service": {
-    "title": "Terms of Service",
-    "lastUpdated": "Last updated: March 2026",
-    "sections": [
-      {
-        "title": "1. Acceptance of Terms",
-        "content": "By accessing and using this website, you accept and agree to be bound by the terms and provisions of this agreement."
-      },
-      {
-        "title": "2. Products and Services",
-        "content": "All products displayed on this website are 3D printed collectibles. Please note that slight variations in color and finish may occur due to the nature of 3D printing processes."
-      },
-      {
-        "title": "3. Pricing and Payment",
-        "content": "Prices are subject to change without notice. We reserve the right to refuse or cancel any orders placed for products listed at an incorrect price."
-      },
-      {
-        "title": "4. Shipping and Delivery",
-        "content": "Shipping costs and delivery times vary by location. We are not responsible for delays caused by customs or carrier issues."
-      },
-      {
-        "title": "5. Intellectual Property",
-        "content": "All content on this website, including designs and images of products, is protected by intellectual property rights."
-      },
-      {
-        "title": "6. Contact Us",
-        "content": "If you have any questions about these Terms, please contact us at legal@5ivearts.com"
-      }
-    ]
-  },
-  "cookie_banner": {
-    "tag": "Photopolymer Unit",
-    "title": "We're curing local cookies.",
-    "description": "Our system uses essential cookies to stabilize site performance and analyze traffic patterns layer by layer.",
-    "accept": "Accept Batch",
-    "preferences": "System Preferences"
-  },
-  "custom_order": {
-    "tagline": "Advanced Custom Protocol",
-    "logistics_title": "System Logistics",
-    "hero_title": "Bespoke Artifacts",
-    "hero_subtitle": "Transform your digital dreams into physical masterpieces with our artisan-led custom commission protocol.",
-    "flow_title": "The Commission Protocol",
-    "step1_title": "1. Asset Submission",
-    "step1_desc": "Upload your character renders or concept art. Our curators review every detail for feasibility.",
-    "step2_title": "2. Complexity Appraisal",
-    "step2_desc": "Our curators evaluate geometric density and painting complexity for a precision quote.",
-    "step3_title": "3. The Agreement",
-    "step3_desc": "Receive your custom quote. Secure the production slot with a 50% artifact deposit.",
-    "step4_title": "4. Master Craftsmanship",
-    "step4_desc": "Monitor progress in your private Vault with real-time photo updates from the workshop.",
-    "step5_title": "5. Final Deployment",
-    "step5_desc": "Settle the final balance upon completion. Insured global deployment to your coordinates.",
-    "auth_invite_title": "Ready to Begin Your Commission?",
-    "auth_invite_desc": "Establish a secure connection to our terminal to upload assets and track your artifact's fabrication.",
-    "cta_login": "Log In to Begin",
-    "cta_register": "Create Collector Account",
-    "cta_start": "Propose New Commission",
-    "benefit1_title": "Verified Security",
-    "benefit1_desc": "End-to-end encrypted asset transfers and secure payment integration for every commission.",
-    "benefit2_title": "Progress Transparency",
-    "benefit2_desc": "Real-time visual records added to your personal vault throughout the fabrication lifecycle.",
-    "benefit3_title": "Artisan Control",
-    "benefit3_desc": "Direct collaboration with our lead curators to ensure your prototype meets museum-grade standards.",
-    "success_title": "Protocol Initialized",
-    "success_subtitle": "Transmission Complete",
-    "success_message": "Your documentation has been encrypted and submitted to our lead curators. We will review the feasibility and complexity within 24-48 hours.",
-    "cta_vault": "Enter My Vault",
-    "proposal_step_identity_tag": "Artisan Bureau",
-    "proposal_step_identity_title": "Project Identity",
-    "proposal_field_title_label": "Character / Project Title",
-    "proposal_field_title_placeholder": "e.g. Master Chief - Mark VI",
-    "proposal_field_scale_label": "Desired Scale",
-    "proposal_field_finish_label": "Finish Protocol",
-    "proposal_cta_configure": "Configure Details",
-    "proposal_step_narrative_tag": "Bureau Documentation",
-    "proposal_step_narrative_title": "Narrative Scope",
-    "proposal_field_desc_label": "Project Description",
-    "proposal_field_desc_placeholder": "Describe your vision, specific poses, or reference details...",
-    "proposal_cta_upload": "Upload Assets",
-    "proposal_cta_back": "Back",
-    "proposal_step_visual_tag": "Visual Evidence",
-    "proposal_step_visual_title": "Asset Transmission",
-    "proposal_field_upload_label": "Add File",
-    "proposal_field_upload_hint": "Supported formats: JPG, PNG, WEBP (MAX 3)",
-    "proposal_cta_submit": "Submit Commission",
-    "error_max_files": "Maximum 3 reference images allowed",
-    "error_required_fields": "Please complete all required fields and upload at least one image.",
-    "scales": {
-      "1:12": "1:12 Scale",
-      "1:10": "1:10 Scale",
-      "1:6": "1:6 Scale",
-      "1:4": "1:4 Scale",
-      "other": "Other / Custom"
-    },
-    "finishes": {
-      "raw": "Raw (Grey Resin)",
-      "standard": "Painted (Standard)",
-      "master": "Painted (Master Grade)"
-    }
-  },
-  "marketing": {
-    "trendingTag": "Most Desired Protocol",
-    "trendingTitle": "Artifacts Under Observation",
-    "interestSync": "Real-time Interest Sync",
-    "activeCitations": "{count} Active Citations"
-  },
-  "products_ui": {
-    "inspect": "Inspect Artifact"
-  }
 }

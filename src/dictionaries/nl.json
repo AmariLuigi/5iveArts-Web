@@ -1,577 +1,579 @@
 {
-  "nav": {
-    "products": "Producten",
-    "faq": "Veelgestelde Vragen",
-    "shipping": "Verzending",
-    "cart": "Winkelwagen",
-    "login": "Inloggen",
-    "admin": "Beheer",
-    "discovery": "Ontdekking",
-    "terminal": "Terminal Toegang",
-    "regional": "Regionale Projectie",
-    "switchRegion": "Regio Wisselen",
-    "vault": "Kluis",
-    "warehouse": "Magazijn",
-    "access": "Toegang",
-    "wishlist": "Verlanglijst",
-    "customOrder": "Aangepaste Bestellingen"
-  },
-  "home": {
-    "title": "5iveArts - Ambachtelijke Precisie",
-    "hero_title": "AMBACHTELIJKE PRECISIE",
-    "hero_subtitle": "Elk figuur is een uniek stuk, met passie gesculpt en met uiterste zorg afgewerkt.",
-    "cta_button": "ONTDEK COLLECTIE",
-    "featured_products": "UITGELICHTE PRODUCTEN",
-    "explore_all": "Alles Verkennen"
-  },
-  "homepage": {
-    "featuredHeading": "Premium 3D-Geprinte Resin Figuren Collecties",
-    "viewAll": "Alle Stukken Bekijken",
-    "testimonialsHeading": "Vertrouwd door Wereldwijde Verzamelaars",
-    "reviewsLabel": "Geverifieerde Recensies",
-    "collectorChoice": "Keuze van de Verzamelaar",
-    "premiumSeries": "Premium Serie",
-    "collectorsVault": "Verzamelaarskluis",
-    "satisfactionRate": "Tevredenheidspercentage",
-    "countriesServed": "Landen Bediend",
-    "yearsExperience": "Jaren Ervaring"
-  },
-  "products": {
-    "title": "Model Arsenaal",
-    "subtitle": "Blader door onze collectie handgemaakte figuren.",
-    "all": "Alle Meesterwerken",
-    "categories": "Categorieën",
-    "filter": "Filteren",
-    "viewDetails": "DETAILS BEKIJKEN",
-    "addToCart": "Aan Winkelwagen Toevoegen",
-    "scale": "Schaal",
-    "finish": "Afwerking",
-    "painted": "Handbeschilderd",
-    "raw": "Rauwe Resin",
-    "description": "Beschrijving",
-    "shippingInfo": "Verzending & Afhandeling",
-    "customerReviews": "Klantenrecensies",
-    "specifications": "Specificaties",
-    "returnPolicy": "Retourbeleid",
-    "securePayment": "Veilige Betaling",
-    "insuredShipping": "Verzekerde Verzending",
-    "price": "Prijs",
-    "details": "Details Bekijken",
-    "startingFrom": "Vanaf",
-    "deploymentConfig": "Inzetconfiguratie",
-    "selectPrototype": "Selecteer Prototype & Afwerking"
-  },
-  "cart": {
-    "title": "Kluis Winkelwagen",
-    "empty": "Je winkelwagen is leeg",
-    "emptyMessage": "Het lijkt erop dat je nog geen figuren hebt toegevoegd.",
-    "returnToShop": "Terug naar de winkel",
-    "subtotal": "Subtotaal",
-    "shippingCost": "Verzending",
-    "total": "Totaal",
-    "checkout": "Doorgaan naar Afrekenen",
-    "remove": "Verwijderen",
-    "item": "artikel",
-    "items": "artikelen",
-    "secureCheckout": "Veilig Afrekenen",
-    "insuredShipping": "Verzekerde Wereldwijde Verzending",
-    "thirtyDayReturns": "30 Dagen Retourneren",
-    "orderSummary": "Besteloverzicht",
-    "calculatedAtCheckout": "Berekend bij afrekenen",
-    "estimatedTotal": "Geschat Totaal",
-    "proceedToCheckout": "Doorgaan naar Afrekenen",
-    "continueShopping": "Verder Winkelen",
-    "freeShipping": "Gratis verzending boven {amount}",
-    "shipping": "Verzending",
-    "emptyArsenal": "Leeg Arsenaal",
-    "checkoutFlow": "Checkout Flow",
-    "yourCart": "Je Winkelwagen",
-    "clearCart": "Winkelwagen Legen",
-    "returnShop": "Terug naar Winkel",
-    "grandTotal": "Eindtotaal",
-    "calculatingLogistics": "Logistiek Berekenen..."
-  },
-  "auth": {
-    "verification": "Identiteitsverificatie",
-    "terminal": "Toegangsterminal",
-    "portal": "Beveiligd portaal voor 5iveArts Verzamelaars",
-    "login": "Inloggen",
-    "register": "Registreren",
-    "emailLabel": "Neural Link (E-mail)",
-    "passwordLabel": "Beveiligingssleutel (Wachtwoord)",
-    "verifyBtn": "Sessie Verifiëren",
-    "registerBtn": "Link Leggen",
-    "tunnel": "End-to-End Versleutelde Tunnel",
-    "guidelines": "Door de terminal te betreden, ga je akkoord met onze Protocolrichtlijnen",
-    "backHome": "Terug naar Publiek HQ",
-    "emailPlaceholder": "VERZAMELAAR@5IVEARTS.COM",
-    "title": "Toegang Magazijn",
-    "subtitle": "Toegang tot je activa en logistieke rapporten.",
-    "loginBtn": "Verbinding Maken"
-  },
-  "faq": {
-    "infoCenter": "Informatiecentrum",
-    "title": "F.A.Q & Contact",
-    "subtitle": "Alles wat je moet weten over ons ambachtelijke proces, logistiek en verzamelaarsprotocollen.",
-    "questions": [
-      {
-        "q": "Hoe worden de figuren gemaakt?",
-        "a": "Elk figuur begint als een 3D-print met hoge resolutie (0,025 mm laagdikte) met resin van industriële kwaliteit. Eenmaal uitgehard besteden onze kunstenaars uren aan het met de hand beschilderen van elk stuk met professionele acrylverf en airbrushtechnieken, afgewerkt met een UV-bestendige vernis van museumkwaliteit."
-      },
-      {
-        "q": "Verzenden jullie internationaal?",
-        "a": "Ja! Wij verzenden vanuit onze studio in Italië naar verzamelaars wereldwijd. We maken gebruik van verzekerde wereldwijde koeriers om ervoor te zorgen dat je meesterwerk veilig aankomt."
-      },
-      {
-        "q": "Hoe lang duurt de productie?",
-        "a": "Omdat elk stuk op bestelling wordt gemaakt of met de hand wordt afgewerkt, moet je rekenen op 7-14 dagen voor productie vóór verzending. We haasten de kunst niet."
-      },
-      {
-        "q": "Wat is jullie retourbeleid?",
-        "a": "Wij bieden een retourbeleid van 30 dagen voor artikelen die beschadigd aankomen of aanzienlijk afwijken van de beschrijving. Omdat dit handgemaakte kunstwerken zijn, kunnen we geen retourzendingen accepteren voor 'bedenktijd'."
-      }
+    "nav": {
+        "products": "Producten",
+        "faq": "Veelgestelde Vragen",
+        "shipping": "Verzending",
+        "cart": "Winkelwagen",
+        "login": "Inloggen",
+        "admin": "Beheer",
+        "discovery": "Ontdekking",
+        "terminal": "Terminal Toegang",
+        "regional": "Regionale Projectie",
+        "switchRegion": "Regio Wisselen",
+        "vault": "Kluis",
+        "warehouse": "Magazijn",
+        "access": "Toegang",
+        "wishlist": "Verlanglijst",
+        "customOrder": "Aangepaste Bestellingen"
+    },
+    "home": {
+        "title": "5iveArts - Ambachtelijke Precisie",
+        "hero_title": "AMBACHTELIJKE PRECISIE",
+        "hero_subtitle": "Elk figuur is een uniek stuk, met passie gesculpt en met uiterste zorg afgewerkt.",
+        "cta_button": "ONTDEK COLLECTIE",
+        "featured_products": "UITGELICHTE PRODUCTEN",
+        "explore_all": "Alles Verkennen"
+    },
+    "homepage": {
+        "featuredHeading": "Premium 3D-Geprinte Resin Figuren Collecties",
+        "viewAll": "Alle Stukken Bekijken",
+        "testimonialsHeading": "Vertrouwd door Wereldwijde Verzamelaars",
+        "reviewsLabel": "Geverifieerde Recensies",
+        "collectorChoice": "Keuze van de Verzamelaar",
+        "premiumSeries": "Premium Serie",
+        "collectorsVault": "Verzamelaarskluis",
+        "satisfactionRate": "Tevredenheidspercentage",
+        "countriesServed": "Landen Bediend",
+        "yearsExperience": "Jaren Ervaring"
+    },
+    "products": {
+        "title": "Model Arsenaal",
+        "subtitle": "Blader door onze collectie handgemaakte figuren.",
+        "all": "Alle Meesterwerken",
+        "categories": "Categorieën",
+        "filter": "Filteren",
+        "viewDetails": "DETAILS BEKIJKEN",
+        "addToCart": "Aan Winkelwagen Toevoegen",
+        "scale": "Schaal",
+        "finish": "Afwerking",
+        "painted": "Handbeschilderd",
+        "raw": "Rauwe Resin",
+        "description": "Beschrijving",
+        "shippingInfo": "Verzending & Afhandeling",
+        "customerReviews": "Klantenrecensies",
+        "specifications": "Specificaties",
+        "returnPolicy": "Retourbeleid",
+        "securePayment": "Veilige Betaling",
+        "insuredShipping": "Verzekerde Verzending",
+        "price": "Prijs",
+        "details": "Details Bekijken",
+        "startingFrom": "Vanaf",
+        "deploymentConfig": "Inzetconfiguratie",
+        "selectPrototype": "Selecteer Prototype & Afwerking"
+    },
+    "cart": {
+        "title": "Kluis Winkelwagen",
+        "empty": "Je winkelwagen is leeg",
+        "emptyMessage": "Het lijkt erop dat je nog geen figuren hebt toegevoegd.",
+        "returnToShop": "Terug naar de winkel",
+        "subtotal": "Subtotaal",
+        "shippingCost": "Verzending",
+        "total": "Totaal",
+        "checkout": "Doorgaan naar Afrekenen",
+        "remove": "Verwijderen",
+        "item": "artikel",
+        "items": "artikelen",
+        "secureCheckout": "Veilig Afrekenen",
+        "insuredShipping": "Verzekerde Wereldwijde Verzending",
+        "thirtyDayReturns": "30 Dagen Retourneren",
+        "orderSummary": "Besteloverzicht",
+        "calculatedAtCheckout": "Berekend bij afrekenen",
+        "estimatedTotal": "Geschat Totaal",
+        "proceedToCheckout": "Doorgaan naar Afrekenen",
+        "continueShopping": "Verder Winkelen",
+        "freeShipping": "Gratis verzending boven {amount}",
+        "shipping": "Verzending",
+        "emptyArsenal": "Leeg Arsenaal",
+        "checkoutFlow": "Checkout Flow",
+        "yourCart": "Je Winkelwagen",
+        "clearCart": "Winkelwagen Legen",
+        "returnShop": "Terug naar Winkel",
+        "grandTotal": "Eindtotaal",
+        "calculatingLogistics": "Logistiek Berekenen..."
+    },
+    "auth": {
+        "verification": "Identiteitsverificatie",
+        "terminal": "Toegangsterminal",
+        "portal": "Beveiligd portaal voor 5iveArts Verzamelaars",
+        "login": "Inloggen",
+        "register": "Registreren",
+        "emailLabel": "Neural Link (E-mail)",
+        "passwordLabel": "Beveiligingssleutel (Wachtwoord)",
+        "verifyBtn": "Sessie Verifiëren",
+        "registerBtn": "Link Leggen",
+        "tunnel": "End-to-End Versleutelde Tunnel",
+        "guidelines": "Door de terminal te betreden, ga je akkoord met onze Protocolrichtlijnen",
+        "backHome": "Terug naar Publiek HQ",
+        "emailPlaceholder": "VERZAMELAAR@5IVEARTS.COM",
+        "title": "Toegang Magazijn",
+        "subtitle": "Toegang tot je activa en logistieke rapporten.",
+        "loginBtn": "Verbinding Maken"
+    },
+    "faq": {
+        "infoCenter": "Informatiecentrum",
+        "title": "F.A.Q & Contact",
+        "subtitle": "Alles wat je moet weten over ons ambachtelijke proces, logistiek en verzamelaarsprotocollen.",
+        "questions": [
+            {
+                "q": "Hoe worden de figuren gemaakt?",
+                "a": "Elk figuur begint als een 3D-print met hoge resolutie (0,025 mm laagdikte) met resin van industriële kwaliteit. Eenmaal uitgehard besteden onze kunstenaars uren aan het met de hand beschilderen van elk stuk met professionele acrylverf en airbrushtechnieken, afgewerkt met een UV-bestendige vernis van museumkwaliteit."
+            },
+            {
+                "q": "Verzenden jullie internationaal?",
+                "a": "Ja! Wij verzenden vanuit onze studio in Italië naar verzamelaars wereldwijd. We maken gebruik van verzekerde wereldwijde koeriers om ervoor te zorgen dat je meesterwerk veilig aankomt."
+            },
+            {
+                "q": "Hoe lang duurt de productie?",
+                "a": "Omdat elk stuk op bestelling wordt gemaakt of met de hand wordt afgewerkt, moet je rekenen op 7-14 dagen voor productie vóór verzending. We haasten de kunst niet."
+            },
+            {
+                "q": "Wat is jullie retourbeleid?",
+                "a": "Wij bieden een retourbeleid van 30 dagen voor artikelen die beschadigd aankomen of aanzienlijk afwijken van de beschrijving. Omdat dit handgemaakte kunstwerken zijn, kunnen we geen retourzendingen accepteren voor 'bedenktijd'."
+            }
+        ],
+        "stillHaveQuestions": "Nog vragen?",
+        "curatorsMessage": "Onze curatoren staan stand-by om te helpen met aangepaste opdrachten en protocolondersteuning.",
+        "emailUs": "E-mail ons",
+        "liveChat": "Live Chat",
+        "offline": "Offline"
+    },
+    "errors": {
+        "invalidLogin": "Toegang Geweigerd. Zorg ervoor dat je beveiligingssleutel correct is en je identiteitslink is geverifieerd.",
+        "confirmationSent": "Bevestigingsmail verzonden. Controleer je inbox om je terminal te activeren.",
+        "stripeLoadError": "Laden van betaalformulier mislukt. Ververs de pagina en probeer het opnieuw.",
+        "unexpectedError": "Er is een onverwachte fout opgetreden. Probeer het opnieuw.",
+        "signupFailed": "Registratie mislukt. Probeer het opnieuw.",
+        "genericError": "Er is iets misgegaan",
+        "verifyStatusError": "We konden je betalingsstatus niet verifiëren. Als je een bevestigingsmail hebt ontvangen, wordt je bestelling verwerkt.",
+        "maxFeatured": "Maximaal 3 toegestaan."
+    },
+    "success": {
+        "orderConfirmed": "Bestelling Bevestigd",
+        "thankYou": "Bedankt voor je aankoop bij 5iveArts",
+        "confEmailSent": "Er is een bevestigingsmail verzonden naar",
+        "shippingNote": "Je figuur wordt zorgvuldig verpakt en verzonden met live tracking.",
+        "logisticsLog": "Beveiligings- & Logistiek Log",
+        "syncComplete": "Synchronisatie Voltooid & E-mail Verzonden",
+        "resendEmail": "E-mail niet ontvangen? Opnieuw verzenden",
+        "paymentVerified": "Betaling geverifieerd.",
+        "fulfillmentNote": "Je figuur wordt nu voorbereid met aangepaste schuimvulling.",
+        "vaultEstablished": "Kluis Gevestigd",
+        "orderLinked": "Je bestelling is nu permanent gekoppeld aan je beveiligde account.",
+        "goWarehouse": "Ga naar mijn Magazijn",
+        "secureCollection": "Beveilig je Collectie",
+        "createAccount": "ACCOUNT AANMAKEN",
+        "securing": "Beveiligen...",
+        "returnHQ": "Terug naar HQ"
+    },
+    "checkout": {
+        "gateway": "Beveiligde Gateway",
+        "checkout": "Afrekenen",
+        "chooseSaved": "Toegang tot Opgeslagen Routes",
+        "useThis": "Route Autoriseren",
+        "newAddress": "Nieuw Protocol Vaststellen",
+        "saveToVault": "Registreer deze verzendroute in mijn beveiligde kluis",
+        "verifying": "Beveiligde Transactie Verifiëren...",
+        "loadingForm": "Betalingsprotocollen laden...",
+        "processing": "Betaling verwerken...",
+        "payNow": "Betaling Autoriseren",
+        "securedBy": "Beveiligd door Stripe Intelligence",
+        "encryptionNote": "Je verbinding is versleuteld met RSA-4096 en AES-256 standaarden. We slaan nooit onbewerkte betalingsgegevens op onze servers op.",
+        "deliveryStep": "1. Levering",
+        "shippingStep": "2. Verzending",
+        "paymentStep": "3. Betaling",
+        "recipientName": "Naam Ontvanger *",
+        "collectorPlaceholder": "Naam van Verzamelaar",
+        "emailAddress": "E-mailadres *",
+        "vault": "Kluis",
+        "streetAddress": "Adres *",
+        "addressLine1": "Adresregel 1",
+        "suite": "Appartement / Unit / Verdieping",
+        "optional": "Optioneel",
+        "postcode": "Postcode *",
+        "zipPlaceholder": "Postcode",
+        "selectCountryFirst": "(Selecteer eerst land)",
+        "city": "Stad *",
+        "detecting": "(Detecteren…)",
+        "autoFilled": "(Automatisch ingevuld)",
+        "enterManually": "(Handmatig invoeren)",
+        "state": "Staat / Provincie *",
+        "phoneLabel": "Telefoonverbinding *",
+        "invalidFormat": "(Ongeldig formaat)",
+        "validNumber": "(Geldig nummer)",
+        "includeCode": "(Inclusief + code)",
+        "continueBtn": "Doorgaan naar Verzendopties",
+        "recalculating": "Wereldwijde Logistiek Herberekenen...",
+        "backBtn": "Terug naar Levering",
+        "changeShipping": "Verzendoptie Wijzigen",
+        "connecting": "Verbinding maken met beveiligde betaalgateway. Handshaking met PCI-DSS-protocollen...",
+        "syncing": "Transactielaag Synchroniseren",
+        "orderReview": "Bestelling Beoordelen",
+        "subtotal": "Subtotaal Artikelen",
+        "logistics": "Logistiek & Afhandeling",
+        "tbd": "Nader te bepalen",
+        "grandTotal": "Eindtotaal",
+        "initGateway": "Gateway Initialiseren...",
+        "proceedBtn": "Doorgaan naar Betaling",
+        "emptyArsenalTitle": "Leeg Arsenaal",
+        "emptyArsenalDesc": "Het lijkt erop dat je nog geen figuren aan je collectie hebt toegevoegd.",
+        "returnShop": "Terug naar Winkel",
+        "deliveryEstimate": "Levering:",
+        "businessDay": "werkdag",
+        "businessDays": "werkdagen"
+    },
+    "product_detail": {
+        "handPaintedTag": "Handbeschilderd & 3D Geprint",
+        "customerReviews": "klantenrecensies",
+        "selectScale": "Selecteer Schaal (Ca. Hoogte)",
+        "selectFinish": "Selecteer Afwerking",
+        "handPainted": "Handbeschilderd",
+        "rawKit": "Basis Kit (Grijze Resin)",
+        "museumGrade": "Afwerking van museumkwaliteit",
+        "primed": "Klaar voor aangepast werk",
+        "description": "Beschrijving",
+        "specifications": "Kenmerken & Specificaties",
+        "encryptedCheckout": "Versleuteld Afrekenen via Stripe",
+        "insuredShipping": "Verzekerde Wereldwijde Verzending",
+        "confirmed": "Bevestigd",
+        "addToCollection": "Toevoegen aan Arsenaal",
+        "instantCheckout": "Direct Kopen",
+        "features": [
+            "Hoge Resolutie Industriële Resin",
+            "Professionele Ambachtelijke Handbeschildering",
+            "UV-Bestendige Vernis van Museumkwaliteit",
+            "Precisie Detailopname (0,025 mm)"
+        ],
+        "readMore": "Lees Meer",
+        "readLess": "Lees Minder"
+    },
+    "trust": [
+        {
+            "label": "Veilig Afrekenen",
+            "sub": "Mogelijk gemaakt door Stripe"
+        },
+        {
+            "label": "Verzekerde Wereldwijde Verzending",
+            "sub": "Wereldwijde levering"
+        },
+        {
+            "label": "Handgemaakt",
+            "sub": "Elk figuur uniek"
+        },
+        {
+            "label": "30 Dagen Retourneren",
+            "sub": "Zonder gedoe"
+        }
     ],
-    "stillHaveQuestions": "Nog vragen?",
-    "curatorsMessage": "Onze curatoren staan stand-by om te helpen met aangepaste opdrachten en protocolondersteuning.",
-    "emailUs": "E-mail ons",
-    "liveChat": "Live Chat",
-    "offline": "Offline"
-  },
-  "errors": {
-    "invalidLogin": "Toegang Geweigerd. Zorg ervoor dat je beveiligingssleutel correct is en je identiteitslink is geverifieerd.",
-    "confirmationSent": "Bevestigingsmail verzonden. Controleer je inbox om je terminal te activeren.",
-    "stripeLoadError": "Laden van betaalformulier mislukt. Ververs de pagina en probeer het opnieuw.",
-    "unexpectedError": "Er is een onverwachte fout opgetreden. Probeer het opnieuw.",
-    "signupFailed": "Registratie mislukt. Probeer het opnieuw.",
-    "genericError": "Er is iets misgegaan",
-    "verifyStatusError": "We konden je betalingsstatus niet verifiëren. Als je een bevestigingsmail hebt ontvangen, wordt je bestelling verwerkt.",
-    "maxFeatured": "Maximaal 3 toegestaan."
-  },
-  "success": {
-    "orderConfirmed": "Bestelling Bevestigd",
-    "thankYou": "Bedankt voor je aankoop bij 5iveArts",
-    "confEmailSent": "Er is een bevestigingsmail verzonden naar",
-    "shippingNote": "Je figuur wordt zorgvuldig verpakt en verzonden met live tracking.",
-    "logisticsLog": "Beveiligings- & Logistiek Log",
-    "syncComplete": "Synchronisatie Voltooid & E-mail Verzonden",
-    "resendEmail": "E-mail niet ontvangen? Opnieuw verzenden",
-    "paymentVerified": "Betaling geverifieerd.",
-    "fulfillmentNote": "Je figuur wordt nu voorbereid met aangepaste schuimvulling.",
-    "vaultEstablished": "Kluis Gevestigd",
-    "orderLinked": "Je bestelling is nu permanent gekoppeld aan je beveiligde account.",
-    "goWarehouse": "Ga naar mijn Magazijn",
-    "secureCollection": "Beveilig je Collectie",
-    "createAccount": "ACCOUNT AANMAKEN",
-    "securing": "Beveiligen...",
-    "returnHQ": "Terug naar HQ"
-  },
-  "checkout": {
-    "gateway": "Beveiligde Gateway",
-    "checkout": "Afrekenen",
-    "chooseSaved": "Toegang tot Opgeslagen Routes",
-    "useThis": "Route Autoriseren",
-    "newAddress": "Nieuw Protocol Vaststellen",
-    "saveToVault": "Registreer deze verzendroute in mijn beveiligde kluis",
-    "verifying": "Beveiligde Transactie Verifiëren...",
-    "loadingForm": "Betalingsprotocollen laden...",
-    "processing": "Betaling verwerken...",
-    "payNow": "Betaling Autoriseren",
-    "securedBy": "Beveiligd door Stripe Intelligence",
-    "encryptionNote": "Je verbinding is versleuteld met RSA-4096 en AES-256 standaarden. We slaan nooit onbewerkte betalingsgegevens op onze servers op.",
-    "deliveryStep": "1. Levering",
-    "shippingStep": "2. Verzending",
-    "paymentStep": "3. Betaling",
-    "recipientName": "Naam Ontvanger *",
-    "collectorPlaceholder": "Naam van Verzamelaar",
-    "emailAddress": "E-mailadres *",
-    "vault": "Kluis",
-    "streetAddress": "Adres *",
-    "addressLine1": "Adresregel 1",
-    "suite": "Appartement / Unit / Verdieping",
-    "optional": "Optioneel",
-    "postcode": "Postcode *",
-    "zipPlaceholder": "Postcode",
-    "selectCountryFirst": "(Selecteer eerst land)",
-    "city": "Stad *",
-    "detecting": "(Detecteren…)",
-    "autoFilled": "(Automatisch ingevuld)",
-    "enterManually": "(Handmatig invoeren)",
-    "state": "Staat / Provincie *",
-    "phoneLabel": "Telefoonverbinding *",
-    "invalidFormat": "(Ongeldig formaat)",
-    "validNumber": "(Geldig nummer)",
-    "includeCode": "(Inclusief + code)",
-    "continueBtn": "Doorgaan naar Verzendopties",
-    "recalculating": "Wereldwijde Logistiek Herberekenen...",
-    "backBtn": "Terug naar Levering",
-    "changeShipping": "Verzendoptie Wijzigen",
-    "connecting": "Verbinding maken met beveiligde betaalgateway. Handshaking met PCI-DSS-protocollen...",
-    "syncing": "Transactielaag Synchroniseren",
-    "orderReview": "Bestelling Beoordelen",
-    "subtotal": "Subtotaal Artikelen",
-    "logistics": "Logistiek & Afhandeling",
-    "tbd": "Nader te bepalen",
-    "grandTotal": "Eindtotaal",
-    "initGateway": "Gateway Initialiseren...",
-    "proceedBtn": "Doorgaan naar Betaling",
-    "emptyArsenalTitle": "Leeg Arsenaal",
-    "emptyArsenalDesc": "Het lijkt erop dat je nog geen figuren aan je collectie hebt toegevoegd.",
-    "returnShop": "Terug naar Winkel",
-    "deliveryEstimate": "Levering:",
-    "businessDay": "werkdag",
-    "businessDays": "werkdagen"
-  },
-  "product_detail": {
-    "handPaintedTag": "Handbeschilderd & 3D Geprint",
-    "customerReviews": "klantenrecensies",
-    "selectScale": "Selecteer Schaal (Ca. Hoogte)",
-    "selectFinish": "Selecteer Afwerking",
-    "handPainted": "Handbeschilderd",
-    "rawKit": "Basis Kit (Grijze Resin)",
-    "museumGrade": "Afwerking van museumkwaliteit",
-    "primed": "Klaar voor aangepast werk",
-    "description": "Beschrijving",
-    "specifications": "Kenmerken & Specificaties",
-    "encryptedCheckout": "Versleuteld Afrekenen via Stripe",
-    "insuredShipping": "Verzekerde Wereldwijde Verzending",
-    "confirmed": "Bevestigd",
-    "addToCollection": "Toevoegen aan Arsenaal",
-    "instantCheckout": "Direct Kopen",
-    "features": [
-      "Hoge Resolutie Industriële Resin",
-      "Professionele Ambachtelijke Handbeschildering",
-      "UV-Bestendige Vernis van Museumkwaliteit",
-      "Precisie Detailopname (0,025 mm)"
-    ],
-    "readMore": "Lees Meer",
-    "readLess": "Lees Minder"
-  },
-  "trust": [
-    {
-      "label": "Veilig Afrekenen",
-      "sub": "Mogelijk gemaakt door Stripe"
+    "account": {
+        "portal": "Beveiligd Magazijn Portaal",
+        "title": "Mijn Account",
+        "databaseFor": "Toegang tot database voor:",
+        "security": "Beveiliging",
+        "decommission": "Sessie Beëindigen",
+        "activeAssets": "Actieve Activa",
+        "totalAcquisitions": "Totaal aantal geregistreerde aankopen",
+        "status": "Accountstatus",
+        "verifiedCollector": "Geverifieerde Verzamelaar",
+        "level1Encryption": "Niveau 1 Versleuteling",
+        "history": "Aankoopgeschiedenis",
+        "verificationRequired": "Verificatie Vereist",
+        "verificationDesc": "Verifieer je identiteit om toegang te krijgen tot alle functies",
+        "resendLink": "Link Opnieuw Verzenden",
+        "neuralLinkError": "Neural Link Fout",
+        "syncFailed": "Synchronisatie met centrale orderkluis mislukt.",
+        "noAssets": "Nog geen activa geregistreerd in de kluis.",
+        "browseCollection": "Collectie Bekijken",
+        "recorded": "Geregistreerd:",
+        "investment": "Investering",
+        "prepPhaseActive": "Voorbereidingsfase",
+        "inTransit": "Onderweg:",
+        "fullLogistics": "Volledige Logistieke Gegevens",
+        "settings": {
+            "title": "Beveiligingskluis",
+            "subtitle": "Beheer je verzamelaarsidentiteit en toegangsprotocollen.",
+            "identityVerification": "Identiteitsverificatie",
+            "verified": "Geverifieerd",
+            "pending": "Verificatie in Afwachting",
+            "guestProtected": "Je toegang is momenteel in een 'Gastbewaakte' staat. Sommige gegevens over de orderafhandeling vereisen een geverifieerde identiteit.",
+            "requestLink": "Nieuwe Verificatielink Aanvragen",
+            "addresses": "Verzendbestemmingen",
+            "addAddress": "Nieuw Protocol Registreren",
+            "noAddresses": "Geen bestemmingen geregistreerd in de kluis.",
+            "default": "Primaire Route",
+            "setDefault": "Instellen als Primair",
+            "edit": "Wijzigen",
+            "delete": "Verwijderen",
+            "confirmDelete": "Weet je zeker dat je deze verzendroute wilt verwijderen?"
+        },
+        "wishlist": {
+            "title": "Mijn Curator Verlanglijst",
+            "subtitle": "Artifacten onder Observatie",
+            "emptyTitle": "Je Verlanglijst is Leeg",
+            "emptyDescription": "Bekijk onze artefacten en markeer degene die resoneren met jouw curatorstijl voor toekomstige aankoop."
+        }
     },
-    {
-      "label": "Verzekerde Wereldwijde Verzending",
-      "sub": "Wereldwijde levering"
+    "orders": {
+        "orderNum": "Bestelling #",
+        "recorded": "Geregistreerd:",
+        "investment": "Investering",
+        "quantity": "Aantal:",
+        "qty": "Aant:",
+        "prepPhase": "Voorbereidingsfase Actief",
+        "inTransit": "Onderweg:",
+        "logisticsData": "Volledige Logistieke Gegevens",
+        "warehouse": "Mijn Magazijn",
+        "operation": "Operatie #",
+        "logged": "Gelogd:",
+        "verifiedAcquisition": "Geverifieerde Aankoop",
+        "trackShipment": "ZENDING VOLGEN",
+        "exportInvoice": "FACTUUR EXPORTEREN",
+        "lifecycle": "Inzet Levenscyclus",
+        "paymentConfirmed": "Betaling Bevestigd",
+        "fundsVerified": "Aankoopfondsen geverifieerd en beveiligd.",
+        "prepPhaseActive": "Voorbereidingsfase",
+        "isolationNote": "Figuurisolatie en beschermend schuim aangebracht.",
+        "shipped": "Verzonden",
+        "logisticsSuccess": "Logistiek beveiligd en onderweg naar bestemming.",
+        "delivered": "Geleverd",
+        "acquired": "Meesterwerk is aangeschaft en beveiligd.",
+        "deploymentZone": "Inzetzone",
+        "carrierProtocol": "Vervoerdersprotocol",
+        "class": "Klasse: Geregistreerd Volgen",
+        "settlement": "Afrekening",
+        "transactionSecure": "Transactie Veilig",
+        "discrepancy": "Logistieke Afwijking?",
+        "contactHQ": "NEEM CONTACT OP MET HQ",
+        "sku": "SKU:",
+        "backToWarehouse": "Terug naar Magazijn",
+        "reportTitle": "Volledig Logistiek Rapport",
+        "paid": "Betaald",
+        "processing": "Verwerken",
+        "cancelled": "Geannuleerd",
+        "pConfirmed": "Betaling Bevestigd",
+        "pConfirmedDesc": "Aankoopfondsen geverifieerd en beveiligd.",
+        "prepPhaseDesc": "Figuurisolatie en beschermende schuimintegratie.",
+        "inTransitDesc": "Magazijnkluis verlaten. Overdracht aan logistiek.",
+        "manifest": "Activa Manifest",
+        "itemDetails": "Artikeldetails",
+        "subtotal": "Aankoop Subtotaal",
+        "shipping": "Logistieke Toeslag",
+        "totalContribution": "Totale Portefeuillebijdrage",
+        "depositPaid": "Aanbetaling voldaan (50%)",
+        "remainingBalance": "Openstaand bedrag (Protocol)"
     },
-    {
-      "label": "Handgemaakt",
-      "sub": "Elk figuur uniek"
+    "footer": {
+        "logistics": "Wereldwijde Ambachtelijke Vakmanschap Logistiek Ingeschakeld",
+        "rights": "© 2026 5iveArts Collector Series. Alle rechten voorbehouden.",
+        "privacy": "Privacy",
+        "terms": "Voorwaarden",
+        "description": "Boutiquestudio voor premium handbeschilderde en 3D-geprinte resin figuren. Wij verzenden meesterwerken van museumkwaliteit naar liefhebbers wereldwijd vanuit onze werkplaats in Palermo.",
+        "seoAbout": "5iveArts is een vooraanstaande boutiquestudio gespecialiseerd in het creëren van premium 3D-geprinte resin figuren en handbeschilderde verzamelobjecten. Onze ambachtelijke serie richt zich op extreem detail, waarbij gebruik wordt gemaakt van 0,025 mm laaghoogtes om museumkwaliteit te garanderen voor elk figuur dat we produceren. Met een wereldwijd verzendnetwerk bedienen we een toegewijde gemeenschap van verzamelaars die de kruising van industriële precisie en handgemaakte kunst waarderen. Elk stuk in onze serie is uniek, afgewerkt met professionele airbrush- en UV-bestendige vernissen om je investering jarenlang te beschermen."
     },
-    {
-      "label": "30 Dagen Retourneren",
-      "sub": "Zonder gedoe"
+    "shipping": {
+        "protocol": "Logistiek Protocol",
+        "title": "Wereldwijde Verzending",
+        "subtitle": "Veilige, verzekerde en gevolgde levering voor elk meesterwerk in de collectie.",
+        "insuredTitle": "Verzekerde Afhandeling",
+        "insuredText": "Elk figuur wordt verpakt met op maat gemaakt schuim met hoge dichtheid en dubbelwandige verzamelaarsdozen. We verzekeren elke zending tegen verlies of beschadiging tijdens het transport.",
+        "freeTierTitle": "Gratis Verzending Niveau",
+        "freeTierText": "We belonen serieuze verzamelaars. Alle bestellingen boven {amount} komen automatisch in aanmerking voor GRATIS STANDAARD VERZENDING, ongeacht je locatie.",
+        "dynamicTitle": "Dynamische Logistiek",
+        "dynamicText": "We maken gebruik van Packlink PRO om real-time, verzekerde verzendtarieven te bieden van premium vervoerders zoals UPS, DHL en FedEx. Je specifieke tarief wordt berekend tijdens het afrekenen op basis van je exacte locatie en de afmetingen van het pakket.",
+        "zonesTitle": "Geschatte Transittijden",
+        "region": "Regio",
+        "standard": "Standaard",
+        "express": "Express",
+        "estTime": "Geschatte Tijd",
+        "trackingInfo": "Live wereldwijde tracking op alle bestellingen",
+        "italy": "Italië",
+        "eu": "Europese Unie",
+        "uk": "Verenigd Koninkrijk",
+        "global": "Wereldwijd / Rest van de Wereld",
+        "days1_3": "1-3 Dagen",
+        "days3_5": "3-5 Dagen",
+        "days4_7": "4-7 Dagen",
+        "days7_14": "7-14 Dagen",
+        "carrierActive": "Wereldwijd Koeriersnetwerk Actief"
+    },
+    "hero": {
+        "slides": [
+            {
+                "tagline": "Premium Resin Precisie",
+                "headline": "3D-Geprinte",
+                "headlineHighlight": "Meesterwerken",
+                "subtext": "Hoge resolutie resin figuren met 0,025 mm laagdikte — museumkwaliteit in elk ambachtelijk vervaardigd stuk."
+            },
+            {
+                "tagline": "Handgemaakt Ambachtelijk Detail",
+                "headline": "Deskundig",
+                "headlineHighlight": "Handbeschilderd",
+                "subtext": "Unieke schaduwwerking en professionele airbrushtechnieken brengen je favoriete personages tot leven, stuk voor uniek stuk."
+            }
+        ],
+        "cta": "Nu Winkelen",
+        "trust": {
+            "quality": "Gecertificeerde Kwaliteit",
+            "handFinished": "Handmatig Afgewerkt",
+            "logistics": "Wereldwijde Logistiek"
+        }
+    },
+    "features": {
+        "handPainted": {
+            "title": "Handbeschilderd",
+            "text": "Elk figuur is handbeschilderd met professionele acrylverf"
+        },
+        "threeDPrinted": {
+            "title": "3D-Geprint",
+            "text": "Hoge resolutie 0,025 mm laaghoogtes"
+        },
+        "fastShipping": {
+            "title": "Snelle Verzending",
+            "text": "Verzekerde wereldwijde levering met tracking"
+        },
+        "secureCheckout": {
+            "title": "Veilig Afrekenen",
+            "text": "Betalingen veilig afgehandeld door Stripe"
+        }
+    },
+    "ctaSection": {
+        "heading": "Klaar om een kunstwerk te bezitten?",
+        "subtext": "Ontdek de volledige collectie handbeschilderde en 3D-geprinte actiefiguren. Elk stuk wordt met zorg op bestelling gemaakt.",
+        "button": "Ontdek de Winkel"
+    },
+    "privacy_policy": {
+        "title": "Privacybeleid",
+        "lastUpdated": "Laatst bijgewerkt: maart 2026",
+        "sections": [
+            {
+                "title": "1. Informatie die we verzamelen",
+                "content": "We verzamelen informatie die je rechtstreeks aan ons verstrekt, waaronder je naam, e-mailadres, verzendadres en betalingsinformatie wanneer je een aankoop doet."
+            },
+            {
+                "title": "2. Hoe we je informatie gebruiken",
+                "content": "We gebruiken de verzamelde informatie om transacties te verwerken, je bestelbevestigingen te sturen en met je te communiceren over je bestellingen."
+            },
+            {
+                "title": "3. Informatie delen",
+                "content": "We verkopen of delen je persoonlijke informatie niet met derden, behalve voor zover nodig om je bestellingen uit te voeren en betalingen te verwerken."
+            },
+            {
+                "title": "4. Gegevensbeveiliging",
+                "content": "Wij implementeren passende beveiligingsmaatregelen om je persoonlijke informatie te beschermen tegen ongeoorloofde toegang of openbaarmaking."
+            },
+            {
+                "title": "5. Contact met ons opnemen",
+                "content": "Als je vragen hebt over dit Privacybeleid, neem dan contact met ons op via privacy@5ivearts.com"
+            }
+        ]
+    },
+    "terms_of_service": {
+        "title": "Servicevoorwaarden",
+        "lastUpdated": "Laatst bijgewerkt: maart 2026",
+        "sections": [
+            {
+                "title": "1. Acceptatie van Voorwaarden",
+                "content": "Door deze website te bezoeken en te gebruiken, accepteer je en ga je ermee akkoord gebonden te zijn aan de voorwaarden en bepalingen van deze overeenkomst."
+            },
+            {
+                "title": "2. Producten en Diensten",
+                "content": "Alle producten die op deze website worden weergegeven zijn 3D-geprinte verzamelobjecten. Houd er rekening mee dat er lichte variaties in kleur en afwerking kunnen optreden als gevolg van de aard van 3D-printprocessen."
+            },
+            {
+                "title": "3. Prijzen en Betaling",
+                "content": "Prijzen kunnen zonder voorafgaande kennisgeving worden gewijzigd. We behouden ons het recht voor om bestellingen te weigeren of te annuleren voor producten die tegen een onjuiste prijs worden vermeld."
+            },
+            {
+                "title": "4. Verzending en Levering",
+                "content": "Verzendkosten en levertijden variëren per locatie. Wij zijn niet verantwoordelijk voor vertragingen veroorzaakt door de douane of problemen bij de vervoerder."
+            },
+            {
+                "title": "5. Intellectueel Eigendom",
+                "content": "Alle inhoud op deze website, inclusief ontwerpen en afbeeldingen van producten, is beschermd door intellectuele eigendomsrechten."
+            },
+            {
+                "title": "6. Contact met ons opnemen",
+                "content": "Als je vragen hebt over deze Voorwaarden, neem dan contact met ons op via legal@5ivearts.com"
+            }
+        ]
+    },
+    "cookie_banner": {
+        "tag": "Fotopolymeer Eenheid",
+        "title": "We harden lokale cookies uit.",
+        "description": "Ons systeem gebruikt essentiële cookies om de siteprestaties te stabiliseren en verkeerspatronen laag voor laag te analyseren.",
+        "accept": "Batch Accepteren",
+        "preferences": "Systeemvoorkeuren"
+    },
+    "custom_order": {
+        "hero_title": "Op Maat Gemaakte Artefacten",
+        "hero_subtitle": "Transformeer uw digitale dromen naar fysieke meesterwerken met ons door ambachtslieden geleid protocol voor aangepaste opdrachten.",
+        "flow_title": "Het Opdrachtenprotocol",
+        "step1_title": "1. Assets Indienen",
+        "step1_desc": "Upload uw karakterrenders of concept art. Onze curatoren beoordelen elk detail op haalbaarheid.",
+        "step2_title": "2. Complexiteitsbeoordeling",
+        "step2_desc": "Onze curatoren beoordelen de geometrische dichtheid en schildercomplexiteit voor een nauwkeurige offerte.",
+        "step3_title": "3. De Overeenkomst",
+        "step3_desc": "Ontvang uw aangepaste offerte. Beveilig het productieslot met een aanbetaling van 50%.",
+        "step4_title": "4. Meesterlijk Vakmanschap",
+        "step4_desc": "Volg de voortgang in uw privéquault met real-time foto-updates vanuit de werkplaats.",
+        "step5_title": "5. Finale Levering",
+        "step5_desc": "Betaal het resterende saldo na voltooiing. Verzekerde wereldwijde levering naar uw coördinaten.",
+        "auth_invite_title": "Klaar om aan uw opdracht te beginnen?",
+        "auth_invite_desc": "Maak een beveiligde verbinding met onze terminal om assets te uploaden en de fabricage van uw artefact te volgen.",
+        "cta_login": "Inloggen om te beginnen",
+        "cta_register": "Verzamelaaraccount aanmaken",
+        "cta_start": "Nieuwe Opdracht Voorstellen",
+        "benefit1_title": "Geverifieerde Beveiliging",
+        "benefit1_desc": "End-to-end versleutelde overdrachten van activa en veilige betalingsintegratie voor elke opdracht.",
+        "benefit2_title": "Transparantie van Voortgang",
+        "benefit2_desc": "Real-time visuele verslagen toegevoegd aan uw persoonlijke Vault gedurende de hele fabricagecyclus.",
+        "benefit3_title": "Ambachtelijke Controle",
+        "benefit3_desc": "Directe samenwerking met onze curatoren om ervoor te zorgen dat uw prototype aan museumstandaarden voldoet.",
+        "success_title": "Protocol Initialisatie",
+        "success_subtitle": "Transmissie Voltooid",
+        "success_message": "Uw documentatie is versleuteld en verzonden naar onze hoofdcuratoren. We zullen de haalbaarheid en complexiteit binnen 24-48 uur beoordelen.",
+        "cta_vault": "Naar Mijn Vault",
+        "tagline": "Geavanceerd Aangepast Protocol",
+        "logistics_title": "Systeemlogistiek",
+        "proposal_step_identity_tag": "Artisan Bureau",
+        "proposal_step_identity_title": "Projectidentiteit",
+        "proposal_field_title_label": "Karakter / Projecttitel",
+        "proposal_field_title_placeholder": "bijv. Master Chief - Mark VI",
+        "proposal_field_scale_label": "Gewenste Schaal",
+        "proposal_field_finish_label": "Afwerkingsprotocol",
+        "proposal_cta_configure": "Details configureren",
+        "proposal_step_narrative_tag": "Bureau Documentatie",
+        "proposal_step_narrative_title": "Narratieve Scope",
+        "proposal_field_desc_label": "Projectbeschrijving",
+        "proposal_field_desc_placeholder": "Beschrijf uw visie, specifieke houdingen of referentiedetails...",
+        "proposal_cta_upload": "Assets uploaden",
+        "proposal_cta_back": "Terug",
+        "proposal_step_visual_tag": "Visueel Bewijs",
+        "proposal_step_visual_title": "Assetoverdracht",
+        "proposal_field_upload_label": "Bestand toevoegen",
+        "proposal_field_upload_hint": "Ondersteunde formaten: JPG, PNG, WEBP (MAX 3)",
+        "proposal_cta_submit": "Opdracht indienen",
+        "error_max_files": "Maximaal 3 referentieafbeeldingen toegestaan",
+        "error_required_fields": "Vul alle verplichte velden in en upload minimaal één afbeelding.",
+        "scales": {
+            "1:12": "Schaal 1:12",
+            "1:10": "Schaal 1:10",
+            "1:6": "Schaal 1:6",
+            "1:4": "Schaal 1:4",
+            "other": "Andere / Op maat"
+        },
+        "finishes": {
+            "raw": "Ruw (Grijze Hars)",
+            "standard": "Geschilderd (Standaard)",
+            "master": "Geschilderd (Master-graad)"
+        }
+    },
+    "marketing": {
+        "trendingTag": "Meest Gewenste Protocol",
+        "trendingTitle": "Artefacten Onder Observatie",
+        "interestSync": "Real-time Interessesynchronisatie",
+        "activeCitations": "{count} Actieve Citaties"
+    },
+    "products_ui": {
+        "inspect": "Artefact Inspecteren"
     }
-  ],
-  "account": {
-    "portal": "Beveiligd Magazijn Portaal",
-    "title": "Mijn Account",
-    "databaseFor": "Toegang tot database voor:",
-    "security": "Beveiliging",
-    "decommission": "Sessie Beëindigen",
-    "activeAssets": "Actieve Activa",
-    "totalAcquisitions": "Totaal aantal geregistreerde aankopen",
-    "status": "Accountstatus",
-    "verifiedCollector": "Geverifieerde Verzamelaar",
-    "level1Encryption": "Niveau 1 Versleuteling",
-    "history": "Aankoopgeschiedenis",
-    "verificationRequired": "Verificatie Vereist",
-    "verificationDesc": "Verifieer je identiteit om toegang te krijgen tot alle functies",
-    "resendLink": "Link Opnieuw Verzenden",
-    "neuralLinkError": "Neural Link Fout",
-    "syncFailed": "Synchronisatie met centrale orderkluis mislukt.",
-    "noAssets": "Nog geen activa geregistreerd in de kluis.",
-    "browseCollection": "Collectie Bekijken",
-    "recorded": "Geregistreerd:",
-    "investment": "Investering",
-    "prepPhaseActive": "Voorbereidingsfase",
-    "inTransit": "Onderweg:",
-    "fullLogistics": "Volledige Logistieke Gegevens",
-    "settings": {
-      "title": "Beveiligingskluis",
-      "subtitle": "Beheer je verzamelaarsidentiteit en toegangsprotocollen.",
-      "identityVerification": "Identiteitsverificatie",
-      "verified": "Geverifieerd",
-      "pending": "Verificatie in Afwachting",
-      "guestProtected": "Je toegang is momenteel in een 'Gastbewaakte' staat. Sommige gegevens over de orderafhandeling vereisen een geverifieerde identiteit.",
-      "requestLink": "Nieuwe Verificatielink Aanvragen",
-      "addresses": "Verzendbestemmingen",
-      "addAddress": "Nieuw Protocol Registreren",
-      "noAddresses": "Geen bestemmingen geregistreerd in de kluis.",
-      "default": "Primaire Route",
-      "setDefault": "Instellen als Primair",
-      "edit": "Wijzigen",
-      "delete": "Verwijderen",
-      "confirmDelete": "Weet je zeker dat je deze verzendroute wilt verwijderen?"
-    },
-    "wishlist": {
-      "title": "Mijn Curator Verlanglijst",
-      "subtitle": "Artifacten onder Observatie",
-      "emptyTitle": "Je Verlanglijst is Leeg",
-      "emptyDescription": "Bekijk onze artefacten en markeer degene die resoneren met jouw curatorstijl voor toekomstige aankoop."
-    }
-  },
-  "orders": {
-    "orderNum": "Bestelling #",
-    "recorded": "Geregistreerd:",
-    "investment": "Investering",
-    "quantity": "Aantal:",
-    "qty": "Aant:",
-    "prepPhase": "Voorbereidingsfase Actief",
-    "inTransit": "Onderweg:",
-    "logisticsData": "Volledige Logistieke Gegevens",
-    "warehouse": "Mijn Magazijn",
-    "operation": "Operatie #",
-    "logged": "Gelogd:",
-    "verifiedAcquisition": "Geverifieerde Aankoop",
-    "trackShipment": "ZENDING VOLGEN",
-    "exportInvoice": "FACTUUR EXPORTEREN",
-    "lifecycle": "Inzet Levenscyclus",
-    "paymentConfirmed": "Betaling Bevestigd",
-    "fundsVerified": "Aankoopfondsen geverifieerd en beveiligd.",
-    "prepPhaseActive": "Voorbereidingsfase",
-    "isolationNote": "Figuurisolatie en beschermend schuim aangebracht.",
-    "shipped": "Verzonden",
-    "logisticsSuccess": "Logistiek beveiligd en onderweg naar bestemming.",
-    "delivered": "Geleverd",
-    "acquired": "Meesterwerk is aangeschaft en beveiligd.",
-    "deploymentZone": "Inzetzone",
-    "carrierProtocol": "Vervoerdersprotocol",
-    "class": "Klasse: Geregistreerd Volgen",
-    "settlement": "Afrekening",
-    "transactionSecure": "Transactie Veilig",
-    "discrepancy": "Logistieke Afwijking?",
-    "contactHQ": "NEEM CONTACT OP MET HQ",
-    "sku": "SKU:",
-    "backToWarehouse": "Terug naar Magazijn",
-    "reportTitle": "Volledig Logistiek Rapport",
-    "paid": "Betaald",
-    "processing": "Verwerken",
-    "cancelled": "Geannuleerd",
-    "pConfirmed": "Betaling Bevestigd",
-    "pConfirmedDesc": "Aankoopfondsen geverifieerd en beveiligd.",
-    "prepPhaseDesc": "Figuurisolatie en beschermende schuimintegratie.",
-    "inTransitDesc": "Magazijnkluis verlaten. Overdracht aan logistiek.",
-    "manifest": "Activa Manifest",
-    "itemDetails": "Artikeldetails",
-    "subtotal": "Aankoop Subtotaal",
-    "shipping": "Logistieke Toeslag",
-    "totalContribution": "Totale Portefeuillebijdrage"
-  },
-  "footer": {
-    "logistics": "Wereldwijde Ambachtelijke Vakmanschap Logistiek Ingeschakeld",
-    "rights": "© 2026 5iveArts Collector Series. Alle rechten voorbehouden.",
-    "privacy": "Privacy",
-    "terms": "Voorwaarden",
-    "description": "Boutiquestudio voor premium handbeschilderde en 3D-geprinte resin figuren. Wij verzenden meesterwerken van museumkwaliteit naar liefhebbers wereldwijd vanuit onze werkplaats in Palermo.",
-    "seoAbout": "5iveArts is een vooraanstaande boutiquestudio gespecialiseerd in het creëren van premium 3D-geprinte resin figuren en handbeschilderde verzamelobjecten. Onze ambachtelijke serie richt zich op extreem detail, waarbij gebruik wordt gemaakt van 0,025 mm laaghoogtes om museumkwaliteit te garanderen voor elk figuur dat we produceren. Met een wereldwijd verzendnetwerk bedienen we een toegewijde gemeenschap van verzamelaars die de kruising van industriële precisie en handgemaakte kunst waarderen. Elk stuk in onze serie is uniek, afgewerkt met professionele airbrush- en UV-bestendige vernissen om je investering jarenlang te beschermen."
-  },
-  "shipping": {
-    "protocol": "Logistiek Protocol",
-    "title": "Wereldwijde Verzending",
-    "subtitle": "Veilige, verzekerde en gevolgde levering voor elk meesterwerk in de collectie.",
-    "insuredTitle": "Verzekerde Afhandeling",
-    "insuredText": "Elk figuur wordt verpakt met op maat gemaakt schuim met hoge dichtheid en dubbelwandige verzamelaarsdozen. We verzekeren elke zending tegen verlies of beschadiging tijdens het transport.",
-    "freeTierTitle": "Gratis Verzending Niveau",
-    "freeTierText": "We belonen serieuze verzamelaars. Alle bestellingen boven {amount} komen automatisch in aanmerking voor GRATIS STANDAARD VERZENDING, ongeacht je locatie.",
-    "dynamicTitle": "Dynamische Logistiek",
-    "dynamicText": "We maken gebruik van Packlink PRO om real-time, verzekerde verzendtarieven te bieden van premium vervoerders zoals UPS, DHL en FedEx. Je specifieke tarief wordt berekend tijdens het afrekenen op basis van je exacte locatie en de afmetingen van het pakket.",
-    "zonesTitle": "Geschatte Transittijden",
-    "region": "Regio",
-    "standard": "Standaard",
-    "express": "Express",
-    "estTime": "Geschatte Tijd",
-    "trackingInfo": "Live wereldwijde tracking op alle bestellingen",
-    "italy": "Italië",
-    "eu": "Europese Unie",
-    "uk": "Verenigd Koninkrijk",
-    "global": "Wereldwijd / Rest van de Wereld",
-    "days1_3": "1-3 Dagen",
-    "days3_5": "3-5 Dagen",
-    "days4_7": "4-7 Dagen",
-    "days7_14": "7-14 Dagen",
-    "carrierActive": "Wereldwijd Koeriersnetwerk Actief"
-  },
-  "hero": {
-    "slides": [
-      {
-        "tagline": "Premium Resin Precisie",
-        "headline": "3D-Geprinte",
-        "headlineHighlight": "Meesterwerken",
-        "subtext": "Hoge resolutie resin figuren met 0,025 mm laagdikte — museumkwaliteit in elk ambachtelijk vervaardigd stuk."
-      },
-      {
-        "tagline": "Handgemaakt Ambachtelijk Detail",
-        "headline": "Deskundig",
-        "headlineHighlight": "Handbeschilderd",
-        "subtext": "Unieke schaduwwerking en professionele airbrushtechnieken brengen je favoriete personages tot leven, stuk voor uniek stuk."
-      }
-    ],
-    "cta": "Nu Winkelen",
-    "trust": {
-      "quality": "Gecertificeerde Kwaliteit",
-      "handFinished": "Handmatig Afgewerkt",
-      "logistics": "Wereldwijde Logistiek"
-    }
-  },
-  "features": {
-    "handPainted": {
-      "title": "Handbeschilderd",
-      "text": "Elk figuur is handbeschilderd met professionele acrylverf"
-    },
-    "threeDPrinted": {
-      "title": "3D-Geprint",
-      "text": "Hoge resolutie 0,025 mm laaghoogtes"
-    },
-    "fastShipping": {
-      "title": "Snelle Verzending",
-      "text": "Verzekerde wereldwijde levering met tracking"
-    },
-    "secureCheckout": {
-      "title": "Veilig Afrekenen",
-      "text": "Betalingen veilig afgehandeld door Stripe"
-    }
-  },
-  "ctaSection": {
-    "heading": "Klaar om een kunstwerk te bezitten?",
-    "subtext": "Ontdek de volledige collectie handbeschilderde en 3D-geprinte actiefiguren. Elk stuk wordt met zorg op bestelling gemaakt.",
-    "button": "Ontdek de Winkel"
-  },
-  "privacy_policy": {
-    "title": "Privacybeleid",
-    "lastUpdated": "Laatst bijgewerkt: maart 2026",
-    "sections": [
-      {
-        "title": "1. Informatie die we verzamelen",
-        "content": "We verzamelen informatie die je rechtstreeks aan ons verstrekt, waaronder je naam, e-mailadres, verzendadres en betalingsinformatie wanneer je een aankoop doet."
-      },
-      {
-        "title": "2. Hoe we je informatie gebruiken",
-        "content": "We gebruiken de verzamelde informatie om transacties te verwerken, je bestelbevestigingen te sturen en met je te communiceren over je bestellingen."
-      },
-      {
-        "title": "3. Informatie delen",
-        "content": "We verkopen of delen je persoonlijke informatie niet met derden, behalve voor zover nodig om je bestellingen uit te voeren en betalingen te verwerken."
-      },
-      {
-        "title": "4. Gegevensbeveiliging",
-        "content": "Wij implementeren passende beveiligingsmaatregelen om je persoonlijke informatie te beschermen tegen ongeoorloofde toegang of openbaarmaking."
-      },
-      {
-        "title": "5. Contact met ons opnemen",
-        "content": "Als je vragen hebt over dit Privacybeleid, neem dan contact met ons op via privacy@5ivearts.com"
-      }
-    ]
-  },
-  "terms_of_service": {
-    "title": "Servicevoorwaarden",
-    "lastUpdated": "Laatst bijgewerkt: maart 2026",
-    "sections": [
-      {
-        "title": "1. Acceptatie van Voorwaarden",
-        "content": "Door deze website te bezoeken en te gebruiken, accepteer je en ga je ermee akkoord gebonden te zijn aan de voorwaarden en bepalingen van deze overeenkomst."
-      },
-      {
-        "title": "2. Producten en Diensten",
-        "content": "Alle producten die op deze website worden weergegeven zijn 3D-geprinte verzamelobjecten. Houd er rekening mee dat er lichte variaties in kleur en afwerking kunnen optreden als gevolg van de aard van 3D-printprocessen."
-      },
-      {
-        "title": "3. Prijzen en Betaling",
-        "content": "Prijzen kunnen zonder voorafgaande kennisgeving worden gewijzigd. We behouden ons het recht voor om bestellingen te weigeren of te annuleren voor producten die tegen een onjuiste prijs worden vermeld."
-      },
-      {
-        "title": "4. Verzending en Levering",
-        "content": "Verzendkosten en levertijden variëren per locatie. Wij zijn niet verantwoordelijk voor vertragingen veroorzaakt door de douane of problemen bij de vervoerder."
-      },
-      {
-        "title": "5. Intellectueel Eigendom",
-        "content": "Alle inhoud op deze website, inclusief ontwerpen en afbeeldingen van producten, is beschermd door intellectuele eigendomsrechten."
-      },
-      {
-        "title": "6. Contact met ons opnemen",
-        "content": "Als je vragen hebt over deze Voorwaarden, neem dan contact met ons op via legal@5ivearts.com"
-      }
-    ]
-  },
-  "cookie_banner": {
-    "tag": "Fotopolymeer Eenheid",
-    "title": "We harden lokale cookies uit.",
-    "description": "Ons systeem gebruikt essentiële cookies om de siteprestaties te stabiliseren en verkeerspatronen laag voor laag te analyseren.",
-    "accept": "Batch Accepteren",
-    "preferences": "Systeemvoorkeuren"
-  },
-  "custom_order": {
-    "hero_title": "Op Maat Gemaakte Artefacten",
-    "hero_subtitle": "Transformeer uw digitale dromen naar fysieke meesterwerken met ons door ambachtslieden geleid protocol voor aangepaste opdrachten.",
-    "flow_title": "Het Opdrachtenprotocol",
-    "step1_title": "1. Assets Indienen",
-    "step1_desc": "Upload uw karakterrenders of concept art. Onze curatoren beoordelen elk detail op haalbaarheid.",
-    "step2_title": "2. Complexiteitsbeoordeling",
-    "step2_desc": "Onze curatoren beoordelen de geometrische dichtheid en schildercomplexiteit voor een nauwkeurige offerte.",
-    "step3_title": "3. De Overeenkomst",
-    "step3_desc": "Ontvang uw aangepaste offerte. Beveilig het productieslot met een aanbetaling van 50%.",
-    "step4_title": "4. Meesterlijk Vakmanschap",
-    "step4_desc": "Volg de voortgang in uw privéquault met real-time foto-updates vanuit de werkplaats.",
-    "step5_title": "5. Finale Levering",
-    "step5_desc": "Betaal het resterende saldo na voltooiing. Verzekerde wereldwijde levering naar uw coördinaten.",
-    "auth_invite_title": "Klaar om aan uw opdracht te beginnen?",
-    "auth_invite_desc": "Maak een beveiligde verbinding met onze terminal om assets te uploaden en de fabricage van uw artefact te volgen.",
-    "cta_login": "Inloggen om te beginnen",
-    "cta_register": "Verzamelaaraccount aanmaken",
-    "cta_start": "Nieuwe Opdracht Voorstellen",
-    "benefit1_title": "Geverifieerde Beveiliging",
-    "benefit1_desc": "End-to-end versleutelde overdrachten van activa en veilige betalingsintegratie voor elke opdracht.",
-    "benefit2_title": "Transparantie van Voortgang",
-    "benefit2_desc": "Real-time visuele verslagen toegevoegd aan uw persoonlijke Vault gedurende de hele fabricagecyclus.",
-    "benefit3_title": "Ambachtelijke Controle",
-    "benefit3_desc": "Directe samenwerking met onze curatoren om ervoor te zorgen dat uw prototype aan museumstandaarden voldoet.",
-    "success_title": "Protocol Initialisatie",
-    "success_subtitle": "Transmissie Voltooid",
-    "success_message": "Uw documentatie is versleuteld en verzonden naar onze hoofdcuratoren. We zullen de haalbaarheid en complexiteit binnen 24-48 uur beoordelen.",
-    "cta_vault": "Naar Mijn Vault",
-    "tagline": "Geavanceerd Aangepast Protocol",
-    "logistics_title": "Systeemlogistiek",
-    "proposal_step_identity_tag": "Artisan Bureau",
-    "proposal_step_identity_title": "Projectidentiteit",
-    "proposal_field_title_label": "Karakter / Projecttitel",
-    "proposal_field_title_placeholder": "bijv. Master Chief - Mark VI",
-    "proposal_field_scale_label": "Gewenste Schaal",
-    "proposal_field_finish_label": "Afwerkingsprotocol",
-    "proposal_cta_configure": "Details configureren",
-    "proposal_step_narrative_tag": "Bureau Documentatie",
-    "proposal_step_narrative_title": "Narratieve Scope",
-    "proposal_field_desc_label": "Projectbeschrijving",
-    "proposal_field_desc_placeholder": "Beschrijf uw visie, specifieke houdingen of referentiedetails...",
-    "proposal_cta_upload": "Assets uploaden",
-    "proposal_cta_back": "Terug",
-    "proposal_step_visual_tag": "Visueel Bewijs",
-    "proposal_step_visual_title": "Assetoverdracht",
-    "proposal_field_upload_label": "Bestand toevoegen",
-    "proposal_field_upload_hint": "Ondersteunde formaten: JPG, PNG, WEBP (MAX 3)",
-    "proposal_cta_submit": "Opdracht indienen",
-    "error_max_files": "Maximaal 3 referentieafbeeldingen toegestaan",
-    "error_required_fields": "Vul alle verplichte velden in en upload minimaal één afbeelding.",
-    "scales": {
-      "1:12": "Schaal 1:12",
-      "1:10": "Schaal 1:10",
-      "1:6": "Schaal 1:6",
-      "1:4": "Schaal 1:4",
-      "other": "Andere / Op maat"
-    },
-    "finishes": {
-      "raw": "Ruw (Grijze Hars)",
-      "standard": "Geschilderd (Standaard)",
-      "master": "Geschilderd (Master-graad)"
-    }
-  },
-  "marketing": {
-    "trendingTag": "Meest Gewenste Protocol",
-    "trendingTitle": "Artefacten Onder Observatie",
-    "interestSync": "Real-time Interessesynchronisatie",
-    "activeCitations": "{count} Actieve Citaties"
-  },
-  "products_ui": {
-    "inspect": "Artefact Inspecteren"
-  }
 }

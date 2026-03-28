@@ -1,577 +1,579 @@
 {
-  "nav": {
-    "products": "Ürünler",
-    "faq": "SSS",
-    "shipping": "Nakliye",
-    "cart": "Sepet",
-    "login": "Giriş",
-    "admin": "Yönetici",
-    "discovery": "Keşif",
-    "terminal": "Terminal Erişimi",
-    "regional": "Bölgesel Projeksiyon",
-    "switchRegion": "Bölge Değiştir",
-    "vault": "Kasa",
-    "warehouse": "Depo",
-    "access": "Erişim",
-    "wishlist": "İstek Listesi",
-    "customOrder": "Özel Siparişler"
-  },
-  "home": {
-    "title": "5iveArts - Sanatsal Hassasiyet",
-    "hero_title": "SANATSAL HASSASİYET",
-    "hero_subtitle": "Her bir figür, tutkuyla yontulmuş ve titiz bir özenle tamamlanmış benzersiz bir eserdir.",
-    "cta_button": "KOLEKSİYONU KEŞFET",
-    "featured_products": "ÖNE ÇIKAN ÜRÜNLER",
-    "explore_all": "Hepsini Gör"
-  },
-  "homepage": {
-    "featuredHeading": "Premium 3D Reçine Figür Koleksiyonları",
-    "viewAll": "Tüm Eserleri Görüntüle",
-    "testimonialsHeading": "Dünya Çapındaki Koleksiyonerlerin Güveni",
-    "reviewsLabel": "Doğrulanmış İncelemeler",
-    "collectorChoice": "Koleksiyoner Seçimi",
-    "premiumSeries": "Premium Seri",
-    "collectorsVault": "Koleksiyoner Kasası",
-    "satisfactionRate": "Memnuniyet Oranı",
-    "countriesServed": "Hizmet Verilen Ülkeler",
-    "yearsExperience": "Yıllık Deneyim"
-  },
-  "products": {
-    "title": "Model Cephaneliği",
-    "subtitle": "El yapımı figür koleksiyonumuza göz atın.",
-    "all": "Tüm Başyapıtlar",
-    "categories": "Kategoriler",
-    "filter": "Filtrele",
-    "viewDetails": "DETAYLARI GÖR",
-    "addToCart": "Sepete Ekle",
-    "scale": "Ölçek",
-    "finish": "Bitiş",
-    "painted": "El Boyaması",
-    "raw": "Ham Reçine",
-    "description": "Açıklama",
-    "shippingInfo": "Nakliye ve Taşıma",
-    "customerReviews": "Müşteri Yorumları",
-    "specifications": "Özellikler",
-    "returnPolicy": "İade Politikası",
-    "securePayment": "Güvenli Ödeme",
-    "insuredShipping": "Sigortalı Nakliye",
-    "price": "Fiyat",
-    "details": "Detayları Gör",
-    "startingFrom": "Başlangıç",
-    "deploymentConfig": "Dağıtım Yapılandırması",
-    "selectPrototype": "Prototip ve Bitiş Seçin"
-  },
-  "cart": {
-    "title": "Kasa Sepeti",
-    "empty": "Sepetiniz boş",
-    "emptyMessage": "Henüz herhangi bir figür eklememişsiniz gibi görünüyor.",
-    "returnToShop": "Mağazaya Dön",
-    "subtotal": "Ara Toplam",
-    "shippingCost": "Nakliye",
-    "total": "Toplam",
-    "checkout": "Ödemeye Geç",
-    "remove": "Kaldır",
-    "item": "öge",
-    "items": "öge",
-    "secureCheckout": "Güvenli Ödeme",
-    "insuredShipping": "Sigortalı Küresel Nakliye",
-    "thirtyDayReturns": "30 Gün İçinde İade",
-    "orderSummary": "Sipariş Özeti",
-    "calculatedAtCheckout": "Ödeme sırasında hesaplanır",
-    "estimatedTotal": "Tahmini Toplam",
-    "proceedToCheckout": "Ödemeye Geç",
-    "continueShopping": "Alışverişe Devam Et",
-    "freeShipping": "{amount} üzeri ücretsiz kargo",
-    "shipping": "Nakliye",
-    "emptyArsenal": "Boş Cephanelik",
-    "checkoutFlow": "Ödeme Süreci",
-    "yourCart": "Sepetiniz",
-    "clearCart": "Sepeti Temizle",
-    "returnShop": "Mağazaya Dön",
-    "grandTotal": "Genel Toplam",
-    "calculatingLogistics": "Lojistik Hesaplanıyor..."
-  },
-  "auth": {
-    "verification": "Kimlik Doğrulama",
-    "terminal": "Erişim Terminali",
-    "portal": "5iveArts Güvenli Koleksiyoner Portalı",
-    "login": "Giriş Yap",
-    "register": "Kayıt Ol",
-    "emailLabel": "Nöral Bağlantı (E-posta)",
-    "passwordLabel": "Güvenlik Anahtarı (Şifre)",
-    "verifyBtn": "Oturumu Doğrula",
-    "registerBtn": "Bağlantı Kur",
-    "tunnel": "Uçtan Uca Şifreli Tünel",
-    "guidelines": "Terminal girişi yaparak Protokol Kurallarımızı kabul etmiş olursunuz",
-    "backHome": "HQ'ya Dön",
-    "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
-    "title": "Depo Erişimi",
-    "subtitle": "Varlıklarınıza ve lojistik raporlarınıza erişin.",
-    "loginBtn": "Bağlantı Kur"
-  },
-  "faq": {
-    "infoCenter": "Bilgi Merkezi",
-    "title": "SSS ve İletişim",
-    "subtitle": "Sanatsal sürecimiz, lojistiğimiz ve koleksiyoner protokollerimiz hakkında bilmeniz gereken her şey.",
-    "questions": [
-      {
-        "q": "Figürler nasıl yapılıyor?",
-        "a": "Her bir figür, endüstriyel sınıf reçine kullanılarak yüksek çözünürlüklü 3D baskı (0.025 mm katman yüksekliği) olarak başlar. Sertleştikten sonra sanatçılarımız, profesyonel akrilikler ve hava fırçası teknikleriyle her parçayı saatlerce elle boyar ve süreci UV dirençli, müze kalitesinde bir vernikle sonlandırır."
-      },
-      {
-        "q": "Uluslararası gönderim yapıyor musunuz?",
-        "a": "Evet! İtalya'daki stüdyomuzdan dünyanın dört bir yanındaki koleksiyonerlere gönderim yapıyoruz. Başyapıtınızın güvenli bir şekilde teslim edilmesini sağlamak için sigortalı küresel kuryeler kullanıyoruz."
-      },
-      {
-        "q": "Üretim ne kadar sürer?",
-        "a": "Her parça sipariş üzerine yapıldığından veya elle tamamlandığından, lütfen gönderimden önce 7-14 günlük bir üretim süresi tanıyın. Sanatı aceleye getirmiyoruz."
-      },
-      {
-        "q": "İade politikanız nedir?",
-        "a": "Hasarlı ulaşan veya açıklamadan önemli ölçüde farklı olan ürünler için 30 günlük bir iade politikası sunuyoruz. Bunlar el yapımı sanat eserleri olduğundan, 'fikir değiştirme' nedeniyle iade kabul edemiyoruz."
-      }
+    "nav": {
+        "products": "Ürünler",
+        "faq": "SSS",
+        "shipping": "Nakliye",
+        "cart": "Sepet",
+        "login": "Giriş",
+        "admin": "Yönetici",
+        "discovery": "Keşif",
+        "terminal": "Terminal Erişimi",
+        "regional": "Bölgesel Projeksiyon",
+        "switchRegion": "Bölge Değiştir",
+        "vault": "Kasa",
+        "warehouse": "Depo",
+        "access": "Erişim",
+        "wishlist": "İstek Listesi",
+        "customOrder": "Özel Siparişler"
+    },
+    "home": {
+        "title": "5iveArts - Sanatsal Hassasiyet",
+        "hero_title": "SANATSAL HASSASİYET",
+        "hero_subtitle": "Her bir figür, tutkuyla yontulmuş ve titiz bir özenle tamamlanmış benzersiz bir eserdir.",
+        "cta_button": "KOLEKSİYONU KEŞFET",
+        "featured_products": "ÖNE ÇIKAN ÜRÜNLER",
+        "explore_all": "Hepsini Gör"
+    },
+    "homepage": {
+        "featuredHeading": "Premium 3D Reçine Figür Koleksiyonları",
+        "viewAll": "Tüm Eserleri Görüntüle",
+        "testimonialsHeading": "Dünya Çapındaki Koleksiyonerlerin Güveni",
+        "reviewsLabel": "Doğrulanmış İncelemeler",
+        "collectorChoice": "Koleksiyoner Seçimi",
+        "premiumSeries": "Premium Seri",
+        "collectorsVault": "Koleksiyoner Kasası",
+        "satisfactionRate": "Memnuniyet Oranı",
+        "countriesServed": "Hizmet Verilen Ülkeler",
+        "yearsExperience": "Yıllık Deneyim"
+    },
+    "products": {
+        "title": "Model Cephaneliği",
+        "subtitle": "El yapımı figür koleksiyonumuza göz atın.",
+        "all": "Tüm Başyapıtlar",
+        "categories": "Kategoriler",
+        "filter": "Filtrele",
+        "viewDetails": "DETAYLARI GÖR",
+        "addToCart": "Sepete Ekle",
+        "scale": "Ölçek",
+        "finish": "Bitiş",
+        "painted": "El Boyaması",
+        "raw": "Ham Reçine",
+        "description": "Açıklama",
+        "shippingInfo": "Nakliye ve Taşıma",
+        "customerReviews": "Müşteri Yorumları",
+        "specifications": "Özellikler",
+        "returnPolicy": "İade Politikası",
+        "securePayment": "Güvenli Ödeme",
+        "insuredShipping": "Sigortalı Nakliye",
+        "price": "Fiyat",
+        "details": "Detayları Gör",
+        "startingFrom": "Başlangıç",
+        "deploymentConfig": "Dağıtım Yapılandırması",
+        "selectPrototype": "Prototip ve Bitiş Seçin"
+    },
+    "cart": {
+        "title": "Kasa Sepeti",
+        "empty": "Sepetiniz boş",
+        "emptyMessage": "Henüz herhangi bir figür eklememişsiniz gibi görünüyor.",
+        "returnToShop": "Mağazaya Dön",
+        "subtotal": "Ara Toplam",
+        "shippingCost": "Nakliye",
+        "total": "Toplam",
+        "checkout": "Ödemeye Geç",
+        "remove": "Kaldır",
+        "item": "öge",
+        "items": "öge",
+        "secureCheckout": "Güvenli Ödeme",
+        "insuredShipping": "Sigortalı Küresel Nakliye",
+        "thirtyDayReturns": "30 Gün İçinde İade",
+        "orderSummary": "Sipariş Özeti",
+        "calculatedAtCheckout": "Ödeme sırasında hesaplanır",
+        "estimatedTotal": "Tahmini Toplam",
+        "proceedToCheckout": "Ödemeye Geç",
+        "continueShopping": "Alışverişe Devam Et",
+        "freeShipping": "{amount} üzeri ücretsiz kargo",
+        "shipping": "Nakliye",
+        "emptyArsenal": "Boş Cephanelik",
+        "checkoutFlow": "Ödeme Süreci",
+        "yourCart": "Sepetiniz",
+        "clearCart": "Sepeti Temizle",
+        "returnShop": "Mağazaya Dön",
+        "grandTotal": "Genel Toplam",
+        "calculatingLogistics": "Lojistik Hesaplanıyor..."
+    },
+    "auth": {
+        "verification": "Kimlik Doğrulama",
+        "terminal": "Erişim Terminali",
+        "portal": "5iveArts Güvenli Koleksiyoner Portalı",
+        "login": "Giriş Yap",
+        "register": "Kayıt Ol",
+        "emailLabel": "Nöral Bağlantı (E-posta)",
+        "passwordLabel": "Güvenlik Anahtarı (Şifre)",
+        "verifyBtn": "Oturumu Doğrula",
+        "registerBtn": "Bağlantı Kur",
+        "tunnel": "Uçtan Uca Şifreli Tünel",
+        "guidelines": "Terminal girişi yaparak Protokol Kurallarımızı kabul etmiş olursunuz",
+        "backHome": "HQ'ya Dön",
+        "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
+        "title": "Depo Erişimi",
+        "subtitle": "Varlıklarınıza ve lojistik raporlarınıza erişin.",
+        "loginBtn": "Bağlantı Kur"
+    },
+    "faq": {
+        "infoCenter": "Bilgi Merkezi",
+        "title": "SSS ve İletişim",
+        "subtitle": "Sanatsal sürecimiz, lojistiğimiz ve koleksiyoner protokollerimiz hakkında bilmeniz gereken her şey.",
+        "questions": [
+            {
+                "q": "Figürler nasıl yapılıyor?",
+                "a": "Her bir figür, endüstriyel sınıf reçine kullanılarak yüksek çözünürlüklü 3D baskı (0.025 mm katman yüksekliği) olarak başlar. Sertleştikten sonra sanatçılarımız, profesyonel akrilikler ve hava fırçası teknikleriyle her parçayı saatlerce elle boyar ve süreci UV dirençli, müze kalitesinde bir vernikle sonlandırır."
+            },
+            {
+                "q": "Uluslararası gönderim yapıyor musunuz?",
+                "a": "Evet! İtalya'daki stüdyomuzdan dünyanın dört bir yanındaki koleksiyonerlere gönderim yapıyoruz. Başyapıtınızın güvenli bir şekilde teslim edilmesini sağlamak için sigortalı küresel kuryeler kullanıyoruz."
+            },
+            {
+                "q": "Üretim ne kadar sürer?",
+                "a": "Her parça sipariş üzerine yapıldığından veya elle tamamlandığından, lütfen gönderimden önce 7-14 günlük bir üretim süresi tanıyın. Sanatı aceleye getirmiyoruz."
+            },
+            {
+                "q": "İade politikanız nedir?",
+                "a": "Hasarlı ulaşan veya açıklamadan önemli ölçüde farklı olan ürünler için 30 günlük bir iade politikası sunuyoruz. Bunlar el yapımı sanat eserleri olduğundan, 'fikir değiştirme' nedeniyle iade kabul edemiyoruz."
+            }
+        ],
+        "stillHaveQuestions": "Hâlâ sorularınız mı var?",
+        "curatorsMessage": "Küratörlerimiz, özel komisyonlar ve protokol desteği konusunda yardıma hazırdır.",
+        "emailUs": "Bize E-posta Gönderin",
+        "liveChat": "Canlı Sohbet",
+        "offline": "Çevrimdışı"
+    },
+    "errors": {
+        "invalidLogin": "Erişim Reddedildi. Lütfen güvenlik anahtarınızın doğru olduğundan ve kimlik bağlantınızın doğrulandığından emin olun.",
+        "confirmationSent": "Onay e-postası gönderildi. Lütfen terminali etkinleştirmek için gelen kutunuzu kontrol edin.",
+        "stripeLoadError": "Ödeme formu yüklenemedi. Lütfen sayfayı yenileyip tekrar deneyin.",
+        "unexpectedError": "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.",
+        "signupFailed": "Kayıt başarısız oldu. Lütfen tekrar deneyin.",
+        "genericError": "Bir şeyler ters gitti",
+        "verifyStatusError": "Ödeme durumunu doğrulayamadık. Bir onay e-postası aldıysanız siparişiniz işleme alınmaktadır.",
+        "maxFeatured": "En fazla 3 taneye izin verilir."
+    },
+    "success": {
+        "orderConfirmed": "Sipariş Onaylandı",
+        "thankYou": "5iveArts'tan satın aldığınız için teşekkür ederiz",
+        "confEmailSent": "Şu adrese bir onay e-postası gönderildi:",
+        "shippingNote": "Figürünüz özenle paketlenecek ve canlı takip ile gönderilecektir.",
+        "logisticsLog": "Güvenlik ve Lojistik Operasyon Günlüğü",
+        "syncComplete": "Senkronizasyon Tamamlandı ve E-posta Gönderildi",
+        "resendEmail": "E-posta gelmedi mi? Tekrar gönder",
+        "paymentVerified": "Ödeme doğrulandı.",
+        "fulfillmentNote": "Figürünüz şu anda özel köpük dolgu kullanılarak hazırlanıyor.",
+        "vaultEstablished": "Kasa Kuruldu",
+        "orderLinked": "Siparişiniz artık güvenli hesabınıza kalıcı olarak bağlandı.",
+        "goWarehouse": "Depoma Git",
+        "secureCollection": "Koleksiyonunuzu Güvence Altına Alın",
+        "createAccount": "HESAP OLUŞTUR",
+        "securing": "Güvenliğe alınıyor...",
+        "returnHQ": "HQ'ya Dön"
+    },
+    "checkout": {
+        "gateway": "Güvenli Geçit",
+        "checkout": "Ödeme",
+        "chooseSaved": "Kayıtlı Rotalara Eriş",
+        "useThis": "Rotayı Yetkilendir",
+        "newAddress": "Yeni Protokol Kur",
+        "saveToVault": "Bu sevkiyat rotasını güvenli kasama kaydet",
+        "verifying": "Güvenli İşlem Doğrulanıyor…",
+        "loadingForm": "Ödeme protokolleri yükleniyor...",
+        "processing": "Ödeme işleniyor…",
+        "payNow": "Ödemeyi Yetkilendir",
+        "securedBy": "Stripe Intelligence ile Güvence Altına Alınmıştır",
+        "encryptionNote": "Bağlantınız RSA-4096 ve AES-256 standartlarıyla şifrelenmiştir. Ham ödeme verilerini asla sunucularımızda saklamayız.",
+        "deliveryStep": "1. Teslimat",
+        "shippingStep": "2. Sevkiyat",
+        "paymentStep": "3. Ödeme",
+        "recipientName": "Alıcı Adı *",
+        "collectorPlaceholder": "Koleksiyoner Adı",
+        "emailAddress": "E-posta Adresi *",
+        "vault": "Kasa",
+        "streetAddress": "Adres *",
+        "addressLine1": "Adres Satırı 1",
+        "suite": "Daire / Ofis / Kat",
+        "optional": "İsteğe bağlı",
+        "postcode": "Posta Kodu *",
+        "zipPlaceholder": "Posta Kodu",
+        "selectCountryFirst": "(Önce ülke seçiniz)",
+        "city": "Şehir *",
+        "detecting": "(Algılanıyor…)",
+        "autoFilled": "(Otomatik dolduruldu)",
+        "enterManually": "(Manuel girin)",
+        "state": "Eyalet / Bölge *",
+        "phoneLabel": "Telefon Bağlantısı *",
+        "invalidFormat": "(Geçersiz format)",
+        "validNumber": "(Geçerli numara)",
+        "includeCode": "(+ kodunu ekleyin)",
+        "continueBtn": "Nakliye Seçeneklerine Devam Et",
+        "recalculating": "Küresel Lojistik Yeniden Hesaplanıyor…",
+        "backBtn": "Teslimata Dön",
+        "changeShipping": "Nakliye Seçeneğini Değiştir",
+        "connecting": "Güvenli Ödeme Geçidine Bağlanılıyor. PCI-DSS protokolleri doğrulanıyor...",
+        "syncing": "İşlem Katmanı Senkronizasyonu",
+        "orderReview": "Sipariş İnceleme",
+        "subtotal": "Ürün Ara Toplamı",
+        "logistics": "Lojistik ve Taşıma",
+        "tbd": "Belirlenecek",
+        "grandTotal": "Genel Toplam",
+        "initGateway": "Geçit Başlatılıyor…",
+        "proceedBtn": "Ödemeye Geç",
+        "emptyArsenalTitle": "Boş Cephanelik",
+        "emptyArsenalDesc": "Koleksiyonunuza henüz herhangi bir figür eklememişsiniz gibi görünüyor.",
+        "returnShop": "Mağazaya Dön",
+        "deliveryEstimate": "Teslimat:",
+        "businessDay": "iş günü",
+        "businessDays": "iş günü"
+    },
+    "product_detail": {
+        "handPaintedTag": "El Boyaması ve 3D Baskı",
+        "customerReviews": "müşteri yorumu",
+        "selectScale": "Ölçek Seçin (Yaklaşık Yükseklik)",
+        "selectFinish": "Bitiş Seçin",
+        "handPainted": "El boyaması",
+        "rawKit": "Temel Kit (Gri reçine)",
+        "museumGrade": "Müze kalitesinde bitiş",
+        "primed": "Boyamaya hazır",
+        "description": "Açıklama",
+        "specifications": "Özellikler ve Teknik Veriler",
+        "encryptedCheckout": "Stripe üzerinden şifreli ödeme",
+        "insuredShipping": "Sigortalı Küresel Nakliye",
+        "confirmed": "Onaylandı",
+        "addToCollection": "Cephaneliğe Ekle",
+        "instantCheckout": "Hemen Satın Al",
+        "features": [
+            "Yüksek Çözünürlüklü Endüstriyel Reçine",
+            "Profesyonel Zanaatkar El Boyaması",
+            "UV dirençli Müze Sınıfı Vernik",
+            "Hassas Detaylandırma (0.025 mm)"
+        ],
+        "readMore": "Devamını Oku",
+        "readLess": "Daha Az Oku"
+    },
+    "trust": [
+        {
+            "label": "Güvenli Ödemeler",
+            "sub": "Stripe altyapısıyla"
+        },
+        {
+            "label": "Sigortalı Küresel Nakliye",
+            "sub": "Dünya çapında teslimat"
+        },
+        {
+            "label": "El Sanatları",
+            "sub": "Her parça benzersizdir"
+        },
+        {
+            "label": "30 Gün İçinde İade",
+            "sub": "Sorunsuz değişim"
+        }
     ],
-    "stillHaveQuestions": "Hâlâ sorularınız mı var?",
-    "curatorsMessage": "Küratörlerimiz, özel komisyonlar ve protokol desteği konusunda yardıma hazırdır.",
-    "emailUs": "Bize E-posta Gönderin",
-    "liveChat": "Canlı Sohbet",
-    "offline": "Çevrimdışı"
-  },
-  "errors": {
-    "invalidLogin": "Erişim Reddedildi. Lütfen güvenlik anahtarınızın doğru olduğundan ve kimlik bağlantınızın doğrulandığından emin olun.",
-    "confirmationSent": "Onay e-postası gönderildi. Lütfen terminali etkinleştirmek için gelen kutunuzu kontrol edin.",
-    "stripeLoadError": "Ödeme formu yüklenemedi. Lütfen sayfayı yenileyip tekrar deneyin.",
-    "unexpectedError": "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.",
-    "signupFailed": "Kayıt başarısız oldu. Lütfen tekrar deneyin.",
-    "genericError": "Bir şeyler ters gitti",
-    "verifyStatusError": "Ödeme durumunu doğrulayamadık. Bir onay e-postası aldıysanız siparişiniz işleme alınmaktadır.",
-    "maxFeatured": "En fazla 3 taneye izin verilir."
-  },
-  "success": {
-    "orderConfirmed": "Sipariş Onaylandı",
-    "thankYou": "5iveArts'tan satın aldığınız için teşekkür ederiz",
-    "confEmailSent": "Şu adrese bir onay e-postası gönderildi:",
-    "shippingNote": "Figürünüz özenle paketlenecek ve canlı takip ile gönderilecektir.",
-    "logisticsLog": "Güvenlik ve Lojistik Operasyon Günlüğü",
-    "syncComplete": "Senkronizasyon Tamamlandı ve E-posta Gönderildi",
-    "resendEmail": "E-posta gelmedi mi? Tekrar gönder",
-    "paymentVerified": "Ödeme doğrulandı.",
-    "fulfillmentNote": "Figürünüz şu anda özel köpük dolgu kullanılarak hazırlanıyor.",
-    "vaultEstablished": "Kasa Kuruldu",
-    "orderLinked": "Siparişiniz artık güvenli hesabınıza kalıcı olarak bağlandı.",
-    "goWarehouse": "Depoma Git",
-    "secureCollection": "Koleksiyonunuzu Güvence Altına Alın",
-    "createAccount": "HESAP OLUŞTUR",
-    "securing": "Güvenliğe alınıyor...",
-    "returnHQ": "HQ'ya Dön"
-  },
-  "checkout": {
-    "gateway": "Güvenli Geçit",
-    "checkout": "Ödeme",
-    "chooseSaved": "Kayıtlı Rotalara Eriş",
-    "useThis": "Rotayı Yetkilendir",
-    "newAddress": "Yeni Protokol Kur",
-    "saveToVault": "Bu sevkiyat rotasını güvenli kasama kaydet",
-    "verifying": "Güvenli İşlem Doğrulanıyor…",
-    "loadingForm": "Ödeme protokolleri yükleniyor...",
-    "processing": "Ödeme işleniyor…",
-    "payNow": "Ödemeyi Yetkilendir",
-    "securedBy": "Stripe Intelligence ile Güvence Altına Alınmıştır",
-    "encryptionNote": "Bağlantınız RSA-4096 ve AES-256 standartlarıyla şifrelenmiştir. Ham ödeme verilerini asla sunucularımızda saklamayız.",
-    "deliveryStep": "1. Teslimat",
-    "shippingStep": "2. Sevkiyat",
-    "paymentStep": "3. Ödeme",
-    "recipientName": "Alıcı Adı *",
-    "collectorPlaceholder": "Koleksiyoner Adı",
-    "emailAddress": "E-posta Adresi *",
-    "vault": "Kasa",
-    "streetAddress": "Adres *",
-    "addressLine1": "Adres Satırı 1",
-    "suite": "Daire / Ofis / Kat",
-    "optional": "İsteğe bağlı",
-    "postcode": "Posta Kodu *",
-    "zipPlaceholder": "Posta Kodu",
-    "selectCountryFirst": "(Önce ülke seçiniz)",
-    "city": "Şehir *",
-    "detecting": "(Algılanıyor…)",
-    "autoFilled": "(Otomatik dolduruldu)",
-    "enterManually": "(Manuel girin)",
-    "state": "Eyalet / Bölge *",
-    "phoneLabel": "Telefon Bağlantısı *",
-    "invalidFormat": "(Geçersiz format)",
-    "validNumber": "(Geçerli numara)",
-    "includeCode": "(+ kodunu ekleyin)",
-    "continueBtn": "Nakliye Seçeneklerine Devam Et",
-    "recalculating": "Küresel Lojistik Yeniden Hesaplanıyor…",
-    "backBtn": "Teslimata Dön",
-    "changeShipping": "Nakliye Seçeneğini Değiştir",
-    "connecting": "Güvenli Ödeme Geçidine Bağlanılıyor. PCI-DSS protokolleri doğrulanıyor...",
-    "syncing": "İşlem Katmanı Senkronizasyonu",
-    "orderReview": "Sipariş İnceleme",
-    "subtotal": "Ürün Ara Toplamı",
-    "logistics": "Lojistik ve Taşıma",
-    "tbd": "Belirlenecek",
-    "grandTotal": "Genel Toplam",
-    "initGateway": "Geçit Başlatılıyor…",
-    "proceedBtn": "Ödemeye Geç",
-    "emptyArsenalTitle": "Boş Cephanelik",
-    "emptyArsenalDesc": "Koleksiyonunuza henüz herhangi bir figür eklememişsiniz gibi görünüyor.",
-    "returnShop": "Mağazaya Dön",
-    "deliveryEstimate": "Teslimat:",
-    "businessDay": "iş günü",
-    "businessDays": "iş günü"
-  },
-  "product_detail": {
-    "handPaintedTag": "El Boyaması ve 3D Baskı",
-    "customerReviews": "müşteri yorumu",
-    "selectScale": "Ölçek Seçin (Yaklaşık Yükseklik)",
-    "selectFinish": "Bitiş Seçin",
-    "handPainted": "El boyaması",
-    "rawKit": "Temel Kit (Gri reçine)",
-    "museumGrade": "Müze kalitesinde bitiş",
-    "primed": "Boyamaya hazır",
-    "description": "Açıklama",
-    "specifications": "Özellikler ve Teknik Veriler",
-    "encryptedCheckout": "Stripe üzerinden şifreli ödeme",
-    "insuredShipping": "Sigortalı Küresel Nakliye",
-    "confirmed": "Onaylandı",
-    "addToCollection": "Cephaneliğe Ekle",
-    "instantCheckout": "Hemen Satın Al",
-    "features": [
-      "Yüksek Çözünürlüklü Endüstriyel Reçine",
-      "Profesyonel Zanaatkar El Boyaması",
-      "UV dirençli Müze Sınıfı Vernik",
-      "Hassas Detaylandırma (0.025 mm)"
-    ],
-    "readMore": "Devamını Oku",
-    "readLess": "Daha Az Oku"
-  },
-  "trust": [
-    {
-      "label": "Güvenli Ödemeler",
-      "sub": "Stripe altyapısıyla"
+    "account": {
+        "portal": "Güvenli Depo Portalı",
+        "title": "Hesabım",
+        "databaseFor": "Şu kişi için veritabanı erişimi:",
+        "security": "Güvenlik",
+        "decommission": "Oturumu Kapat",
+        "activeAssets": "Aktif Varlıklar",
+        "totalAcquisitions": "Toplam kayıtlı edinim",
+        "status": "Hesap Durumu",
+        "verifiedCollector": "Doğrulanmış Koleksiyoner",
+        "level1Encryption": "Seviye 1 Şifreleme",
+        "history": "Edinim Geçmişi",
+        "verificationRequired": "Doğrulama Gerekli",
+        "verificationDesc": "Tüm özelliklere erişmek için lütfen kimliğinizi doğrulayın",
+        "resendLink": "Bağlantıyı Tekrar Gönder",
+        "neuralLinkError": "Nöral Bağlantı Hatası",
+        "syncFailed": "Merkezi sipariş kasasıyla senkronizasyon başarısız oldu.",
+        "noAssets": "Kasada kayıtlı varlık yok.",
+        "browseCollection": "Koleksiyona Göz At",
+        "recorded": "Kaydedildi:",
+        "investment": "Yatırım",
+        "prepPhaseActive": "Hazırlık Aşaması",
+        "inTransit": "Taşımada:",
+        "fullLogistics": "Tam Lojistik Verileri",
+        "settings": {
+            "title": "Güvenlik Kasası",
+            "subtitle": "Koleksiyoner kimliğinizi ve erişim protokollerinizi yönetin.",
+            "identityVerification": "Kimlik Doğrulama",
+            "verified": "Doğrulandı",
+            "pending": "Doğrulama Bekleniyor",
+            "guestProtected": "Erişiminiz şu anda 'Misafir Korumalı' durumundadır. Bazı sipariş teslimat verileri doğrulanmış kimlik gerektirir.",
+            "requestLink": "Yeni Doğrulama Bağlantısı İste",
+            "addresses": "Sevkiyat Hedefleri",
+            "addAddress": "Yeni Protokol Kaydet",
+            "noAddresses": "Kasada kayıtlı hedef yok.",
+            "default": "Ana Rota",
+            "setDefault": "Varsayılan Yap",
+            "edit": "Düzenle",
+            "delete": "Sil",
+            "confirmDelete": "Bu sevkiyat rotasını silmek istediğinizden emin misiniz?"
+        },
+        "wishlist": {
+            "title": "Küratör İstek Listem",
+            "subtitle": "Gözetim Altındaki Eserler",
+            "emptyTitle": "İstek Listeniz Boş",
+            "emptyDescription": "Eserlerimizi keşfedin ve gelecekte edinmek üzere küratör tarzınıza uyanları işaretleyin."
+        }
     },
-    {
-      "label": "Sigortalı Küresel Nakliye",
-      "sub": "Dünya çapında teslimat"
+    "orders": {
+        "orderNum": "Sipariş #",
+        "recorded": "Kaydedildi:",
+        "investment": "Yatırım",
+        "quantity": "Miktar:",
+        "qty": "Adet:",
+        "prepPhase": "Hazırlık Aşaması Aktif",
+        "inTransit": "Taşımada:",
+        "logisticsData": "Tam Lojistik Verileri",
+        "warehouse": "Depom",
+        "operation": "Operasyon #",
+        "logged": "Günlük Kaydı:",
+        "verifiedAcquisition": "Doğrulanmış Edinim",
+        "trackShipment": "SEVKIYATI TAKIP ET",
+        "exportInvoice": "FATURAYI DIŞA AKTAR",
+        "lifecycle": "Dağıtım Yaşam Döngüsü",
+        "paymentConfirmed": "Ödeme Onaylandı",
+        "fundsVerified": "Edinim fonları doğrulandı ve güvenceye alındı.",
+        "prepPhaseActive": "Hazırlık Aşaması",
+        "isolationNote": "Figür izolasyonu ve koruyucu köpük yerleştirildi.",
+        "shipped": "Gönderildi",
+        "logisticsSuccess": "Lojistik güvenceye alındı ve hedefe doğru yola çıktı.",
+        "delivered": "Teslim Edildi",
+        "acquired": "Başyapıt başarıyla edinildi ve güvenceye alındı.",
+        "deploymentZone": "Dağıtım Bölgesi",
+        "carrierProtocol": "Taşıyıcı Protokolü",
+        "class": "Sınıf: Kayıtlı Takip",
+        "settlement": "Yerleşim",
+        "transactionSecure": "İşlem Güvenli",
+        "discrepancy": "Lojistik Tutarsızlık mı?",
+        "contactHQ": "HQ İLE İLETİŞİME GEÇ",
+        "sku": "Stok Kodu (SKU):",
+        "backToWarehouse": "Depoya Dön",
+        "reportTitle": "Tam Lojistik Raporu",
+        "paid": "Ödendi",
+        "processing": "İşleniyor",
+        "cancelled": "İptal Edildi",
+        "pConfirmed": "Ödeme Onaylandı",
+        "pConfirmedDesc": "Edinim fonları doğrulandı ve güvenceye alındı.",
+        "prepPhaseDesc": "Figür izolasyonu ve koruyucu köpük entegrasyonu.",
+        "inTransitDesc": "Depo kasasından çıkış. Lojistiğe devir.",
+        "manifest": "Varlık Manifestosu",
+        "itemDetails": "Ürün Detayları",
+        "subtotal": "Edinim Ara Toplamı",
+        "shipping": "Lojistik Ücreti",
+        "totalContribution": "Toplam Portföy Katkısı",
+        "depositPaid": "Depozito ödendi (50%)",
+        "remainingBalance": "Kalan bakiye (Protokol)"
     },
-    {
-      "label": "El Sanatları",
-      "sub": "Her parça benzersizdir"
+    "footer": {
+        "logistics": "Zanaatkar Küresel Lojistik Etkin",
+        "rights": "© 2026 5iveArts Collector Series. Tüm hakları saklıdır.",
+        "privacy": "Gizlilik",
+        "terms": "Şartlar",
+        "description": "Premium el boyaması ve 3D baskılı reçine figürler hazırlayan butik stüdyo. Palermo'daki atölyemizden dünyanın dört bir yanındaki meraklılara müze kalitesinde eserler gönderiyoruz.",
+        "seoAbout": "5iveArts, premium 3D baskılı figürler ve el boyaması koleksiyon ürünleri oluşturma konusunda uzmanlaşmış lider bir butik stüdyodur. Zanaatkar serimiz, üretilen her figürde müze sınıfı kaliteyi sağlamak için 0.025 mm katman yüksekliği kullanarak aşırı detaylara odaklanır. Küresel nakliye ağımızla, endüstriyel hassasiyet ve el sanatının birleşimine değer veren kendini adamış koleksiyoner topluluğuna hizmet veriyoruz. Serimizdeki her bir parça benzersizdir, profesyonel hava fırçası işçiliği ile tamamlanmış ve yatırımınızı yıllarca korumak için UV dirençli verniklerle kaplanmıştır."
     },
-    {
-      "label": "30 Gün İçinde İade",
-      "sub": "Sorunsuz değişim"
+    "shipping": {
+        "protocol": "Lojistik Protokolü",
+        "title": "Küresel Sevkiyat",
+        "subtitle": "Koleksiyondaki her bir başyapıt için güvenli, sigortalı ve takipli teslimat.",
+        "insuredTitle": "Sigortalı Gönderim",
+        "insuredText": "Her figür, özel yüksek yoğunluklu köpük ve çift katmanlı koleksiyoner sınıfı kutular kullanılarak paketlenir. Her sevkiyatı taşıma sırasındaki kayıp veya hasara karşı sigortalıyoruz.",
+        "freeTierTitle": "Ücretsiz Nakliye Eşiği",
+        "freeTierText": "Ciddi koleksiyonerleri ödüllendiriyoruz. {amount} üzerindeki tüm siparişler, bulunduğunuz yerden bağımsız olarak otomatik olarak ÜCRETSİZ STANDART NAKLİYE hakkı kazanır.",
+        "dynamicTitle": "Dinamik Lojistik",
+        "dynamicText": "UPS, DHL ve FedEx gibi premium taşıyıcılardan gerçek zamanlı sigortalı nakliye ücretleri sağlamak için Packlink PRO kullanıyoruz. Ücretiniz, ödeme sırasında tam konumunuza ve paket boyutlarınıza göre hesaplanır.",
+        "zonesTitle": "Tahmini Taşıma Süreleri",
+        "region": "Bölge",
+        "standard": "Standart",
+        "express": "Ekspres",
+        "estTime": "Tahm. Süre",
+        "trackingInfo": "Tüm siparişler için canlı küresel takip sağlanmaktadır",
+        "italy": "İtalya",
+        "eu": "Avrupa Birliği",
+        "uk": "Birleşik Krallık",
+        "global": "Küresel / Dünyanın Geri Kalanı",
+        "days1_3": "1-3 gün",
+        "days3_5": "3-5 gün",
+        "days4_7": "4-7 gün",
+        "days7_14": "7-14 gün",
+        "carrierActive": "Küresel Kurye Ağı Aktif"
+    },
+    "hero": {
+        "slides": [
+            {
+                "tagline": "Premium Reçine Hassasiyeti",
+                "headline": "3D Baskılı",
+                "headlineHighlight": "Başyapıtlar",
+                "subtext": "Yüksek çözünürlüklü reçine figürler, 0.025 mm katman yüksekliği — her zanaatkar parçada müze kalitesi."
+            },
+            {
+                "tagline": "Zanaatkâr El İşçiliği Detayları",
+                "headline": "Profesyonel",
+                "headlineHighlight": "El Boyaması",
+                "subtext": "Benzersiz gölgelendirme ve profesyonel hava fırçası teknikleri, favori karakterlerinize hayat verir — her biri eşsiz bir eser."
+            }
+        ],
+        "cta": "Hemen Satın Al",
+        "trust": {
+            "quality": "Sertifikalı Kalite",
+            "handFinished": "El İşçiliği",
+            "logistics": "Küresel Lojistik"
+        }
+    },
+    "features": {
+        "handPainted": {
+            "title": "El Boyaması",
+            "text": "Her figür profesyonel akriliklerle elle boyanmıştır"
+        },
+        "threeDPrinted": {
+            "title": "3D Baskılı",
+            "text": "0.025 mm çözünürlük (katman yüksekliği)"
+        },
+        "fastShipping": {
+            "title": "Hızlı Kargo",
+            "text": "Takip özellikli sigortalı küresel teslimat"
+        },
+        "secureCheckout": {
+            "title": "Güvenli Ödeme",
+            "text": "Ödemeler Stripe ile güvenli bir şekilde işlenir"
+        }
+    },
+    "ctaSection": {
+        "heading": "Bir sanat eserine sahip olmaya hazır mısınız?",
+        "subtext": "El boyaması ve 3D baskılı aksiyon figürlerinin tam koleksiyonunu keşfedin. Her biri özenle sipariş üzerine üretilir.",
+        "button": "Mağazaya Git"
+    },
+    "privacy_policy": {
+        "title": "Gizlilik Politikası",
+        "lastUpdated": "Son Güncelleme: Mart 2026",
+        "sections": [
+            {
+                "title": "1. Topladığımız Bilgiler",
+                "content": "Bir satın alma işlemi gerçekleştirdiğinizde bize doğrudan verdiğiniz ad, e-posta adresi, teslimat adresi ve ödeme bilgileri dahil olmak üzere bilgileri topluyoruz."
+            },
+            {
+                "title": "2. Bilgilerinizi Nasıl Kullanıyoruz",
+                "content": "Toplanan bilgileri işlemlerinizi gerçekleştirmek, sipariş onayları göndermek ve satın alımlarınızla ilgili sizinle iletişim kurmak için kullanıyoruz."
+            },
+            {
+                "title": "3. Bilgi Paylaşımı",
+                "content": "Kişisel bilgilerinizi, siparişlerin yerine getirilmesi ve ödeme işleme için gerekli durumlar dışında üçüncü taraflarla satmıyoruz veya paylaşmıyoruz."
+            },
+            {
+                "title": "4. Veri Güvenliği",
+                "content": "Kişisel bilgilerinizi yetkisiz erişime veya ifşaya karşı korumak için uygun güvenlik önlemlerini uyguluyoruz."
+            },
+            {
+                "title": "5. İletişim",
+                "content": "Gizlilik Politikası hakkında sorularınız varsa, lütfen privacy@5ivearts.com adresinden bizimle iletişime geçin."
+            }
+        ]
+    },
+    "terms_of_service": {
+        "title": "Hizmet Şartları",
+        "lastUpdated": "Son Güncelleme: Mart 2026",
+        "sections": [
+            {
+                "title": "1. Şartların Kabulü",
+                "content": "Bu siteye erişerek, bu sözleşmenin hüküm ve koşullarına uymayı kabul etmiş olursunuz."
+            },
+            {
+                "title": "2. Ürünler ve Hizmetler",
+                "content": "Sitedeki tüm ürünler 3D baskılı koleksiyon ürünleridir. 3D baskı sürecinin doğası gereği renk ve bitişte küçük farklılıklar olabileceğini lütfen unutmayın."
+            },
+            {
+                "title": "3. Fiyatlandırma ve Ödeme",
+                "content": "Fiyatlar önceden haber verilmeksizin değiştirilebilir. Yanlış fiyatla listelenen ürünler için verilen siparişleri reddetme veya iptal etme hakkımızı saklı tutarız."
+            },
+            {
+                "title": "4. Nakliye ve Teslimat",
+                "content": "Nakliye masrafları ve teslimat süreleri bölgeye göre değişir. Gümrük gecikmelerinden veya taşıyıcı sorunlarından sorumlu değiliz."
+            },
+            {
+                "title": "5. Fikri Mülkiyet",
+                "content": "Ürün tasarımları ve fotoğrafları dahil olmak üzere bu sitedeki tüm içerikler fikri mülkiyet haklarıyla korunmaktadır."
+            },
+            {
+                "title": "6. İletişim",
+                "content": "Şartlar hakkında sorularınız varsa, lütfen legal@5ivearts.com adresinden bizimle iletişime geçin."
+            }
+        ]
+    },
+    "cookie_banner": {
+        "tag": "Fotopolimer Ünitesi",
+        "title": "Yerel çerezleri kürliyoruz.",
+        "description": "Sistemimiz, site kararlılığını sağlamak ve trafik modellerini katman katman analiz etmek için temel çerezleri kullanır.",
+        "accept": "Partiyi Kabul Et",
+        "preferences": "Sistem Tercihleri"
+    },
+    "custom_order": {
+        "hero_title": "Ismarlama Eserler",
+        "hero_subtitle": "Zanaatkarlarımız tarafından yönetilen özel sipariş protokolümüzle dijital hayallerinizi fiziksel şaheserlere dönüştürün.",
+        "flow_title": "Sipariş Protokolü",
+        "step1_title": "1. Varlık Sunumu",
+        "step1_desc": "Karakter render'larınızı veya konsept çizimlerinizi yükleyin. Küratörlerimiz her detayı uygulanabilirlik açısından inceler.",
+        "step2_title": "2. Karmaşıklık Değerlendirmesi",
+        "step2_desc": "Küratörlerimiz, hassas bir teklif için geometrik yoğunluğu ve boyama karmaşıklığını değerlendirir.",
+        "step3_title": "3. Anlaşma",
+        "step3_desc": "Özel teklifinizi alın. %50 depozito ile üretim sıranızı garantileyin.",
+        "step4_title": "4. Usta Zanaatkarlık",
+        "step4_desc": "Atölyeden gelen gerçek zamanlı fotoğraf güncellemeleriyle progresinizi özel kasanızdan (Vault) takip edin.",
+        "step5_title": "5. Final Teslimat",
+        "step5_desc": "Tamamlandığında kalan bakiyeyi ödeyin. Koordinatlarınıza sigortalı küresel teslimat.",
+        "auth_invite_title": "Siparişinize başlamaya hazır mısınız?",
+        "auth_invite_desc": "Varlıkları yüklemek ve eserinizin üretimini takip etmek için terminalimize güvenli bir bağlantı kurun.",
+        "cta_login": "Başlamak için Giriş Yap",
+        "cta_register": "Koleksiyoner Hesabı Oluştur",
+        "cta_start": "Yeni Sipariş Öner",
+        "benefit1_title": "Doğrulanmış Güvenlik",
+        "benefit1_desc": "Her komisyon için uçtan uca şifrelenmiş varlık transferleri ve güvenli ödeme entegrasyonu.",
+        "benefit2_title": "İlerleme Şeffaflığı",
+        "benefit2_desc": "Üretim döngüsü boyunca kişisel Vault'unuza eklenen gerçek zamanlı görsel kayıtlar.",
+        "benefit3_title": "Zanaatkar Kontrolü",
+        "benefit3_desc": "Prototipinizin müze standartlarını karşıladığından emin olmak için baş küratörlerimizle doğrudan işbirliği.",
+        "success_title": "Protokol Başlatıldı",
+        "success_subtitle": "İletim Tamamlandı",
+        "success_message": "Belgeleriniz şifrelenmiş ve baş küratörlerimize iletilmiştir. Fizibiliteyi ve karmaşıklığı 24-48 saat içinde gözden geçireceğiz.",
+        "cta_vault": "Vault'uma Gir",
+        "tagline": "Gelişmiş Özel Protokol",
+        "logistics_title": "Sistem Lojistiği",
+        "proposal_step_identity_tag": "Artisan Bureau",
+        "proposal_step_identity_title": "Proje Kimliği",
+        "proposal_field_title_label": "Karakter / Proje Başlığı",
+        "proposal_field_title_placeholder": "örn. Master Chief - Mark VI",
+        "proposal_field_scale_label": "İstenilen Ölçek",
+        "proposal_field_finish_label": "Bitiş Protokolü",
+        "proposal_cta_configure": "Detayları Yapılandır",
+        "proposal_step_narrative_tag": "Bureau Dokümantasyonu",
+        "proposal_step_narrative_title": "Anlatı Kapsamı",
+        "proposal_field_desc_label": "Proje Açıklaması",
+        "proposal_field_desc_placeholder": "Vizyonunuzu, belirli pozları veya referans detaylarını açıklayın...",
+        "proposal_cta_upload": "Varlıkları Yükle",
+        "proposal_cta_back": "Geri",
+        "proposal_step_visual_tag": "Görsel Kanıt",
+        "proposal_step_visual_title": "Varlık İletimi",
+        "proposal_field_upload_label": "Dosya Ekle",
+        "proposal_field_upload_hint": "Desteklenen formatlar: JPG, PNG, WEBP (MAKS 3)",
+        "proposal_cta_submit": "Siparişi Gönder",
+        "error_max_files": "Maksimum 3 referans resmine izin verlir",
+        "error_required_fields": "Lütfen gerekli tüm alanları doldurun ve en az bir resim yükleyin.",
+        "scales": {
+            "1:12": "1:12 Ölçek",
+            "1:10": "1:10 Ölçek",
+            "1:6": "1:6 Ölçek",
+            "1:4": "1:4 Ölçek",
+            "other": "Diğer / Özel"
+        },
+        "finishes": {
+            "raw": "Ham (Gri Reçine)",
+            "standard": "Boyalı (Standart)",
+            "master": "Boyalı (Usta Sınıfı)"
+        }
+    },
+    "marketing": {
+        "trendingTag": "En Çok Arzulanan Protokol",
+        "trendingTitle": "Gözlem Altındaki Eserler",
+        "interestSync": "Gerçek Zamanlı İlgi Senkronizasyonu",
+        "activeCitations": "{count} Aktif Alıntı"
+    },
+    "products_ui": {
+        "inspect": "Eseri İncele"
     }
-  ],
-  "account": {
-    "portal": "Güvenli Depo Portalı",
-    "title": "Hesabım",
-    "databaseFor": "Şu kişi için veritabanı erişimi:",
-    "security": "Güvenlik",
-    "decommission": "Oturumu Kapat",
-    "activeAssets": "Aktif Varlıklar",
-    "totalAcquisitions": "Toplam kayıtlı edinim",
-    "status": "Hesap Durumu",
-    "verifiedCollector": "Doğrulanmış Koleksiyoner",
-    "level1Encryption": "Seviye 1 Şifreleme",
-    "history": "Edinim Geçmişi",
-    "verificationRequired": "Doğrulama Gerekli",
-    "verificationDesc": "Tüm özelliklere erişmek için lütfen kimliğinizi doğrulayın",
-    "resendLink": "Bağlantıyı Tekrar Gönder",
-    "neuralLinkError": "Nöral Bağlantı Hatası",
-    "syncFailed": "Merkezi sipariş kasasıyla senkronizasyon başarısız oldu.",
-    "noAssets": "Kasada kayıtlı varlık yok.",
-    "browseCollection": "Koleksiyona Göz At",
-    "recorded": "Kaydedildi:",
-    "investment": "Yatırım",
-    "prepPhaseActive": "Hazırlık Aşaması",
-    "inTransit": "Taşımada:",
-    "fullLogistics": "Tam Lojistik Verileri",
-    "settings": {
-      "title": "Güvenlik Kasası",
-      "subtitle": "Koleksiyoner kimliğinizi ve erişim protokollerinizi yönetin.",
-      "identityVerification": "Kimlik Doğrulama",
-      "verified": "Doğrulandı",
-      "pending": "Doğrulama Bekleniyor",
-      "guestProtected": "Erişiminiz şu anda 'Misafir Korumalı' durumundadır. Bazı sipariş teslimat verileri doğrulanmış kimlik gerektirir.",
-      "requestLink": "Yeni Doğrulama Bağlantısı İste",
-      "addresses": "Sevkiyat Hedefleri",
-      "addAddress": "Yeni Protokol Kaydet",
-      "noAddresses": "Kasada kayıtlı hedef yok.",
-      "default": "Ana Rota",
-      "setDefault": "Varsayılan Yap",
-      "edit": "Düzenle",
-      "delete": "Sil",
-      "confirmDelete": "Bu sevkiyat rotasını silmek istediğinizden emin misiniz?"
-    },
-    "wishlist": {
-      "title": "Küratör İstek Listem",
-      "subtitle": "Gözetim Altındaki Eserler",
-      "emptyTitle": "İstek Listeniz Boş",
-      "emptyDescription": "Eserlerimizi keşfedin ve gelecekte edinmek üzere küratör tarzınıza uyanları işaretleyin."
-    }
-  },
-  "orders": {
-    "orderNum": "Sipariş #",
-    "recorded": "Kaydedildi:",
-    "investment": "Yatırım",
-    "quantity": "Miktar:",
-    "qty": "Adet:",
-    "prepPhase": "Hazırlık Aşaması Aktif",
-    "inTransit": "Taşımada:",
-    "logisticsData": "Tam Lojistik Verileri",
-    "warehouse": "Depom",
-    "operation": "Operasyon #",
-    "logged": "Günlük Kaydı:",
-    "verifiedAcquisition": "Doğrulanmış Edinim",
-    "trackShipment": "SEVKIYATI TAKIP ET",
-    "exportInvoice": "FATURAYI DIŞA AKTAR",
-    "lifecycle": "Dağıtım Yaşam Döngüsü",
-    "paymentConfirmed": "Ödeme Onaylandı",
-    "fundsVerified": "Edinim fonları doğrulandı ve güvenceye alındı.",
-    "prepPhaseActive": "Hazırlık Aşaması",
-    "isolationNote": "Figür izolasyonu ve koruyucu köpük yerleştirildi.",
-    "shipped": "Gönderildi",
-    "logisticsSuccess": "Lojistik güvenceye alındı ve hedefe doğru yola çıktı.",
-    "delivered": "Teslim Edildi",
-    "acquired": "Başyapıt başarıyla edinildi ve güvenceye alındı.",
-    "deploymentZone": "Dağıtım Bölgesi",
-    "carrierProtocol": "Taşıyıcı Protokolü",
-    "class": "Sınıf: Kayıtlı Takip",
-    "settlement": "Yerleşim",
-    "transactionSecure": "İşlem Güvenli",
-    "discrepancy": "Lojistik Tutarsızlık mı?",
-    "contactHQ": "HQ İLE İLETİŞİME GEÇ",
-    "sku": "Stok Kodu (SKU):",
-    "backToWarehouse": "Depoya Dön",
-    "reportTitle": "Tam Lojistik Raporu",
-    "paid": "Ödendi",
-    "processing": "İşleniyor",
-    "cancelled": "İptal Edildi",
-    "pConfirmed": "Ödeme Onaylandı",
-    "pConfirmedDesc": "Edinim fonları doğrulandı ve güvenceye alındı.",
-    "prepPhaseDesc": "Figür izolasyonu ve koruyucu köpük entegrasyonu.",
-    "inTransitDesc": "Depo kasasından çıkış. Lojistiğe devir.",
-    "manifest": "Varlık Manifestosu",
-    "itemDetails": "Ürün Detayları",
-    "subtotal": "Edinim Ara Toplamı",
-    "shipping": "Lojistik Ücreti",
-    "totalContribution": "Toplam Portföy Katkısı"
-  },
-  "footer": {
-    "logistics": "Zanaatkar Küresel Lojistik Etkin",
-    "rights": "© 2026 5iveArts Collector Series. Tüm hakları saklıdır.",
-    "privacy": "Gizlilik",
-    "terms": "Şartlar",
-    "description": "Premium el boyaması ve 3D baskılı reçine figürler hazırlayan butik stüdyo. Palermo'daki atölyemizden dünyanın dört bir yanındaki meraklılara müze kalitesinde eserler gönderiyoruz.",
-    "seoAbout": "5iveArts, premium 3D baskılı figürler ve el boyaması koleksiyon ürünleri oluşturma konusunda uzmanlaşmış lider bir butik stüdyodur. Zanaatkar serimiz, üretilen her figürde müze sınıfı kaliteyi sağlamak için 0.025 mm katman yüksekliği kullanarak aşırı detaylara odaklanır. Küresel nakliye ağımızla, endüstriyel hassasiyet ve el sanatının birleşimine değer veren kendini adamış koleksiyoner topluluğuna hizmet veriyoruz. Serimizdeki her bir parça benzersizdir, profesyonel hava fırçası işçiliği ile tamamlanmış ve yatırımınızı yıllarca korumak için UV dirençli verniklerle kaplanmıştır."
-  },
-  "shipping": {
-    "protocol": "Lojistik Protokolü",
-    "title": "Küresel Sevkiyat",
-    "subtitle": "Koleksiyondaki her bir başyapıt için güvenli, sigortalı ve takipli teslimat.",
-    "insuredTitle": "Sigortalı Gönderim",
-    "insuredText": "Her figür, özel yüksek yoğunluklu köpük ve çift katmanlı koleksiyoner sınıfı kutular kullanılarak paketlenir. Her sevkiyatı taşıma sırasındaki kayıp veya hasara karşı sigortalıyoruz.",
-    "freeTierTitle": "Ücretsiz Nakliye Eşiği",
-    "freeTierText": "Ciddi koleksiyonerleri ödüllendiriyoruz. {amount} üzerindeki tüm siparişler, bulunduğunuz yerden bağımsız olarak otomatik olarak ÜCRETSİZ STANDART NAKLİYE hakkı kazanır.",
-    "dynamicTitle": "Dinamik Lojistik",
-    "dynamicText": "UPS, DHL ve FedEx gibi premium taşıyıcılardan gerçek zamanlı sigortalı nakliye ücretleri sağlamak için Packlink PRO kullanıyoruz. Ücretiniz, ödeme sırasında tam konumunuza ve paket boyutlarınıza göre hesaplanır.",
-    "zonesTitle": "Tahmini Taşıma Süreleri",
-    "region": "Bölge",
-    "standard": "Standart",
-    "express": "Ekspres",
-    "estTime": "Tahm. Süre",
-    "trackingInfo": "Tüm siparişler için canlı küresel takip sağlanmaktadır",
-    "italy": "İtalya",
-    "eu": "Avrupa Birliği",
-    "uk": "Birleşik Krallık",
-    "global": "Küresel / Dünyanın Geri Kalanı",
-    "days1_3": "1-3 gün",
-    "days3_5": "3-5 gün",
-    "days4_7": "4-7 gün",
-    "days7_14": "7-14 gün",
-    "carrierActive": "Küresel Kurye Ağı Aktif"
-  },
-  "hero": {
-    "slides": [
-      {
-        "tagline": "Premium Reçine Hassasiyeti",
-        "headline": "3D Baskılı",
-        "headlineHighlight": "Başyapıtlar",
-        "subtext": "Yüksek çözünürlüklü reçine figürler, 0.025 mm katman yüksekliği — her zanaatkar parçada müze kalitesi."
-      },
-      {
-        "tagline": "Zanaatkâr El İşçiliği Detayları",
-        "headline": "Profesyonel",
-        "headlineHighlight": "El Boyaması",
-        "subtext": "Benzersiz gölgelendirme ve profesyonel hava fırçası teknikleri, favori karakterlerinize hayat verir — her biri eşsiz bir eser."
-      }
-    ],
-    "cta": "Hemen Satın Al",
-    "trust": {
-      "quality": "Sertifikalı Kalite",
-      "handFinished": "El İşçiliği",
-      "logistics": "Küresel Lojistik"
-    }
-  },
-  "features": {
-    "handPainted": {
-      "title": "El Boyaması",
-      "text": "Her figür profesyonel akriliklerle elle boyanmıştır"
-    },
-    "threeDPrinted": {
-      "title": "3D Baskılı",
-      "text": "0.025 mm çözünürlük (katman yüksekliği)"
-    },
-    "fastShipping": {
-      "title": "Hızlı Kargo",
-      "text": "Takip özellikli sigortalı küresel teslimat"
-    },
-    "secureCheckout": {
-      "title": "Güvenli Ödeme",
-      "text": "Ödemeler Stripe ile güvenli bir şekilde işlenir"
-    }
-  },
-  "ctaSection": {
-    "heading": "Bir sanat eserine sahip olmaya hazır mısınız?",
-    "subtext": "El boyaması ve 3D baskılı aksiyon figürlerinin tam koleksiyonunu keşfedin. Her biri özenle sipariş üzerine üretilir.",
-    "button": "Mağazaya Git"
-  },
-  "privacy_policy": {
-    "title": "Gizlilik Politikası",
-    "lastUpdated": "Son Güncelleme: Mart 2026",
-    "sections": [
-      {
-        "title": "1. Topladığımız Bilgiler",
-        "content": "Bir satın alma işlemi gerçekleştirdiğinizde bize doğrudan verdiğiniz ad, e-posta adresi, teslimat adresi ve ödeme bilgileri dahil olmak üzere bilgileri topluyoruz."
-      },
-      {
-        "title": "2. Bilgilerinizi Nasıl Kullanıyoruz",
-        "content": "Toplanan bilgileri işlemlerinizi gerçekleştirmek, sipariş onayları göndermek ve satın alımlarınızla ilgili sizinle iletişim kurmak için kullanıyoruz."
-      },
-      {
-        "title": "3. Bilgi Paylaşımı",
-        "content": "Kişisel bilgilerinizi, siparişlerin yerine getirilmesi ve ödeme işleme için gerekli durumlar dışında üçüncü taraflarla satmıyoruz veya paylaşmıyoruz."
-      },
-      {
-        "title": "4. Veri Güvenliği",
-        "content": "Kişisel bilgilerinizi yetkisiz erişime veya ifşaya karşı korumak için uygun güvenlik önlemlerini uyguluyoruz."
-      },
-      {
-        "title": "5. İletişim",
-        "content": "Gizlilik Politikası hakkında sorularınız varsa, lütfen privacy@5ivearts.com adresinden bizimle iletişime geçin."
-      }
-    ]
-  },
-  "terms_of_service": {
-    "title": "Hizmet Şartları",
-    "lastUpdated": "Son Güncelleme: Mart 2026",
-    "sections": [
-      {
-        "title": "1. Şartların Kabulü",
-        "content": "Bu siteye erişerek, bu sözleşmenin hüküm ve koşullarına uymayı kabul etmiş olursunuz."
-      },
-      {
-        "title": "2. Ürünler ve Hizmetler",
-        "content": "Sitedeki tüm ürünler 3D baskılı koleksiyon ürünleridir. 3D baskı sürecinin doğası gereği renk ve bitişte küçük farklılıklar olabileceğini lütfen unutmayın."
-      },
-      {
-        "title": "3. Fiyatlandırma ve Ödeme",
-        "content": "Fiyatlar önceden haber verilmeksizin değiştirilebilir. Yanlış fiyatla listelenen ürünler için verilen siparişleri reddetme veya iptal etme hakkımızı saklı tutarız."
-      },
-      {
-        "title": "4. Nakliye ve Teslimat",
-        "content": "Nakliye masrafları ve teslimat süreleri bölgeye göre değişir. Gümrük gecikmelerinden veya taşıyıcı sorunlarından sorumlu değiliz."
-      },
-      {
-        "title": "5. Fikri Mülkiyet",
-        "content": "Ürün tasarımları ve fotoğrafları dahil olmak üzere bu sitedeki tüm içerikler fikri mülkiyet haklarıyla korunmaktadır."
-      },
-      {
-        "title": "6. İletişim",
-        "content": "Şartlar hakkında sorularınız varsa, lütfen legal@5ivearts.com adresinden bizimle iletişime geçin."
-      }
-    ]
-  },
-  "cookie_banner": {
-    "tag": "Fotopolimer Ünitesi",
-    "title": "Yerel çerezleri kürliyoruz.",
-    "description": "Sistemimiz, site kararlılığını sağlamak ve trafik modellerini katman katman analiz etmek için temel çerezleri kullanır.",
-    "accept": "Partiyi Kabul Et",
-    "preferences": "Sistem Tercihleri"
-  },
-  "custom_order": {
-    "hero_title": "Ismarlama Eserler",
-    "hero_subtitle": "Zanaatkarlarımız tarafından yönetilen özel sipariş protokolümüzle dijital hayallerinizi fiziksel şaheserlere dönüştürün.",
-    "flow_title": "Sipariş Protokolü",
-    "step1_title": "1. Varlık Sunumu",
-    "step1_desc": "Karakter render'larınızı veya konsept çizimlerinizi yükleyin. Küratörlerimiz her detayı uygulanabilirlik açısından inceler.",
-    "step2_title": "2. Karmaşıklık Değerlendirmesi",
-    "step2_desc": "Küratörlerimiz, hassas bir teklif için geometrik yoğunluğu ve boyama karmaşıklığını değerlendirir.",
-    "step3_title": "3. Anlaşma",
-    "step3_desc": "Özel teklifinizi alın. %50 depozito ile üretim sıranızı garantileyin.",
-    "step4_title": "4. Usta Zanaatkarlık",
-    "step4_desc": "Atölyeden gelen gerçek zamanlı fotoğraf güncellemeleriyle progresinizi özel kasanızdan (Vault) takip edin.",
-    "step5_title": "5. Final Teslimat",
-    "step5_desc": "Tamamlandığında kalan bakiyeyi ödeyin. Koordinatlarınıza sigortalı küresel teslimat.",
-    "auth_invite_title": "Siparişinize başlamaya hazır mısınız?",
-    "auth_invite_desc": "Varlıkları yüklemek ve eserinizin üretimini takip etmek için terminalimize güvenli bir bağlantı kurun.",
-    "cta_login": "Başlamak için Giriş Yap",
-    "cta_register": "Koleksiyoner Hesabı Oluştur",
-    "cta_start": "Yeni Sipariş Öner",
-    "benefit1_title": "Doğrulanmış Güvenlik",
-    "benefit1_desc": "Her komisyon için uçtan uca şifrelenmiş varlık transferleri ve güvenli ödeme entegrasyonu.",
-    "benefit2_title": "İlerleme Şeffaflığı",
-    "benefit2_desc": "Üretim döngüsü boyunca kişisel Vault'unuza eklenen gerçek zamanlı görsel kayıtlar.",
-    "benefit3_title": "Zanaatkar Kontrolü",
-    "benefit3_desc": "Prototipinizin müze standartlarını karşıladığından emin olmak için baş küratörlerimizle doğrudan işbirliği.",
-    "success_title": "Protokol Başlatıldı",
-    "success_subtitle": "İletim Tamamlandı",
-    "success_message": "Belgeleriniz şifrelenmiş ve baş küratörlerimize iletilmiştir. Fizibiliteyi ve karmaşıklığı 24-48 saat içinde gözden geçireceğiz.",
-    "cta_vault": "Vault'uma Gir",
-    "tagline": "Gelişmiş Özel Protokol",
-    "logistics_title": "Sistem Lojistiği",
-    "proposal_step_identity_tag": "Artisan Bureau",
-    "proposal_step_identity_title": "Proje Kimliği",
-    "proposal_field_title_label": "Karakter / Proje Başlığı",
-    "proposal_field_title_placeholder": "örn. Master Chief - Mark VI",
-    "proposal_field_scale_label": "İstenilen Ölçek",
-    "proposal_field_finish_label": "Bitiş Protokolü",
-    "proposal_cta_configure": "Detayları Yapılandır",
-    "proposal_step_narrative_tag": "Bureau Dokümantasyonu",
-    "proposal_step_narrative_title": "Anlatı Kapsamı",
-    "proposal_field_desc_label": "Proje Açıklaması",
-    "proposal_field_desc_placeholder": "Vizyonunuzu, belirli pozları veya referans detaylarını açıklayın...",
-    "proposal_cta_upload": "Varlıkları Yükle",
-    "proposal_cta_back": "Geri",
-    "proposal_step_visual_tag": "Görsel Kanıt",
-    "proposal_step_visual_title": "Varlık İletimi",
-    "proposal_field_upload_label": "Dosya Ekle",
-    "proposal_field_upload_hint": "Desteklenen formatlar: JPG, PNG, WEBP (MAKS 3)",
-    "proposal_cta_submit": "Siparişi Gönder",
-    "error_max_files": "Maksimum 3 referans resmine izin verlir",
-    "error_required_fields": "Lütfen gerekli tüm alanları doldurun ve en az bir resim yükleyin.",
-    "scales": {
-      "1:12": "1:12 Ölçek",
-      "1:10": "1:10 Ölçek",
-      "1:6": "1:6 Ölçek",
-      "1:4": "1:4 Ölçek",
-      "other": "Diğer / Özel"
-    },
-    "finishes": {
-      "raw": "Ham (Gri Reçine)",
-      "standard": "Boyalı (Standart)",
-      "master": "Boyalı (Usta Sınıfı)"
-    }
-  },
-  "marketing": {
-    "trendingTag": "En Çok Arzulanan Protokol",
-    "trendingTitle": "Gözlem Altındaki Eserler",
-    "interestSync": "Gerçek Zamanlı İlgi Senkronizasyonu",
-    "activeCitations": "{count} Aktif Alıntı"
-  },
-  "products_ui": {
-    "inspect": "Eseri İncele"
-  }
 }
