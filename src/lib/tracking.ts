@@ -162,8 +162,100 @@ class PaccofacileProvider implements TrackingProvider {
   }
 }
 
+/**
+ * InPost Tracking Provider
+ * Handles real-time last-mile delivery updates via InPost Group API
+ */
+class InpostProvider implements TrackingProvider {
+  name = "InPost";
+
+  isCompatible(carrierName: string, trackingNumber: string): boolean {
+    const name = carrierName?.toLowerCase() || "";
+    // Match "InPost" or "In Post" or "In-Post"
+    return name.includes("inpost") || name.includes("in post");
+  }
+
+  async track(trackingNumber: string): Promise<TrackingData> {
+    // Note: The InPost V1 API requires trackingNumbers as a query parameter (array)
+    const url = `https://api.inpost-group.com/tracking/v1/parcels`;
+    
+    const response = await axios.get(url, {
+      params: {
+        trackingNumbers: trackingNumber
+      },
+      headers: {
+        "Content-Type": "application/json",
+        "x-inpost-event-version": "V1",
+        // Fallback for authenticated environments
+        ...(process.env.INPOST_TOKEN ? { "Authorization": `Bearer ${process.env.INPOST_TOKEN}` } : {})
+      }
+    });
+
+    const data = response.data;
+    // The response returns a "parcels" array wrapping the results
+    const parcel = data.parcels?.find((p: any) => p.trackingNumber === trackingNumber) || data.parcels?.[0];
+    
+    if (!parcel) {
+      throw new Error(`InPost tracking search for ${trackingNumber} yielded no results.`);
+    }
+
+    const movements: TrackingMovement[] = (parcel.events || []).map((e: any) => ({
+      timestamp: e.eventTimestamp,
+      location: e.location?.city ? `${e.location.city}${e.location.country ? `, ${e.location.country}` : ''}` : (e.location?.name || "Hub"),
+      description: this.getFriendlyDescription(e.eventCode, e.status),
+      status: this.mapStatus(e.eventCode, e.status)
+    }));
+
+    // Sort by latest first
+    movements.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+    const latest = movements[0];
+
+    return {
+      trackingNumber,
+      carrier: this.name,
+      status: latest?.status || "unknown",
+      latestLocation: latest?.location || "Unknown",
+      lastUpdated: new Date().toISOString(),
+      movements
+    };
+  }
+
+  private getFriendlyDescription(code: string, status: string): string {
+    if (status) return status;
+    // Basic mapping for common InPost LMD (Last Mile Delivery) codes
+    switch (code) {
+      case "LMD.1001": return "Parcel in-transit to destination";
+      case "LMD.1002": return "Parcel arrived at local hub";
+      case "LMD.1003": return "Ready for collection at machine/point";
+      case "LMD.1005": return "Placed in Automated Parcel Machine";
+      case "LMD.4001": return "Parcel collected by recipient";
+      case "LMD.9001": return "Shipment registered in network";
+      default: return `Status Update: ${code}`;
+    }
+  }
+
+  private mapStatus(code: string, statusText: string): TrackingStatus {
+    const text = (statusText || "").toLowerCase();
+    const c = code?.toUpperCase() || "";
+
+    if (text.includes("delivered") || text.includes("consegnat") || text.includes("collected") || c === "LMD.4001" || c.startsWith("EOL")) {
+      return "delivered";
+    }
+    if (text.includes("in consegna") || text.includes("out for delivery") || text.includes("ready") || c === "LMD.1003" || c === "LMD.1005") {
+      return "out_for_delivery";
+    }
+    if (text.includes("transit") || text.includes("spedita") || c.startsWith("LMD") || c.startsWith("FMD")) {
+      return "in_transit";
+    }
+
+    return "unknown";
+  }
+}
+
 // Registry for future expansion
 const providers: TrackingProvider[] = [
+  new InpostProvider(),
   new PosteItalianeProvider(),
   new PaccofacileProvider(),
 ];
