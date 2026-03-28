@@ -41,7 +41,17 @@ export async function PATCH(
     const body = await req.json();
 
     // Allow updating status, tracking_number, label_url, and custom fields
-    const { status, tracking_number, label_url, total_pence, complexity_factor } = body;
+    const { 
+        status, 
+        tracking_number, 
+        label_url, 
+        total_pence, 
+        subtotal_pence,
+        complexity_factor,
+        shipping_pence,
+        shipping_service_id,
+        shipping_service_name
+    } = body;
 
     // Sync total_pence to subtotal and order_items for custom commissions
     const { data: updatedOrder, error } = await supabase
@@ -51,8 +61,11 @@ export async function PATCH(
             tracking_number,
             label_url,
             total_pence,
-            subtotal_pence: total_pence,
+            subtotal_pence: subtotal_pence !== undefined ? subtotal_pence : total_pence,
             complexity_factor,
+            shipping_pence,
+            shipping_service_id,
+            shipping_service_name,
             updated_at: new Date().toISOString()
         })
         .eq("id", id)
@@ -65,11 +78,12 @@ export async function PATCH(
     }
 
     // Update the line item price to match the quote for traceability
-    if (total_pence !== undefined) {
+    const lineItemPrice = subtotal_pence !== undefined ? subtotal_pence : total_pence;
+    if (lineItemPrice !== undefined) {
         await supabase
             .from("order_items")
             .update({ 
-                product_price_pence: total_pence 
+                product_price_pence: lineItemPrice 
             })
             .eq("order_id", id);
     }
