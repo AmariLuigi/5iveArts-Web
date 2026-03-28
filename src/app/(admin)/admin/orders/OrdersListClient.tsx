@@ -16,9 +16,9 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
 
     const filteredOrders = orders.filter(o => {
         const matchesSearch = 
-            o.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            o.customer_email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            o.id.toLowerCase().includes(searchTerm.toLowerCase());
+            (o.customer_name?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+            (o.customer_email?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+            (o.id?.toLowerCase() || "").includes(searchTerm.toLowerCase());
         
         const matchesStatus = statusFilter === "all" || o.status === statusFilter;
 
@@ -32,6 +32,11 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
             case "shipped": return "text-purple-400 bg-purple-500/10 border-purple-500/20";
             case "delivered": return "text-green-400 bg-green-500/10 border-green-500/20";
             case "cancelled": return "text-red-400 bg-red-500/10 border-red-500/20";
+            // Custom Workflow Statuses
+            case "analyzing": return "text-neutral-400 bg-white/5 border-white/10";
+            case "quoted": return "text-brand-yellow bg-brand-yellow/10 border-brand-yellow/20";
+            case "in_production": return "text-blue-300 bg-blue-500/10 border-blue-500/20";
+            case "ready_to_ship": return "text-green-300 bg-green-500/10 border-green-500/20";
             default: return "text-neutral-400 bg-neutral-500/10 border-neutral-500/20";
         }
     };
@@ -64,6 +69,11 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
                         <option value="shipped" className="bg-[#0a0a0a]">Shipped</option>
                         <option value="delivered" className="bg-[#0a0a0a]">Delivered</option>
                         <option value="cancelled" className="bg-[#0a0a0a]">Cancelled</option>
+                        {/* Custom Workflow Statuses */}
+                        <option value="analyzing" className="bg-[#0a0a0a]">Analyzing (Custom)</option>
+                        <option value="quoted" className="bg-[#0a0a0a]">Quoted (Custom)</option>
+                        <option value="in_production" className="bg-[#0a0a0a]">In Production (Custom)</option>
+                        <option value="ready_to_ship" className="bg-[#0a0a0a]">Ready to Ship (Custom)</option>
                     </select>
                     <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 text-neutral-600 pointer-events-none" />
                 </div>
