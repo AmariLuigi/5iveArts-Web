@@ -325,6 +325,7 @@
         "operation": "Operation #",
         "logged": "Erfasst am:",
         "verifiedAcquisition": "Verifizierte Akquisition",
+        "confirmDelivery": "LIEFERUNG BESTÄTIGEN",
         "trackShipment": "SENDUNG VERFOLGEN",
         "exportInvoice": "RECHNUNG EXPORTIEREN",
         "lifecycle": "Bereitstellungslebenszyklus",

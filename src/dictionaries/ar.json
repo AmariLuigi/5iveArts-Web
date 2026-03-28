@@ -325,6 +325,7 @@
         "operation": "عملية #",
         "logged": "تم التسجيل:",
         "verifiedAcquisition": "استحواذ موثق",
+        "confirmDelivery": "تأكيد التسليم",
         "trackShipment": "تتبع الشحنة",
         "exportInvoice": "تصدير الفاتورة",
         "lifecycle": "دورة حياة النشر",

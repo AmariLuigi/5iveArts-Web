@@ -325,6 +325,7 @@
         "operation": "Opération #",
         "logged": "Enregistré le :",
         "verifiedAcquisition": "Acquisition Vérifiée",
+        "confirmDelivery": "CONFIRMER LA LIVRAISON",
         "trackShipment": "SUIVRE L'EXPÉDITION",
         "exportInvoice": "EXPORTER LA FACTURE",
         "lifecycle": "Cycle de Vie du Déploiement",

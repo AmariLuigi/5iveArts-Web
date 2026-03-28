@@ -325,6 +325,7 @@
         "operation": "Operation #",
         "logged": "Logged:",
         "verifiedAcquisition": "Verified Acquisition",
+        "confirmDelivery": "CONFIRM DELIVERY",
         "trackShipment": "TRACK SHIPMENT",
         "exportInvoice": "Export Official Manifest",
         "depositPaid": "Deposit Settled (50%)",

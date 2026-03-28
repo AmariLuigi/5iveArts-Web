@@ -325,6 +325,7 @@
         "operation": "Operasyon #",
         "logged": "Günlük Kaydı:",
         "verifiedAcquisition": "Doğrulanmış Edinim",
+        "confirmDelivery": "TESLİMATI ONAYLA",
         "trackShipment": "SEVKIYATI TAKIP ET",
         "exportInvoice": "FATURAYI DIŞA AKTAR",
         "lifecycle": "Dağıtım Yaşam Döngüsü",

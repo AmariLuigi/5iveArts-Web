@@ -325,6 +325,7 @@
         "operation": "オペレーション #",
         "logged": "ログ記録：",
         "verifiedAcquisition": "認証済み取得",
+        "confirmDelivery": "配送を確認",
         "trackShipment": "配送状況を追跡",
         "exportInvoice": "請求書を出力",
         "lifecycle": "デプロイメント・ライフサイクル",

@@ -5,6 +5,8 @@ import { MapPin, Plus, Trash2, CheckCircle2, Loader2, X, Home, Phone, Map as Map
 import { UserAddress } from "@/types";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import CustomSelect from "@/components/ui/CustomSelect";
+import { countries } from "@/lib/countries";
 
 interface AddressManagerProps {
     lang: string;
@@ -203,13 +205,12 @@ export default function AddressManager({ lang, dict, userEmail }: AddressManager
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[8px] uppercase font-black tracking-widest text-neutral-600">Country Code (ISO)</label>
-                                    <input
-                                        required
+                                    <CustomSelect
+                                        label="Country"
+                                        options={countries}
                                         value={formData.country}
-                                        onChange={e => setFormData({ ...formData, country: e.target.value.toUpperCase() })}
-                                        className="w-full bg-white/[0.03] border border-white/10 rounded-sm p-4 text-[11px] font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all"
-                                        maxLength={2}
+                                        onChange={val => setFormData({ ...formData, country: val })}
+                                        name="country"
                                     />
                                 </div>
                             </div>

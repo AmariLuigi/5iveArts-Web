@@ -325,6 +325,7 @@
         "operation": "Operatie #",
         "logged": "Gelogd:",
         "verifiedAcquisition": "Geverifieerde Aankoop",
+        "confirmDelivery": "BEVESTIG LEVERING",
         "trackShipment": "ZENDING VOLGEN",
         "exportInvoice": "FACTUUR EXPORTEREN",
         "lifecycle": "Inzet Levenscyclus",

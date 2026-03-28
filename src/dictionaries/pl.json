@@ -325,6 +325,7 @@
         "operation": "Operacja #",
         "logged": "Zarejestrowano:",
         "verifiedAcquisition": "Zweryfikowany Zakup",
+        "confirmDelivery": "POTWIERDŹ DOSTAWĘ",
         "trackShipment": "ŚLEDŹ PRZESYŁKĘ",
         "exportInvoice": "EKSPORTUJ FAKTURĘ",
         "lifecycle": "Cykl Życia Dostawy",

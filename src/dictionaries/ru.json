@@ -325,6 +325,7 @@
         "operation": "Операция #",
         "logged": "Залогировано:",
         "verifiedAcquisition": "Подтвержденное приобретение",
+        "confirmDelivery": "ПОДТВЕРДИТЬ ДОСТАВКУ",
         "trackShipment": "ОТСЛЕДИТЬ ПОСЫЛКУ",
         "exportInvoice": "ЭКСПОРТ ИНВОЙСА",
         "lifecycle": "Жизненный цикл развертывания",

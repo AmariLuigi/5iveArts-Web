@@ -197,7 +197,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                     </div>
 
                     <div className="flex gap-4">
-                        {(order.status === 'shipped' || order.status === 'ready_to_ship') && (
+                        {(order.status === 'shipped' || order.status === 'ready_to_ship' || order.status === 'paid') && (
                             <button 
                                 onClick={handleMarkAsDelivered}
                                 disabled={loadingDelivery}
@@ -247,11 +247,11 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 
                                 {(() => {
                                     const customStages = [
-                                        { id: 'analyzing', label: 'Analysis', icon: ShieldCheck, active: ['analyzing', 'quoted', 'deposit_paid', 'in_production', 'ready_to_ship', 'shipped', 'delivered'] },
-                                        { id: 'deposit_paid', label: 'Deposit', icon: CreditCard, active: ['deposit_paid', 'in_production', 'ready_to_ship', 'shipped', 'delivered'] },
-                                        { id: 'in_production', label: 'Forging', icon: Box, active: ['in_production', 'ready_to_ship', 'shipped', 'delivered'] },
-                                        { id: 'ready_to_ship', label: 'Finalizing', icon: CheckCircle2, active: ['ready_to_ship', 'shipped', 'delivered'] },
-                                        { id: 'shipped', label: 'Deployment', icon: Truck, active: ['shipped', 'delivered'] }
+                                        { id: 'analyzing', label: 'Analysis', icon: ShieldCheck, active: ['analyzing', 'quoted', 'deposit_paid', 'in_production', 'ready_to_ship', 'shipped', 'delivered', 'paid'] },
+                                        { id: 'deposit_paid', label: 'Deposit', icon: CreditCard, active: ['deposit_paid', 'in_production', 'ready_to_ship', 'shipped', 'delivered', 'paid'] },
+                                        { id: 'in_production', label: 'Forging', icon: Box, active: ['in_production', 'ready_to_ship', 'shipped', 'delivered', 'paid'] },
+                                        { id: 'ready_to_ship', label: 'Finalizing', icon: CheckCircle2, active: ['ready_to_ship', 'shipped', 'delivered', 'paid'] },
+                                        { id: 'shipped', label: 'Deployment', icon: Truck, active: ['shipped', 'delivered', 'paid'] }
                                     ];
 
                                     const stdStages = [
