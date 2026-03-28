@@ -506,8 +506,8 @@
     "flow_title": "The Commission Protocol",
     "step1_title": "1. Asset Submission",
     "step1_desc": "Upload your character renders or concept art. Our curators review every detail for feasibility.",
-    "step2_title": "2. Neural Analysis",
-    "step2_desc": "Our AI Vision protocol evaluates geometric density and painting complexity for precision pricing.",
+    "step2_title": "2. Complexiteitsbeoordeling",
+    "step2_desc": "Onze curatoren beoordelen de geometrische dichtheid en de complexiteit van het schilderwerk voor een nauwkeurige offerte.",
     "step3_title": "3. The Agreement",
     "step3_desc": "Receive your custom quote. Secure the production slot with a 50% artifact deposit.",
     "step4_title": "4. Master Craftsmanship",
@@ -518,6 +518,12 @@
     "auth_invite_desc": "Establish a secure connection to our terminal to upload assets and track your artifact's fabrication.",
     "cta_login": "Log In to Begin",
     "cta_register": "Create Collector Account",
-    "cta_start": "Propose New Commission"
+    "cta_start": "Propose New Commission",
+    "benefit1_title": "Geverifieerde Beveiliging",
+    "benefit1_desc": "End-to-end versleutelde overdrachten van activa en veilige betalingsintegratie voor elke opdracht.",
+    "benefit2_title": "Transparantie van Voortgang",
+    "benefit2_desc": "Real-time visuele verslagen toegevoegd aan uw persoonlijke Vault gedurende de hele fabricagecyclus.",
+    "benefit3_title": "Ambachtelijke Controle",
+    "benefit3_desc": "Directe samenwerking met onze curatoren om ervoor te zorgen dat uw prototype aan museumstandaarden voldoet."
   }
 }

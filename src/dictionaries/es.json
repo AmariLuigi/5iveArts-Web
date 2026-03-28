@@ -506,8 +506,8 @@
     "flow_title": "El Protocolo de Comisión",
     "step1_title": "1. Envío de Activos",
     "step1_desc": "Sube los renders de tus personajes o arte conceptual. Nuestros curadores revisan cada detalle.",
-    "step2_title": "2. Análisis Neuronal",
-    "step2_desc": "Nuestro protocolo AI Vision evalúa la densidad geométrica y la complejidad de la pintura.",
+    "step2_title": "2. Evaluación de Complejidad",
+    "step2_desc": "Nuestros curadores evalúan la densidad geométrica e la complejidad de la pintura para un presupuesto de precisión.",
     "step3_title": "3. El Acuerdo",
     "step3_desc": "Recibe tu presupuesto personalizado. Asegura tu plaza de producción con un depósito del 50%.",
     "step4_title": "4. Maestría Artesanal",
@@ -518,6 +518,12 @@
     "auth_invite_desc": "Establece una conexión segura con nuestra terminal para subir archivos y rastrear la fabricación.",
     "cta_login": "Iniciar Sesión para Empezar",
     "cta_register": "Crear Cuenta de Coleccionista",
-    "cta_start": "Proponer Nuevo Encargo"
+    "cta_start": "Proponer Nuevo Encargo",
+    "benefit1_title": "Seguridad Verificada",
+    "benefit1_desc": "Transferencias de activos cifradas de extremo a extremo e integración de pagos seguros para cada encargo.",
+    "benefit2_title": "Transparencia de Progreso",
+    "benefit2_desc": "Registros visuales en tiempo real añadidos a tu Vault personal durante todo el ciclo de fabricación.",
+    "benefit3_title": "Control Artesanal",
+    "benefit3_desc": "Colaboración directa con nuestros curadores principales para garantizar que tu prototipo cumpla con estándares de museo."
   }
 }

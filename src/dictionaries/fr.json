@@ -506,8 +506,8 @@
     "flow_title": "Le Protocole de Commande",
     "step1_title": "1. Soumission des Actifs",
     "step1_desc": "Téléchargez vos rendus de personnages ou vos concepts artistiques. Nos conservateurs examinent chaque détail.",
-    "step2_title": "2. Analyse Neurale",
-    "step2_desc": "Notre protocole AI Vision évalue la densité géométrique et la complexité de la peinture.",
+    "step2_title": "2. Évaluation de la Complexité",
+    "step2_desc": "Nos conservateurs évaluent la densité géométrique et la complexité de la peinture pour un devis de précision.",
     "step3_title": "3. L'Accord",
     "step3_desc": "Recevez votre devis personnalisé. Sécurisez votre créneau de production avec un dépôt de 50%.",
     "step4_title": "4. Maîtrise Artisanale",
@@ -518,6 +518,12 @@
     "auth_invite_desc": "Établissez une connexion sécurisée avec notre terminal pour télécharger des fichiers et suivre la fabrication.",
     "cta_login": "Se connecter pour commencer",
     "cta_register": "Créer un compte collectionneur",
-    "cta_start": "Proposer une nouvelle commande"
+    "cta_start": "Proposer une nouvelle commande",
+    "benefit1_title": "Sécurité Vérifiée",
+    "benefit1_desc": "Transferts d'actifs chiffrés de bout en bout et intégration de paiements sécurisés pour chaque commande.",
+    "benefit2_title": "Transparence des Progrès",
+    "benefit2_desc": "Enregistrements visuels en temps réel ajoutés à votre Vault personnel tout au long du cycle de fabrication.",
+    "benefit3_title": "Contrôle Artisanal",
+    "benefit3_desc": "Collaboration directe avec nos conservateurs en chef pour garantir que votre prototype respecte les normes muséales."
   }
 }

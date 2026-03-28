@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { 
   Sparkles, 
-  Cpu, 
+  Search, 
   Paintbrush, 
   CheckCircle2, 
   Truck, 
@@ -40,7 +40,7 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
     {
       title: t.step2_title,
       desc: t.step2_desc,
-      icon: Cpu,
+      icon: Search,
       color: "text-purple-400",
       bg: "bg-purple-400/5",
       border: "border-purple-400/20"
@@ -115,9 +115,9 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-yellow/20 bg-brand-yellow/5 mb-8 backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-brand-yellow shadow-[0_0_10px_#ff9f00]" />
-              <span className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-yellow italic">Advanced Custom Protocol</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-yellow/30 bg-black/40 mb-8 backdrop-blur-xl group cursor-default">
+              <Sparkles className="w-3.5 h-3.5 text-brand-yellow" />
+              <span className="text-[8px] uppercase font-black tracking-[0.3em] text-brand-yellow italic">Advanced Custom Protocol</span>
             </div>
             
             <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-white italic leading-[0.9] mb-8">
@@ -144,9 +144,9 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
             )}
 
             {isLoggedIn && (
-              <button className="hasbro-btn-primary px-16 py-6 text-sm font-black group shadow-[0_0_30px_rgba(255,159,0,0.2)]">
-                <span className="flex items-center gap-3">
-                   <Wand2 className="w-5 h-5 shadow-[0_0_10px_#000]" />
+              <button className="hasbro-btn-primary px-16 py-6 text-sm font-black group shadow-[0_0_50px_rgba(255,159,0,0.1)]">
+                <span className="flex items-center gap-4">
+                   <Wand2 className="w-5 h-5" />
                    {t.cta_start}
                 </span>
               </button>
@@ -155,7 +155,7 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
         </div>
 
         {/* Floating background elements */}
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-10" />
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/95 to-transparent z-10" />
       </section>
 
       {/* Process Flow Section */}
@@ -182,7 +182,7 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
               const Icon = step.icon;
               return (
                 <motion.div key={idx} variants={item} className="group flex flex-col items-center">
-                  <div className={`w-20 h-20 rounded-2xl flex items-center justify-center border-2 ${step.border} ${step.bg} mb-8 group-hover:scale-110 transition-all duration-500 shadow-[0_0_30px_transparent] group-hover:shadow-[0_0_30px_rgba(255,159,0,0.1)] relative`}>
+                  <div className={`w-20 h-20 rounded-2xl flex items-center justify-center border-2 ${step.border} ${step.bg} mb-8 group-hover:scale-110 transition-all duration-500 relative`}>
                     <Icon className={`w-8 h-8 ${step.color}`} />
                     <div className="absolute -top-3 -right-3 w-8 h-8 bg-black border border-white/10 rounded-full flex items-center justify-center text-[11px] font-black text-white italic">
                       {idx + 1}
@@ -245,9 +245,9 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
                   <ShieldCheck className="w-5 h-5 text-brand-yellow" />
                </div>
                <div>
-                  <h4 className="text-[11px] font-black uppercase tracking-widest text-white mb-2">Verified Security</h4>
+                  <h4 className="text-[11px] font-black uppercase tracking-widest text-white mb-2">{t.benefit1_title}</h4>
                   <p className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 leading-relaxed">
-                     End-to-end encrypted asset transfers and secure payment integration for every commission.
+                     {t.benefit1_desc}
                   </p>
                </div>
             </div>
@@ -256,9 +256,9 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
                   <History className="w-5 h-5 text-brand-yellow" />
                </div>
                <div>
-                  <h4 className="text-[11px] font-black uppercase tracking-widest text-white mb-2">Progress Transparency</h4>
+                  <h4 className="text-[11px] font-black uppercase tracking-widest text-white mb-2">{t.benefit2_title}</h4>
                   <p className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 leading-relaxed">
-                     Real-time visual records added to your personal vault throughout the fabrication lifecycle.
+                     {t.benefit2_desc}
                   </p>
                </div>
             </div>
@@ -267,9 +267,9 @@ export default function CustomOrderContent({ dict, lang, isLoggedIn }: CustomOrd
                   <Wand2 className="w-5 h-5 text-brand-yellow" />
                </div>
                <div>
-                  <h4 className="text-[11px] font-black uppercase tracking-widest text-white mb-2">Artisan Control</h4>
+                  <h4 className="text-[11px] font-black uppercase tracking-widest text-white mb-2">{t.benefit3_title}</h4>
                   <p className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 leading-relaxed">
-                     Direct collaboration with our lead curators to ensure your prototype meets museum-grade standards.
+                     {t.benefit3_desc}
                   </p>
                </div>
             </div>
