@@ -51,12 +51,18 @@ const OneTapComponent = () => {
         },
         nonce: hashedNonce,
         use_fedcm_for_prompt: true,
+        // @ts-ignore - Google FedCM migration requirement missing in local types
+        use_fedcm_for_button: true,
       })
       
       // 1. One Tap Prompt (Silent/Background)
       google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-            console.warn('[auth/google] One Tap suppressed:', notification.getNotDisplayedReason())
+        // Migration: Remove use of display moment methods for privacy.
+        if (notification.isSkippedMoment()) {
+            console.warn('[auth/google] One Tap skipped.')
+        }
+        if (notification.isDismissedMoment()) {
+            console.warn('[auth/google] One Tap dismissed:', notification.getDismissedReason())
         }
       })
 
