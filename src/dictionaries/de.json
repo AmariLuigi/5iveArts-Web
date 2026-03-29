@@ -383,19 +383,19 @@
     "shipping": {
         "protocol": "Logistikprotokoll",
         "title": "Weltweiter Versand",
-        "subtitle": "Sicherer, versicherter und verfolgter Versand für jedes Meisterwerk in der Sammlung.",
+        "subtitle": "Sichere, versicherte und verfolgte Lieferung für jedes Meisterwerk der Sammlung.",
         "insuredTitle": "Versicherte Abwicklung",
-        "insuredText": "Jede Figur wird mit maßgeschneidertem hochdichtem Schaumstoff und doppelwandigen Sammlerboxen verpackt. Wir versichern jede Sendung gegen Verlust oder Beschädigung während des Transports.",
-        "freeTierTitle": "Kostenloser Versand",
-        "freeTierText": "Wir belohnen ernsthafte Sammler. Alle Bestellungen über {amount} qualifizieren sich automatisch für KOSTENLOSEN STANDARDVERSAND, unabhängig von Ihrem Standort.",
+        "insuredText": "Jede Figur wird mit maßgeschneidertem hochdichtem Schaumstoff und doppelwandigen Sammlerkartons verpackt. Wir versichern jede Sendung gegen Verlust oder Beschädigung während des Transports.",
         "dynamicTitle": "Dynamische Logistik",
-        "dynamicText": "Wir nutzen Packlink PRO, um versicherte Versandtarife in Echtzeit von Premium-Versanddienstleistern wie UPS, DHL und FedEx anzubieten. Ihr spezifischer Tarif wird während des Checkouts basierend auf Ihrem genauen Standort und den Paketabmessungen berechnet.",
+        "dynamicText": "Wir nutzen Paccofacile für versicherte Echtzeit-Versandtarife von Premium-Spediteuren wie UPS, DHL und FedEx. Alle Sendungen werden weltweit über WhereParcel verfolgt. Ihr spezifischer Tarif wird beim Bezahlvorgang basierend auf Ihrem genauen Standort und den Abmessungen des Pakets berechnet.",
+        "freeTierTitle": "Versandkostenfreie Stufe",
+        "freeTierText": "Wir belohnen ernsthafte Sammler. Alle Bestellungen über {amount} qualifizieren sich automatisch für KOSTENLOSEN STANDARDVERSAND, unabhängig von Ihrem Standort.",
         "zonesTitle": "Voraussichtliche Transitzeiten",
         "region": "Region",
         "standard": "Standard",
         "express": "Express",
-        "estTime": "Voraussichtliche Zeit",
-        "trackingInfo": "Globales Live-Tracking für alle Bestellungen",
+        "estTime": "Vorauss. Zeit",
+        "trackingInfo": "Live-Weltverfolgung für alle Bestellungen",
         "italy": "Italien",
         "eu": "Europäische Union",
         "uk": "Vereinigtes Königreich",
@@ -404,7 +404,7 @@
         "days3_5": "3-5 Tage",
         "days4_7": "4-7 Tage",
         "days7_14": "7-14 Tage",
-        "carrierActive": "Globales Kuriernetzwerk Aktiv"
+        "carrierActive": "Globales Speditionsnetz aktiv"
     },
     "hero": {
         "slides": [

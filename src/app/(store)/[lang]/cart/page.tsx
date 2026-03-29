@@ -20,7 +20,7 @@ export default async function CartPage({
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale).catch(() => null);
   const settings = await getSiteSettings();
-  const threshold = settings.logistics?.free_shipping_threshold_cents ?? 5000;
+  const threshold = settings.logistics?.free_shipping_threshold_cents ?? 25000;
 
   if (!dict) notFound();
 

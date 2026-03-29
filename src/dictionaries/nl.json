@@ -383,19 +383,19 @@
     "shipping": {
         "protocol": "Logistiek Protocol",
         "title": "Wereldwijde Verzending",
-        "subtitle": "Veilige, verzekerde en gevolgde levering voor elk meesterwerk in de collectie.",
-        "insuredTitle": "Verzekerde Afhandeling",
-        "insuredText": "Elk figuur wordt verpakt met op maat gemaakt schuim met hoge dichtheid en dubbelwandige verzamelaarsdozen. We verzekeren elke zending tegen verlies of beschadiging tijdens het transport.",
-        "freeTierTitle": "Gratis Verzending Niveau",
-        "freeTierText": "We belonen serieuze verzamelaars. Alle bestellingen boven {amount} komen automatisch in aanmerking voor GRATIS STANDAARD VERZENDING, ongeacht je locatie.",
+        "subtitle": "Veilige, verzekerde en getrackte bezorging voor elk meesterwerk in de collectie.",
+        "insuredTitle": "Verzekerde Uitvoering",
+        "insuredText": "Elke figuur wordt verpakt met op maat gemaakte hoge-dichtheid schuim en dubbelwandige collectioneursdozen. We verzekeren elke zending tegen verlies of schade tijdens het transport.",
         "dynamicTitle": "Dynamische Logistiek",
-        "dynamicText": "We maken gebruik van Packlink PRO om real-time, verzekerde verzendtarieven te bieden van premium vervoerders zoals UPS, DHL en FedEx. Je specifieke tarief wordt berekend tijdens het afrekenen op basis van je exacte locatie en de afmetingen van het pakket.",
+        "dynamicText": "We gebruiken Paccofacile voor real-time verzekerde verzendtarieven van premium vervoerders zoals UPS, DHL en FedEx. Alle zendingen worden wereldwijd gevolgd via WhereParcel. Uw specifieke tarief wordt berekend bij het afrekenen op basis van uw exacte locatie en de afmetingen van het pakket.",
+        "freeTierTitle": "Gratis Verzendniveau",
+        "freeTierText": "We belonen serieuze verzamelaars. Alle bestellingen boven {amount} komen automatisch in aanmerking voor GRATIS STANDAARD VERZENDING, ongeacht uw locatie.",
         "zonesTitle": "Geschatte Transittijden",
         "region": "Regio",
         "standard": "Standaard",
         "express": "Express",
-        "estTime": "Geschatte Tijd",
-        "trackingInfo": "Live wereldwijde tracking op alle bestellingen",
+        "estTime": "Geschatte tijd",
+        "trackingInfo": "Live Wereldwijde Tracking op Alle Bestellingen",
         "italy": "Italië",
         "eu": "Europese Unie",
         "uk": "Verenigd Koninkrijk",
@@ -404,7 +404,7 @@
         "days3_5": "3-5 Dagen",
         "days4_7": "4-7 Dagen",
         "days7_14": "7-14 Dagen",
-        "carrierActive": "Wereldwijd Koeriersnetwerk Actief"
+        "carrierActive": "Wereldwijd Vervoerdersnetwerk Actief"
     },
     "hero": {
         "slides": [

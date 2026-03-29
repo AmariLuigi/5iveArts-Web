@@ -21,7 +21,7 @@ export default async function ShippingPage({
 }) {
     const dict = await getDictionary(lang);
     const settings = await getSiteSettings();
-    const thresholdCents = settings.logistics?.free_shipping_threshold_cents ?? 5000;
+    const thresholdCents = settings.logistics?.free_shipping_threshold_cents ?? 25000;
     const thresholdFormatted = formatPrice(thresholdCents);
 
     const s = dict.shipping;
