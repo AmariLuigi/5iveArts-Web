@@ -21,7 +21,7 @@ export interface TrackingData {
 export interface TrackingProvider {
   name: string;
   isCompatible(carrierName: string, trackingNumber: string): boolean;
-  track(trackingNumber: string): Promise<TrackingData>;
+  track(carrierName: string, trackingNumber: string): Promise<TrackingData>;
 }
 
 /**
@@ -35,14 +35,18 @@ class WhereParcelProvider implements TrackingProvider {
     return true; // We use WhereParcel for everything
   }
 
-  async track(trackingNumber: string): Promise<TrackingData> {
+  async track(carrierName: string, trackingNumber: string): Promise<TrackingData> {
     const apiKey = process.env.WHEREPARCEL_API_KEY;
     const secretKey = process.env.WHEREPARCEL_SECRET_KEY || "";
     const authString = secretKey ? `${apiKey}:${secretKey}` : apiKey; 
 
     if (!apiKey) throw new Error("WHEREPARCEL_API_KEY is missing in environment");
 
+    // Unified Mapping for Paccofacile -> WhereParcel
+    const carrierSlug = this.mapToCarrierSlug(carrierName);
+
     const response = await axios.post("https://api.whereparcel.com/v2/track", {
+      carrier: carrierSlug,
       trackingNumber
     }, {
       headers: {
@@ -69,12 +73,27 @@ class WhereParcelProvider implements TrackingProvider {
 
     return {
       trackingNumber,
-      carrier: result.carrier || "Universal Courier",
+      carrier: result.carrier || carrierName || "Universal Courier",
       status: latest?.status || "unknown",
       latestLocation: latest?.location || "Unknown",
       lastUpdated: new Date().toISOString(),
       movements
     };
+  }
+
+  private mapToCarrierSlug(name: string): string {
+    const n = (name || "").toLowerCase();
+    if (n.includes("inpost")) return "it.inpost";
+    if (n.includes("poste") || n.includes("sda")) return "it.post";
+    if (n.includes("brt")) return "it.brt";
+    if (n.includes("tnt")) return "it.tnt";
+    if (n.includes("ups")) return "it.ups";
+    if (n.includes("dhl")) return "it.dhl";
+    if (n.includes("gls")) return "it.gls";
+    if (n.includes("fedex")) return "it.fedex";
+    
+    // Generic fallback or auto-detection if they support it
+    return "it.post"; 
   }
 
   private mapStatus(status: string): TrackingStatus {
@@ -118,7 +137,7 @@ const providers: TrackingProvider[] = [
 export async function getTrackingInfo(carrierName: string, trackingNumber: string): Promise<TrackingData | null> {
   const provider = providers[0];
   try {
-    return await provider.track(trackingNumber);
+    return await provider.track(carrierName, trackingNumber);
   } catch (err: any) {
     console.warn(`[tracking] WhereParcel failed for ${trackingNumber}: ${err.message}`);
     return null;
