@@ -24,18 +24,25 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
 
     async function handleGoogleLogin() {
         setLoading(true);
+        setError(null);
         try {
-            const { error } = await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                    redirectTo: `${window.location.origin}/auth/callback?next=/${lang}${returnTo.startsWith('/') ? returnTo : `/${returnTo}`}`,
-                    queryParams: {
-                        access_type: 'offline',
-                        prompt: 'select_account',
-                    },
-                }
-            });
-            if (error) throw error;
+            if (typeof (window as any).triggerGoogleAuth === 'function') {
+                console.log('[auth/client] Triggering high-fidelity identity protocol...');
+                (window as any).triggerGoogleAuth();
+                
+                // Keep loading state until potential redirect or callback
+                setTimeout(() => setLoading(false), 3000);
+            } else {
+                // If the script isn't and ready, fallback but warn
+                console.warn('[auth/client] Google Identity script not yet available.');
+                const { error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: `${window.location.origin}/auth/callback?next=/${lang}${returnTo.startsWith('/') ? returnTo : `/${returnTo}`}`,
+                    }
+                });
+                if (error) throw error;
+            }
         } catch (err: any) {
             setError(err.message);
             setLoading(false);

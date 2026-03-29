@@ -53,6 +53,7 @@ export async function proxy(request: NextRequest) {
 
     // ── Skip paths that should NOT be internationalized ──
     if (
+        pathname.startsWith('/auth') ||
         pathname.startsWith('/admin') ||
         pathname.startsWith('/api') ||
         pathname.startsWith('/_next') ||

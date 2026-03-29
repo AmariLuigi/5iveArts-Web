@@ -4,6 +4,7 @@ import Script from 'next/script'
 import { createClient } from '@/lib/supabase-browser'
 import type { accounts, CredentialResponse } from 'google-one-tap'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 declare const google: { accounts: accounts }
 
@@ -22,56 +23,52 @@ const OneTapComponent = () => {
   const supabase = createClient()
   const router = useRouter()
 
-  const initializeGoogleOneTap = async () => {
-    console.log('Initializing Google One Tap')
+  const initializeGoogleAuth = async (manual = false) => {
+    console.log('Initializing Google Authentication Protocol', manual ? '(Manual)' : '(Background)')
     const [nonce, hashedNonce] = await generateNonce()
     
-    // check if there's already an existing session
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser()
+    // Check session safety
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user && !manual) return;
 
-    if (error) {
-      console.error('Error getting user', error)
-    }
-
-    if (user) {
-      // already logged in
-      return
-    }
-
-    /* global google */
     if (typeof google !== 'undefined' && google.accounts) {
       google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
         callback: async (response: CredentialResponse) => {
           try {
-            // send id token returned in response.credential to supabase
+            console.log('[auth/google] Validating Identity Token on-domain...')
             const { data, error } = await supabase.auth.signInWithIdToken({
               provider: 'google',
               token: response.credential,
               nonce,
             })
             if (error) throw error
-            console.log('Session data: ', data)
-            console.log('Successfully logged in with Google One Tap')
-            
-            // force refresh to update auth state across components
+            console.log('[auth/google] Identity Verified. Synchronizing Session.')
             router.refresh()
           } catch (error) {
-            console.error('Error logging in with Google One Tap', error)
+            console.error('[auth/google] Synchronous verification failed:', error)
           }
         },
         nonce: hashedNonce,
-        // with chrome's removal of third-party cookies, we need to use FedCM instead
         use_fedcm_for_prompt: true,
       })
-      google.accounts.id.prompt() // Display the One Tap UI
+      
+      // If manual, we can't easily force the One Tap if it was closed, 
+      // but we can at least try to prompt or render the Google Button.
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            console.warn('[auth/google] Display suppressed:', notification.getNotDisplayedReason())
+        }
+      })
     }
   }
 
-  return <Script onReady={() => { initializeGoogleOneTap(); }} src="https://accounts.google.com/gsi/client" />
+  useEffect(() => {
+    // Expose manual trigger to the window for TerminalForm use
+    (window as any).triggerGoogleAuth = () => initializeGoogleAuth(true);
+  }, []);
+
+  return <Script onReady={() => { initializeGoogleAuth(); }} src="https://accounts.google.com/gsi/client" />
 }
 
-export default OneTapComponent
+export default OneTapComponent;
