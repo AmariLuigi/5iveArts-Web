@@ -56,15 +56,9 @@ const OneTapComponent = () => {
       })
       
       // 1. One Tap Prompt (Silent/Background)
-      google.accounts.id.prompt((notification) => {
-        // Migration: Remove use of display moment methods for privacy.
-        if (notification.isSkippedMoment()) {
-            console.warn('[auth/google] One Tap skipped.')
-        }
-        if (notification.isDismissedMoment()) {
-            console.warn('[auth/google] One Tap dismissed:', notification.getDismissedReason())
-        }
-      })
+      // Migration: Removed status callbacks as they are deprecated in FedCM.
+      google.accounts.id.prompt();
+
 
       // 2. Manual Button Branding (Overlay)
       // This ensures that when the user clicks our "Continue with Google" button,
