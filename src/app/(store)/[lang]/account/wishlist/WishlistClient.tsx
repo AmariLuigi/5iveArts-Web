@@ -8,6 +8,7 @@ import MinimalProductCard from "@/components/product/MinimalProductCard";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWishlistStore } from "@/store/wishlist";
+import { createClient } from "@/lib/supabase-browser";
 
 interface WishlistClientProps {
     lang: string;
@@ -24,6 +25,14 @@ export default function WishlistClient({ lang, dict }: WishlistClientProps) {
     }, [itemIds.length]);
 
     const fetchWishlist = async () => {
+        const supabase = createClient();
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+            setLoading(false);
+            return;
+        }
+
         try {
             const res = await axios.get("/api/account/wishlist");
             setWishlist(res.data);

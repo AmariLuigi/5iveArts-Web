@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
+import { createClient } from "@/lib/supabase-browser";
 
 interface WishlistStore {
     itemIds: string[];
@@ -22,6 +23,15 @@ export const useWishlistStore = create<WishlistStore>()(
                 const { initialized } = get();
                 if (initialized) return;
 
+                const supabase = createClient();
+                const { data: { session } } = await supabase.auth.getSession();
+                
+                if (!session) {
+                    // Mark as initialized to stop further unauthorized checks for this guest session
+                    set({ initialized: true });
+                    return;
+                }
+
                 set({ loading: true });
                 try {
                     const res = await axios.get("/api/account/wishlist");
@@ -40,24 +50,28 @@ export const useWishlistStore = create<WishlistStore>()(
                 const { itemIds } = get();
                 const exists = itemIds.includes(productId);
 
-                // Optimistic UI update
+                // Optimistic UI update (always allowed, persisted locally)
                 if (exists) {
                     set({ itemIds: itemIds.filter(id => id !== productId) });
                 } else {
                     set({ itemIds: [...itemIds, productId] });
                 }
 
+                // Database synchronization (only for authenticated users)
+                const supabase = createClient();
+                const { data: { session } } = await supabase.auth.getSession();
+                
+                if (!session) return; // Silent local-only for guests
+
                 try {
                     if (exists) {
                         await axios.delete(`/api/account/wishlist/${productId}`);
-                        // track("wishlist_remove", { product_id: productId });
                     } else {
                         await axios.post("/api/account/wishlist", { productId });
-                        // track("wishlist_add", { product_id: productId });
                     }
                 } catch (err) {
                     console.error("Wishlist sync failed:", err);
-                    // Revert on error
+                    // Revert UI if server sync failed for an authenticated user
                     set({ itemIds });
                 }
             },
