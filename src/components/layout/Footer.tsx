@@ -14,6 +14,9 @@ const LANGUAGES = [
   { code: 'es', flag: '🇪🇸' },
   { code: 'fr', flag: '🇫🇷' },
   { code: 'de', flag: '🇩🇪' },
+  { code: 'pt', flag: '🇵🇹' },
+  { code: 'nl', flag: '🇳🇱' },
+  { code: 'pl', flag: '🇵🇱' },
 ];
 
 export default function Footer({ dict, lang }: FooterProps) {

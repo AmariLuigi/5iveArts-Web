@@ -18,12 +18,8 @@ export const SUPPORTED_LANGUAGES: Language[] = [
     { code: "fr", name: "French", flag: "🇫🇷", nativeName: "Français" },
     { code: "es", name: "Spanish", flag: "🇪🇸", nativeName: "Español" },
     { code: "nl", name: "Dutch", flag: "🇳🇱", nativeName: "Nederlands" },
-    { code: "ru", name: "Russian", flag: "🇷🇺", nativeName: "Русский" },
-    { code: "tr", name: "Turkish", flag: "🇹🇷", nativeName: "Türkçe" },
     { code: "pt", name: "Portuguese", flag: "🇵🇹", nativeName: "Português" },
-    { code: "ja", name: "Japanese", flag: "🇯🇵", nativeName: "日本語" },
     { code: "pl", name: "Polish", flag: "🇵🇱", nativeName: "Polski" },
-    { code: "ar", name: "Arabic", flag: "🇸🇦", nativeName: "العربية" },
 ];
 
 export interface MultiLanguageEditorProps {

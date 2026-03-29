@@ -491,12 +491,8 @@ const LANGUAGES = [
     { key: 'de', label: 'German', icon: '🇩🇪' },
     { key: 'fr', label: 'French', icon: '🇫🇷' },
     { key: 'es', label: 'Spanish', icon: '🇪🇸' },
-    { key: 'ru', label: 'Russian', icon: '🇷🇺' },
-    { key: 'tr', label: 'Turkish', icon: '🇹🇷' },
     { key: 'pt', label: 'Portuguese', icon: '🇵🇹' },
     { key: 'nl', label: 'Dutch', icon: '🇳🇱' },
-    { key: 'ja', label: 'Japanese', icon: '🇯🇵' },
-    { key: 'ar', label: 'Arabic', icon: '🇦🇪' },
     { key: 'pl', label: 'Polish', icon: '🇵🇱' }
 ];
 
@@ -507,25 +503,15 @@ function TestimonialCard({ testi, index, testimonials, updateTestimonials, showT
 
     const handleForge = async () => {
         setForging(true);
-        setForgeProgress(5); // Start
+        setForgeProgress(10);
         try {
-            // Batch 1: Western
-            const { data: b1 } = await axios.post("/api/admin/ai/translate", {
+            const { data: trans } = await axios.post("/api/admin/ai/translate", {
                 text: testi.quote,
                 gender: testi.gender || 'neutral',
-                targetLanguages: ["en", "it", "de", "fr", "es", "ru"]
-            });
-            setForgeProgress(50);
-
-            // Batch 2: Global
-            const { data: b2 } = await axios.post("/api/admin/ai/translate", {
-                text: testi.quote,
-                gender: testi.gender || 'neutral',
-                targetLanguages: ["tr", "pt", "nl", "ja", "ar", "pl"]
+                targetLanguages: ["en", "it", "de", "fr", "es", "pt", "nl", "pl"]
             });
             setForgeProgress(100);
 
-            const trans = { ...b1, ...b2 };
             const nl = [...testimonials];
             Object.keys(trans).forEach(lang => {
                 (nl[index] as any)[`quote_${lang}`] = trans[lang];
@@ -533,7 +519,7 @@ function TestimonialCard({ testi, index, testimonials, updateTestimonials, showT
 
             updateTestimonials(nl);
             showToast(`TRANSLATIONS FORGED FOR ${testi.name}`, 'success');
-            setTimeout(() => setForgeProgress(0), 2000);
+            setTimeout(() => setForgeProgress(0), 1500);
         } catch (err) {
             console.error("Forge Failed:", err);
             setForgeProgress(0);
