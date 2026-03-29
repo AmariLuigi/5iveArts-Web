@@ -182,9 +182,17 @@ const providers: TrackingProvider[] = [
 export async function getTrackingInfo(carrierName: string, trackingNumber: string): Promise<TrackingData | null> {
   const provider = providers[0];
   try {
+    console.log(`[tracking] Attempting WhereParcel sync: ${carrierName} -> ${trackingNumber}`);
     return await provider.track(carrierName, trackingNumber);
   } catch (err: any) {
-    console.warn(`[tracking] WhereParcel failed for ${trackingNumber}: ${err.message}`);
+    const status = err.response?.status;
+    const errorData = err.response?.data?.error;
+    console.error(`[tracking] EXCEPTION for ${trackingNumber}:`, {
+        status,
+        code: errorData?.code,
+        message: errorData?.message || err.message,
+        carrierName
+    });
     return null;
   }
 }

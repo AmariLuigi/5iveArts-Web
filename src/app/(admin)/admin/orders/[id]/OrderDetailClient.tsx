@@ -442,10 +442,30 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
                             <div className="absolute top-0 right-0 p-8 opacity-5">
                                 <Truck className="w-40 h-40 text-blue-500" />
                             </div>
-                            <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-blue-400 mb-8 flex items-center gap-3">
-                                <Truck className="w-5 h-5" />
-                                In-Transit Intelligence
-                            </h3>
+                            <div className="flex items-center justify-between mb-8">
+                                <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-blue-400 flex items-center gap-3">
+                                    <Truck className="w-5 h-5" />
+                                    In-Transit Intelligence
+                                </h3>
+                                <button 
+                                    onClick={async () => {
+                                        setLoadingTracking(true);
+                                        try {
+                                            const res = await axios.get(`/api/orders/${order.id}/tracking`);
+                                            setTrackingData(res.data);
+                                            // Optional: Alert or message success
+                                        } catch (err: any) {
+                                            // Optional: Error message
+                                        } finally {
+                                            setLoadingTracking(false);
+                                        }
+                                    }}
+                                    disabled={loadingTracking}
+                                    className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-sm hover:bg-blue-500/20 transition-all group"
+                                >
+                                    <RefreshCcw className={`w-4 h-4 text-blue-400 ${loadingTracking ? 'animate-spin opacity-50' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
+                                </button>
+                            </div>
 
                             <div className="space-y-4 max-w-2xl">
                                 <div className="flex flex-wrap gap-8 items-center py-4 border-y border-white/5 mb-8">
