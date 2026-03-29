@@ -26,6 +26,80 @@ export interface TrackingProvider {
 }
 
 /**
+ * Poste Italiane Specialist Provider
+ * Native REST protocol for Italian state shipments and SDA.
+ * Active when WhereParcel lacks a crawler implementation.
+ */
+class PosteItalianeProvider implements TrackingProvider {
+    name = "Poste Italiane";
+
+    isCompatible(carrierName: string, trackingNumber: string): boolean {
+        const n = (carrierName || "").toLowerCase();
+        return n.includes("poste") || n.includes("sda") || (trackingNumber || "").endsWith("IT");
+    }
+
+    async track(carrierName: string, trackingNumber: string): Promise<TrackingData> {
+        const response = await axios.post("https://www.poste.it/online/dovequando/DQ-REST/ricercasemplice", {
+            tipoRichiedente: "WEB",
+            codiceSpedizione: trackingNumber,
+            periodoRicerca: 1
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                "Referer": "https://www.poste.it/cerca/index.html",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
+        });
+
+        const data = response.data;
+        if (!data || !data.listaMovimenti) {
+            throw new Error(`Poste Italiane: No data for ${trackingNumber}`);
+        }
+
+        const movements: TrackingMovement[] = data.listaMovimenti.map((m: any) => ({
+            timestamp: new Date(m.dataOra).toISOString(),
+            location: m.luogo || "Italy",
+            description: m.statoLavorazione,
+            status: this.mapBoxToStatus(m.box)
+        }));
+
+        // Sort latest first
+        movements.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+        const latest = movements[0];
+        let status = latest?.status || "unknown";
+
+        // Terminal status check
+        if (data.stato === "delivered" || data.esitoRicerca === "delivered" || data.stato === "5") {
+            status = "delivered";
+        }
+
+        return {
+            trackingNumber,
+            carrier: data.tipoProdotto || "Poste Italiane",
+            status,
+            latestLocation: latest?.location || "Unknown",
+            lastUpdated: new Date().toISOString(),
+            movements
+        };
+    }
+
+    async registerWebhook(): Promise<any> {
+        return { success: true, message: "Webhook not supported for Poste Native (polling only)" };
+    }
+
+    private mapBoxToStatus(box: string): TrackingStatus {
+        switch (box) {
+            case "4": return "out_for_delivery";
+            case "3": 
+            case "2": return "in_transit";
+            case "5": return "delivered";
+            default: return "in_transit";
+        }
+    }
+}
+
+/**
  * WhereParcel Tracking Provider
  * The unified all-in-one logistics protocol.
  */
@@ -33,7 +107,7 @@ class WhereParcelProvider implements TrackingProvider {
   name = "WhereParcel";
 
   isCompatible(carrierName: string, trackingNumber: string): boolean {
-    return true; // We use WhereParcel for everything
+    return true; // We use WhereParcel for everything else
   }
 
   async track(carrierName: string, trackingNumber: string): Promise<TrackingData> {
@@ -183,18 +257,20 @@ export function getTrackingUrl(carrierName: string, trackingNumber: string): str
 }
 
 const providers: TrackingProvider[] = [
+  new PosteItalianeProvider(),
   new WhereParcelProvider(),
 ];
 
 export async function getTrackingInfo(carrierName: string, trackingNumber: string): Promise<TrackingData | null> {
-  const provider = providers[0];
+  const provider = providers.find(p => p.isCompatible(carrierName, trackingNumber)) || providers[1]; // Fallback to WhereParcel
+
   try {
-    console.log(`[tracking] Attempting WhereParcel sync: ${carrierName} -> ${trackingNumber}`);
+    console.log(`[tracking] Routing to ${provider.name}: ${carrierName} -> ${trackingNumber}`);
     return await provider.track(carrierName, trackingNumber);
   } catch (err: any) {
     const status = err.response?.status;
     const errorData = err.response?.data?.error;
-    console.error(`[tracking] EXCEPTION for ${trackingNumber}:`, {
+    console.error(`[tracking/${provider.name}] EXCEPTION for ${trackingNumber}:`, {
         status,
         code: errorData?.code,
         message: errorData?.message || err.message,
@@ -205,11 +281,11 @@ export async function getTrackingInfo(carrierName: string, trackingNumber: strin
 }
 
 export async function registerTrackingWebhook(carrierName: string, trackingNumber: string, orderId: string): Promise<any> {
-    const provider = providers[0];
+    const provider = providers.find(p => p.isCompatible(carrierName, trackingNumber)) || providers[1];
     try {
       return await provider.registerWebhook(carrierName, trackingNumber, orderId);
     } catch (err: any) {
-      console.warn(`[tracking] Webhook registration failed for ${trackingNumber}: ${err.message}`);
+      console.warn(`[tracking/${provider.name}] Webhook registration failed for ${trackingNumber}: ${err.message}`);
       return null;
     }
   }
