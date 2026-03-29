@@ -91,7 +91,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
     const handleMarkAsDelivered = async () => {
         setLoadingDelivery(true);
         try {
-            await axios.patch(`/api/orders/${order.id}`, { status: 'delivered' });
+            await axios.patch(`/api/orders/${order.id}/deliver`, { status: 'delivered' });
             router.refresh();
         } catch (err) {
             console.error("Failed to update delivery status:", err);
