@@ -34,13 +34,13 @@ const nextConfig: NextConfig = {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
     const CSP = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://js.stripe.com",
+      "script-src 'self' 'unsafe-inline' https://js.stripe.com https://accounts.google.com/gsi/client",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "frame-src https://js.stripe.com https://hooks.stripe.com",
-      `img-src 'self' data: blob: ${supabaseUrl} https://purecatamphetamine.github.io https://api.dicebear.com`,
+      "frame-src https://js.stripe.com https://hooks.stripe.com https://accounts.google.com",
+      `img-src 'self' data: blob: ${supabaseUrl} https://lh3.googleusercontent.com https://purecatamphetamine.github.io https://api.dicebear.com`,
       `media-src 'self' ${supabaseUrl}`,
-      `connect-src 'self' https://api.stripe.com https://api.packlink.com https://restcountries.com ${supabaseUrl}`,
+      `connect-src 'self' https://api.stripe.com https://api.packlink.com https://restcountries.com https://accounts.google.com ${supabaseUrl}`,
       "upgrade-insecure-requests",
     ].join("; ");
 
