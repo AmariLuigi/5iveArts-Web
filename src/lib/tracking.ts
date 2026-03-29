@@ -129,18 +129,18 @@ class WhereParcelProvider implements TrackingProvider {
   }
 
   private mapToCarrierSlug(name: string): string {
+    // Refined Mapping for Italian Logistics Ecosystem
     const n = (name || "").toLowerCase();
-    if (n.includes("inpost")) return "it.inpost"; // Speculative but standard
-    if (n.includes("poste")) return "it.poste";
+    if (n.includes("inpost")) return "it.inpost";
     if (n.includes("sda")) return "it.sda";
-    if (n.includes("brt")) return "it.brt";
+    if (n.includes("brt") || n.includes("bartolini")) return "it.brt";
     if (n.includes("tnt")) return "it.tnt";
+    if (n.includes("fedex")) return "it.fedex";
     if (n.includes("ups")) return "it.ups";
     if (n.includes("dhl")) return "it.dhl";
     if (n.includes("gls")) return "it.gls";
-    if (n.includes("fedex")) return "it.fedex";
-    if (n.includes("dpd")) return "it.dpd";
     if (n.includes("nexive")) return "it.nexive";
+    if (n.includes("poste")) return "it.poste";
     
     return "it.poste"; // Final Italian fallback
   }
