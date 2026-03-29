@@ -4,35 +4,82 @@ import { normalizeAddressForCourier } from "@/lib/address-utils";
 
 const BASE_URL = "https://paccofacile.tecnosogima.cloud/live/v1";
 
+function getCredentials() {
+  const token = process.env.PACCOFACILE_TOKEN;
+  const apiKey = process.env.PACCOFACILE_API_KEY;
+  const account = process.env.PACCOFACILE_ACCOUNT_NUMBER;
+
+  if (!token || !apiKey || !account) {
+    throw new Error("Missing Paccofacile credentials");
+  }
+
+  return { token, apiKey, account };
+}
+
+function getHeaders() {
+  const { token, apiKey, account } = getCredentials();
+  return {
+    "Authorization": `Bearer ${token}`,
+    "api-key": apiKey,
+    "Account-Number": account,
+    "Content-Type": "application/json"
+  };
+}
+
 /**
- * Fetches real-time shipping rates from Paccofacile.it API.
- * 🛡️ Fortified with Double-Try (Specific -> Zone-Based) logic for 100% reliability.
+ * Calculates weight based on scale (Basis: 1/9 -> 0.4kg)
+ * Equation: Weight(kg) = 3.6 / scaleValue
+ * Example: 1/6 scale => 3.6 / 6 = 0.6kg
  */
+function calculateItemWeight(scale: string): number {
+  if (!scale) return 0.5; // Default safety fallback
+  const match = scale.match(/1[:\/](\d+)/);
+  if (match && match[1]) {
+    const denominator = parseInt(match[1], 10);
+    if (denominator > 0) {
+      return 3.6 / denominator;
+    }
+  }
+  return 0.5; // Default safety fallback
+}
+
 export async function fetchShippingRates(
   toAddress: ShippingAddress,
   subtotalCents: number = 0,
-  logisticsSettings?: any
+  logisticsSettings?: any,
+  items: any[] = []
 ): Promise<(ShippingRate & { partial_validation?: boolean })[]> {
   const fromZip = process.env.WAREHOUSE_POSTCODE || "90138";
   const fromCountry = process.env.WAREHOUSE_COUNTRY || "IT";
   const fromCity = "Palermo";
   const fromProvince = "PA";
 
-  const token = process.env.PACCOFACILE_TOKEN;
-  const apiKey = process.env.PACCOFACILE_API_KEY;
-  const account = process.env.PACCOFACILE_ACCOUNT_NUMBER;
-
-  if (!token || !apiKey || !account) {
-    console.error("[paccofacile] Missing credentials in environment variables.");
+  let creds;
+  try {
+    creds = getCredentials();
+  } catch (e) {
+    console.error(`[paccofacile] ${e}`);
     return [];
   }
 
   const norm = normalizeAddressForCourier(toAddress);
 
+  // Business Protocol: Single box size, dynamic weight per scale
+  const totalWeight = items.reduce((acc, item) => {
+    const scale = item.selectedScale || item.product?.scale || "";
+    return acc + (calculateItemWeight(scale) * (item.quantity || 1));
+  }, 0) || 0.5;
+
   const fetchQuote = async (dest: any, attempt: number) => {
     const payload = {
       shipment_service: {
-        parcels: [{ shipment_type: 1, dim1: 25, dim2: 25, dim3: 25, weight: 0.5 }],
+        parcels: [{ 
+          shipment_type: 1, 
+          dim1: 30, // Static Box Length
+          dim2: 20, // Static Box Height
+          dim3: 15, // Static Box Width
+          weight: Math.max(0.1, totalWeight) // Dynamic Weight
+        }],
         accessories: [],
         package_content_type: "GOODS"
       },
@@ -43,12 +90,7 @@ export async function fetchShippingRates(
     console.log(`[paccofacile] QUERY ATTEMPT ${attempt} PAYLOAD:`, JSON.stringify(payload, null, 2));
 
     return await axios.post(`${BASE_URL}/service/shipment/quote`, payload, {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "api-key": apiKey,
-        "Account-Number": account,
-        "Content-Type": "application/json"
-      },
+      headers: getHeaders(),
       timeout: 10000
     });
   };
@@ -116,7 +158,6 @@ export async function fetchShippingRates(
       };
     });
 
-    console.log(`[paccofacile] Success. Found ${rates.length} rates.`);
     return rates.sort((a, b) => a.price - b.price);
 
   } catch (error: any) {
@@ -124,4 +165,135 @@ export async function fetchShippingRates(
     console.error("[paccofacile] Final calculation failure:", errorMsg);
     throw new Error(`COURIER_REJECTION: ${errorMsg}`);
   }
+}
+
+/**
+ * Creates a shipment draft on Paccofacile.
+ * Returns the shipment_id.
+ */
+export async function createShipment(
+  order: any, 
+  items: any[], 
+  serviceId: string
+): Promise<number> {
+  const fromZip = process.env.WAREHOUSE_POSTCODE || "90138";
+  const fromCountry = process.env.WAREHOUSE_COUNTRY || "IT";
+  const fromCity = "Palermo";
+  const fromProvince = "PA";
+  const fromStreet = process.env.WAREHOUSE_STREET || "Via Roma 1";
+  const fromEmail = process.env.ADMIN_EMAIL || "info@5ivearts.com";
+  const fromPhone = process.env.WAREHOUSE_PHONE || "3330000000";
+
+  const totalWeight = items.reduce((acc, item) => {
+    const scale = item.selectedScale || item.product?.scale || "";
+    return acc + (calculateItemWeight(scale) * (item.quantity || 1));
+  }, 0) || 0.5;
+
+  const dest = order.shipping_address;
+  const norm = normalizeAddressForCourier(dest);
+
+  const payload = {
+    shipment_service: {
+      pickup_date: new Date(Date.now() + 86400000).toISOString().split('T')[0], // Tomorrow
+      pickup_range: "AM",
+      service_id: parseInt(serviceId, 10),
+      parcels: [{
+        shipment_type: 1,
+        dim1: 30,
+        dim2: 20,
+        dim3: 15,
+        weight: Math.max(0.1, totalWeight)
+      }],
+      accessories: [],
+      package_content_type: "GOODS"
+    },
+    pickup: {
+      iso_code: fromCountry,
+      postal_code: fromZip,
+      city: fromCity,
+      header_name: "5ive Arts Studio",
+      address: fromStreet,
+      StateOrProvinceCode: fromProvince,
+      phone: fromPhone,
+      email: fromEmail,
+      note: "Fragile items"
+    },
+    destination: {
+      iso_code: norm.iso_code,
+      postal_code: norm.postal_code,
+      city: norm.city,
+      header_name: dest.full_name,
+      address: dest.street1 + (dest.street2 ? " " + dest.street2 : ""),
+      StateOrProvinceCode: norm.ProvinceCode,
+      phone: dest.phone || "0000000000",
+      email: dest.email || order.customer_email,
+      note: ""
+    },
+    additional_information: {
+      reference: order.id.slice(0, 8),
+      content: "Scale Figure Archive"
+    }
+  };
+
+  const response = await axios.post(`${BASE_URL}/service/shipment/save`, payload, {
+    headers: getHeaders()
+  });
+
+  if (!response.data?.data?.shipment_id) {
+    throw new Error("Shipment creation failed: No shipment_id returned");
+  }
+
+  return response.data.data.shipment_id;
+}
+
+/**
+ * Purchases a shipment using account credit.
+ * Returns the tracking_number.
+ */
+export async function purchaseShipment(shipmentId: number): Promise<string> {
+  const payload = {
+    shipments: [shipmentId],
+    billing_type: 1, // Receipt
+    billing_date: "2", // Single
+    payment_method: "CREDIT"
+  };
+
+  const response = await axios.post(`${BASE_URL}/service/shipment/buy`, payload, {
+    headers: getHeaders()
+  });
+
+  const tracking = response.data?.data?.shipments?.[0]?.tracking_number;
+  if (!tracking) {
+    throw new Error("Shipment purchase failed: No tracking number returned");
+  }
+
+  return tracking;
+}
+
+/**
+ * Retrieves the shipping label as Base64 PDF.
+ */
+export async function getShipmentLabel(shipmentId: number): Promise<{ content: string, format: string }> {
+  const response = await axios.get(`${BASE_URL}/service/shipment/${shipmentId}/label`, {
+    headers: getHeaders()
+  });
+
+  return {
+    content: response.data?.data?.content,
+    format: response.data?.data?.format || "pdf"
+  };
+}
+
+/**
+ * Fetches account credit balance.
+ */
+export async function getAccountCredit(): Promise<{ value: number, currency: string }> {
+  const response = await axios.get(`${BASE_URL}/service/customers/credit`, {
+    headers: getHeaders()
+  });
+
+  return {
+    value: parseFloat(response.data?.data?.credit?.value || "0"),
+    currency: response.data?.data?.credit?.currency || "EUR"
+  };
 }

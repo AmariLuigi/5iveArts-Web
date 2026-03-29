@@ -413,7 +413,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 const newNames: Record<string, string | null> = { ...names, en: title };
                 
                 if (autoTranslate) {
-                    const languages = ["it", "es", "fr", "de", "nl", "ru", "tr", "pt", "ja", "pl", "ar"];
+                    const languages = ["it", "es", "fr", "de", "nl", "pt", "pl"];
                     for (const lang of languages) {
                         try {
                             const res = await axios.post("/api/translate", {
@@ -726,7 +726,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                         onChange={(e) => setAutoTranslate(e.target.checked)}
                                     />
                                     <span className="text-[9px] uppercase font-black tracking-widest text-neutral-500 group-hover/toggle:text-neutral-300 transition-colors">
-                                        Auto-Generate Global Translations
+                                        Auto-Generate European Translations
                                     </span>
                                 </label>
 
@@ -734,7 +734,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                     {isTranslating && (
                                         <div className="flex flex-col gap-2 min-w-[200px]">
                                             <div className="flex items-center justify-between text-[8px] uppercase font-black tracking-widest text-[#df9e55]">
-                                                <span>Syncing Global Markets</span>
+                                                <span>Syncing European Markets</span>
                                                 <span className="font-bold">{Math.round(translationProgress)}%</span>
                                             </div>
                                             <div className="h-1 bg-white/5 rounded-full overflow-hidden">

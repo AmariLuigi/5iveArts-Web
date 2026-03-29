@@ -74,7 +74,7 @@
         "item": "produkt",
         "items": "produkty",
         "secureCheckout": "Bezpieczne Płatności",
-        "insuredShipping": "Ubezpieczona Wysyłka Globalna",
+        "insuredShipping": "Ubezpieczona Wysyłka Europeanna",
         "thirtyDayReturns": "30-dniowe zwroty",
         "orderSummary": "Podsumowanie Zamówienia",
         "calculatedAtCheckout": "Obliczane przy płatności",
@@ -122,7 +122,7 @@
             },
             {
                 "q": "Czy wysyłacie za granicę?",
-                "a": "Tak! Wysyłamy z naszego studia we Włoszech do kolekcjonerów na całym świecie. Korzystamy z ubezpieczonych globalnych kurierów, aby zapewnić bezpieczną dostawę Twojego arcydzieła."
+                "a": "Tak! Wysyłamy z naszego studia we Włoszech do kolekcjonerów na całym świecie. Korzystamy z ubezpieczonych Europeannych kurierów, aby zapewnić bezpieczną dostawę Twojego arcydzieła."
             },
             {
                 "q": "Ile trwa produkcja?",
@@ -222,7 +222,7 @@
         "validNumber": "(Poprawny numer)",
         "includeCode": "(Dołącz kod +)",
         "continueBtn": "Przejdź do Opcji Wysyłki",
-        "recalculating": "Ponowne Obliczanie Logistyki Globalnej…",
+        "recalculating": "Ponowne Obliczanie Logistyki Europeannej…",
         "backBtn": "Powrót do Dostawy",
         "changeShipping": "Zmień Opcję Wysyłki",
         "connecting": "Łączenie z bezpieczną bramką płatności. Nawiązywanie połączenia z protokołami PCI-DSS...",
@@ -253,7 +253,7 @@
         "description": "Opis",
         "specifications": "Cechy i Specyfikacja",
         "encryptedCheckout": "Szyfrowana Płatność przez Stripe",
-        "insuredShipping": "Ubezpieczona Wysyłka Globalna",
+        "insuredShipping": "Ubezpieczona Wysyłka Europeanna",
         "confirmed": "Potwierdzone",
         "addToCollection": "Dodaj do Arsenału",
         "instantCheckout": "Kup Teraz",
@@ -272,7 +272,7 @@
             "sub": "Obsługiwane przez Stripe"
         },
         {
-            "label": "Ubezpieczona Wysyłka Globalna",
+            "label": "Ubezpieczona Wysyłka Europeanna",
             "sub": "Dostawa na całym świecie"
         },
         {
@@ -391,21 +391,21 @@
         "daysEst": "dni (szac.)"
     },
     "footer": {
-        "logistics": "Globalna Logistyka Rzemieślnicza Aktywna",
+        "logistics": "Europeanna Logistyka Rzemieślnicza Aktywna",
         "rights": "© 2026 5iveArts Collector Series. Wszelkie prawa zastrzeżone.",
         "privacy": "Prywatność",
         "terms": "Warunki",
         "description": "Butikowe studio zajmujące się produkcją ręcznie malowanych figurek z żywicy drukowanej 3D. Wysyłamy arcydzieła klasy muzealnej do kolekcjonerów na całym świecie z naszego warsztatu w Palermo.",
-        "seoAbout": "5iveArts to wiodące butikowe studio specjalizujące się w tworzeniu figurek z żywicy drukowanej 3D oraz ręcznie malowanych przedmiotów kolekcjonerskich. Nasza rzemieślnicza seria koncentruje się na ekstremalnej szczegółowości, wykorzystując wysokość warstwy 0,025 mm, aby zapewnić muzealną jakość każdej produkowanej przez nas figurki. Dzięki globalnej sieci wysyłkowej służymy oddanej społeczności kolekcjonerów, którzy cenią połączenie przemysłowej precyzji i rękodzieła. Każdy element w naszej serii jest unikalny, wykończony profesjonalnym malowaniem aerografem i lakierami odpornymi na UV, aby chronić Twoją inwestycję przez lata."
+        "seoAbout": "5iveArts to wiodące butikowe studio specjalizujące się w tworzeniu figurek z żywicy drukowanej 3D oraz ręcznie malowanych przedmiotów kolekcjonerskich. Nasza rzemieślnicza seria koncentruje się na ekstremalnej szczegółowości, wykorzystując wysokość warstwy 0,025 mm, aby zapewnić muzealną jakość każdej produkowanej przez nas figurki. Dzięki Europeannej sieci wysyłkowej służymy oddanej społeczności kolekcjonerów, którzy cenią połączenie przemysłowej precyzji i rękodzieła. Każdy element w naszej serii jest unikalny, wykończony profesjonalnym malowaniem aerografem i lakierami odpornymi na UV, aby chronić Twoją inwestycję przez lata."
     },
     "shipping": {
         "protocol": "Protokół Logistyczny",
-        "title": "Wysyłka Globalna",
+        "title": "Wysyłka Europeanna",
         "subtitle": "Bezpieczna, ubezpieczona i śledzona dostawa dla każdego arcydzieła w kolekcji.",
         "insuredTitle": "Ubezpieczona Realizacja",
         "insuredText": "Każda figurka jest pakowana w dopasowaną piankę wysokiej gęstości i pudełka kolekcjonerskie z podwójnymi ściankami. Ubezpieczamy każdą przesyłkę od utraty lub uszkodzenia podczas transportu.",
         "dynamicTitle": "Dynamiczna Logistyka",
-        "dynamicText": "Korzystamy z Paccofacile, aby zapewniać ubezpieczone stawki wysyłki w czasie rzeczywistym od premium przewoźników, takich jak UPS, DHL i FedEx. Wszystkie przesyłki są śledzone globalnie przez WhereParcel. Twoja stawka jest obliczana podczas płatności na podstawie dokładnej lokalizacji i wymiarów paczki.",
+        "dynamicText": "Korzystamy z Paccofacile, aby zapewniać ubezpieczone stawki wysyłki w czasie rzeczywistym od premium przewoźników, takich jak UPS, DHL i FedEx. Wszystkie przesyłki są śledzone Europeannie przez WhereParcel. Twoja stawka jest obliczana podczas płatności na podstawie dokładnej lokalizacji i wymiarów paczki.",
         "freeTierTitle": "Poziom Darmowej Wysyłki",
         "freeTierText": "Nagradzamy poważnych kolekcjonerów. Wszystkie zamówienia powyżej {amount} automatycznie kwalifikują się do BEZPŁATNEJ STANDARDOWEJ WYSYŁKI, niezależnie od lokalizacji.",
         "zonesTitle": "Szacowany Czas Tranzytu",
@@ -413,16 +413,12 @@
         "standard": "Standardowy",
         "express": "Ekspresowy",
         "estTime": "Szcac. czas",
-        "trackingInfo": "Globalny Śledzenie na Żywo dla Wszystkich Zamówień",
+        "trackingInfo": "Europeanny Śledzenie na Żywo dla Wszystkich Zamówień",
         "italy": "Włochy",
         "eu": "Unia Europejska",
-        "uk": "Wielka Brytania",
-        "global": "Globalnie / Reszta Świata",
         "days1_3": "1-3 Dni",
         "days3_5": "3-5 Dni",
-        "days4_7": "4-7 Dni",
-        "days7_14": "7-14 Dni",
-        "carrierActive": "Globalna Sieć Przewoźników Aktywna"
+        "carrierActive": "Europeanna Sieć Przewoźników Aktywna"
     },
     "hero": {
         "slides": [
@@ -443,7 +439,7 @@
         "trust": {
             "quality": "Certyfikowana Jakość",
             "handFinished": "Ręcznie Wykończone",
-            "logistics": "Globalna Logistyka"
+            "logistics": "Europeanna Logistyka"
         }
     },
     "features": {
@@ -457,7 +453,7 @@
         },
         "fastShipping": {
             "title": "Szybka Wysyłka",
-            "text": "Ubezpieczona dostawa globalna ze śledzeniem"
+            "text": "Ubezpieczona dostawa Europeanna ze śledzeniem"
         },
         "secureCheckout": {
             "title": "Bezpieczne Płatności",

@@ -25,8 +25,7 @@ export async function POST(req: Request) {
     }
 
     const languages = [
-      ["en", "it", "de", "fr", "es", "ru"], 
-      ["tr", "pt", "nl", "ja", "ar", "pl"]
+      ["en", "it", "de", "fr", "es", "pl", "pt", "nl"]
     ];
 
     const translateBatch = async (batch: string[]) => {
@@ -82,17 +81,11 @@ RULES:
     }
 
     const fullBatches = [
-      ["en", "it", "de", "fr", "es", "ru"], 
-      ["tr", "pt", "nl", "ja", "ar", "pl"]
+      ["en", "it", "de", "fr", "es", "pl", "pt", "nl"]
     ];
 
-    const [batch1, batch2] = await Promise.all([
-      translateBatch(fullBatches[0]),
-      translateBatch(fullBatches[1])
-    ]);
-
-    const translations = { ...batch1, ...batch2 };
-    return NextResponse.json(translations);
+    const result = await translateBatch(fullBatches[0]);
+    return NextResponse.json(result);
 
   } catch (error: any) {
     console.error("[AI Translate] Fatal Error:", error);

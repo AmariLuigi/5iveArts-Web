@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
     LayoutDashboard,
     ShoppingCart,
+    Truck,
     Tag,
     LogOut,
     ChevronRight,
@@ -33,6 +34,7 @@ export default function AdminSidebar() {
         { label: "Overview", href: "/admin", icon: LayoutDashboard },
         { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
         { label: "Manage Orders", href: "/admin/orders", icon: ShoppingCart },
+        { label: "Logistics", href: "/admin/logistics", icon: Truck },
         { label: "Products", href: "/admin/products", icon: Tag },
         { label: "Lore Taxonomy", href: "/admin/taxonomy", icon: GitCommit },
         { label: "Settings", href: "/admin/settings", icon: Settings },

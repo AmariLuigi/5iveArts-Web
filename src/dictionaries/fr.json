@@ -121,7 +121,7 @@
                 "a": "Chaque figurine commence par une impression 3D haute résolution (couche de 0,025 mm) utilisant de la résine de qualité industrielle. Une fois polymérisées, nos artistes passent des heures à peindre chaque pièce à la main avec une technique professionnelle."
             },
             {
-                "q": "Expédiez-vous à l'international ?",
+                "q": "Expédiez-vous à l'European ?",
                 "a": "Oui ! Nous expédions depuis notre studio en Italie aux collectionneurs du monde entier. Nous utilisons des transporteurs mondiaux assurés pour garantir que votre chef-d'œuvre arrive en toute sécurité."
             },
             {
@@ -222,7 +222,7 @@
         "validNumber": "(Numéro valide)",
         "includeCode": "(Inclure l'indicatif +)",
         "continueBtn": "Continuer vers les options d'expédition",
-        "recalculating": "Recalcul de la Logistique Globale…",
+        "recalculating": "Recalcul de la Logistique Europeane…",
         "backBtn": "Retour à la Livraison",
         "changeShipping": "Changer d'Option d'Expédition",
         "connecting": "Connexion à la passerelle de paiement sécurisée. Handshake avec protocoles PCI-DSS…",
@@ -253,7 +253,7 @@
         "description": "Description",
         "specifications": "Caractéristiques & Spécifications",
         "encryptedCheckout": "Paiement Sécurisé via Stripe",
-        "insuredShipping": "Expédition Globale Assurée",
+        "insuredShipping": "Expédition Europeane Assurée",
         "confirmed": "Confirmé",
         "addToCollection": "Ajouter à l'Arsenal",
         "instantCheckout": "Achat Rapide",
@@ -272,8 +272,8 @@
             "sub": "Propulsé par Stripe"
         },
         {
-            "label": "Expédition Globale Assurée",
-            "sub": "Livraison internationale"
+            "label": "Expédition Europeane Assurée",
+            "sub": "Livraison Europeane"
         },
         {
             "label": "Peint à la Main",
@@ -416,12 +416,8 @@
         "trackingInfo": "Suivi Mondial en Direct sur Toutes les Commandes",
         "italy": "Italie",
         "eu": "Union Européenne",
-        "uk": "Royaume-Uni",
-        "global": "Global / Reste du Monde",
         "days1_3": "1-3 Jours",
         "days3_5": "3-5 Jours",
-        "days4_7": "4-7 Jours",
-        "days7_14": "7-14 Jours",
         "carrierActive": "Réseau Mondial de Transporteurs Actif"
     },
     "hero": {
@@ -443,7 +439,7 @@
         "trust": {
             "quality": "Qualité Certifiée",
             "handFinished": "Fini à la Main",
-            "logistics": "Logistique Globale"
+            "logistics": "Logistique Europeane"
         }
     },
     "features": {

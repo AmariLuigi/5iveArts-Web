@@ -9,8 +9,8 @@ const BADGES = [
   },
   {
     icon: Truck,
-    label: "Insured Global Shipping",
-    sub: "Worldwide delivery",
+    label: "Insured European Shipping",
+    sub: "European delivery",
     color: "text-green-500",
   },
   {

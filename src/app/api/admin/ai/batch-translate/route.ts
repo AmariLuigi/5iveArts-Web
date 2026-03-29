@@ -7,8 +7,8 @@ const NVIDIA_INVOKE_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 export async function POST(req: Request) {
   try {
     const { 
-      text, 
-      languages = ["en", "it", "de", "fr", "es", "ja", "ru", "tr", "pt", "nl", "pl", "ar"]
+      text,
+      languages = ["en", "it", "de", "fr", "es", "pt", "nl", "pl"]
     } = await req.json();
 
     if (!text) {

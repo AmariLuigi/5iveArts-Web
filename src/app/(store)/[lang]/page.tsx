@@ -70,7 +70,7 @@ export default async function HomePage({
     {
       icon: <Truck className="w-7 h-7 text-brand-yellow" />,
       title: dict?.features?.fastShipping?.title || "Fast Shipping",
-      text: dict?.features?.fastShipping?.text || "Worldwide delivery",
+      text: dict?.features?.fastShipping?.text || "European delivery",
     },
     {
       icon: <ShieldCheck className="w-7 h-7 text-brand-yellow" />,
@@ -123,7 +123,7 @@ export default async function HomePage({
       <ScrollReveal direction="down">
         <CtaSection
           heading={dict?.ctaSection?.heading || "Ready to upgrade your collection?"}
-          subtext={dict?.ctaSection?.subtext || "Join thousands of collectors worldwide."}
+          subtext={dict?.ctaSection?.subtext || "Join thousands of European collectors."}
           cta={{ label: dict?.ctaSection?.button || "Shop Now", href: `/${lang}/products` }}
         />
       </ScrollReveal>

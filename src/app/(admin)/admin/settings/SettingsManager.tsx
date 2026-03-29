@@ -565,7 +565,7 @@ function TestimonialCard({ testi, index, testimonials, updateTestimonials, showT
                     <button 
                         onClick={handleForge}
                         disabled={forging}
-                        title="Forge Global Translations"
+                        title="Forge European Translations"
                         className={`p-3 bg-brand-yellow/5 border border-brand-yellow/10 text-brand-yellow hover:bg-brand-yellow hover:text-black transition-all rounded-sm flex items-center justify-center -translate-y-2 group-hover/testi:opacity-100 duration-500 ${forging ? 'opacity-100 bg-brand-yellow/20 cursor-wait' : 'opacity-0'}`}
                     >
                         {forging ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
@@ -587,10 +587,10 @@ function TestimonialCard({ testi, index, testimonials, updateTestimonials, showT
 
             <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                    <label className="text-[8px] font-black text-neutral-600 uppercase">Global Master Quote (English)</label>
+                    <label className="text-[8px] font-black text-neutral-600 uppercase">European Master Quote (English)</label>
                     {forging && <span className="text-[7px] font-black text-brand-yellow animate-pulse uppercase">TRANSMITTING... {forgeProgress}%</span>}
                 </div>
-                <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[index].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/40 border border-white/10 p-4 text-[11px] text-white font-medium min-h-[80px] outline-none focus:border-brand-yellow/50" placeholder="GLOBAL QUOTE" />
+                <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[index].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/40 border border-white/10 p-4 text-[11px] text-white font-medium min-h-[80px] outline-none focus:border-brand-yellow/50" placeholder="EUROPEAN QUOTE" />
                 
                 {forgeProgress > 0 && (
                     <div className="w-full bg-white/5 h-0.5 rounded-full overflow-hidden mt-1">

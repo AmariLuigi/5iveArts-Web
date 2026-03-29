@@ -391,6 +391,7 @@ export default function CheckoutClient({
       const res = await axios.post<ShippingRate[]>("/api/shipping/rates", {
         toAddress: address,
         subtotalPence: subtotal,
+        items: items,
       });
       log(`Rates received: ${res.data.length} services found.`);
       setRates(res.data);

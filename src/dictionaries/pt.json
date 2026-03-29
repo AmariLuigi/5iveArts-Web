@@ -74,7 +74,7 @@
         "item": "item",
         "items": "itens",
         "secureCheckout": "Checkout Seguro",
-        "insuredShipping": "Envio Global com Seguro",
+        "insuredShipping": "Envio European com Seguro",
         "thirtyDayReturns": "30 dias para devoluções",
         "orderSummary": "Resumo do Pedido",
         "calculatedAtCheckout": "Calculado na finalização",
@@ -222,7 +222,7 @@
         "validNumber": "(Número Válido)",
         "includeCode": "(Incluir código +)",
         "continueBtn": "Continuar para Opções de Envio",
-        "recalculating": "Recalculando Logística Global…",
+        "recalculating": "Recalculando Logística European…",
         "backBtn": "Voltar para Entrega",
         "changeShipping": "Alterar Opção de Envio",
         "connecting": "A ligar ao portal de pagamento seguro. Sincronizando com protocolos PCI-DSS...",
@@ -253,7 +253,7 @@
         "description": "Descrição",
         "specifications": "Características e Especificações",
         "encryptedCheckout": "Checkout Encriptado via Stripe",
-        "insuredShipping": "Envio Global com Seguro",
+        "insuredShipping": "Envio European com Seguro",
         "confirmed": "Confirmado",
         "addToCollection": "Adicionar ao Arsenal",
         "instantCheckout": "Compra Instantânea",
@@ -272,7 +272,7 @@
             "sub": "Operado por Stripe"
         },
         {
-            "label": "Envio Global com Seguro",
+            "label": "Envio European com Seguro",
             "sub": "Entrega em todo o mundo"
         },
         {
@@ -391,21 +391,21 @@
         "daysEst": "dias est."
     },
     "footer": {
-        "logistics": "Logística de Ofício Artesanal Global Ativada",
+        "logistics": "Logística de Ofício Artesanal European Ativada",
         "rights": "© 2026 5iveArts Collector Series. Todos os derechos reservados.",
         "privacy": "Privacidade",
         "terms": "Termos",
         "description": "Estúdio boutique de figuras premium em resina pintadas à mão e impressas em 3D. Enviamos coleccionáveis de qualidade museumógica para entusiastas de todo o mundo a partir da nossa oficina em Palermo.",
-        "seoAbout": "A 5iveArts é um estúdio boutique de primeira linha especializado na criação de figuras premium em resina impressas em 3D e coleccionáveis pintados à mão. A nossa série artesanal foca-se no detalhe extremo, utilizando alturas de camada de 0,025 mm para garantir qualidade museológica em cada figura que produzimos. Com uma rede de envio global, servimos uma comunidade dedicada de coleccionadores que valorizam a interseção entre precisão industrial e arte artesanal. Cada peça da nossa série é única, finalizada com aerografia profissional e vernizes resistentes aos UV para proteger o seu investimento durante anos."
+        "seoAbout": "A 5iveArts é um estúdio boutique de primeira linha especializado na criação de figuras premium em resina impressas em 3D e coleccionáveis pintados à mão. A nossa série artesanal foca-se no detalhe extremo, utilizando alturas de camada de 0,025 mm para garantir qualidade museológica em cada figura que produzimos. Com uma rede de envio European, servimos uma comunidade dedicada de coleccionadores que valorizam a interseção entre precisão industrial e arte artesanal. Cada peça da nossa série é única, finalizada com aerografia profissional e vernizes resistentes aos UV para proteger o seu investimento durante anos."
     },
     "shipping": {
         "protocol": "Protocolo Logístico",
-        "title": "Envio Global",
+        "title": "Envio European",
         "subtitle": "Entrega segura, segurada e rastreada para cada obra-prima da coleção.",
         "insuredTitle": "Cumprimento Segurado",
         "insuredText": "Cada figura é embalada com espuma de alta densidade sob medida e caixas de colecionador de parede dupla. Seguramos cada envio contra perda ou dano durante o trânsito.",
         "dynamicTitle": "Logística Dinâmica",
-        "dynamicText": "Usamos o Paccofacile para fornecer tarifas de envio seguradas em tempo real de transportadoras premium como UPS, DHL e FedEx. Todos os envios são rastreados globalmente via WhereParcel. Sua tarifa específica é calculada no checkout com base na sua localização exata e nas dimensões do pacote.",
+        "dynamicText": "Usamos o Paccofacile para fornecer tarifas de envio seguradas em tempo real de transportadoras premium como UPS, DHL e FedEx. Todos os envios são rastreados Europeanmente via WhereParcel. Sua tarifa específica é calculada no checkout com base na sua localização exata e nas dimensões do pacote.",
         "freeTierTitle": "Nível de Envio Gratuito",
         "freeTierText": "Recompensamos colecionadores sérios. Todos os pedidos acima de {amount} qualificam-se automaticamente para ENVIO PADRÃO GRATUITO, independentemente da sua localização.",
         "zonesTitle": "Prazos de Trânsito Estimados",
@@ -413,16 +413,12 @@
         "standard": "Padrão",
         "express": "Expresso",
         "estTime": "Tempo Est.",
-        "trackingInfo": "Rastreamento Global ao Vivo em Todos os Pedidos",
+        "trackingInfo": "Rastreamento European ao Vivo em Todos os Pedidos",
         "italy": "Itália",
         "eu": "União Europeia",
-        "uk": "Reino Unido",
-        "global": "Global / Resto do Mundo",
         "days1_3": "1-3 Dias",
         "days3_5": "3-5 Dias",
-        "days4_7": "4-7 Dias",
-        "days7_14": "7-14 Dias",
-        "carrierActive": "Rede Global de Transportadoras Ativa"
+        "carrierActive": "Rede European de Transportadoras Ativa"
     },
     "hero": {
         "slides": [
@@ -443,7 +439,7 @@
         "trust": {
             "quality": "Qualidade Certificada",
             "handFinished": "Acabado à Mão",
-            "logistics": "Logística Global"
+            "logistics": "Logística European"
         }
     },
     "features": {
@@ -457,7 +453,7 @@
         },
         "fastShipping": {
             "title": "Envio Rápido",
-            "text": "Entrega global com seguro e rastreio"
+            "text": "Entrega European com seguro e rastreio"
         },
         "secureCheckout": {
             "title": "Checkout Seguro",
@@ -545,7 +541,7 @@
         "step4_title": "4. Excelência Artesanal",
         "step4_desc": "Monitore o progresso no seu Vault privado com atualizações de fotos em tempo real da oficina.",
         "step5_title": "5. Implementação Final",
-        "step5_desc": "Liquide o saldo final após a conclusão. Envio global segurado para as suas coordenadas.",
+        "step5_desc": "Liquide o saldo final após a conclusão. Envio European segurado para as suas coordenadas.",
         "auth_invite_title": "Pronto para começar sua encomenda?",
         "auth_invite_desc": "Estabeleça uma ligação segura ao nosso terminal para carregar ativos e acompanhar a fabricação do seu artefato.",
         "cta_login": "Fazer login para começar",

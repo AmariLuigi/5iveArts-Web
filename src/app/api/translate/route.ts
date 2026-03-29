@@ -15,12 +15,8 @@ const LANGUAGE_PROMPTS: Record<string, string> = {
     de: "Translate to German. Only provide the translation, no explanations.",
     fr: "Translate to French. Only provide the translation, no explanations.",
     es: "Translate to Spanish. Only provide the translation, no explanations.",
-    ru: "Translate to Russian. Only provide the translation, no explanations.",
-    tr: "Translate to Turkish. Only provide the translation, no explanations.",
     pt: "Translate to Portuguese. Only provide the translation, no explanations.",
     nl: "Translate to Dutch. Only provide the translation, no explanations.",
-    ja: "Translate to Japanese. Only provide the translation, no explanations.",
-    ar: "Translate to Arabic. Only provide the translation, no explanations.",
     pl: "Translate to Polish. Only provide the translation, no explanations.",
 };
 

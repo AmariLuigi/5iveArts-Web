@@ -168,3 +168,37 @@ export async function sendOrderStageUpdateEmail({
     console.error("[email] Failed to send stage update email:", err);
   }
 }
+
+export async function sendLowCreditAlert(creditValue: number, currency: string) {
+  if (!process.env.RESEND_API_KEY) return;
+  const adminEmail = process.env.ADMIN_EMAIL || "info@5ivearts.com";
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+  const fromName = process.env.RESEND_FROM_NAME || "5iveArts";
+
+  try {
+    await resend.emails.send({
+      from: `${fromName} <${fromEmail}>`,
+      to: adminEmail,
+      subject: `CRITICAL: Paccofacile Credit Low (${creditValue} ${currency})`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border: 1px solid #111; border-radius: 4px;">
+          <h1 style="color: #ef4444; font-size: 20px; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 30px; font-weight: 900;">Logistics Depletion Alert</h1>
+          <p style="font-size: 14px; line-height: 1.6; color: #ffffff; font-weight: bold;">Paccofacile account balance is critically low: <span style="color: #ef4444;">${creditValue} ${currency}</span></p>
+          <p style="font-size: 12px; line-height: 1.6; color: #a3a3a3;">Automated shipment fulfillment will fail if credit is exhausted. Please refill the account immediately via the Paccofacile portal.</p>
+          
+          <div style="text-align: center; margin-top: 40px;">
+            <a href="https://www.paccofacile.it/area-riservata/ricarica-credito" style="display: inline-block; padding: 15px 30px; background-color: #ef4444; color: #ffffff; text-decoration: none; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; border-radius: 2px;">Refill Account</a>
+          </div>
+          
+          <hr style="border: 0; border-top: 1px solid #1a1a1a; margin: 40px 0;" />
+          <p style="text-align: center; color: #eab308; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em;">
+            5iveArts — System Administrator
+          </p>
+        </div>
+      `
+    });
+  } catch (err) {
+    console.error("[email] Failed to send low credit alert:", err);
+  }
+}

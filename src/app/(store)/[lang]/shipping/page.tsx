@@ -30,8 +30,6 @@ export default async function ShippingPage({
     const zones = [
         { name: s.italy, days: s.days1_3 },
         { name: s.eu, days: s.days3_5 },
-        { name: s.uk, days: s.days4_7 },
-        { name: s.global, days: s.days7_14 },
     ];
 
     return (

@@ -27,7 +27,7 @@
     "homepage": {
         "featuredHeading": "Colecciones Premium de Figuras de Resina Impresas en 3D",
         "viewAll": "Ver Todas las Piezas",
-        "testimonialsHeading": "Respaldado por Coleccionistas Globales",
+        "testimonialsHeading": "Respaldado por Coleccionistas Europeanes",
         "reviewsLabel": "Reseñas de Coleccionistas",
         "collectorChoice": "Opción del Coleccionista",
         "premiumSeries": "Serie Premium",
@@ -74,7 +74,7 @@
         "item": "artículo",
         "items": "artículos",
         "secureCheckout": "Pago Seguro",
-        "insuredShipping": "Envío Global Asegurado",
+        "insuredShipping": "Envío European Asegurado",
         "thirtyDayReturns": "Devoluciones en 30 días",
         "orderSummary": "Resumen del Pedido",
         "calculatedAtCheckout": "Calculado al pagar",
@@ -122,7 +122,7 @@
             },
             {
                 "q": "¿Envían internacionalmente?",
-                "a": "¡Sí! Enviamos desde nuestro estudio en Italia a coleccionistas de todo el mundo. Utilizamos servicios de mensajería global asegurados para garantizar que tu obra maestra llegue de forma segura."
+                "a": "¡Sí! Enviamos desde nuestro estudio en Italia a coleccionistas de todo el mundo. Utilizamos servicios de mensajería European asegurados para garantizar que tu obra maestra llegue de forma segura."
             },
             {
                 "q": "¿Cuánto tarda la producción?",
@@ -222,7 +222,7 @@
         "validNumber": "(Número válido)",
         "includeCode": "(Incluye prefijo +)",
         "continueBtn": "Continuar con las opciones de envío",
-        "recalculating": "Recalculando Logística Global…",
+        "recalculating": "Recalculando Logística European…",
         "backBtn": "Volver a la Entrega",
         "changeShipping": "Cambiar Opción de Envío",
         "connecting": "Conectando con la pasarela de pago segura. Handshake con protocolos PCI-DSS…",
@@ -253,7 +253,7 @@
         "description": "Descripción",
         "specifications": "Características & Especificaciones",
         "encryptedCheckout": "Pago Encriptado vía Stripe",
-        "insuredShipping": "Envío Global Asegurado",
+        "insuredShipping": "Envío European Asegurado",
         "confirmed": "Confirmado",
         "addToCollection": "Añadir al Arsenal",
         "instantCheckout": "Compra Rápida",
@@ -272,7 +272,7 @@
             "sub": "Powered by Stripe"
         },
         {
-            "label": "Envío Global Asegurado",
+            "label": "Envío European Asegurado",
             "sub": "Entrega mundial"
         },
         {
@@ -391,21 +391,21 @@
         "daysEst": "días est."
     },
     "footer": {
-        "logistics": "Logística Artesanal Global Habilitada",
+        "logistics": "Logística Artesanal European Habilitada",
         "rights": "© 2026 5iveArts Collector Series. Todos los derechos reservados.",
         "privacy": "Privacidad",
         "terms": "Condiciones",
         "description": "Estudio boutique de figuras de resina premium pintadas a mano e impresas en 3D. Enviamos piezas de colección de calidad de museo a todo el mundo desde nuestro taller en Palermo.",
-        "seoAbout": "5iveArts es un estudio boutique de primer nivel especializado en la creación de figuras de resina premium impresas en 3D y objetos de colección pintados a mano. Nuestra serie artesanal se centra en el detalle extremo, utilizando alturas de capa de 0,025 mm para garantizar una calidad de museo en cada figura que producimos. Con una red de envío global, servimos a una comunidad dedicada de coleccionistas que valoran la intersección de la precisión industrial y el arte hecho a mano. Cada pieza de nuestra serie es única, acabada con aerografía profesional y barnices resistentes a los rayos UV para proteger su inversión durante años."
+        "seoAbout": "5iveArts es un estudio boutique de primer nivel especializado en la creación de figuras de resina premium impresas en 3D y objetos de colección pintados a mano. Nuestra serie artesanal se centra en el detalle extremo, utilizando alturas de capa de 0,025 mm para garantizar una calidad de museo en cada figura que producimos. Con una red de envío European, servimos a una comunidad dedicada de coleccionistas que valoran la intersección de la precisión industrial y el arte hecho a mano. Cada pieza de nuestra serie es única, acabada con aerografía profesional y barnices resistentes a los rayos UV para proteger su inversión durante años."
     },
     "shipping": {
         "protocol": "Protocolo Logístico",
-        "title": "Envío Global",
+        "title": "Envío European",
         "subtitle": "Entrega segura, asegurada y rastreada para cada obra maestra de la colección.",
         "insuredTitle": "Cumplimiento Asegurado",
         "insuredText": "Cada figura se embala con espuma de alta densidad a medida y cajas de colección de doble pared. Aseguramos cada envío contra pérdida o daño durante el tránsito.",
         "dynamicTitle": "Logística Dinámica",
-        "dynamicText": "Usamos Paccofacile para ofrecer tarifas de envío aseguradas en tiempo real de transportistas premium como UPS, DHL y FedEx. Todos los envíos se rastrean globalmente mediante WhereParcel. Tu tarifa específica se calcula en el proceso de pago según tu ubicación exacta y las dimensiones del paquete.",
+        "dynamicText": "Usamos Paccofacile para ofrecer tarifas de envío aseguradas en tiempo real de transportistas premium como UPS, DHL y FedEx. Todos los envíos se rastrean Europeanmente mediante WhereParcel. Tu tarifa específica se calcula en el proceso de pago según tu ubicación exacta y las dimensiones del paquete.",
         "freeTierTitle": "Nivel de Envío Gratuito",
         "freeTierText": "Recompensamos a los coleccionistas serios. Todos los pedidos superiores a {amount} califican automáticamente para ENVÍO ESTÁNDAR GRATUITO, independientemente de tu ubicación.",
         "zonesTitle": "Tiempos de Tránsito Estimados",
@@ -413,16 +413,12 @@
         "standard": "Estándar",
         "express": "Exprés",
         "estTime": "Tiempo Est.",
-        "trackingInfo": "Seguimiento Global en Vivo en Todos los Pedidos",
+        "trackingInfo": "Seguimiento European en Vivo en Todos los Pedidos",
         "italy": "Italia",
         "eu": "Unión Europea",
-        "uk": "Reino Unido",
-        "global": "Global / Resto del Mundo",
         "days1_3": "1-3 Días",
         "days3_5": "3-5 Días",
-        "days4_7": "4-7 Días",
-        "days7_14": "7-14 Días",
-        "carrierActive": "Red Global de Transportistas Activa"
+        "carrierActive": "Red European de Transportistas Activa"
     },
     "hero": {
         "slides": [
@@ -443,7 +439,7 @@
         "trust": {
             "quality": "Calidad Certificada",
             "handFinished": "Acabado a Mano",
-            "logistics": "Logística Global"
+            "logistics": "Logística European"
         }
     },
     "features": {
@@ -545,7 +541,7 @@
         "step4_title": "4. Maestría Artesanal",
         "step4_desc": "Monitorea el progreso en tu Vault privado con actualizaciones fotográficas en tiempo real desde el taller.",
         "step5_title": "5. Despliegue Final",
-        "step5_desc": "Liquida el saldo final al completar. Despliegue global asegurado a tus coordenadas.",
+        "step5_desc": "Liquida el saldo final al completar. Despliegue European asegurado a tus coordenadas.",
         "auth_invite_title": "¿Listo para comenzar tu comisión?",
         "auth_invite_desc": "Establece una conexión segura con nuestro terminal para subir activos y rastrear la fabricación de tu artefacto.",
         "cta_login": "Iniciar sesión para comenzar",

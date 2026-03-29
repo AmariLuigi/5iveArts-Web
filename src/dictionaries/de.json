@@ -27,7 +27,7 @@
     "homepage": {
         "featuredHeading": "Premium 3D-gedruckte Resin-Figuren-Kollektionen",
         "viewAll": "Alle Stücke Ansehen",
-        "testimonialsHeading": "Geschätzt von Globalen Sammlern",
+        "testimonialsHeading": "Geschätzt von Europeanen Sammlern",
         "reviewsLabel": "Kundenstimmen",
         "collectorChoice": "Wahl der Sammler",
         "premiumSeries": "Premium-Serie",
@@ -121,8 +121,8 @@
                 "a": "Jede Figur beginnt als hochauflösender 3D-Druck (0,025 mm Schichthöhe) mit industrietauglichem Harz. Nach dem Aushärten verbringen unsere Künstler Stunden damit, jedes Stück mit professionellen Acrylfarben und Airbrush-Techniken von Hand zu bemalen, und schließen mit einem UV-beständigen Lack in Museumsqualität ab."
             },
             {
-                "q": "Versenden Sie international?",
-                "a": "Ja! Wir versenden von unserem Studio in Italien an Sammler weltweit. Wir nutzen versicherte globale Kuriere, um sicherzustellen, dass Ihr Meisterwerk sicher ankommt."
+                "q": "Versenden Sie European?",
+                "a": "Ja! Wir versenden von unserem Studio in Italien an Sammler weltweit. Wir nutzen versicherte Europeane Kuriere, um sicherzustellen, dass Ihr Meisterwerk sicher ankommt."
             },
             {
                 "q": "Wie lange dauert die Produktion?",
@@ -222,7 +222,7 @@
         "validNumber": "(Gültige Nummer)",
         "includeCode": "(Vorwahl + einschließen)",
         "continueBtn": "Weiter zu den Versandoptionen",
-        "recalculating": "Globale Logistik wird neu berechnet…",
+        "recalculating": "Europeane Logistik wird neu berechnet…",
         "backBtn": "Zurück zur Lieferung",
         "changeShipping": "Versandoption ändern",
         "connecting": "Verbindung zum sicheren Zahlungs-Gateway wird hergestellt. Handshake mit PCI-DSS-Protokollen…",
@@ -391,12 +391,12 @@
         "daysEst": "Tage (gesch.)"
     },
     "footer": {
-        "logistics": "Globale Kunsthandwerkslogistik Aktiviert",
+        "logistics": "Europeane Kunsthandwerkslogistik Aktiviert",
         "rights": "© 2026 5iveArts Collector Series. Alle Rechte vorbehalten.",
         "privacy": "Datenschutz",
         "terms": "Bedingungen",
         "description": "Boutique-Studio für handbemalte und 3D-gedruckte Premium-Resinfiguren. Wir versenden Sammlerstücke in Museumsqualität weltweit aus unserer Werkstatt in Palermo.",
-        "seoAbout": "5iveArts ist ein erstklassiges Boutique-Studio, das auf die Erstellung von premium 3D-gedruckten Resin-Figuren und handbemalten Sammlerstücken spezialisiert ist. Unsere Artisan-Serie konzentriert sich auf extreme Details und nutzt Schichthöhen von 0,025 mm, um Museumsqualität für jede produzierte Figur zu gewährleisten. Mit einem globalen Versandnetzwerk bedienen wir eine engagierte Gemeinschaft von Sammlern, die die Verbindung von industrieller Präzision und handgefertigter Kunst schätzen. Jedes Stück unserer Serie ist ein Unikat, veredelt mit professioneller Airbrush-Technik und UV-beständigen Lacken."
+        "seoAbout": "5iveArts ist ein erstklassiges Boutique-Studio, das auf die Erstellung von premium 3D-gedruckten Resin-Figuren und handbemalten Sammlerstücken spezialisiert ist. Unsere Artisan-Serie konzentriert sich auf extreme Details und nutzt Schichthöhen von 0,025 mm, um Museumsqualität für jede produzierte Figur zu gewährleisten. Mit einem Europeanen Versandnetzwerk bedienen wir eine engagierte Gemeinschaft von Sammlern, die die Verbindung von industrieller Präzision und handgefertigter Kunst schätzen. Jedes Stück unserer Serie ist ein Unikat, veredelt mit professioneller Airbrush-Technik und UV-beständigen Lacken."
     },
     "shipping": {
         "protocol": "Logistikprotokoll",
@@ -416,13 +416,9 @@
         "trackingInfo": "Live-Weltverfolgung für alle Bestellungen",
         "italy": "Italien",
         "eu": "Europäische Union",
-        "uk": "Vereinigtes Königreich",
-        "global": "Global / Rest der Welt",
         "days1_3": "1-3 Tage",
         "days3_5": "3-5 Tage",
-        "days4_7": "4-7 Tage",
-        "days7_14": "7-14 Tage",
-        "carrierActive": "Globales Speditionsnetz aktiv"
+        "carrierActive": "Europeanes Speditionsnetz aktiv"
     },
     "hero": {
         "slides": [
@@ -443,7 +439,7 @@
         "trust": {
             "quality": "Zertifizierte Qualität",
             "handFinished": "Handveredelt",
-            "logistics": "Globale Logistik"
+            "logistics": "Europeane Logistik"
         }
     },
     "features": {

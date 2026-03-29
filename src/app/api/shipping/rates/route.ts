@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
   // ── Fetch dynamic Paccofacile rates ──────────────────────────────────────
   const settings = await getSiteSettings();
-  const rates = await fetchShippingRates(addressResult.data, subtotalPence, settings.logistics);
+  const rates = await fetchShippingRates(addressResult.data, subtotalPence, settings.logistics, (b.items as any[]) || []);
 
   if (rates.length === 0) {
     console.warn(`[shipping] No Paccofacile services found for ${addressResult.data.country}/${addressResult.data.zip_code}.`);
