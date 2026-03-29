@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { createClient } from "@/lib/supabase-browser";
@@ -118,7 +118,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
 
     const supabase = createClient();
 
-    useState(() => {
+    useEffect(() => {
         if (order.tracking_number && (status === 'shipped' || status === 'delivered')) {
             const fetchTracking = async () => {
                 setLoadingTracking(true);
@@ -133,7 +133,7 @@ export default function OrderDetailClient({ order, orderItems, initialProgressMe
             };
             fetchTracking();
         }
-    });
+    }, [order.tracking_number, status, order.id]);
 
     const copyToClipboard = async (text: string, type: string) => {
         try {

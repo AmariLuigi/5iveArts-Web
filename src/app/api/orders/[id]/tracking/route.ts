@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import { getTrackingInfo } from "@/lib/tracking";
+import { getTrackingInfo, getTrackingUrl } from "@/lib/tracking";
 
 export async function GET(
   req: NextRequest,
@@ -25,6 +25,8 @@ export async function GET(
       return NextResponse.json({ error: "No tracking number assigned" }, { status: 400 });
     }
 
+    const trackingUrl = getTrackingUrl(order.shipping_service_name || "Poste Italiane", order.tracking_number);
+
     // 2. Fetch Real-time Tracking
     const tracking = await getTrackingInfo(
       order.shipping_service_name || "Poste Italiane",
@@ -32,7 +34,10 @@ export async function GET(
     );
 
     if (!tracking) {
-      return NextResponse.json({ error: "Tracking provider not found or failed" }, { status: 502 });
+      return NextResponse.json({ 
+        error: "Tracking provider not found or failed",
+        trackingUrl 
+      }, { status: 502 });
     }
 
     // 3. Update Flag if Delivered (but don't change order status automatically)
@@ -55,7 +60,7 @@ export async function GET(
         .eq("id", id);
     }
 
-    return NextResponse.json(tracking);
+    return NextResponse.json({ ...tracking, trackingUrl });
   } catch (err: any) {
     console.error("[api/orders/tracking] Error:", err.message);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

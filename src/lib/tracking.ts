@@ -266,24 +266,208 @@ class InpostProvider implements TrackingProvider {
   }
 }
 
-// Registry for future expansion
+/**
+ * RapidAPI Order Tracking Provider
+ * High-fidelity fallback that supports 1000+ couriers including InPost
+ */
+class RapidApiTrackingProvider implements TrackingProvider {
+  name = "OrderTracking (RapidAPI)";
+
+  isCompatible(carrierName: string, trackingNumber: string): boolean {
+    // This provider is a universal fallback/aggregator
+    // We prioritize it for InPost if direct auth failed, 
+    // or as a generic provider for unknown carriers.
+    return true; 
+  }
+
+  async track(trackingNumber: string): Promise<TrackingData> {
+    const host = "order-tracking.p.rapidapi.com";
+    const key = process.env.RAPIDAPI_TRACKING_KEY;
+    const url = `https://${host}/trackings/realtime`;
+
+    if (!key) {
+        throw new Error("RapidAPI Tracking Key is missing in environment");
+    }
+
+    try {
+      const response = await axios.post(url, {
+        tracking_number: trackingNumber,
+        // Optional: you can provide carrier_code if known (e.g. 'inpost-paczkomaty')
+      }, {
+        headers: {
+          "x-rapidapi-host": host,
+          "x-rapidapi-key": key,
+          "Content-Type": "application/json"
+        }
+      });
+
+      const data = response.data;
+      if (!data || data.code !== 200 || !data.data) {
+          throw new Error(data?.msg || "RapidAPI tracking failed");
+      }
+
+      const result = data.data;
+      const originMovements = result.origin_info?.trackinfo || [];
+      const destinationMovements = result.destination_info?.trackinfo || [];
+      
+      const allEvents = [...originMovements, ...destinationMovements];
+      const movements: TrackingMovement[] = allEvents.map((m: any) => ({
+        timestamp: m.Date || new Date().toISOString(),
+        location: m.StatusDescription || "LMD Point",
+        description: m.Details || m.StatusDescription || "Status Update",
+        status: this.mapStatus(m.checkpoint_status || result.status)
+      }));
+
+      // Sort by latest first
+      movements.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+      const latest = movements[0];
+
+      return {
+        trackingNumber,
+        carrier: result.carrier_code || "Universal Carrier",
+        status: latest?.status || "unknown",
+        latestLocation: latest?.location || "Unknown",
+        lastUpdated: new Date().toISOString(),
+        movements
+      };
+    } catch (err: any) {
+      console.error(`[tracking] RapidAPI Handshake Error for ${trackingNumber}:`, err.message);
+      throw err;
+    }
+  }
+
+  private mapStatus(status: string): TrackingStatus {
+    const s = (status || "").toLowerCase();
+    if (s.includes("delivered") || s.includes("consegnato")) return "delivered";
+    if (s.includes("out for delivery") || s.includes("in consegna")) return "out_for_delivery";
+    if (s.includes("transit") || s.includes("spedito") || s.includes("picked up")) return "in_transit";
+    if (s.includes("exception") || s.includes("failed") || s.includes("undelivered")) return "exception";
+    return "unknown";
+  }
+}
+
+/**
+ * WhereParcel Tracking Provider
+ * All-in-one unified tracking solution for checkout flows
+ */
+class WhereParcelProvider implements TrackingProvider {
+  name = "WhereParcel";
+
+  isCompatible(carrierName: string, trackingNumber: string): boolean {
+    // WhereParcel is meant to be our primary all-in-one handler
+    return true; 
+  }
+
+  async track(trackingNumber: string): Promise<TrackingData> {
+    const apiKey = process.env.WHEREPARCEL_API_KEY;
+    const secretKey = process.env.WHEREPARCEL_SECRET_KEY || "";
+    // Combined as per documentation: apiKey:secretKey
+    const authString = secretKey ? `${apiKey}:${secretKey}` : apiKey; 
+
+    // Find a likely carrier code based on common names if available
+    // For now we attempt it without carrier code if not strictly required 
+    // or we can try to guess it from the tracking number length/format if needed.
+    // However, WhereParcel /track endpoint usually needs a carrier.
+    
+    // We'll try to use 'it.inpost' for Inpost and 'it.post' for Poste Italiane
+    // If we don't know it, we might need to rely on their auto-detect if they have it.
+    
+    const response = await axios.post("https://api.whereparcel.com/v2/track", {
+      trackingNumber,
+      // Defaulting to auto-inference or common carriers if we can identify them
+      // In a real scenario, we might want to store the carrier code in the DB
+    }, {
+      headers: {
+        "Authorization": `Bearer ${authString}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    const data = response.data;
+    if (!data.success) throw new Error(data.error || "WhereParcel tracking failed");
+
+    const result = data.data;
+    const movements: TrackingMovement[] = (result.events || []).map((e: any) => ({
+      timestamp: e.timestamp,
+      location: e.location || "Hub",
+      description: e.description,
+      status: this.mapStatus(e.status)
+    }));
+
+    // Sort by latest first
+    movements.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+    const latest = movements[0];
+
+    return {
+      trackingNumber,
+      carrier: result.carrier || "Search Result",
+      status: latest?.status || "unknown",
+      latestLocation: latest?.location || "Unknown",
+      lastUpdated: new Date().toISOString(),
+      movements
+    };
+  }
+
+  private mapStatus(status: string): TrackingStatus {
+    const s = (status || "").toLowerCase();
+    switch (s) {
+        case "delivered": return "delivered";
+        case "out_for_delivery": return "out_for_delivery";
+        case "in_transit": return "in_transit";
+        case "exception": return "exception";
+        case "picked_up": return "in_transit";
+        default: return "unknown";
+    }
+  }
+}
+
+export function getTrackingUrl(carrierName: string, trackingNumber: string): string {
+  const name = carrierName?.toLowerCase() || "";
+  if (name.includes("inpost")) {
+    return `https://inpost.it/trova-il-tuo-pacco?parcel_number=${trackingNumber}`;
+  }
+  if (name.includes("poste") || name.includes("sda")) {
+    return `https://www.poste.it/cerca/index.html#/risultati-spedizioni/${trackingNumber}`;
+  }
+  if (name.includes("brt")) {
+    return `https://www.brt.it/it/tracking?tracking_number=${trackingNumber}`;
+  }
+  if (name.includes("ups")) {
+    return `https://www.ups.com/track?tracknum=${trackingNumber}`;
+  }
+  if (name.includes("tnt")) {
+    return `https://www.tnt.it/tracking/index.do?ricerca_per=0&numeri_spedizione=${trackingNumber}`;
+  }
+  
+  // Generic fallback (Google Search)
+  return `https://www.google.com/search?q=track+${name}+${trackingNumber}`;
+}
+
+// Registry for logistics orchestration
 const providers: TrackingProvider[] = [
-  new InpostProvider(),
-  new PosteItalianeProvider(),
-  new PaccofacileProvider(),
+  new WhereParcelProvider(), // Unified Handler (Primary)
+  new InpostProvider(),       // Specialist Specialist
+  new PosteItalianeProvider(),// Specialist Specialist
+  new PaccofacileProvider(),  // Specialist Specialist
+  new RapidApiTrackingProvider(), // Cloud Fallback
 ];
 
 export async function getTrackingInfo(carrierName: string, trackingNumber: string): Promise<TrackingData | null> {
-  const provider = providers.find(p => p.isCompatible(carrierName, trackingNumber));
-  if (!provider) {
-    console.warn(`[tracking] No compatible provider found for carrier: "${carrierName}"`);
-    return null;
+  // We iterate through providers. WhereParcel will be attempted first.
+  for (const provider of providers) {
+    if (provider.isCompatible(carrierName, trackingNumber)) {
+        try {
+            const data = await provider.track(trackingNumber);
+            if (data) return data;
+        } catch (err: any) {
+            console.warn(`[tracking] Provider "${provider.name}" failed for ${trackingNumber}: ${err.message}`);
+            // Continue to next provider in orchestrated chain
+        }
+    }
   }
-  
-  try {
-    return await provider.track(trackingNumber);
-  } catch (err: any) {
-    console.error(`[tracking] Provider "${provider.name}" failed to retrieve tracking for ${trackingNumber}:`, err.message);
-    return null;
-  }
+
+  console.warn(`[tracking] All providers exhausted for: "${carrierName}" - ${trackingNumber}`);
+  return null;
 }

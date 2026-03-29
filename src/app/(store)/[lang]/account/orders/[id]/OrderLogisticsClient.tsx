@@ -19,7 +19,7 @@ import {
     Loader2
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import jsPDF from "jspdf";
@@ -43,22 +43,30 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
     const [isUpdatingLogistics, setIsUpdatingLogistics] = useState(false);
 
     // Dynamic Tracking Fetch
-    useState(() => {
+    useEffect(() => {
         if (order.tracking_number && (order.status === 'shipped' || order.status === 'delivered')) {
             const fetchTracking = async () => {
                 setLoadingTracking(true);
                 try {
                     const res = await axios.get(`/api/orders/${order.id}/tracking`);
                     setTrackingData(res.data);
-                } catch (err) {
+                } catch (err: any) {
                     console.error("Tracking fetch failed:", err);
+                    // Pass the trackingUrl from error response if it exists (502 case)
+                    if (err.response?.data?.trackingUrl) {
+                        setTrackingData({ 
+                            trackingUrl: err.response.data.trackingUrl,
+                            movements: [],
+                            carrier: order.shipping_service_name || "Regional Carrier"
+                        });
+                    }
                 } finally {
                     setLoadingTracking(false);
                 }
             };
             fetchTracking();
         }
-    });
+    }, [order.tracking_number, order.status, order.id]);
 
     const getStatusColor = (s: string) => {
         switch (s) {
@@ -373,9 +381,42 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                     </div>
 
                                     {trackingData.movements.length === 0 && (
-                                        <div className="py-12 flex flex-col items-center justify-center text-neutral-700 italic">
-                                            <Loader2 className="w-6 h-6 mb-3 animate-spin opacity-20" />
-                                            <span className="text-[10px] uppercase font-black tracking-widest">Handshaking with Carrier API...</span>
+                                        <div className="py-12 flex flex-col items-center justify-center text-neutral-700 italic border-t border-white/5">
+                                            <p className="text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-6">Real-time status analysis restricted or unavailable.</p>
+                                            
+                                            {trackingData.trackingUrl && (
+                                                <a 
+                                                    href={trackingData.trackingUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="hasbro-btn-secondary px-6 py-3 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 group border border-brand-yellow/30 hover:bg-brand-yellow/10"
+                                                >
+                                                    <ExternalLink className="w-3.5 h-3.5 text-brand-yellow" />
+                                                    Track on Carrier Website
+                                                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                                                </a>
+                                            )}
+                                            
+                                            {!trackingData.trackingUrl && (
+                                                <>
+                                                    <Loader2 className="w-6 h-6 mb-3 animate-spin opacity-20" />
+                                                    <span className="text-[10px] uppercase font-black tracking-widest">Handshaking with Carrier API...</span>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {trackingData.movements.length > 0 && trackingData.trackingUrl && (
+                                        <div className="pt-6 border-t border-white/5 flex justify-end">
+                                            <a 
+                                                href={trackingData.trackingUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-[9px] font-black uppercase text-brand-yellow flex items-center gap-2 hover:brightness-110 transition-all opacity-60 hover:opacity-100"
+                                            >
+                                                <ExternalLink className="w-3 h-3" />
+                                                View Live carrier details
+                                            </a>
                                         </div>
                                     )}
                                 </div>
