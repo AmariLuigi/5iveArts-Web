@@ -238,7 +238,7 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
                         </div>
                     </form>
 
-                    <OneTapComponent />
+                    <OneTapComponent lang={lang} next={returnTo} />
 
                     <div className="mt-10 pt-8 border-t border-white/5 flex flex-col items-center gap-4">
                         <div className="flex items-center gap-2">

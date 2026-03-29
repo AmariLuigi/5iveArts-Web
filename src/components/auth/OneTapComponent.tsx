@@ -19,7 +19,12 @@ const generateNonce = async (): Promise<string[]> => {
   return [nonce, hashedNonce]
 }
 
-const OneTapComponent = () => {
+interface OneTapProps {
+  lang: string;
+  next?: string;
+}
+
+const OneTapComponent = ({ lang, next = 'account' }: OneTapProps) => {
   const supabase = createClient()
   const router = useRouter()
 
@@ -44,7 +49,9 @@ const OneTapComponent = () => {
             })
             if (error) throw error
             console.log('[auth/google] Identity Verified. Synchronizing Session.')
-            router.refresh()
+            const target = next.startsWith('/') ? next : `/${next}`;
+            router.push(`/${lang}${target}`);
+            router.refresh();
           } catch (error) {
             console.error('[auth/google] Synchronous verification failed:', error)
           }

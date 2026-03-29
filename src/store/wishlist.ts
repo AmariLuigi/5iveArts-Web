@@ -25,7 +25,7 @@ export const useWishlistStore = create<WishlistStore>()(
 
                 const supabase = createClient();
                 const { data: { session } } = await supabase.auth.getSession();
-                
+
                 if (!session) {
                     // Mark as initialized to stop further unauthorized checks for this guest session
                     set({ initialized: true });
@@ -35,9 +35,9 @@ export const useWishlistStore = create<WishlistStore>()(
                 set({ loading: true });
                 try {
                     const res = await axios.get("/api/account/wishlist");
-                    set({ 
-                        itemIds: res.data.map((item: any) => item.product_id), 
-                        initialized: true 
+                    set({
+                        itemIds: res.data.map((item: any) => item.product_id),
+                        initialized: true
                     });
                 } catch (err) {
                     console.error("Failed to fetch wishlist:", err);
@@ -60,7 +60,7 @@ export const useWishlistStore = create<WishlistStore>()(
                 // Database synchronization (only for authenticated users)
                 const supabase = createClient();
                 const { data: { session } } = await supabase.auth.getSession();
-                
+
                 if (!session) return; // Silent local-only for guests
 
                 try {
