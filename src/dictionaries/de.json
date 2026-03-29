@@ -27,7 +27,7 @@
     "homepage": {
         "featuredHeading": "Premium 3D-gedruckte Resin-Figuren-Kollektionen",
         "viewAll": "Alle Stücke Ansehen",
-        "testimonialsHeading": "Geschätzt von Europeanen Sammlern",
+        "testimonialsHeading": "Geschätzt von European Sammlern",
         "reviewsLabel": "Kundenstimmen",
         "collectorChoice": "Wahl der Sammler",
         "premiumSeries": "Premium-Serie",
@@ -122,7 +122,7 @@
             },
             {
                 "q": "Versenden Sie European?",
-                "a": "Ja! Wir versenden von unserem Studio in Italien an Sammler weltweit. Wir nutzen versicherte Europeane Kuriere, um sicherzustellen, dass Ihr Meisterwerk sicher ankommt."
+                "a": "Ja! Wir versenden von unserem Studio in Italien an Sammler weltweit. Wir nutzen versicherte Europea Kuriere, um sicherzustellen, dass Ihr Meisterwerk sicher ankommt."
             },
             {
                 "q": "Wie lange dauert die Produktion?",
@@ -222,7 +222,7 @@
         "validNumber": "(Gültige Nummer)",
         "includeCode": "(Vorwahl + einschließen)",
         "continueBtn": "Weiter zu den Versandoptionen",
-        "recalculating": "Europeane Logistik wird neu berechnet…",
+        "recalculating": "Europea Logistik wird neu berechnet…",
         "backBtn": "Zurück zur Lieferung",
         "changeShipping": "Versandoption ändern",
         "connecting": "Verbindung zum sicheren Zahlungs-Gateway wird hergestellt. Handshake mit PCI-DSS-Protokollen…",
@@ -391,12 +391,12 @@
         "daysEst": "Tage (gesch.)"
     },
     "footer": {
-        "logistics": "Europeane Kunsthandwerkslogistik Aktiviert",
+        "logistics": "Europea Kunsthandwerkslogistik Aktiviert",
         "rights": "© 2026 5iveArts Collector Series. Alle Rechte vorbehalten.",
         "privacy": "Datenschutz",
         "terms": "Bedingungen",
         "description": "Boutique-Studio für handbemalte und 3D-gedruckte Premium-Resinfiguren. Wir versenden Sammlerstücke in Museumsqualität weltweit aus unserer Werkstatt in Palermo.",
-        "seoAbout": "5iveArts ist ein erstklassiges Boutique-Studio, das auf die Erstellung von premium 3D-gedruckten Resin-Figuren und handbemalten Sammlerstücken spezialisiert ist. Unsere Artisan-Serie konzentriert sich auf extreme Details und nutzt Schichthöhen von 0,025 mm, um Museumsqualität für jede produzierte Figur zu gewährleisten. Mit einem Europeanen Versandnetzwerk bedienen wir eine engagierte Gemeinschaft von Sammlern, die die Verbindung von industrieller Präzision und handgefertigter Kunst schätzen. Jedes Stück unserer Serie ist ein Unikat, veredelt mit professioneller Airbrush-Technik und UV-beständigen Lacken."
+        "seoAbout": "5iveArts ist ein erstklassiges Boutique-Studio, das auf die Erstellung von premium 3D-gedruckten Resin-Figuren und handbemalten Sammlerstücken spezialisiert ist. Unsere Artisan-Serie konzentriert sich auf extreme Details und nutzt Schichthöhen von 0,025 mm, um Museumsqualität für jede produzierte Figur zu gewährleisten. Mit einem European Versandnetzwerk bedienen wir eine engagierte Gemeinschaft von Sammlern, die die Verbindung von industrieller Präzision und handgefertigter Kunst schätzen. Jedes Stück unserer Serie ist ein Unikat, veredelt mit professioneller Airbrush-Technik und UV-beständigen Lacken."
     },
     "shipping": {
         "protocol": "Logistikprotokoll",
@@ -418,7 +418,7 @@
         "eu": "Europäische Union",
         "days1_3": "1-3 Tage",
         "days3_5": "3-5 Tage",
-        "carrierActive": "Europeanes Speditionsnetz aktiv"
+        "carrierActive": "Europeas Speditionsnetz aktiv"
     },
     "hero": {
         "slides": [
@@ -439,7 +439,7 @@
         "trust": {
             "quality": "Zertifizierte Qualität",
             "handFinished": "Handveredelt",
-            "logistics": "Europeane Logistik"
+            "logistics": "Europea Logistik"
         }
     },
     "features": {

@@ -222,7 +222,7 @@
         "validNumber": "(Numéro valide)",
         "includeCode": "(Inclure l'indicatif +)",
         "continueBtn": "Continuer vers les options d'expédition",
-        "recalculating": "Recalcul de la Logistique Europeane…",
+        "recalculating": "Recalcul de la Logistique Europea…",
         "backBtn": "Retour à la Livraison",
         "changeShipping": "Changer d'Option d'Expédition",
         "connecting": "Connexion à la passerelle de paiement sécurisée. Handshake avec protocoles PCI-DSS…",
@@ -253,7 +253,7 @@
         "description": "Description",
         "specifications": "Caractéristiques & Spécifications",
         "encryptedCheckout": "Paiement Sécurisé via Stripe",
-        "insuredShipping": "Expédition Europeane Assurée",
+        "insuredShipping": "Expédition Europea Assurée",
         "confirmed": "Confirmé",
         "addToCollection": "Ajouter à l'Arsenal",
         "instantCheckout": "Achat Rapide",
@@ -272,8 +272,8 @@
             "sub": "Propulsé par Stripe"
         },
         {
-            "label": "Expédition Europeane Assurée",
-            "sub": "Livraison Europeane"
+            "label": "Expédition Europea Assurée",
+            "sub": "Livraison Europea"
         },
         {
             "label": "Peint à la Main",
@@ -439,7 +439,7 @@
         "trust": {
             "quality": "Qualité Certifiée",
             "handFinished": "Fini à la Main",
-            "logistics": "Logistique Europeane"
+            "logistics": "Logistique Europea"
         }
     },
     "features": {
