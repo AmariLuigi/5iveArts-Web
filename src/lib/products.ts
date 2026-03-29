@@ -33,6 +33,7 @@ export async function fetchProductsFromDb(): Promise<Product[]> {
     .from("products")
     .select("*")
     .eq("status", "published")
+    .neq("name", "Custom Commission Prototype") // Hide placeholder from main list
     .order("created_at", { ascending: false });
 
   if (error) {
