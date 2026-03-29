@@ -111,6 +111,9 @@ class WhereParcelProvider implements TrackingProvider {
 
 export function getTrackingUrl(carrierName: string, trackingNumber: string): string {
   const name = carrierName?.toLowerCase() || "";
+  if (name.includes("dpd")) {
+    return `https://www.dpd.com/za/en/receiving-parcels/track-my-parcel/`;
+  }
   if (name.includes("inpost")) {
     return `https://inpost.it/trova-il-tuo-pacco?parcel_number=${trackingNumber}`;
   }
