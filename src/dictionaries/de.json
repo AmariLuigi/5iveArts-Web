@@ -105,9 +105,11 @@
         "guidelines": "Mit dem Zugriff auf das Terminal akzeptieren Sie unsere Richtlinien und Protokolle.",
         "backHome": "Zurück zum Öffentlichen HQ",
         "emailPlaceholder": "SAMMLER@5IVEARTS.COM",
-        "title": "title",
-        "subtitle": "subtitle",
-        "loginBtn": "login Btn"
+        "title": "Lagerzugang",
+        "subtitle": "Greifen Sie auf Ihre Bestände und Logistikberichte zu.",
+        "loginBtn": "Verbindung Herstellen",
+        "googleLogin": "Mit Google fortfahren",
+        "or": "ODER"
     },
     "faq": {
         "infoCenter": "Informationszentrum",

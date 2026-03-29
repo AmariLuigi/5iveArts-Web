@@ -105,9 +105,11 @@
         "guidelines": "Accedendo al terminale, accetti i nostri protocolli e linee guida.",
         "backHome": "Torna alla Centrale Pubblica",
         "emailPlaceholder": "COLLEZIONISTA@5IVEARTS.COM",
-        "title": "title",
-        "subtitle": "subtitle",
-        "loginBtn": "login Btn"
+        "title": "Accesso al Magazzino",
+        "subtitle": "Accedi ai tuoi asset e ai report logistici.",
+        "loginBtn": "Stabilisci Collegamento",
+        "googleLogin": "Continua con Google",
+        "or": "OPPURE"
     },
     "faq": {
         "infoCenter": "Centro Informazioni",

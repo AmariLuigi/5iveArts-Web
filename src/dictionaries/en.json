@@ -107,7 +107,9 @@
         "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
         "title": "Warehouse Access",
         "subtitle": "Access your assets and logistics reports.",
-        "loginBtn": "Establish Connection"
+        "loginBtn": "Establish Connection",
+        "googleLogin": "Continue with Google",
+        "or": "OR"
     },
     "faq": {
         "infoCenter": "Information Center",

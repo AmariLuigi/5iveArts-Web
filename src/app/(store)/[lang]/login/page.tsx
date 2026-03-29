@@ -3,6 +3,16 @@ import { getDictionary, Locale } from "@/lib/get-dictionary";
 import TerminalForm from "./TerminalForm";
 import { Loader2 } from "lucide-react";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await getDictionary(lang as Locale).catch(() => null) as any;
+  return {
+    title: `${dict?.auth?.title || 'Access Terminal'} — 5iveArts Secure Portal`,
+    description: dict?.auth?.subtitle || "Access your high-end figure collection and logistics reports."
+  };
+}
 
 export default async function AccessTerminalPage({
     params,

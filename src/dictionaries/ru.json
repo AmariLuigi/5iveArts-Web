@@ -107,7 +107,9 @@
         "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
         "title": "Доступ к складу",
         "subtitle": "Получите доступ к вашим активам и логистическим отчетам.",
-        "loginBtn": "Установить соединение"
+        "loginBtn": "Установить соединение",
+        "googleLogin": "Продолжить через Google",
+        "or": "ИЛИ"
     },
     "faq": {
         "infoCenter": "Информационный центр",

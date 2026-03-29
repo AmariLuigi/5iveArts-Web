@@ -107,7 +107,9 @@
         "emailPlaceholder": "COLECCIONISTA@5IVEARTS.COM",
         "title": "Acceso al Almacén",
         "subtitle": "Acceda a sus activos e informes logísticos.",
-        "loginBtn": "Establecer Conexión"
+        "loginBtn": "Establecer Conexión",
+        "googleLogin": "Continuar con Google",
+        "or": "O"
     },
     "faq": {
         "infoCenter": "Centro de Información",

@@ -35,7 +35,14 @@ export async function generateMetadata({ params }: Props) {
     lang === 'it' ? product.description_it :
     lang === 'de' ? product.description_de :
     lang === 'fr' ? product.description_fr :
-    lang === 'es' ? product.description_es : 
+    lang === 'es' ? product.description_es :
+    lang === 'ru' ? product.description_ru :
+    lang === 'tr' ? product.description_tr :
+    lang === 'pt' ? product.description_pt :
+    lang === 'nl' ? product.description_nl :
+    lang === 'ja' ? product.description_ja :
+    lang === 'ar' ? product.description_ar :
+    lang === 'pl' ? product.description_pl :
     product.description
   ) || product.description;
 

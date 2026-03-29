@@ -107,7 +107,9 @@
         "emailPlaceholder": "VERZAMELAAR@5IVEARTS.COM",
         "title": "Toegang Magazijn",
         "subtitle": "Toegang tot je activa en logistieke rapporten.",
-        "loginBtn": "Verbinding Maken"
+        "loginBtn": "Verbinding Maken",
+        "googleLogin": "Doorgaan met Google",
+        "or": "OF"
     },
     "faq": {
         "infoCenter": "Informatiecentrum",

@@ -95,11 +95,11 @@
         "verification": "verification",
         "terminal": "terminal",
         "portal": "portal",
-        "login": "login",
-        "register": "register",
+        "login": "Se Connecter",
+        "register": "S'Inscrire",
         "emailLabel": "Identifiant de Liaison (Email)",
-        "passwordLabel": "password Label",
-        "verifyBtn": "verify Btn",
+        "passwordLabel": "Clé de Sécurité (Mot de Passe)",
+        "verifyBtn": "Vérifier la Session",
         "registerBtn": "Établir la Liaison",
         "tunnel": "Tunnel Chiffré de Bout en Bout",
         "guidelines": "En accédant au terminal, vous acceptez nos protocoles et nos conditions.",
@@ -107,7 +107,9 @@
         "emailPlaceholder": "COLLECTIONNEUR@5IVEARTS.COM",
         "title": "Accès Warehouse",
         "subtitle": "Accédez à vos actifs et rapports de logistique.",
-        "loginBtn": "Établir Connexion"
+        "loginBtn": "Établir Connexion",
+        "googleLogin": "Continuer avec Google",
+        "or": "OU"
     },
     "faq": {
         "infoCenter": "Centre d'Information",

@@ -107,7 +107,9 @@
         "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
         "title": "الوصول للمستودع",
         "subtitle": "الوصول إلى أصولك وتقاريرك اللوجستية.",
-        "loginBtn": "إنشاء اتصال"
+        "loginBtn": "إنشاء اتصال",
+        "googleLogin": "المتابعة باستخدام Google",
+        "or": "أو"
     },
     "faq": {
         "infoCenter": "مركز المعلومات",

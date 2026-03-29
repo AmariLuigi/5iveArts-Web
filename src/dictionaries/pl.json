@@ -107,7 +107,9 @@
         "emailPlaceholder": "KOLEKCJONER@5IVEARTS.COM",
         "title": "Dostęp do Magazynu",
         "subtitle": "Uzyskaj dostęp do swoich zasobów i raportów logistycznych.",
-        "loginBtn": "Nawiąż Połączenie"
+        "loginBtn": "Nawiąż Połączenie",
+        "googleLogin": "Kontynuuj przez Google",
+        "or": "LUB"
     },
     "faq": {
         "infoCenter": "Centrum Informacyjne",

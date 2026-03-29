@@ -107,7 +107,9 @@
         "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
         "title": "ウェアハウス・アクセス",
         "subtitle": "資産および物流レポートにアクセスします。",
-        "loginBtn": "接続を確立"
+        "loginBtn": "接続を確立",
+        "googleLogin": "Googleで続行",
+        "or": "または"
     },
     "faq": {
         "infoCenter": "インフォメーション・センター",

@@ -107,7 +107,9 @@
         "emailPlaceholder": "COLECCIONADOR@5IVEARTS.COM",
         "title": "Acesso ao Armazém",
         "subtitle": "Aceda aos seus ativos e relatórios de logística.",
-        "loginBtn": "Estabelecer Ligação"
+        "loginBtn": "Estabelecer Conexão",
+        "googleLogin": "Continuar com Google",
+        "or": "OU"
     },
     "faq": {
         "infoCenter": "Centro de Informação",
@@ -116,11 +118,11 @@
         "questions": [
             {
                 "q": "Como as figuras são feitas?",
-                "a": "Cada figura começa como uma impressão 3D de alta resolução (0,025 mm de altura de camada) usando resina de qualidade industrial. Uma vez curada, os nossos artistas passam horas a pintar à mão cada peça com acrílicos profissionais e técnicas de aerógrafo, finalizando com um verniz resistente aos raios UV de qualidade museológica."
+                "a": "Cada figura começa como uma impressão 3D de alta resolução (0,025 mm de altura de camada) usando resina de qualidade industrial. Uma vez curada, os nossos artistas passam horas pintando à mão cada peça com acrílicos profissionais e técnicas de aerógrafo, finalizando com um verniz resistente aos raios UV de qualidade museológica."
             },
             {
                 "q": "Fazem envios internacionais?",
-                "a": "Sim! Enviamos do nosso estúdio em Itália para coleccionadores de todo o mundo. Utilizamos transportadoras globais com seguro para garantir que a sua obra-prima chegue em segurança."
+                "a": "Sim! Enviamos do nosso estúdio na Itália para coleccionadores de todo o mundo. Utilizamos transportadoras globais com seguro para garantir que a sua obra-prima chegue em segurança."
             },
             {
                 "q": "Quanto tempo demora a produção?",

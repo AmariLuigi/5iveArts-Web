@@ -6,11 +6,15 @@ import { fetchProductsFromDb } from "@/lib/products";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
 
-export const metadata = {
-  title: "Shop — 5iveArts Action Figures",
-  description:
-    "Browse all hand-painted and 3D-printed action figures from 5iveArts. Each figure is unique and crafted with care.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang as Locale).catch(() => null) as any;
+  
+  return {
+    title: `${dict?.nav?.products || 'Shop'} — 5iveArts Action Figures`,
+    description: dict?.products?.subtitle || "Browse all hand-painted and 3D-printed action figures from 5iveArts."
+  };
+}
 
 async function ProductsList({ lang, dict }: { lang: string, dict: any }) {
   const products = await fetchProductsFromDb();

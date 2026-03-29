@@ -107,7 +107,9 @@
         "emailPlaceholder": "COLLECTOR@5IVEARTS.COM",
         "title": "Depo Erişimi",
         "subtitle": "Varlıklarınıza ve lojistik raporlarınıza erişin.",
-        "loginBtn": "Bağlantı Kur"
+        "loginBtn": "Bağlantı Kur",
+        "googleLogin": "Google ile devam et",
+        "or": "VEYA"
     },
     "faq": {
         "infoCenter": "Bilgi Merkezi",

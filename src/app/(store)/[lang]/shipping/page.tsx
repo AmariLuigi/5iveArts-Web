@@ -3,6 +3,16 @@ import { getDictionary, locales } from "@/lib/get-dictionary";
 import { Locale } from "@/lib/get-dictionary";
 import { getSiteSettings } from "@/lib/settings";
 import { formatPrice } from "@/lib/products";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }): Promise<Metadata> {
+    const dict = await getDictionary(lang);
+    const s = dict.shipping;
+    return {
+        title: `${s.title} — 5iveArts Global Logistics`,
+        description: s.subtitle || "Secure, insured, and tracked delivery for every masterpiece in the collection."
+    };
+}
 
 export default async function ShippingPage({
     params: { lang },
