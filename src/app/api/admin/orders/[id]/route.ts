@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { requireAdmin } from "@/lib/auth";
+import { registerTrackingWebhook } from "@/lib/tracking";
 
 export async function GET(
     req: NextRequest,
@@ -54,7 +55,7 @@ export async function PATCH(
         shipping_service_name
     } = body;
 
-    // Sync total_pence to subtotal and order_items for custom commissions
+    // 1. Update the database record
     const { data: updatedOrder, error } = await supabase
         .from("orders")
         .update({
@@ -79,7 +80,21 @@ export async function PATCH(
         return NextResponse.json({ error: "Failed to update order" }, { status: 400 });
     }
 
-    // Update the line item price for custom orders only
+    // 2. Automate Webhook Monitoring (WhereParcel)
+    // Register if we have a tracking number and carrier name
+    const activeTracking = tracking_number || updatedOrder.tracking_number;
+    const activeCarrier = shipping_service_name || updatedOrder.shipping_service_name;
+
+    if (activeTracking && activeCarrier && (status === 'shipped' || updatedOrder.status === 'shipped')) {
+        try {
+            console.log(`[api/admin/orders] Initializing real-time webhook for ${activeTracking} (${activeCarrier})`);
+            await registerTrackingWebhook(activeCarrier, activeTracking, id);
+        } catch (webhookErr: any) {
+            console.error("[api/admin/orders] Webhook registration deferred/failed:", webhookErr.message);
+        }
+    }
+
+    // 3. Update the line item price for custom orders only
     // This synchronization ensures the single artifact item reflects the latest quote
     if (updatedOrder.is_custom && (subtotal_pence !== undefined || total_pence !== undefined)) {
         const lineItemPrice = subtotal_pence !== undefined ? subtotal_pence : total_pence;

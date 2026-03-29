@@ -22,6 +22,7 @@ export interface TrackingProvider {
   name: string;
   isCompatible(carrierName: string, trackingNumber: string): boolean;
   track(carrierName: string, trackingNumber: string): Promise<TrackingData>;
+  registerWebhook(carrierName: string, trackingNumber: string, orderId: string): Promise<any>;
 }
 
 /**
@@ -79,6 +80,45 @@ class WhereParcelProvider implements TrackingProvider {
       lastUpdated: new Date().toISOString(),
       movements
     };
+  }
+
+  /**
+   * Register a persistent monitoring subscription (Webhook)
+   */
+  async registerWebhook(carrierName: string, trackingNumber: string, orderId: string): Promise<any> {
+    const apiKey = process.env.WHEREPARCEL_API_KEY;
+    const secretKey = process.env.WHEREPARCEL_SECRET_KEY || "";
+    const endpointId = process.env.WHEREPARCEL_WEBHOOK_ENDPOINT_ID;
+    const authString = secretKey ? `${apiKey}:${secretKey}` : apiKey;
+
+    if (!apiKey) return { success: false, error: "API Key missing" };
+    if (!endpointId) return { success: false, error: "Webhook Endpoint ID missing (WHEREPARCEL_WEBHOOK_ENDPOINT_ID)" };
+
+    const carrierSlug = this.mapToCarrierSlug(carrierName);
+
+    try {
+        const response = await axios.post("https://api.whereparcel.com/v2/webhooks/register", {
+            trackingItems: [
+                {
+                    carrier: carrierSlug,
+                    trackingNumber: trackingNumber,
+                    clientId: orderId
+                }
+            ],
+            recurring: true,
+            webhookEndpointId: endpointId
+        }, {
+            headers: {
+                "Authorization": `Bearer ${authString}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        return response.data;
+    } catch (err: any) {
+        console.error(`[tracking/webhook] Registration failed for ${orderId}:`, err.message);
+        return { success: false, error: err.message };
+    }
   }
 
   private mapToCarrierSlug(name: string): string {
@@ -148,3 +188,13 @@ export async function getTrackingInfo(carrierName: string, trackingNumber: strin
     return null;
   }
 }
+
+export async function registerTrackingWebhook(carrierName: string, trackingNumber: string, orderId: string): Promise<any> {
+    const provider = providers[0];
+    try {
+      return await provider.registerWebhook(carrierName, trackingNumber, orderId);
+    } catch (err: any) {
+      console.warn(`[tracking] Webhook registration failed for ${trackingNumber}: ${err.message}`);
+      return null;
+    }
+  }
