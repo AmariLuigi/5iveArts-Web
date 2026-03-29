@@ -188,7 +188,7 @@ export async function sendLowCreditAlert(creditValue: number, currency: string) 
           <p style="font-size: 12px; line-height: 1.6; color: #a3a3a3;">Automated shipment fulfillment will fail if credit is exhausted. Please refill the account immediately via the Paccofacile portal.</p>
           
           <div style="text-align: center; margin-top: 40px;">
-            <a href="https://www.paccofacile.it/area-riservata/ricarica-credito" style="display: inline-block; padding: 15px 30px; background-color: #ef4444; color: #ffffff; text-decoration: none; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; border-radius: 2px;">Refill Account</a>
+            <a href="https://www.paccofacile.it/ricarica/wallet" style="display: inline-block; padding: 15px 30px; background-color: #ef4444; color: #ffffff; text-decoration: none; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; border-radius: 2px;">Refill Account</a>
           </div>
           
           <hr style="border: 0; border-top: 1px solid #1a1a1a; margin: 40px 0;" />

@@ -122,7 +122,7 @@ export default function LogisticsClient({ initialOrders }: LogisticsClientProps)
                             </div>
                             <div className="ml-auto">
                                 <a 
-                                    href="https://www.paccofacile.it/area-riservata/ricarica-credito" 
+                                    href="https://www.paccofacile.it/ricarica/wallet" 
                                     target="_blank" 
                                     className="px-6 py-2.5 bg-red-500 text-white text-[9px] font-black uppercase tracking-widest rounded transition-all hover:bg-red-600 inline-flex items-center gap-2"
                                 >
