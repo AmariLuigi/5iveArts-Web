@@ -9,6 +9,13 @@ export interface Testimonial {
     quote_de?: string;
     quote_fr?: string;
     quote_es?: string;
+    quote_ru?: string;
+    quote_tr?: string;
+    quote_pt?: string;
+    quote_nl?: string;
+    quote_ja?: string;
+    quote_ar?: string;
+    quote_pl?: string;
     rating: 1 | 2 | 3 | 4 | 5;
     avatar?: string;
     gender?: 'male' | 'female' | 'neutral';

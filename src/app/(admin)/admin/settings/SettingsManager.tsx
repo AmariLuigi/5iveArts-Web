@@ -360,120 +360,39 @@ export default function SettingsManager({ initialSettings }: Props) {
                             </button>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-10 border-t border-white/5">
-                            {testimonials.map((testi, i) => {
-                                const handleForgeTranslation = async () => {
-                                    setLoading(true);
-                                    try {
-                                        const { data: trans } = await axios.post("/api/admin/ai/translate", { 
-                                            text: testi.quote,
-                                            gender: testi.gender || 'neutral'
-                                        });
-                                        const nl = [...testimonials];
-                                        nl[i].quote_en = trans.en;
-                                        nl[i].quote_it = trans.it;
-                                        nl[i].quote_de = trans.de;
-                                        nl[i].quote_fr = trans.fr;
-                                        nl[i].quote_es = trans.es;
-                                        updateTestimonials(nl);
-                                        showToast(`Translations forged for ${testi.name}`, 'success');
-                                    } catch (err) {
-                                        console.error("Forge Failed:", err);
-                                        setError("Translation Forge failed. Verify API connection.");
-                                    } finally {
-                                        setLoading(false);
-                                    }
-                                };
-
-                                return (
-                                    <div key={i} className="bg-white/[0.01] border border-white/5 p-8 rounded-sm space-y-6 group/testi">
-                                        <div className="flex justify-between items-start">
-                                            <div className="flex gap-4 items-center">
-                                                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-brand-yellow/20 bg-black">
-                                                    <img src={testi.avatar} alt="" className="w-full h-full object-cover" />
-                                                </div>
-                                                <div className="flex gap-1">
-                                                    {AVATAR_LIBRARY.map((img, idx) => (
-                                                        <button 
-                                                            key={idx} 
-                                                            onClick={() => { const nl = [...testimonials]; nl[i].avatar = img; updateTestimonials(nl); }} 
-                                                            className={`w-5 h-5 rounded-full border transition-all ${testi.avatar === img ? "border-brand-yellow scale-110 shadow-[0_0_8px_rgba(255,159,0,0.5)]" : "border-white/5 opacity-40 hover:opacity-100"}`}
-                                                        >
-                                                            <img src={img} className="w-full h-full object-cover rounded-full" />
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <button 
-                                                    onClick={handleForgeTranslation}
-                                                    title="Forge Global Translations"
-                                                    className="p-3 bg-brand-yellow/5 border border-brand-yellow/10 text-brand-yellow hover:bg-brand-yellow hover:text-black transition-all rounded-sm flex items-center justify-center -translate-y-2 opacity-0 group-hover/testi:opacity-100 duration-500"
-                                                >
-                                                    <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-                                                </button>
-                                                <button onClick={() => updateTestimonials(testimonials.filter((_, idx) => idx !== i))} className="text-neutral-800 hover:text-red-500 transition-colors -translate-y-2"><Trash2 className="w-4 h-4" /></button>
-                                            </div>
-                                        </div>
-
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="space-y-2">
-                                                <label className="text-[8px] font-black text-neutral-600 uppercase">Collector Identity</label>
-                                                <input value={testi.name} onChange={(e) => { const nl = [...testimonials]; nl[i].name = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-3 text-[10px] font-black text-white uppercase outline-none focus:border-brand-yellow/20" placeholder="NAME" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="text-[8px] font-black text-neutral-600 uppercase">Role / Rank</label>
-                                                <input value={testi.role || ""} onChange={(e) => { const nl = [...testimonials]; nl[i].role = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-3 text-[10px] font-black text-white uppercase outline-none focus:border-brand-yellow/20" placeholder="COLLECTOR" />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <div className="flex items-center justify-between">
-                                                <label className="text-[8px] font-black text-neutral-600 uppercase">Primary Review (English)</label>
-                                                <span className="text-[8px] font-black text-brand-yellow/50 uppercase">Master Source</span>
-                                            </div>
-                                            <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[i].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/40 border border-white/10 p-4 text-[11px] text-white font-medium min-h-[100px] outline-none focus:border-brand-yellow/50" placeholder="GLOBAL QUOTE" />
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="text-[8px] font-black text-neutral-600 uppercase">Grammatical Gender (For Translation)</label>
-                                            <div className="flex gap-2">
-                                                {['male', 'female', 'neutral'].map((g) => (
-                                                    <button
-                                                        key={g}
-                                                        onClick={() => { const nl = [...testimonials]; nl[i].gender = g as any; updateTestimonials(nl); }}
-                                                        className={`flex-1 py-2 px-3 text-[10px] font-black uppercase transition-all border ${testi.gender === g ? "bg-brand-yellow/10 border-brand-yellow text-brand-yellow" : "bg-black/20 border-white/5 text-neutral-500 hover:border-white/20"}`}
-                                                    >
-                                                        {g}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </div>
-
-                                        {/* Multilingual Projections */}
-                                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
-                                            {[
-                                                { key: 'it', label: 'Italian', icon: '🇮🇹' },
-                                                { key: 'de', label: 'German', icon: '🇩🇪' },
-                                                { key: 'fr', label: 'French', icon: '🇫🇷' },
-                                                { key: 'es', label: 'Spanish', icon: '🇪🇸' }
-                                            ].map(lang => (
-                                                <div key={lang.key} className="space-y-2">
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="text-[8px] grayscale opacity-50">{lang.icon}</span>
-                                                        <label className="text-[8px] font-black text-neutral-700 uppercase">{lang.label} Quote</label>
-                                                    </div>
-                                                    <textarea 
-                                                        value={(testi as any)[`quote_${lang.key}`] || ""} 
-                                                        onChange={(e) => { const nl = [...testimonials]; (nl[i] as any)[`quote_${lang.key}`] = e.target.value; updateTestimonials(nl); }} 
-                                                        className="w-full bg-white/[0.012] border border-white/5 p-3 text-[10px] text-neutral-500 min-h-[80px] outline-none focus:border-brand-yellow/20" 
-                                                        placeholder="..." 
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                            {testimonials.map((testi, i) => (
+                                <TestimonialCard 
+                                    key={i} 
+                                    testi={testi} 
+                                    index={i} 
+                                    testimonials={testimonials} 
+                                    updateTestimonials={updateTestimonials}
+                                    onForge={async () => {
+                                        setLoading(true);
+                                        try {
+                                            const { data: trans } = await axios.post("/api/admin/ai/translate", { 
+                                                text: testi.quote,
+                                                gender: testi.gender || 'neutral'
+                                            });
+                                            const nl = [...testimonials];
+                                            // Core languages
+                                            nl[i].quote_en = trans.en;
+                                            nl[i].quote_it = trans.it;
+                                            nl[i].quote_de = trans.de;
+                                            nl[i].quote_fr = trans.fr;
+                                            nl[i].quote_es = trans.es;
+                                            // Handle others if returned, or keep empty for manual
+                                            updateTestimonials(nl);
+                                            showToast(`Translations forged for ${testi.name}`, 'success');
+                                        } catch (err) {
+                                            console.error("Forge Failed:", err);
+                                            setError("Translation Forge failed. Verify API connection.");
+                                        } finally {
+                                            setLoading(false);
+                                        }
+                                    }}
+                                />
+                            ))}
                         </div>
                     </div>
 
@@ -585,6 +504,128 @@ export default function SettingsManager({ initialSettings }: Props) {
                     <Loader2 className="w-3 h-3 text-brand-yellow animate-spin" /><span className="text-[8px] font-black uppercase tracking-widest text-white">Projecting...</span>
                 </div>
             )}
+        </div>
+    );
+}
+
+const LANGUAGES = [
+    { key: 'en', label: 'English', icon: '🇺🇸' },
+    { key: 'it', label: 'Italian', icon: '🇮🇹' },
+    { key: 'de', label: 'German', icon: '🇩🇪' },
+    { key: 'fr', label: 'French', icon: '🇫🇷' },
+    { key: 'es', label: 'Spanish', icon: '🇪🇸' },
+    { key: 'ru', label: 'Russian', icon: '🇷🇺' },
+    { key: 'tr', label: 'Turkish', icon: '🇹🇷' },
+    { key: 'pt', label: 'Portuguese', icon: '🇵🇹' },
+    { key: 'nl', label: 'Dutch', icon: '🇳🇱' },
+    { key: 'ja', label: 'Japanese', icon: '🇯🇵' },
+    { key: 'ar', label: 'Arabic', icon: '🇦🇪' },
+    { key: 'pl', label: 'Polish', icon: '🇵🇱' }
+];
+
+function TestimonialCard({ testi, index, testimonials, updateTestimonials, onForge }: any) {
+    const [activeLang, setActiveLang] = useState('it');
+
+    return (
+        <div className="bg-white/[0.01] border border-white/5 p-8 rounded-sm space-y-6 group/testi">
+            <div className="flex justify-between items-start">
+                <div className="flex gap-4 items-center">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-brand-yellow/20 bg-black">
+                        <img src={testi.avatar} alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex gap-1 flex-wrap max-w-[120px]">
+                        {AVATAR_LIBRARY.map((img, idx) => (
+                            <button 
+                                key={idx} 
+                                onClick={() => { const nl = [...testimonials]; nl[index].avatar = img; updateTestimonials(nl); }} 
+                                className={`w-5 h-5 rounded-full border transition-all ${testi.avatar === img ? "border-brand-yellow scale-110 shadow-[0_0_8px_rgba(255,159,0,0.5)]" : "border-white/5 opacity-40 hover:opacity-100"}`}
+                            >
+                                <img src={img} className="w-full h-full object-cover rounded-full" />
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                <div className="flex items-center gap-2">
+                    <button 
+                        onClick={onForge}
+                        title="Forge Global Translations"
+                        className="p-3 bg-brand-yellow/5 border border-brand-yellow/10 text-brand-yellow hover:bg-brand-yellow hover:text-black transition-all rounded-sm flex items-center justify-center -translate-y-2 opacity-0 group-hover/testi:opacity-100 duration-500"
+                    >
+                        <Sparkles className="w-3.5 h-3.5" />
+                    </button>
+                    <button onClick={() => updateTestimonials(testimonials.filter((_: any, idx: number) => idx !== index))} className="text-neutral-800 hover:text-red-500 transition-colors -translate-y-2"><Trash2 className="w-4 h-4" /></button>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <label className="text-[8px] font-black text-neutral-600 uppercase">Collector Identity</label>
+                    <input value={testi.name} onChange={(e) => { const nl = [...testimonials]; nl[index].name = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-3 text-[10px] font-black text-white uppercase outline-none focus:border-brand-yellow/20" placeholder="NAME" />
+                </div>
+                <div className="space-y-2">
+                    <label className="text-[8px] font-black text-neutral-600 uppercase">Role / Rank</label>
+                    <input value={testi.role || ""} onChange={(e) => { const nl = [...testimonials]; nl[index].role = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/20 border border-white/5 p-3 text-[10px] font-black text-white uppercase outline-none focus:border-brand-yellow/20" placeholder="COLLECTOR" />
+                </div>
+            </div>
+
+            <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                    <label className="text-[8px] font-black text-neutral-600 uppercase">Global Master Quote (English)</label>
+                    <span className="text-[8px] font-black text-brand-yellow/50 uppercase">Source</span>
+                </div>
+                <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[index].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/40 border border-white/10 p-4 text-[11px] text-white font-medium min-h-[80px] outline-none focus:border-brand-yellow/50" placeholder="GLOBAL QUOTE" />
+            </div>
+
+            <div className="space-y-2">
+                <label className="text-[8px] font-black text-neutral-600 uppercase">Collector Gender</label>
+                <div className="flex gap-2">
+                    {['male', 'female', 'neutral'].map((g) => (
+                        <button
+                            key={g}
+                            onClick={() => { const nl = [...testimonials]; nl[index].gender = g as any; updateTestimonials(nl); }}
+                            className={`flex-1 py-2 px-3 text-[10px] font-black uppercase transition-all border ${testi.gender === g ? "bg-brand-yellow/10 border-brand-yellow text-brand-yellow" : "bg-black/20 border-white/5 text-neutral-500 hover:border-white/20"}`}
+                        >
+                            {g}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* Multilingual Projections Tabbed */}
+            <div className="pt-6 border-t border-white/5 space-y-4">
+                <div className="flex flex-wrap gap-1">
+                    {LANGUAGES.filter(l => l.key !== 'en').map(lang => (
+                        <button
+                            key={lang.key}
+                            onClick={() => setActiveLang(lang.key)}
+                            className={`px-3 py-2 rounded-sm border transition-all flex items-center gap-2 ${activeLang === lang.key ? "bg-brand-yellow/10 border-brand-yellow/30 text-white" : "bg-white/[0.02] border-white/5 text-neutral-600 hover:border-white/10"}`}
+                        >
+                            <span className={`text-xs ${activeLang === lang.key ? "" : "grayscale opacity-40"}`}>{lang.icon}</span>
+                            <span className="text-[9px] font-black uppercase">{lang.key}</span>
+                        </button>
+                    ))}
+                </div>
+
+                {LANGUAGES.filter(l => l.key === activeLang).map(lang => (
+                    <div key={lang.key} className="space-y-2 animate-in fade-in duration-300">
+                        <div className="flex items-center justify-between">
+                            <label className="text-[8px] font-black text-neutral-500 uppercase">{lang.label} Translation</label>
+                            <button 
+                                onClick={() => { const nl = [...testimonials]; (nl[index] as any)[`quote_${lang.key}`] = testi.quote; updateTestimonials(nl); }}
+                                className="text-[7px] font-black text-neutral-700 hover:text-brand-yellow uppercase"
+                            >
+                                Copy Source
+                            </button>
+                        </div>
+                        <textarea 
+                            value={(testi as any)[`quote_${lang.key}`] || ""} 
+                            onChange={(e) => { const nl = [...testimonials]; (nl[index] as any)[`quote_${lang.key}`] = e.target.value; updateTestimonials(nl); }} 
+                            className="w-full bg-white/[0.01] border border-white/5 p-4 text-[10px] text-neutral-400 min-h-[100px] outline-none focus:border-brand-yellow/20" 
+                            placeholder={`Enter ${lang.label} translation...`} 
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
