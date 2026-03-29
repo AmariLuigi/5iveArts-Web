@@ -1,11 +1,10 @@
 "use client";
 
-import { formatPrice } from "@/lib/products";
-import {
-    ChevronLeft,
-    Package,
-    Truck,
-    MapPin,
+import { 
+    ChevronLeft, 
+    Package, 
+    Truck, 
+    MapPin, 
     Calendar,
     CreditCard,
     ExternalLink,
@@ -13,9 +12,7 @@ import {
     CheckCircle2,
     ShieldCheck,
     Box,
-    FileText,
     History,
-    Anchor,
     Loader2
 } from "lucide-react";
 import Link from "next/link";
@@ -24,6 +21,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { formatPrice } from "@/lib/products";
 
 interface OrderLogisticsClientProps {
     order: any;
@@ -32,6 +30,8 @@ interface OrderLogisticsClientProps {
     dict: any;
     lang: string;
 }
+
+type TrackingStatus = "in_transit" | "out_for_delivery" | "delivered" | "exception" | "unknown";
 
 export default function OrderLogisticsClient({ order, orderItems, progressMedia, dict, lang }: OrderLogisticsClientProps) {
     const router = useRouter();
@@ -52,7 +52,6 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                     setTrackingData(res.data);
                 } catch (err: any) {
                     console.error("Tracking fetch failed:", err);
-                    // Pass the trackingUrl from error response if it exists (502 case)
                     if (err.response?.data?.trackingUrl) {
                         setTrackingData({ 
                             trackingUrl: err.response.data.trackingUrl,
@@ -66,95 +65,86 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
             };
             fetchTracking();
         }
-    }, [order.tracking_number, order.status, order.id]);
+    }, [order.tracking_number, order.status, order.id, order.shipping_service_name]);
 
     const getStatusColor = (s: string) => {
         switch (s) {
             case "paid": 
-                return "text-blue-400 border-blue-400/20 bg-blue-400/5";
-            case "deposit_paid":
-                return "text-blue-400 border-blue-400/20 bg-blue-400/5";
-            case "processing":
-            case "analyzing":
-            case "quoted":
-                return "text-orange-400 border-orange-400/20 bg-orange-400/5";
-            case "in_production":
-                return "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5";
-            case "shipped": 
-                return "text-purple-400 border-purple-400/20 bg-purple-400/5";
-            case "ready_to_ship":
-                return "text-brand-yellow border-brand-yellow/20 bg-brand-yellow/5";
-            case "delivered": return "text-green-400 border-green-400/20 bg-green-400/5";
-            case "cancelled": return "text-red-400 border-red-400/20 bg-red-400/5";
-            default: return "text-neutral-400 border-neutral-400/20 bg-neutral-400/5";
+            case "processing": return "bg-blue-500/10 text-blue-500 border-blue-500/20";
+            case "in_production": return "bg-purple-500/10 text-purple-500 border-purple-500/20";
+            case "ready_to_ship": return "bg-orange-500/10 text-orange-500 border-orange-500/20";
+            case "shipped": return "bg-brand-yellow/10 text-brand-yellow border-brand-yellow/20";
+            case "delivered": return "bg-green-500/10 text-green-500 border-green-500/20";
+            default: return "bg-neutral-500/10 text-neutral-500 border-white/5";
         }
     };
 
-    const cleanState = (s: string) => {
-        if (!s) return "";
-        let val = s.includes("-") ? s.split("-")[1] : s;
-        if (/^\d+$/.test(val)) return "";
-        return val.toUpperCase();
-    };
-
-    const handleSelectLogistics = async (serviceId: string) => {
-        if (order.status !== 'quoted' && order.status !== 'analyzing') return;
-        setIsUpdatingLogistics(true);
-        try {
-            await axios.patch(`/api/orders/${order.id}/logistics`, { service_id: serviceId });
-            setSelectedServiceId(serviceId);
-            router.refresh();
-        } catch (err) {
-            console.error("Logistics Update Failed:", err);
-            alert("Protocol selection failed. Please retry.");
-        } finally {
-            setIsUpdatingLogistics(false);
+    const cleanState = (state: string) => {
+        if (!state) return "";
+        if (state.length > 2 && state.includes("(")) {
+            const match = state.match(/\(([^)]+)\)/);
+            return match ? match[1] : state;
         }
+        return state;
     };
 
     const handleMarkAsDelivered = async () => {
-        if (loadingDelivery) return;
         setLoadingDelivery(true);
         try {
-            await axios.patch(`/api/orders/${order.id}/deliver`);
+            await axios.patch(`/api/orders/${order.id}`, { status: 'delivered' });
             router.refresh();
         } catch (err) {
-            console.error("Failed to mark as delivered:", err);
-            alert("Protocol Update Failed: Please contact HQ if delivery is confirmed.");
+            console.error("Failed to update delivery status:", err);
         } finally {
             setLoadingDelivery(false);
         }
     };
 
-    const handleExportInvoice = async () => {
+    const handleSelectLogistics = async (serviceId: string) => {
+        setIsUpdatingLogistics(true);
+        try {
+            const selectedOpt = (order.shipping_options || []).find((o: any) => String(o.service_id) === String(serviceId));
+            if (!selectedOpt) return;
+
+            await axios.patch(`/api/orders/${order.id}/logistics`, {
+                service_id: serviceId,
+                carrier_name: selectedOpt.carrier_name,
+                service_name: selectedOpt.service_name,
+                price_pence: selectedOpt.price
+            });
+            
+            setSelectedServiceId(serviceId);
+            router.refresh();
+        } catch (err) {
+            console.error("Failed to update logistics:", err);
+        } finally {
+            setIsUpdatingLogistics(false);
+        }
+    };
+
+    const generateInvoice = () => {
         const doc = new jsPDF();
         const orderIdShort = order.id.slice(0, 8).toUpperCase();
 
-        // Styles & Branding Header
-        doc.setFillColor(5, 5, 5);
-        doc.rect(0, 0, 210, 45, "F");
-        
-        doc.setTextColor(255, 159, 0);
+        // Branding
+        doc.setFillColor(0, 0, 0);
+        doc.rect(0, 0, 210, 40, "F");
         doc.setFontSize(22);
+        doc.setTextColor(255, 159, 0); // brand-yellow
         doc.setFont("helvetica", "bold");
-        doc.text("5IVE ARTS", 20, 28);
+        doc.text("5IVE ARTS", 20, 25);
         
-        doc.setTextColor(255, 255, 255);
         doc.setFontSize(10);
-        doc.text(dict.orders.exportInvoice, 150, 28);
+        doc.text("LOGISTICS MANIFEST // OFFICIAL INVOICE", 140, 25);
 
-        // Metadata block
+        // Header Info
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(10);
-        doc.setFont("helvetica", "bold");
-        doc.text(dict.account.history.toUpperCase(), 20, 55);
-        doc.setFont("helvetica", "normal");
-        doc.text(`${dict.orders.operation}${orderIdShort}`, 20, 62);
-        doc.text(`${dict.orders.logged} ${new Date(order.created_at).toLocaleDateString(lang)}`, 20, 68);
-        doc.text(`${dict.account.status}: ${(dict.orders[order.status] || order.status).toUpperCase()}`, 20, 74);
+        doc.text(`DATE: ${new Date(order.created_at).toLocaleDateString()}`, 20, 55);
+        doc.text(`ORDER ID: ${orderIdShort}`, 20, 62);
+        doc.text(`STATUS: ${order.status.toUpperCase()}`, 20, 69);
 
-        // Billing/Shipping block
-        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
         doc.text(dict.orders.deploymentZone.toUpperCase(), 120, 55);
         doc.setFont("helvetica", "normal");
         const addr = order.shipping_address;
@@ -199,7 +189,6 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
         doc.setTextColor(255, 159, 0);
         doc.text(`${dict.orders.totalContribution.toUpperCase()}: ${formatPrice(order.total_pence)}`, 140, finalY + (order.is_custom ? 30 : 17));
 
-        // Security Footer
         doc.setFontSize(8);
         doc.setTextColor(150, 150, 150);
         doc.text(`ENCRYPTED TRANSACTION | ${dict.orders.transactionSecure.toUpperCase()} | 5IVE ARTS HQ`, 105, 285, { align: "center" });
@@ -211,7 +200,6 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
         <div className="min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto space-y-12">
                 
-                {/* Navigation Breadcrumb */}
                 <div className="flex items-center gap-2">
                     <Link href={`/${lang}/account`} className="text-[10px] uppercase font-black tracking-widest text-neutral-600 hover:text-brand-yellow transition-colors flex items-center gap-1 group">
                         <ChevronLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
@@ -221,7 +209,6 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                     <span className="text-[10px] uppercase font-black tracking-widest text-brand-yellow">{dict.orders.reportTitle}</span>
                 </div>
 
-                {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-white/5">
                     <div>
                         <div className="flex flex-wrap items-center gap-4 mb-4">
@@ -237,7 +224,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 </span>
                             )}
                         </div>
-                        <div className="flex flex-wrap items-center gap-6 text-neutral-500">
+                        <div className="flex wrap items-center gap-6 text-neutral-500">
                             <div className="flex items-center gap-2">
                                 <Calendar className="w-4 h-4" />
                                 <span className="text-[10px] font-black uppercase tracking-widest">{dict.orders.logged} {new Date(order.created_at).toLocaleDateString(lang, { dateStyle: 'long' })}</span>
@@ -256,55 +243,33 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 disabled={loadingDelivery}
                                 className={`hasbro-btn-primary px-8 py-4 text-[10px] font-black flex items-center gap-2 shadow-[0_4px_15px_rgba(234,179,8,0.3)] ${order.carrier_delivered ? 'ring-2 ring-green-500 ring-offset-2 ring-offset-black' : 'animate-glow'}`}
                             >
-                                {loadingDelivery ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
-                                {dict.orders.confirmDelivery || "Mark as Delivered"}
+                                <CheckCircle2 className="w-4 h-4" />
+                                {loadingDelivery ? "Authorizing..." : "Verify Delivery"}
                             </button>
                         )}
-                        {order.tracking_number && (order.status === 'shipped' || order.status === 'delivered') && (
-                            <button className="bg-white/5 border border-white/10 px-8 py-4 text-[10px] font-black text-white hover:bg-white/10 transition-all rounded-sm flex items-center gap-2">
-                                <Truck className="w-4 h-4" />
-                                {dict.orders.trackShipment}
-                            </button>
-                        )}
-                        {(!order.is_custom || (order.status !== 'analyzing' && order.status !== 'quoted' && order.status !== 'in_production')) && (
-                            <button 
-                                onClick={handleExportInvoice}
-                                className="bg-white/5 border border-white/10 px-8 py-4 text-[10px] font-black text-white hover:bg-white/10 transition-all rounded-sm flex items-center gap-2"
-                            >
-                                <FileText className="w-4 h-4" />
-                                {dict.orders.exportInvoice}
-                            </button>
-                        )}
+                        <button onClick={generateInvoice} className="hasbro-btn-secondary px-8 py-4 text-[10px] font-black uppercase tracking-widest border border-white/10 hover:border-white/30 transition-all flex items-center gap-2">
+                            Download Invoice
+                        </button>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    
-                    {/* Main Content Area */}
                     <div className="lg:col-span-2 space-y-12">
                         
-                        {/* Deployment Timeline */}
-                        <div className="bg-[#0a0a0a] border border-white/5 p-8 rounded relative overflow-hidden">
-                            <div className="absolute top-0 right-0 p-6 opacity-5">
-                                <History className="w-32 h-32 text-brand-yellow" />
-                            </div>
-                            
-                            <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white mb-10 flex items-center gap-3">
-                                <Anchor className="w-4 h-4 text-brand-yellow" />
-                                {order.is_custom ? "Custom Fabrication Protocol" : dict.orders.lifecycle}
+                        <div className="space-y-10">
+                            <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
+                                <History className="w-4 h-4 text-brand-yellow" />
+                                Timeline Protocol
                             </h3>
-
-                            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
-                                {/* Connector Line (Desktop) */}
-                                <div className="hidden md:block absolute top-4 left-[10%] right-[10%] h-px bg-white/10 z-0" />
-                                
+                            <div className="flex justify-between relative overflow-hidden pb-4">
+                                <div className="absolute top-4 left-0 w-full h-px bg-white/5 z-0" />
                                 {(() => {
                                     const customStages = [
-                                        { id: 'analyzing', label: 'Analysis', icon: ShieldCheck, active: ['analyzing', 'quoted', 'in_production', 'ready_to_ship', 'paid', 'shipped', 'delivered'] },
-                                        { id: 'in_production', label: 'Forging', icon: Box, active: ['in_production', 'ready_to_ship', 'paid', 'shipped', 'delivered'] },
-                                        { id: 'ready_to_ship', label: 'Finalizing', icon: History, active: ['ready_to_ship', 'paid', 'shipped', 'delivered'] },
-                                        { id: 'paid', label: 'Deployment', icon: Package, active: ['paid', 'shipped', 'delivered'] },
-                                        { id: 'shipped', label: 'Delivering', icon: Truck, active: ['shipped', 'delivered'] }
+                                        { id: 'paid', label: 'Authorized', icon: CheckCircle2, active: ['paid', 'processing', 'in_production', 'ready_to_ship', 'shipped', 'delivered'] },
+                                        { id: 'in_production', label: 'Fabrication', icon: Box, active: ['in_production', 'ready_to_ship', 'shipped', 'delivered'] },
+                                        { id: 'ready_to_ship', label: 'QC Passed', icon: ShieldCheck, active: ['ready_to_ship', 'shipped', 'delivered'] },
+                                        { id: 'shipped', label: 'Deployment', icon: Truck, active: ['shipped', 'delivered'] },
+                                        { id: 'delivered', label: 'Delivered', icon: MapPin, active: ['delivered'] }
                                     ];
 
                                     const stdStages = [
@@ -505,10 +470,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                         </div>
                     </div>
 
-                    {/* Sidebar Information */}
                     <div className="space-y-8">
-                        
-                        {/* Shipping Portal */}
                         <div className="bg-[#0a0a0a] border border-white/5 p-8 rounded space-y-8">
                             <div>
                                 <h3 className="text-[11px] uppercase font-black tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
@@ -528,7 +490,6 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                         {` ${order.shipping_address?.zip_code || ""}`}
                                     </p>
                                     <p className="text-white brightness-75">
-                                        {/* Look up full name from countries list if available */}
                                         {order.shipping_address?.country || "International"}
                                     </p>
                                 </div>
@@ -596,36 +557,12 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                                             </button>
                                                         );
                                                     })}
-                                                    {(!order.shipping_options || order.shipping_options.length === 0) && (
-                                                        <div className="p-8 border border-dashed border-white/5 rounded-sm bg-white/[0.01] text-center">
-                                                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-600 mb-2">Logistics In Analysis</p>
-                                                            <p className="text-[8px] font-bold uppercase tracking-widest text-neutral-700 italic">
-                                                                Awaiting custom shipment tiers to be finalized by the studio. Check back soon.
-                                                            </p>
-                                                        </div>
-                                                    )}
                                                 </div>
-                                            </div>
-                                        )}
-
-                                        {(order.status === 'quoted' || order.status === 'analyzing' || order.status === 'in_production' || order.status === 'ready_to_ship') && (
-                                            <div className="p-4 bg-orange-500/5 border border-orange-500/10 rounded-sm">
-                                                <p className="text-[9px] font-black text-orange-400 uppercase tracking-widest leading-relaxed">
-                                                    {order.status === 'ready_to_ship' 
-                                                        ? "PROTOCOL LOCK: Final manifest ready for deployment. Settle residue funds to initiate delivery."
-                                                        : "CAUTION: Once the first payment is authorized, fabrication begins immediately. Cancellation is prohibited beyond this point."}
-                                                </p>
                                             </div>
                                         )}
 
                                         <a 
                                             href={(order.status === 'quoted' || order.status === 'analyzing') && !selectedServiceId ? "#" : order.payment_link}
-                                            onClick={(e) => {
-                                                if ((order.status === 'quoted' || order.status === 'analyzing') && !selectedServiceId) {
-                                                    e.preventDefault();
-                                                    alert("Please select a Logistics Protocol first.");
-                                                }
-                                            }}
                                             className={`w-full flex items-center justify-center gap-2 py-4 text-[10px] font-black uppercase tracking-widest transition-all rounded-sm shadow-[0_0_20px_rgba(255,160,0,0.1)] group ${
                                                 ((order.status === 'quoted' || order.status === 'analyzing') && !selectedServiceId)
                                                 ? "bg-neutral-800 text-neutral-500 cursor-not-allowed border border-white/5"
@@ -640,7 +577,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                 ) : (
                                     <div className="flex flex-col gap-4">
                                         <div className={`px-4 py-2 rounded-[2px] text-[9px] font-black uppercase tracking-widest border ${
-                                            order.status === 'paid' || order.status === 'shipped' || order.status === 'delivered' || order.status === 'in_production' || order.status === 'ready_to_ship'
+                                            ['paid', 'shipped', 'delivered', 'in_production', 'ready_to_ship'].includes(order.status)
                                             ? 'bg-green-500/10 text-green-500 border-green-500/20' 
                                             : 'bg-neutral-500/10 text-neutral-500 border-white/5'
                                         }`}>
@@ -648,17 +585,11 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
                                                 ? "Transaction Layer Secured" 
                                                 : "Analysis in Progress..."}
                                         </div>
-                                        {order.deposit_pence > 0 && (
-                                            <p className="text-[8px] font-black text-neutral-600 uppercase tracking-widest">
-                                                Partial Settlement: {formatPrice(order.deposit_pence)} Verified
-                                            </p>
-                                        )}
                                     </div>
                                 )}
                             </div>
                         </div>
 
-                        {/* Support Block */}
                         <div className="bg-brand-yellow/[0.02] border border-brand-yellow/10 p-8 rounded text-center">
                             <p className="text-[10px] font-black uppercase text-brand-yellow tracking-widest mb-4">{dict.orders.discrepancy}</p>
                             <button className="text-[9px] font-black uppercase text-white border-b border-brand-yellow/50 pb-1 hover:text-brand-yellow transition-colors">
