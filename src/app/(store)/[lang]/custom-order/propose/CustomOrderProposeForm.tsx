@@ -1,35 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Upload, 
   ChevronRight, 
   ChevronLeft, 
-  Box, 
-  Paintbrush, 
   Layers, 
   FileText, 
   CheckCircle2, 
   Loader2, 
   X,
-  Sparkles,
-  Search
+  AlertCircle
 } from "lucide-react";
 import Image from "next/image";
 import axios from "axios";
 import { createClient } from "@/lib/supabase-browser";
 import CustomSelect from "@/components/ui/CustomSelect";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 interface CustomOrderProposeFormProps {
   dict: any;
   lang: string;
 }
 
+const SESSION_KEY = "5ivearts-custom-order-draft";
+
 export default function CustomOrderProposeForm({ dict, lang }: CustomOrderProposeFormProps) {
   const router = useRouter();
+  const { track } = useAnalytics();
   const t = dict.custom_order;
+  const stepEnteredAt = useRef<number>(Date.now());
   
   const scaleOptions = [
     { code: "1:12", name: t.scales["1:12"] },
@@ -56,8 +58,66 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
   const [finish, setFinish] = useState(finishOptions[1].code);
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
+
+  // Inline validation state
+  const [titleTouched, setTitleTouched] = useState(false);
+  const [descTouched, setDescTouched] = useState(false);
+  const titleError = titleTouched && !title.trim() 
+    ? "Project title is required" : 
+    titleTouched && title.trim().length < 3 
+    ? "Title must be at least 3 characters" : null;
+  const descError = descTouched && !description.trim() 
+    ? "Project description is required" : 
+    descTouched && description.trim().length < 20 
+    ? "Please provide more detail (20+ characters)" : null;
   
   const supabase = createClient();
+
+  // ── Session Persistence ─────────────────────────────────────────────────
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(SESSION_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.title) setTitle(parsed.title);
+        if (parsed.description) setDescription(parsed.description);
+        if (parsed.scale) setScale(parsed.scale);
+        if (parsed.finish) setFinish(parsed.finish);
+        if (parsed.step && parsed.step < 4) setStep(parsed.step);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
+    if (step >= 4) return; // Don't persist success state
+    try {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({ title, description, scale, finish, step }));
+    } catch {
+      // ignore
+    }
+  }, [title, description, scale, finish, step]);
+
+  // ── Analytics: Step Funnel ────────────────────────────────────────────────
+  useEffect(() => {
+    if (step > 3) return;
+    const now = Date.now();
+    const timeOnPrev = now - stepEnteredAt.current;
+    stepEnteredAt.current = now;
+
+    track(
+      `custom_order_step_${step}` as "custom_order_step_1" | "custom_order_step_2" | "custom_order_step_3",
+      {
+        step,
+        title_length: title.length,
+        desc_length: description.length,
+        ...(step > 1 ? { time_on_previous_step_ms: timeOnPrev } : {}),
+      },
+      step
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
@@ -75,6 +135,19 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
   const removeFile = (index: number) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
     setPreviews(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const goToStep = (nextStep: number) => {
+    // Validate before advancing
+    if (nextStep === 2 && !title.trim()) {
+      setTitleTouched(true);
+      return;
+    }
+    if (nextStep === 3 && !description.trim()) {
+      setDescTouched(true);
+      return;
+    }
+    setStep(nextStep);
   };
 
   const handleSubmit = async () => {
@@ -118,11 +191,28 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
       });
 
       if (res.status === 201) {
-        setStep(4); // Success step
+        // Track successful submission
+        track("custom_order_submitted", {
+          scale,
+          finish,
+          image_count: uploadedUrls.length,
+          title_length: title.length,
+          desc_length: description.length,
+        });
+
+        // Clear session draft on success
+        sessionStorage.removeItem(SESSION_KEY);
+        setStep(4);
       }
     } catch (err: any) {
-      console.error(err);
-      setError(err.response?.data?.error || err.message || "Something went wrong. Please try again.");
+      const errorMessage = err.response?.data?.error || err.message || "Something went wrong. Please try again.";
+      setError(errorMessage);
+      
+      track("custom_order_error", {
+        error: errorMessage,
+        step,
+        image_count: files.length,
+      });
     } finally {
       setLoading(false);
     }
@@ -130,8 +220,8 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
 
   const container = {
     hidden: { opacity: 0, x: 20 },
-    show: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 }
+    show: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" as const } },
+    exit: { opacity: 0, x: -20, transition: { duration: 0.2 } }
   };
 
   return (
@@ -160,15 +250,24 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
             </div>
 
             <div className="space-y-8">
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">{t.proposal_field_title_label}</label>
                 <input 
                   type="text" 
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => { setTitle(e.target.value); if (titleTouched) setTitleTouched(true); }}
+                  onBlur={() => setTitleTouched(true)}
                   placeholder={t.proposal_field_title_placeholder}
-                  className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-5 text-sm font-black uppercase tracking-widest text-white placeholder:text-neutral-800 focus:outline-none focus:border-brand-yellow/30 transition-all font-outfit"
+                  className={`w-full bg-white/[0.02] border rounded-sm p-5 text-sm font-black uppercase tracking-widest text-white placeholder:text-neutral-800 focus:outline-none transition-all font-outfit ${
+                    titleError ? "border-red-500/50 focus:border-red-500" : "border-white/5 focus:border-brand-yellow/30"
+                  }`}
                 />
+                {titleError && (
+                  <div className="flex items-center gap-2 text-red-400 text-[10px] font-bold uppercase tracking-widest">
+                    <AlertCircle className="w-3 h-3 flex-shrink-0" />
+                    {titleError}
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -188,8 +287,8 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
             </div>
 
             <button 
-              onClick={() => setStep(2)}
-              disabled={!title}
+              onClick={() => goToStep(2)}
+              disabled={!title.trim() || title.trim().length < 3}
               className="hasbro-btn-primary w-full py-5 text-xs font-black disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {t.proposal_cta_configure}
@@ -206,15 +305,27 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
             </div>
 
             <div className="space-y-8">
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <label className="text-[10px] uppercase font-black tracking-widest text-neutral-500 block">{t.proposal_field_desc_label}</label>
                 <textarea 
                   rows={8}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  onBlur={() => setDescTouched(true)}
                   placeholder={t.proposal_field_desc_placeholder}
-                  className="w-full bg-white/[0.02] border border-white/5 rounded-sm p-5 text-xs font-bold uppercase tracking-widest text-white placeholder:text-neutral-800 focus:outline-none focus:border-brand-yellow/30 transition-all resize-none font-outfit leading-relaxed"
+                  className={`w-full bg-white/[0.02] border rounded-sm p-5 text-xs font-bold uppercase tracking-widest text-white placeholder:text-neutral-800 focus:outline-none transition-all resize-none font-outfit leading-relaxed ${
+                    descError ? "border-red-500/50 focus:border-red-500" : "border-white/5 focus:border-brand-yellow/30"
+                  }`}
                 />
+                {descError && (
+                  <div className="flex items-center gap-2 text-red-400 text-[10px] font-bold uppercase tracking-widest">
+                    <AlertCircle className="w-3 h-3 flex-shrink-0" />
+                    {descError}
+                  </div>
+                )}
+                <p className="text-[9px] font-bold text-neutral-700 uppercase tracking-widest text-right">
+                  {description.length} / 3000
+                </p>
               </div>
             </div>
 
@@ -223,8 +334,8 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
                 {t.proposal_cta_back}
               </button>
               <button 
-                onClick={() => setStep(3)}
-                disabled={!description}
+                onClick={() => goToStep(3)}
+                disabled={!description.trim() || description.trim().length < 20}
                 className="hasbro-btn-primary flex-1 py-5 text-xs font-black disabled:opacity-50 flex items-center justify-center gap-2 font-outfit"
               >
                 {t.proposal_cta_upload}
@@ -267,8 +378,16 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
                 {t.proposal_field_upload_hint}
               </p>
 
+              {files.length === 0 && (
+                <div className="flex items-center gap-2 text-amber-500/70 text-[10px] font-bold uppercase tracking-widest justify-center">
+                  <AlertCircle className="w-3 h-3 flex-shrink-0" />
+                  At least one reference image is required
+                </div>
+              )}
+
               {error && (
-                <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest text-center animate-in fade-in slide-in-from-top-2 font-outfit">
+                <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest text-center animate-in fade-in slide-in-from-top-2 font-outfit flex items-center justify-center gap-2">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   {error}
                 </div>
               )}

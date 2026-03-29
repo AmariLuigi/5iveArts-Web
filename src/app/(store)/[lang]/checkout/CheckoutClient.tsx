@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Truck, CreditCard, Loader2, Check, ShieldCheck, Lock, ChevronLeft, ArrowLeft } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useCartStore, CartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/products";
 import { ShippingAddress, ShippingRate, UserAddress } from "@/types";
@@ -546,8 +547,16 @@ export default function CheckoutClient({
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
         <div className="lg:col-span-2">
+          <AnimatePresence mode="wait">
           {activeStep === 1 && (
-            <div className="hasbro-card p-10 animate-in fade-in slide-in-from-left-4 duration-500">
+            <motion.div
+              key="step1"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="hasbro-card p-10"
+            >
               <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white flex items-center gap-3 mb-10">
                 <Truck className="w-5 h-5 text-brand-yellow" />
                 {dict.checkout.deliveryStep}
@@ -839,11 +848,18 @@ export default function CheckoutClient({
                 {fetchingRates && <Loader2 className="w-4 h-4 animate-spin text-brand-yellow" />}
                 {fetchingRates ? dict.checkout.recalculating : dict.checkout.continueBtn}
               </button>
-            </div>
+            </motion.div>
           )}
 
           {activeStep === 2 && (
-            <div className="hasbro-card p-10 animate-in fade-in slide-in-from-right-4 duration-500">
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="hasbro-card p-10"
+            >
               <button
                 type="button"
                 onClick={() => setActiveStep(1)}
@@ -904,11 +920,18 @@ export default function CheckoutClient({
                   {checkingOut ? dict.checkout.initGateway : dict.checkout.proceedBtn}
                 </button>
               )}
-            </div>
+            </motion.div>
           )}
 
           {activeStep === 3 && (
-            <div className="hasbro-card p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <motion.div
+              key="step3"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="hasbro-card p-10"
+            >
               <button
                 type="button"
                 onClick={() => setActiveStep(2)}
@@ -935,8 +958,9 @@ export default function CheckoutClient({
               ) : (
                 <StripePaymentForm clientSecret={clientSecret} total={total} dict={dict} />
               )}
-            </div>
+            </motion.div>
           )}
+          </AnimatePresence>
 
           {rateError && (
             <p className="text-red-500 text-[10px] uppercase font-black border border-red-500/20 bg-red-500/5 rounded px-6 py-4 mt-8">
