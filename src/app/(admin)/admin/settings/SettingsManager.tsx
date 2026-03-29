@@ -367,37 +367,7 @@ export default function SettingsManager({ initialSettings }: Props) {
                                     index={i} 
                                     testimonials={testimonials} 
                                     updateTestimonials={updateTestimonials}
-                                    onForge={async () => {
-                                        setLoading(true);
-                                        try {
-                                            const { data: trans } = await axios.post("/api/admin/ai/translate", { 
-                                                text: testi.quote,
-                                                gender: testi.gender || 'neutral'
-                                            });
-                                            const nl = [...testimonials];
-                                            // Map all 12 languages
-                                            nl[i].quote_en = trans.en;
-                                            nl[i].quote_it = trans.it;
-                                            nl[i].quote_de = trans.de;
-                                            nl[i].quote_fr = trans.fr;
-                                            nl[i].quote_es = trans.es;
-                                            nl[i].quote_ru = trans.ru;
-                                            nl[i].quote_tr = trans.tr;
-                                            nl[i].quote_pt = trans.pt;
-                                            nl[i].quote_nl = trans.nl;
-                                            nl[i].quote_ja = trans.ja;
-                                            nl[i].quote_ar = trans.ar;
-                                            nl[i].quote_pl = trans.pl;
-                                            
-                                            updateTestimonials(nl);
-                                            showToast(`Translations forged for ${testi.name}`, 'success');
-                                        } catch (err) {
-                                            console.error("Forge Failed:", err);
-                                            setError("Translation Forge failed. Verify API connection.");
-                                        } finally {
-                                            setLoading(false);
-                                        }
-                                    }}
+                                    showToast={showToast}
                                 />
                             ))}
                         </div>
@@ -530,8 +500,47 @@ const LANGUAGES = [
     { key: 'pl', label: 'Polish', icon: '🇵🇱' }
 ];
 
-function TestimonialCard({ testi, index, testimonials, updateTestimonials, onForge }: any) {
+function TestimonialCard({ testi, index, testimonials, updateTestimonials, showToast }: any) {
     const [activeLang, setActiveLang] = useState('it');
+    const [forging, setForging] = useState(false);
+    const [forgeProgress, setForgeProgress] = useState(0);
+
+    const handleForge = async () => {
+        setForging(true);
+        setForgeProgress(5); // Start
+        try {
+            // Batch 1: Western
+            const { data: b1 } = await axios.post("/api/admin/ai/translate", {
+                text: testi.quote,
+                gender: testi.gender || 'neutral',
+                targetLanguages: ["en", "it", "de", "fr", "es", "ru"]
+            });
+            setForgeProgress(50);
+
+            // Batch 2: Global
+            const { data: b2 } = await axios.post("/api/admin/ai/translate", {
+                text: testi.quote,
+                gender: testi.gender || 'neutral',
+                targetLanguages: ["tr", "pt", "nl", "ja", "ar", "pl"]
+            });
+            setForgeProgress(100);
+
+            const trans = { ...b1, ...b2 };
+            const nl = [...testimonials];
+            Object.keys(trans).forEach(lang => {
+                (nl[index] as any)[`quote_${lang}`] = trans[lang];
+            });
+
+            updateTestimonials(nl);
+            showToast(`TRANSLATIONS FORGED FOR ${testi.name}`, 'success');
+            setTimeout(() => setForgeProgress(0), 2000);
+        } catch (err) {
+            console.error("Forge Failed:", err);
+            setForgeProgress(0);
+        } finally {
+            setForging(false);
+        }
+    };
 
     return (
         <div className="bg-white/[0.01] border border-white/5 p-8 rounded-sm space-y-6 group/testi">
@@ -554,11 +563,12 @@ function TestimonialCard({ testi, index, testimonials, updateTestimonials, onFor
                 </div>
                 <div className="flex items-center gap-2">
                     <button 
-                        onClick={onForge}
+                        onClick={handleForge}
+                        disabled={forging}
                         title="Forge Global Translations"
-                        className="p-3 bg-brand-yellow/5 border border-brand-yellow/10 text-brand-yellow hover:bg-brand-yellow hover:text-black transition-all rounded-sm flex items-center justify-center -translate-y-2 opacity-0 group-hover/testi:opacity-100 duration-500"
+                        className={`p-3 bg-brand-yellow/5 border border-brand-yellow/10 text-brand-yellow hover:bg-brand-yellow hover:text-black transition-all rounded-sm flex items-center justify-center -translate-y-2 group-hover/testi:opacity-100 duration-500 ${forging ? 'opacity-100 bg-brand-yellow/20 cursor-wait' : 'opacity-0'}`}
                     >
-                        <Sparkles className="w-3.5 h-3.5" />
+                        {forging ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
                     </button>
                     <button onClick={() => updateTestimonials(testimonials.filter((_: any, idx: number) => idx !== index))} className="text-neutral-800 hover:text-red-500 transition-colors -translate-y-2"><Trash2 className="w-4 h-4" /></button>
                 </div>
@@ -578,9 +588,18 @@ function TestimonialCard({ testi, index, testimonials, updateTestimonials, onFor
             <div className="space-y-2">
                 <div className="flex items-center justify-between">
                     <label className="text-[8px] font-black text-neutral-600 uppercase">Global Master Quote (English)</label>
-                    <span className="text-[8px] font-black text-brand-yellow/50 uppercase">Source</span>
+                    {forging && <span className="text-[7px] font-black text-brand-yellow animate-pulse uppercase">TRANSMITTING... {forgeProgress}%</span>}
                 </div>
                 <textarea value={testi.quote} onChange={(e) => { const nl = [...testimonials]; nl[index].quote = e.target.value; updateTestimonials(nl); }} className="w-full bg-black/40 border border-white/10 p-4 text-[11px] text-white font-medium min-h-[80px] outline-none focus:border-brand-yellow/50" placeholder="GLOBAL QUOTE" />
+                
+                {forgeProgress > 0 && (
+                    <div className="w-full bg-white/5 h-0.5 rounded-full overflow-hidden mt-1">
+                        <div 
+                            className="h-full bg-brand-yellow transition-all duration-500" 
+                            style={{ width: `${forgeProgress}%` }}
+                        />
+                    </div>
+                )}
             </div>
 
             <div className="space-y-2">
