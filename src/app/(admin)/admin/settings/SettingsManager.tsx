@@ -375,13 +375,20 @@ export default function SettingsManager({ initialSettings }: Props) {
                                                 gender: testi.gender || 'neutral'
                                             });
                                             const nl = [...testimonials];
-                                            // Core languages
+                                            // Map all 12 languages
                                             nl[i].quote_en = trans.en;
                                             nl[i].quote_it = trans.it;
                                             nl[i].quote_de = trans.de;
                                             nl[i].quote_fr = trans.fr;
                                             nl[i].quote_es = trans.es;
-                                            // Handle others if returned, or keep empty for manual
+                                            nl[i].quote_ru = trans.ru;
+                                            nl[i].quote_tr = trans.tr;
+                                            nl[i].quote_pt = trans.pt;
+                                            nl[i].quote_nl = trans.nl;
+                                            nl[i].quote_ja = trans.ja;
+                                            nl[i].quote_ar = trans.ar;
+                                            nl[i].quote_pl = trans.pl;
+                                            
                                             updateTestimonials(nl);
                                             showToast(`Translations forged for ${testi.name}`, 'success');
                                         } catch (err) {

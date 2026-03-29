@@ -24,17 +24,21 @@ export async function POST(req: Request) {
     }
 
     const systemPrompt = `You are a professional multilingual curator for 5iveArts.
-Translate the provided text into English, Italian, German, French, and Spanish.
+Translate the provided text into the following 12 languages: English, Italian, German, French, Spanish, Russian, Turkish, Portuguese, Dutch, Japanese, Arabic, and Polish.
 Maintain the professional, enthusiastic tone of a high-end collector.
 
-GENDER: The reviewer is ${gender}. Use appropriate gendered inflections in Italian, French, German, and Spanish.
+GENDER: The reviewer is ${gender}. Use appropriate gendered inflections in languages that require it (Italian, French, German, Spanish, Russian, Portuguese, Polish, etc.).
 
-SCHEMA: { "en": "...", "it": "...", "de": "...", "fr": "...", "es": "..." }
+SCHEMA: { 
+  "en": "...", "it": "...", "de": "...", "fr": "...", "es": "...", 
+  "ru": "...", "tr": "...", "pt": "...", "nl": "...", "ja": "...", 
+  "ar": "...", "pl": "..." 
+}
 
 RULES:
 - Respond ONLY with raw JSON.
 - DO NOT use markdown code blocks.
-- Preserve technical terms like '0.025mm', 'resin', 'artisan'.
+- Preserve technical terms like '0.025mm', 'resin', 'artisan', '5iveArts'.
 - CONTEXT: ${context}`;
 
     const response = await fetch(NVIDIA_INVOKE_URL, {
