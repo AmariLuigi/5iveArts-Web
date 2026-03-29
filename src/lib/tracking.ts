@@ -47,8 +47,12 @@ class WhereParcelProvider implements TrackingProvider {
     const carrierSlug = this.mapToCarrierSlug(carrierName);
 
     const response = await axios.post("https://api.whereparcel.com/v2/track", {
-      carrier: carrierSlug,
-      trackingNumber
+      trackingItems: [
+        {
+          carrier: carrierSlug,
+          trackingNumber
+        }
+      ]
     }, {
       headers: {
         "Authorization": `Bearer ${authString}`,
@@ -57,9 +61,12 @@ class WhereParcelProvider implements TrackingProvider {
     });
 
     const data = response.data;
-    if (!data.success) throw new Error(data.error?.message || "WhereParcel tracking failed");
+    if (!data.success) throw new Error(data.error?.message || "WhereParcel batch query failed");
 
-    const result = data.data;
+    // The result is the first item in the data array
+    const result = data.data?.[0];
+    if (!result) throw new Error("No tracking data returned in batch response");
+    if (!result.success) throw new Error(result.error?.message || `Carrier ${carrierSlug} failed to find ${trackingNumber}`);
     const movements: TrackingMovement[] = (result.events || []).map((e: any) => ({
       timestamp: e.timestamp,
       location: e.location || "Logistics Hub",
