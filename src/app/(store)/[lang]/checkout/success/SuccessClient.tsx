@@ -197,21 +197,21 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
         </div>
 
         <h1 className="text-5xl md:text-6xl font-black text-white mb-4 uppercase tracking-tighter">
-          {isFinalBalance ? "Final Protocol Solidified" : isCustom ? "Commission Protocoled" : dict.success.orderConfirmed}
+          {isFinalBalance ? dict.success.finalProtocol : isCustom ? dict.success.commissionProtocol : dict.success.orderConfirmed}
         </h1>
         <p className="text-lg text-neutral-300 mb-2 font-bold uppercase tracking-widest text-[12px]">
-          {isFinalBalance ? "Acquisition Phase: COMPLETE" : isCustom ? "Fabrication Protocol Initiated" : dict.success.thankYou}
+          {isFinalBalance ? dict.success.acquisitionComplete : isCustom ? dict.success.fabricationInitiated : dict.success.thankYou}
         </p>
         <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-14">
           {dict.success.confEmailSent} <span className="text-brand-yellow">{customerEmail}</span>.<br />
-          {isFinalBalance ? "Logistics have been locked. Your artifact is being prepared for extraction." : isCustom ? "Your project is now being queued in the Artisan Workshop." : dict.success.shippingNote}
+          {isFinalBalance ? dict.success.logisticsLocked : isCustom ? dict.success.projectQueued : dict.success.shippingNote}
         </p>
 
         <div className="bg-[#0a0a0a] rounded border border-white/5 p-8 mb-14 text-left relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1 h-full bg-brand-yellow/50" />
           <div className="flex justify-between items-center mb-10 pb-4 border-b border-white/5">
             <h2 className="font-black text-white uppercase tracking-[0.3em] text-[11px]">
-              {isCustom ? "Fabrication Journal" : dict.success.logisticsLog}
+              {isCustom ? dict.success.fabricationJournal : dict.success.logisticsLog}
             </h2>
             <button
               onClick={handleResendEmail}
@@ -232,10 +232,10 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
               </div>
               <div>
                 <p className="font-black text-white text-[11px] uppercase tracking-widest">
-                    {isFinalBalance ? "Balance Reconciled" : isCustom ? "Deposit Secured" : (dict.checkout.deliveryStep.split(". ")[1] || "Confirmation")}
+                    {isFinalBalance ? dict.success.balanceReconciled : isCustom ? dict.success.depositSecured : (dict.checkout.deliveryStep.split(". ")[1] || "Confirmation")}
                 </p>
                 <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">
-                    {isFinalBalance ? "Logistics investment and final artifact balance verified." : isCustom ? "50% protocol initial investment verified." : dict.success.paymentVerified}
+                    {isFinalBalance ? dict.success.logisticsVerified : isCustom ? dict.success.depositVerified : dict.success.paymentVerified}
                 </p>
               </div>
             </div>
@@ -245,10 +245,10 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
               </div>
               <div>
                 <p className="font-black text-white text-[11px] uppercase tracking-widest">
-                    {isFinalBalance ? "Extraction Protocol" : isCustom ? "Artisan Forging" : (dict.checkout.shippingStep.split(". ")[1] || "Fulfillment")}
+                    {isFinalBalance ? dict.success.extractionProtocol : isCustom ? dict.success.artisanForging : (dict.checkout.shippingStep.split(". ")[1] || "Fulfillment")}
                 </p>
                 <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-bold">
-                    {isFinalBalance ? "Hand-off to logistical carrier initiated." : isCustom ? "Your artifact has entered the production queue." : dict.success.fulfillmentNote}
+                    {isFinalBalance ? dict.success.carrierHandoff : isCustom ? dict.success.productionQueue : dict.success.fulfillmentNote}
                 </p>
               </div>
             </div>
@@ -258,13 +258,13 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
         {(signupSuccess || (user && !checkingAuth)) ? (
           <div className="bg-brand-yellow/5 border border-brand-yellow/20 rounded p-8 mb-14 text-center animate-in zoom-in duration-500">
             <ShieldCheck className="w-12 h-12 text-brand-yellow mx-auto mb-4" />
-            <h3 className="text-white font-black uppercase tracking-widest text-sm mb-2">Vault Entry Permitted</h3>
-            <p className="text-brand-yellow text-[10px] font-bold uppercase tracking-[0.2em] mb-6">Your fabrication records are archived in your account.</p>
+            <h3 className="text-white font-black uppercase tracking-widest text-sm mb-2">{dict.success.vaultEntry}</h3>
+            <p className="text-brand-yellow text-[10px] font-bold uppercase tracking-[0.2em] mb-6">{dict.success.recordsArchived}</p>
             <Link 
               href={orderId ? `/${lang}/account/orders/${orderId}` : `/${lang}/account`}
               className="inline-block text-[10px] font-black uppercase tracking-widest text-white border-b border-brand-yellow/50 pb-1 hover:text-brand-yellow transition-all flex items-center gap-2 mx-auto w-fit"
             >
-              {isCustom ? "View Fabrication Protocol" : dict.success.goWarehouse}
+              {isCustom ? dict.success.viewProtocol : dict.success.goWarehouse}
               <ChevronRight className="w-3 h-3" />
             </Link>
           </div>

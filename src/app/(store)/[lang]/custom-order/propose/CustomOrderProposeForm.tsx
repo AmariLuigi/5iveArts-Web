@@ -50,6 +50,7 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submittedOrderId, setSubmittedOrderId] = useState<string | null>(null);
   
   // Form State
   const [title, setTitle] = useState("");
@@ -199,6 +200,9 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
           title_length: title.length,
           desc_length: description.length,
         });
+
+        // Capture order ID for the success CTA
+        setSubmittedOrderId(res.data.orderId || null);
 
         // Clear session draft on success
         sessionStorage.removeItem(SESSION_KEY);
@@ -434,7 +438,7 @@ export default function CustomOrderProposeForm({ dict, lang }: CustomOrderPropos
             </p>
  
             <button 
-              onClick={() => router.push(`/${lang}/account`)}
+              onClick={() => router.push(submittedOrderId ? `/${lang}/account/orders/${submittedOrderId}` : `/${lang}/account`)}
               className="hasbro-btn-primary px-12 py-5 text-xs font-black font-outfit"
             >
               {dict.custom_order.cta_vault}

@@ -370,10 +370,21 @@ export default function CheckoutClient({
     const log = (m: string) => navigator.sendBeacon("/api/debug/log", JSON.stringify({ message: `[STATE] ${m}`, type: "info" }));
     log("Starting fetchShippingRates...");
 
-    if (!address.zip_code || !address.country) {
-      setRateError(dict.errors?.genericError || "Please enter your postcode and country to get shipping rates.");
+    // ── Client-side validation before wasting an API call ──────────────────────
+    const missing: string[] = [];
+    if (!address.full_name?.trim()) missing.push(dict.checkout.recipientName.replace(" *", ""));
+    if (!address.email?.trim()) missing.push(dict.checkout.emailAddress.replace(" *", ""));
+    if (!address.street1?.trim()) missing.push(dict.checkout.stAddress?.replace(" *", "") || "Street Address");
+    if (!address.city?.trim()) missing.push(dict.checkout.city || "City");
+    if (!address.zip_code?.trim()) missing.push(dict.checkout.zipCode || "Zip Code");
+    if (!address.country?.trim()) missing.push("Country");
+    if (!address.phone?.trim()) missing.push(dict.checkout.phoneLabel?.replace(" *", "") || "Phone");
+
+    if (missing.length > 0) {
+      setRateError(`${dict.errors?.genericError || "Please complete all required fields before continuing"}: ${missing.join(", ")}`);
       return;
     }
+
     setFetchingRates(true);
     setRateError(null);
     try {
@@ -455,6 +466,7 @@ export default function CheckoutClient({
         items,
         shippingRate: selectedRate,
         shippingAddress: address,
+        lang,
       });
 
       // Address Auto-Save Protocol
