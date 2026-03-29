@@ -53,19 +53,37 @@ const OneTapComponent = () => {
         use_fedcm_for_prompt: true,
       })
       
-      // If manual, we can't easily force the One Tap if it was closed, 
-      // but we can at least try to prompt or render the Google Button.
+      // 1. One Tap Prompt (Silent/Background)
       google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-            console.warn('[auth/google] Display suppressed:', notification.getNotDisplayedReason())
+            console.warn('[auth/google] One Tap suppressed:', notification.getNotDisplayedReason())
         }
       })
+
+      // 2. Manual Button Branding (Overlay)
+      // This ensures that when the user clicks our "Continue with Google" button,
+      // they are actually clicking the official branded Google button (invisible overlay),
+      // which triggers an on-domain popup branded as "5ive Arts".
+      const overlay = document.getElementById('google-auth-overlay');
+      if (overlay) {
+        google.accounts.id.renderButton(overlay, {
+            type: 'standard',
+            shape: 'rectangular',
+            theme: 'outline',
+            size: 'large',
+            width: overlay.offsetWidth || 400
+        });
+      }
     }
   }
 
   useEffect(() => {
-    // Expose manual trigger to the window for TerminalForm use
-    (window as any).triggerGoogleAuth = () => initializeGoogleAuth(true);
+    // Background refresh check
+    const check = async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) router.refresh();
+    };
+    check();
   }, []);
 
   return <Script onReady={() => { initializeGoogleAuth(); }} src="https://accounts.google.com/gsi/client" />
