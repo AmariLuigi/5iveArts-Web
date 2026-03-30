@@ -176,7 +176,9 @@ body {
 .has-custom-cursor a,
 .has-custom-cursor button,
 .has-custom-cursor [role="button"],
-.has-custom-cursor .cursor-zoom-in {
+.has-custom-cursor .cursor-zoom-in,
+.has-custom-cursor input,
+.has-custom-cursor textarea {
   cursor: none !important;
 }
 
