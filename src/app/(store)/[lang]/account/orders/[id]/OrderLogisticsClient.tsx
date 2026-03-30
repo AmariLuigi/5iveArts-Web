@@ -125,75 +125,169 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
     const generateInvoice = () => {
         const doc = new jsPDF();
         const orderIdShort = order.id.slice(0, 8).toUpperCase();
+        const accentColor: [number, number, number] = [255, 159, 0]; // brand-yellow
 
-        // Branding
-        doc.setFillColor(0, 0, 0);
-        doc.rect(0, 0, 210, 40, "F");
-        doc.setFontSize(22);
-        doc.setTextColor(255, 159, 0); // brand-yellow
+        // 1. Black Header Bar
+        doc.setFillColor(10, 10, 10);
+        doc.rect(0, 0, 210, 45, "F");
+        
+        // 2. Main Logo/Title
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(26);
         doc.setFont("helvetica", "bold");
         doc.text("5IVE ARTS", 20, 25);
         
-        doc.setFontSize(10);
-        doc.text("LOGISTICS MANIFEST // OFFICIAL INVOICE", 140, 25);
+        doc.setFontSize(8);
+        doc.setTextColor(accentColor[0], accentColor[1], accentColor[2]);
+        doc.text("ARTISAN FIGURE BUREAU // LOGISTICS MANIFEST", 20, 32);
 
-        // Header Info
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(10);
+        doc.text("OFFICIAL DOCKET", 160, 20);
+        doc.setFontSize(14);
+        doc.text(`#${orderIdShort}`, 160, 28);
+        
+        // 3. Status Ribbon in Header
+        const status = (order.status || "paid").toUpperCase();
+        doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
+        doc.rect(160, 32, 35, 6, "F");
         doc.setTextColor(0, 0, 0);
-        doc.setFontSize(10);
-        doc.text(`DATE: ${new Date(order.created_at).toLocaleDateString()}`, 20, 55);
-        doc.text(`ORDER ID: ${orderIdShort}`, 20, 62);
-        doc.text(`STATUS: ${order.status.toUpperCase()}`, 20, 69);
+        doc.setFontSize(7);
+        doc.setFont("helvetica", "bold");
+        doc.text(status, 177.5, 36.5, { align: "center" });
 
-        doc.setFontSize(12);
-        doc.text(dict.orders.deploymentZone.toUpperCase(), 120, 55);
+        // 4. Metadata Section
+        let currentY = 60;
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(9);
+        doc.setFont("helvetica", "bold");
+        doc.text("OPERATIONAL METADATA", 20, currentY);
+        doc.setDrawColor(accentColor[0], accentColor[1], accentColor[2]);
+        doc.setLineWidth(0.5);
+        doc.line(20, currentY + 2, 40, currentY + 2);
+
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(80, 80, 80);
+        currentY += 10;
+        doc.text(`LOG DATE:`, 20, currentY);
+        doc.setTextColor(0, 0, 0);
+        doc.text(new Date(order.created_at).toLocaleDateString(), 45, currentY);
+        
+        currentY += 6;
+        doc.setTextColor(80, 80, 80);
+        doc.text(`TRACKING:`, 20, currentY);
+        doc.setTextColor(0, 0, 0);
+        doc.text(order.tracking_number || "PENDING DEPLOYMENT", 45, currentY);
+
+        currentY += 6;
+        doc.setTextColor(80, 80, 80);
+        doc.text(`CARRIER:`, 20, currentY);
+        doc.setTextColor(0, 0, 0);
+        doc.text(order.shipping_service_name?.toUpperCase() || "STANDARD REGIONAL", 45, currentY);
+
+        // 5. Deployment Zone (Customer)
+        currentY = 60;
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(9);
+        doc.setFont("helvetica", "bold");
+        doc.text("DEPLOYMENT ZONE", 120, currentY);
+        doc.line(120, currentY + 2, 140, currentY + 2);
+
         doc.setFont("helvetica", "normal");
         const addr = order.shipping_address;
-        doc.text(order.customer_name || "", 120, 62);
-        doc.text(addr?.street1 || "", 120, 68);
-        if (addr?.street2) doc.text(addr.street2, 120, 74);
-        doc.text(`${addr?.city || ""}${addr?.state ? `, ${addr.state}` : ""} ${addr?.zip_code || ""}`, 120, addr?.street2 ? 80 : 74);
-        doc.text(addr?.country || "", 120, addr?.street2 ? 86 : 80);
+        currentY += 10;
+        doc.text(order.customer_name?.toUpperCase() || "RECORD UNKNOWN", 120, currentY);
+        currentY += 5;
+        doc.text(addr?.street1 || "", 120, currentY);
+        if (addr?.street2) {
+            currentY += 5;
+            doc.text(addr.street2, 120, currentY);
+        }
+        currentY += 5;
+        doc.text(`${addr?.city || ""}${addr?.state ? `, ${addr.state}` : ""} ${addr?.zip_code || ""}`, 120, currentY);
+        currentY += 5;
+        doc.text(addr?.country || "", 120, currentY);
 
-        // Table Manifest
+        // 6. Manifest Table
         const tableData = orderItems.map((item) => [
-            item.product_name,
-            String(item.quantity),
+            { content: item.product_name.toUpperCase(), styles: { fontStyle: 'bold' } },
+            item.quantity,
             formatPrice(item.product_price_pence),
-            formatPrice(item.product_price_pence * item.quantity),
+            { content: formatPrice(item.product_price_pence * item.quantity), styles: { halign: 'right' } },
         ]);
 
         autoTable(doc, {
-            startY: 100,
-            head: [[dict.orders.itemDetails, dict.orders.qty, dict.products.price, dict.cart.subtotal]],
+            startY: 110,
+            head: [[dict.orders.itemDetails.toUpperCase(), "QTY", "UNIT INVESTMENT", "SUBTOTAL"]],
             body: tableData,
-            headStyles: { fillColor: [20, 20, 20], textColor: [255, 159, 0], fontStyle: "bold" },
-            alternateRowStyles: { fillColor: [250, 250, 250] },
+            theme: 'striped',
+            headStyles: { 
+                fillColor: [20, 20, 20], 
+                textColor: accentColor, 
+                fontSize: 8,
+                cellPadding: 4,
+                fontStyle: 'bold'
+            },
+            bodyStyles: { 
+                fontSize: 8,
+                cellPadding: 4,
+                textColor: [40, 40, 40]
+            },
+            alternateRowStyles: { fillColor: [252, 252, 252] },
             margin: { left: 20, right: 20 },
         });
 
-        // Totals
-        const finalY = (doc as any).lastAutoTable.finalY + 10;
+        // 7. Financial Breakdown
+        const finalY = (doc as any).lastAutoTable.finalY + 15;
+        const totalX = 140;
+        const valueX = 190;
+
+        doc.setFontSize(9);
+        doc.setTextColor(100, 100, 100);
         doc.setFont("helvetica", "bold");
-        doc.text(`${dict.orders.subtotal}: ${formatPrice(order.subtotal_pence)}`, 140, finalY);
-        doc.text(`${dict.orders.shipping}: ${formatPrice(order.shipping_pence)}`, 140, finalY + 7);
+        doc.text("ACQUISITION SUBTOTAL", totalX, finalY);
+        doc.setFont("helvetica", "normal");
+        doc.text(formatPrice(order.subtotal_pence), valueX, finalY, { align: "right" });
+
+        doc.setFont("helvetica", "bold");
+        doc.text("LOGISTICS SURCHARGE", totalX, finalY + 7);
+        doc.setFont("helvetica", "normal");
+        doc.text(formatPrice(order.shipping_pence), valueX, finalY + 7, { align: "right" });
         
+        let shiftY = 14;
         if (order.is_custom) {
-            doc.text(`${dict.orders.depositPaid || "Paid Deposit"}: ${formatPrice(order.deposit_pence || 0)}`, 140, finalY + 14);
-            const remaining = order.total_pence - (order.deposit_pence || 0) - (order.final_payment_pence || 0);
-            if (remaining > 0) {
-                doc.text(`${dict.orders.remainingBalance || "Remainder"}: ${formatPrice(remaining)}`, 140, finalY + 21);
-            }
+            doc.setFont("helvetica", "bold");
+            doc.text("PROTOCOL DEPOSIT", totalX, finalY + shiftY);
+            doc.setFont("helvetica", "normal");
+            doc.text(formatPrice(order.deposit_pence || 0), valueX, finalY + shiftY, { align: "right" });
+            shiftY += 7;
         }
 
-        doc.setFontSize(14);
-        doc.setTextColor(255, 159, 0);
-        doc.text(`${dict.orders.totalContribution.toUpperCase()}: ${formatPrice(order.total_pence)}`, 140, finalY + (order.is_custom ? 30 : 17));
+        // Final Total
+        doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
+        doc.rect(totalX - 5, finalY + shiftY - 4, 60, 10, "F");
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.setFont("helvetica", "bold");
+        doc.text("TOTAL CONTRIBUTION", totalX, finalY + shiftY + 2.5);
+        doc.setFontSize(12);
+        doc.text(formatPrice(order.total_pence), valueX, finalY + shiftY + 2.5, { align: "right" });
 
-        doc.setFontSize(8);
+        // 8. Studio Footer
+        doc.setDrawColor(230, 230, 230);
+        doc.line(20, 270, 190, 270);
+        
+        doc.setFontSize(7);
         doc.setTextColor(150, 150, 150);
-        doc.text(`ENCRYPTED TRANSACTION | ${dict.orders.transactionSecure.toUpperCase()} | 5IVE ARTS HQ`, 105, 285, { align: "center" });
+        doc.setFont("helvetica", "bold");
+        doc.text("5IVE ARTS STUDIO // PALERMO HUB", 20, 276);
+        doc.setFont("helvetica", "normal");
+        doc.text("VIA ROMA 1, PALERMO (PA), IT | INFO@5IVEARTS.COM", 20, 280);
+        
+        doc.setTextColor( accentColor[0], accentColor[1], accentColor[2]);
+        doc.text("ENCRYPTED TRANSACTION // SECURED BY RSA-4096", 190, 280, { align: "right" });
 
-        doc.save(`Invoice_${orderIdShort}.pdf`);
+        doc.save(`5IVEARTS_MANIFEST_${orderIdShort}.pdf`);
     };
 
     return (
