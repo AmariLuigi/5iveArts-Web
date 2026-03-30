@@ -4,8 +4,8 @@ interface Country {
 }
 
 /**
- * Restricted Market: European Union Only
- * Based on business decision to focus solely on EU logistics.
+ * Restricted Market: Europe, UK & Switzerland
+ * Focusing on European regional logistics.
  */
 export const countries: Country[] = [
     { code: "AT", name: "Austria" },
@@ -35,4 +35,6 @@ export const countries: Country[] = [
     { code: "SI", name: "Slovenia" },
     { code: "ES", name: "Spain" },
     { code: "SE", name: "Sweden" },
+    { code: "CH", name: "Switzerland" },
+    { code: "GB", name: "United Kingdom" },
 ].sort((a, b) => a.name.localeCompare(b.name));
