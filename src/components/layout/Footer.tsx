@@ -64,6 +64,7 @@ export default function Footer({ dict, lang }: FooterProps) {
           <h2 className="text-[8px] uppercase font-black tracking-[0.4em] text-neutral-400 mb-8">{dict.nav.terminal}</h2>
           <ul className="space-y-4 text-[10px] uppercase font-black tracking-widest text-neutral-400">
             <li><Link href={`/${lang}/login`} className="hover:text-brand-yellow transition-all">{dict.nav.login}</Link></li>
+            <li><Link href={`/${lang}/login?register=true`} className="hover:text-brand-yellow transition-all">{dict.auth.register}</Link></li>
             <li><Link href={`/${lang}/cart`} className="hover:text-brand-yellow transition-all">{dict.cart.title}</Link></li>
           </ul>
         </div>

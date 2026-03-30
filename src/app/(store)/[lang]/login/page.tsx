@@ -1,16 +1,34 @@
 import { Suspense } from "react";
-import { getDictionary, Locale } from "@/lib/get-dictionary";
+import { getDictionary, Locale, locales } from "@/lib/get-dictionary";
 import TerminalForm from "./TerminalForm";
 import { Loader2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+export async function generateMetadata({ 
+  params,
+  searchParams,
+}: { 
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}): Promise<Metadata> {
   const { lang } = await params;
+  const resolvedSearchParams = await searchParams;
+  const register = resolvedSearchParams?.register === 'true';
   const dict = await getDictionary(lang as Locale).catch(() => null) as any;
+  const queryString = register ? `?register=true` : "";
+  const canonicalPath = `/${lang}/login${queryString}`;
+  
   return {
-    title: `${dict?.auth?.title || 'Access Terminal'} — 5iveArts Secure Portal`,
-    description: dict?.auth?.subtitle || "Access your high-end figure collection and logistics reports."
+    metadataBase: new URL('https://www.5ivearts.com'),
+    title: register ? `${dict?.auth?.register || 'Create Account'} — 5iveArts Secure Portal` : `${dict?.auth?.title || 'Access Terminal'} — 5iveArts Secure Portal`,
+    description: dict?.auth?.subtitle || "Access your high-end figure collection and logistics reports.",
+    alternates: {
+      canonical: canonicalPath,
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `/${locale}/login${queryString}`])
+      ),
+    },
   };
 }
 

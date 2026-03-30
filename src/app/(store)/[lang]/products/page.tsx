@@ -7,18 +7,29 @@ import { getDictionary, Locale, locales } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+export async function generateMetadata({ 
+  params,
+  searchParams,
+}: { 
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const { lang } = await params;
+  const resolvedSearchParams = await searchParams;
+  const category = resolvedSearchParams?.category as string | undefined;
+  
   const dict = await getDictionary(lang as Locale).catch(() => null) as any;
+  const queryString = category ? `?category=${encodeURIComponent(category)}` : "";
+  const canonicalPath = `/${lang}/products${queryString}`;
   
   return {
     metadataBase: new URL('https://www.5ivearts.com'),
-    title: `${dict?.nav?.products || 'Shop'} — 5iveArts Action Figures`,
+    title: category ? `${category} Action Figures — 5iveArts` : `${dict?.nav?.products || 'Shop'} — 5iveArts Action Figures`,
     description: dict?.products?.subtitle || "Browse all hand-painted and 3D-printed action figures from 5iveArts.",
     alternates: {
-      canonical: `/${lang}/products`,
+      canonical: canonicalPath,
       languages: Object.fromEntries(
-        locales.map((locale) => [locale, `/${locale}/products`])
+        locales.map((locale) => [locale, `/${locale}/products${queryString}`])
       ),
     },
   };
