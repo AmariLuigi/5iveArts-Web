@@ -239,7 +239,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
 
         // 7. Financial Breakdown
         const finalY = (doc as any).lastAutoTable.finalY + 15;
-        const totalX = 140;
+        const totalX = 125;
         const valueX = 190;
 
         doc.setFontSize(9);
@@ -265,7 +265,7 @@ export default function OrderLogisticsClient({ order, orderItems, progressMedia,
 
         // Final Total
         doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
-        doc.rect(totalX - 5, finalY + shiftY - 4, 60, 10, "F");
+        doc.rect(totalX - 5, finalY + shiftY - 4, 75, 10, "F");
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0);
         doc.setFont("helvetica", "bold");
