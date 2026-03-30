@@ -138,9 +138,25 @@ export async function DELETE(
         .eq("id", id);
 
     if (error) {
+        // Handle Foreign Key Constraint (Postgres Code 23503)
+        // If the product is linked to orders, we archive it instead of deleting it.
+        if ((error as any).code === '23503') {
+            const { error: archiveError } = await supabase
+                .from("products")
+                .update({ status: 'archived' })
+                .eq("id", id);
+            
+            if (archiveError) {
+                console.error("[api/admin/products] ARCHIVE fallback error:", archiveError.message);
+                return NextResponse.json({ error: "Failed to archive product" }, { status: 400 });
+            }
+
+            return NextResponse.json({ success: true, archived: true });
+        }
+
         console.error("[api/admin/products] DELETE error:", error.message);
         return NextResponse.json({ error: "Failed to delete product" }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, archived: false });
 }
