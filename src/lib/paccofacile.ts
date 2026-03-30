@@ -130,26 +130,40 @@ export async function fetchShippingRates(
     const EU_COUNTRIES = ["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"];
     const isEU = EU_COUNTRIES.includes(norm.iso_code);
 
+    const filteredRatesRaw = ratesRaw.filter((s: any) => {
+      const name = (s.name || "").toUpperCase();
+      // Exclude services that require a pickup-point or delivery-point
+      const isPointToPoint = name.includes("POINT-POINT") || name.includes("POINT TO POINT") || name.includes("POINT-TO-POINT");
+      const isHomeToPoint = name.includes("HOME-POINT") || name.includes("HOME TO POINT");
+      const isPointToHome = name.includes("POINT-HOME") || name.includes("POINT TO HOME");
+      const isLocker = name.includes("LOCKER");
+
+      return !isPointToPoint && !isHomeToPoint && !isPointToHome && !isLocker;
+    });
+
     let minPriceCents = Infinity;
     let cheapestServiceId: string | null = null;
-    ratesRaw.forEach((s: any) => {
+    filteredRatesRaw.forEach((s: any) => {
       const p = Math.round(parseFloat(s.price_total.amount) * 100);
       if (p < minPriceCents) { minPriceCents = p; cheapestServiceId = String(s.service_id); }
     });
 
-    const rates = ratesRaw.map((service: any) => {
+    const rates = filteredRatesRaw.map((service: any) => {
       const priceCents = Math.round(parseFloat(service.price_total.amount) * 100);
       let finalPrice = priceCents;
 
+      // Adjust the subsidy check for filtered rates
       if (isFreeShipping && String(service.service_id) === cheapestServiceId) {
         const subsidyLimit = isEU ? 2500 : 3500;
         finalPrice = Math.max(0, priceCents - subsidyLimit);
       }
 
+      const displayPrice = finalPrice === 0 ? " (Free Shipping)" : " (Home Delivery)";
+
       return {
         service_id: String(service.service_id),
         carrier_name: service.carrier,
-        service_name: service.name + (finalPrice === 0 ? " (Free Shipping)" : " (Home Delivery)"),
+        service_name: service.name + displayPrice,
         price: finalPrice,
         original_price: finalPrice < priceCents ? priceCents : undefined,
         currency: service.price_total.currency,
