@@ -19,10 +19,15 @@ export async function generateMetadata({
   const queryString = register ? `?register=true` : "";
   const canonicalPath = `/${lang}/login${queryString}`;
   
+  const baseDesc = dict?.auth?.subtitle || "Access your high-end figure collection and logistics reports.";
+  const dynamicDesc = register 
+    ? (dict?.auth?.registerSubtitle || `Create a new 5iveArts Collector account to track deliveries. ${baseDesc}`)
+    : baseDesc;
+
   return {
     metadataBase: new URL('https://www.5ivearts.com'),
     title: register ? `${dict?.auth?.register || 'Create Account'} — 5iveArts Secure Portal` : `${dict?.auth?.title || 'Access Terminal'} — 5iveArts Secure Portal`,
-    description: dict?.auth?.subtitle || "Access your high-end figure collection and logistics reports.",
+    description: dynamicDesc,
     alternates: {
       canonical: canonicalPath,
       languages: Object.fromEntries(

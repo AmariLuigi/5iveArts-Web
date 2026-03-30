@@ -22,10 +22,13 @@ export async function generateMetadata({
   const queryString = category ? `?category=${encodeURIComponent(category)}` : "";
   const canonicalPath = `/${lang}/products${queryString}`;
   
+  const baseDesc = dict?.products?.subtitle || "Browse all hand-painted and 3D-printed action figures from 5iveArts.";
+  const dynamicDesc = category ? `${category} collection: ${baseDesc}` : baseDesc;
+
   return {
     metadataBase: new URL('https://www.5ivearts.com'),
     title: category ? `${category} Action Figures — 5iveArts` : `${dict?.nav?.products || 'Shop'} — 5iveArts Action Figures`,
-    description: dict?.products?.subtitle || "Browse all hand-painted and 3D-printed action figures from 5iveArts.",
+    description: dynamicDesc,
     alternates: {
       canonical: canonicalPath,
       languages: Object.fromEntries(
