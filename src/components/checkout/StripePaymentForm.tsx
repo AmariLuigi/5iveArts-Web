@@ -133,8 +133,9 @@ export default function StripePaymentForm({
                 setPaying(false);
             }
             // If no error, Stripe redirects to return_url automatically
-        } catch {
-            setError(dict.errors?.unexpectedError || "An unexpected error occurred. Please try again.");
+        } catch (err: any) {
+            console.error("STRIPE CRASH:", err);
+            setError(err?.message || dict.errors?.unexpectedError || "An unexpected error occurred. Please try again.");
             setPaying(false);
         }
     };
