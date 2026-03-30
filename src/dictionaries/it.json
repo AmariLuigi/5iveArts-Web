@@ -147,7 +147,14 @@
         "signupFailed": "Registrazione fallita. Per favore riprova.",
         "genericError": "Qualcosa è andato storto",
         "verifyStatusError": "Non siamo riusciti a verificare lo stato del pagamento. Se hai ricevuto un'email di conferma, l'ordine è in fase di elaborazione.",
-        "maxFeatured": "Massimo 3 consentiti."
+        "maxFeatured": "Massimo 3 consentiti.",
+        "stripe": {
+            "card_declined": "La tua carta è stata rifiutata. Utilizza un altro metodo di pagamento.",
+            "expired_card": "La tua carta è scaduta. Controlla la data di scadenza o usa un'altra carta.",
+            "incorrect_cvc": "Il codice CVC non è corretto. Controlla sul retro della tua carta.",
+            "insufficient_funds": "Fondi insufficienti sulla tua carta per questa transazione.",
+            "processing_error": "Si è verificato un errore durante l'elaborazione della tua carta. Riprova tra un momento."
+        }
     },
     "success": {
         "orderConfirmed": "Ordine Confermato",

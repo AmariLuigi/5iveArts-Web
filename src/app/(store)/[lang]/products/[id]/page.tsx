@@ -47,13 +47,14 @@ export async function generateMetadata({ params }: Props) {
   ) || product.description;
 
   return {
+    metadataBase: new URL('https://www.5ivearts.com'),
     title: `${product.name} — 5iveArts`,
     description: metaDescription,
     openGraph: {
       type: 'website', 
       title: `${product.name} | 5iveArts`,
       description: metaDescription,
-      url: `https://5ivearts.com/${lang}/products/${product.id}`,
+      url: `https://www.5ivearts.com/${lang}/products/${product.id}`,
       images: [
         {
           url: product.images?.[0] || '/logo.svg',
@@ -66,6 +67,12 @@ export async function generateMetadata({ params }: Props) {
       title: `${product.name} | 5iveArts`,
       description: metaDescription,
       images: [product.images?.[0] || '/logo.svg'],
+    },
+    alternates: {
+      canonical: `/${lang}/products/${product.id}`,
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `/${locale}/products/${product.id}`])
+      ),
     },
   };
 }

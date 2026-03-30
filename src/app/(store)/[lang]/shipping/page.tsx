@@ -10,8 +10,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
     const dict = await getDictionary(lang);
     const s = dict.shipping;
     return {
+        metadataBase: new URL('https://www.5ivearts.com'),
         title: `${s.title} — 5iveArts Global Logistics`,
-        description: s.subtitle || "Secure, insured, and tracked delivery for every masterpiece in the collection."
+        description: s.subtitle || "Secure, insured, and tracked delivery for every masterpiece in the collection.",
+        alternates: {
+            canonical: `/${lang}/shipping`,
+            languages: Object.fromEntries(
+                locales.map((locale) => [locale, `/${locale}/shipping`])
+            ),
+        },
     };
 }
 

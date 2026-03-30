@@ -147,7 +147,14 @@
         "signupFailed": "Signup failed. Please try again.",
         "genericError": "Something went wrong",
         "verifyStatusError": "We couldn't verify your payment status. If you received a confirmation email, your order is being processed.",
-        "maxFeatured": "Maximum 3 allowed."
+        "maxFeatured": "Maximum 3 allowed.",
+        "stripe": {
+            "card_declined": "Your card was declined. Please use a different payment method.",
+            "expired_card": "Your card has expired. Please check the expiry date or use another card.",
+            "incorrect_cvc": "The CVC code is incorrect. Check the back of your card.",
+            "insufficient_funds": "Your card has insufficient funds for this transaction.",
+            "processing_error": "An error occurred while processing your card. Try again in a moment."
+        }
     },
     "success": {
         "orderConfirmed": "Order Confirmed",

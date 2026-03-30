@@ -125,10 +125,49 @@ export async function POST(req: NextRequest) {
           payment_method: lastError?.payment_method?.type ?? null,
           amount_pence: intent.amount,
           currency: intent.currency,
-          // Attempt number inferred from metadata (Stripe doesn't expose charge count directly on PaymentIntent)
+          // Attempt number inferred from metadata
           attempt_number: (intent as any).charges?.data?.length ?? 1,
         }, null);
 
+        break;
+      }
+
+      case "charge.dispute.created": {
+        const dispute = event.data.object as Stripe.Dispute;
+        console.error("[webhook-security] DISPUTE CREATED:", dispute.id, "for intent:", dispute.payment_intent);
+        
+        const supabase = getSupabaseAdmin() as any;
+        // Mark order as disputed to freeze operations
+        await supabase
+          .from("orders")
+          .update({ status: "cancelled" })
+          .eq("stripe_payment_intent", dispute.payment_intent as string);
+
+        await trackServerEvent("payment_dispute", {
+          dispute_id: dispute.id,
+          reason: dispute.reason,
+          amount: dispute.amount,
+          status: dispute.status,
+          payment_intent: dispute.payment_intent
+        }, null);
+        break;
+      }
+
+      case "charge.refunded": {
+        const charge = event.data.object as Stripe.Charge;
+        console.log("[webhook] Charge refunded:", charge.id);
+        
+        const supabase = getSupabaseAdmin() as any;
+        await supabase
+          .from("orders")
+          .update({ status: "refunded" })
+          .eq("stripe_payment_intent", charge.payment_intent as string);
+
+        await trackServerEvent("payment_refund", {
+          charge_id: charge.id,
+          amount_refunded: charge.amount_refunded,
+          payment_intent: charge.payment_intent
+        }, null);
         break;
       }
 
@@ -138,7 +177,7 @@ export async function POST(req: NextRequest) {
     }
   } catch (err) {
     console.error("[webhook] Handler error:", err);
-    // Return 500 so Stripe retries the event
+    // MONITORING: Dead-Letter Queue — Return 500 so Stripe retries the event
     return NextResponse.json(
       { error: "Internal webhook handler error" },
       { status: 500 }

@@ -30,7 +30,22 @@ const TrendingArtifacts = dynamic(() => import("@/components/marketing/TrendingA
 
 import { type Feature } from "@/components/marketing/FeaturesSection";
 import { type Testimonial } from "@/components/marketing/TestimonialsSection";
+import { Metadata } from 'next';
+import { locales } from "@/lib/get-dictionary";
 
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  
+  return {
+    metadataBase: new URL('https://www.5ivearts.com'),
+    alternates: {
+      canonical: `/${lang}`,
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `/${locale}`])
+      ),
+    },
+  };
+}
 export default async function HomePage({
   params,
 }: {

@@ -147,7 +147,14 @@
         "signupFailed": "Échec de l'inscription. Veuillez réessayer.",
         "genericError": "Un problème est survenu",
         "verifyStatusError": "Nous n'avons pas pu vérifier le statut de votre paiement. Si vous avez reçu un e-mail de confirmation, votre commande est en cours de traitement.",
-        "maxFeatured": "Maximum 3 autorisés."
+        "maxFeatured": "Maximum 3 autorisés.",
+        "stripe": {
+            "card_declined": "Votre carte a été refusée. Veuillez utiliser un autre moyen de paiement.",
+            "expired_card": "Votre carte a expiré. Veuillez vérifier la date d'expiration ou utiliser une autre carte.",
+            "incorrect_cvc": "Le code CVC est incorrect. Vérifiez au dos de votre carte.",
+            "insufficient_funds": "Votre carte ne dispose pas de fonds suffisants pour cette transaction.",
+            "processing_error": "Une erreur est survenue lors du traitement de votre carte. Réessayez dans un instant."
+        }
     },
     "success": {
         "orderConfirmed": "Commande Confirmée",

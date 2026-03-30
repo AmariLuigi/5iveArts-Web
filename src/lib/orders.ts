@@ -148,6 +148,28 @@ export async function processCompletedCheckout(
             orderId = (order as any).id;
             console.log("[orders] Order persisted:", orderId);
 
+            // ── Inventory Race-Condition Mitigation (The 'Audit' Standard) ─────────
+            // We use an atomic RPC function in Supabase to decrement stock.
+            // This prevents "double-selling" if two webhooks fire near-simultaneously.
+            for (const item of lineItems) {
+                const product = item.price?.product as Stripe.Product | undefined;
+                const productId = product?.metadata?.product_id;
+                const quantity = item.quantity ?? 1;
+                
+                if (productId) {
+                    const { error: stockError } = await supabase.rpc("decrement_stock", {
+                        row_id: productId,
+                        decrement_by: quantity
+                    });
+                    
+                    if (stockError) {
+                        console.error(`[orders-inventory] Stock decrement failed for ${productId}:`, stockError);
+                        // We continue with the order because the payment is already captured, 
+                        // but we log a critical alert for manual warehouse reconciliation.
+                    }
+                }
+            }
+
             // Record line items (only for NEW orders, installments are linked to existing items)
             for (const item of lineItems) {
                 const product = item.price?.product as Stripe.Product | undefined;

@@ -147,7 +147,14 @@
         "signupFailed": "Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.",
         "genericError": "Etwas ist schief gelaufen",
         "verifyStatusError": "Wir konnten Ihren Zahlungsstatus nicht überprüfen. Wenn Sie eine Bestätigungs-E-Mail erhalten haben, wird Ihre Bestellung bearbeitet.",
-        "maxFeatured": "Maximal 3 erlaubt."
+        "maxFeatured": "Maximal 3 erlaubt.",
+        "stripe": {
+            "card_declined": "Ihre Karte wurde abgelehnt. Bitte nutzen Sie eine andere Zahlungsmethode.",
+            "expired_card": "Ihre Karte ist abgelaufen. Bitte prüfen Sie das Ablaufdatum oder nutzen Sie eine andere Karte.",
+            "incorrect_cvc": "Der CVC-Code ist falsch. Prüfen Sie die Rückseite Ihrer Karte.",
+            "insufficient_funds": "Ihre Karte verfügt nicht über ausreichende Mittel für diese Transaktion.",
+            "processing_error": "Bei der Verarbeitung Ihrer Karte ist ein Fehler aufgetreten. Versuchen Sie es in einem Moment erneut."
+        }
     },
     "success": {
         "orderConfirmed": "Bestellung Bestätigt",

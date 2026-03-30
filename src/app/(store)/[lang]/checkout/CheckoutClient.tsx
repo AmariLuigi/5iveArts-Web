@@ -10,6 +10,7 @@ import { formatPrice } from "@/lib/products";
 import { ShippingAddress, ShippingRate, UserAddress } from "@/types";
 import { MapPin, Globe, ChevronDown, CheckCircle2, Plus } from "lucide-react";
 import axios from "axios";
+import { getStripeErrorMessage } from "@/lib/stripe-errors";
 import StripePaymentForm from "@/components/checkout/StripePaymentForm";
 import { countries } from "@/lib/countries";
 import CustomSelect from "@/components/ui/CustomSelect";
@@ -489,7 +490,10 @@ export default function CheckoutClient({
       setActiveStep(3);
     } catch (err: any) {
       console.error("[checkout] Initialization failed:", err.response?.data || err.message);
-      setRateError(err.response?.data?.error || dict.errors?.unexpectedError || "Could not initialize secure gateway. Please verify your address.");
+      
+      const errorMessage = getStripeErrorMessage(err.response?.data?.stripeError || err, dict);
+      setRateError(errorMessage);
+
       track("payment_gateway_error", {
         error: err.response?.data?.error || err.message,
         country: address.country,

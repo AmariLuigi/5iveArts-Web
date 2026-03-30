@@ -147,7 +147,14 @@
         "signupFailed": "Registratie mislukt. Probeer het opnieuw.",
         "genericError": "Er is iets misgegaan",
         "verifyStatusError": "We konden je betalingsstatus niet verifiëren. Als je een bevestigingsmail hebt ontvangen, wordt je bestelling verwerkt.",
-        "maxFeatured": "Maximaal 3 toegestaan."
+        "maxFeatured": "Maximaal 3 toegestaan.",
+        "stripe": {
+            "card_declined": "Uw kaart is geweigerd. Gebruik een andere betaalmethode.",
+            "expired_card": "Uw kaart is verlopen. Controleer de vervaldatum of gebruik een andere kaart.",
+            "incorrect_cvc": "De CVC-code is onjuist. Controleer de achterkant van uw kaart.",
+            "insufficient_funds": "Uw kaart heeft onvoldoende saldo voor deze transactie.",
+            "processing_error": "Er is een fout opgetreden bij het verwerken van uw kaart. Probeer het over een ogenblik opnieuw."
+        }
     },
     "success": {
         "orderConfirmed": "Bestelling Bevestigd",

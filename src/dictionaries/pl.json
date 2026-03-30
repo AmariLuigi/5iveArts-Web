@@ -147,7 +147,14 @@
         "signupFailed": "Rejestracja nie powiodła się. Spróbuj ponownie.",
         "genericError": "Coś poszło nie tak",
         "verifyStatusError": "Nie udało nam się zweryfikować statusu płatności. Jeśli otrzymałeś email z potwierdzeniem, Twoje zamówienie jest przetwarzane.",
-        "maxFeatured": "Maksymalnie 3 dozwolone."
+        "maxFeatured": "Maksymalnie 3 dozwolone.",
+        "stripe": {
+            "card_declined": "Twoja karta została odrzucona. Prosimy o użycie innej metody płatności.",
+            "expired_card": "Twoja karta wygasła. Sprawdź datę ważności lub użyj innej karty.",
+            "incorrect_cvc": "Kod CVC jest nieprawidłowy. Sprawdź tył swojej karty.",
+            "insufficient_funds": "Twoja karta ma niewystarczające środki na tę transakcję.",
+            "processing_error": "Wystąpił błąd podczas przetwarzania Twojej karty. Spróbuj ponownie za chwilę."
+        }
     },
     "success": {
         "orderConfirmed": "Zamówienie Potwierdzone",

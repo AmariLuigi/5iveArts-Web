@@ -147,7 +147,14 @@
         "signupFailed": "Error en el registro. Por favor, inténtelo de nuevo.",
         "genericError": "Algo salió mal",
         "verifyStatusError": "No pudimos verificar el estado de su pago. Si recibió un correo de confirmación, su pedido se está procesando.",
-        "maxFeatured": "Máximo 3 permitidos."
+        "maxFeatured": "Máximo 3 permitidos.",
+        "stripe": {
+            "card_declined": "Tu tarjeta fue rechazada. Por favor, utiliza otro método de pago.",
+            "expired_card": "Tu tarjeta ha caducado. Comprueba la fecha de caducidad o usa otra tarjeta.",
+            "incorrect_cvc": "El código CVC es incorrecto. Comprueba el reverso de tu tarjeta.",
+            "insufficient_funds": "Tu tarjeta no tiene fondos suficientes para esta transacción.",
+            "processing_error": "Ha ocurrido un error al procesar tu tarjeta. Inténtalo de nuevo en un momento."
+        }
     },
     "success": {
         "orderConfirmed": "Pedido Confirmado",

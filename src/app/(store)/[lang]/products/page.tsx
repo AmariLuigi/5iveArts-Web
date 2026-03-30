@@ -3,16 +3,24 @@ export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import ProductsClient from "./ProductsClient";
 import { fetchProductsFromDb } from "@/lib/products";
-import { getDictionary, Locale } from "@/lib/get-dictionary";
+import { getDictionary, Locale, locales } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
+import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale).catch(() => null) as any;
   
   return {
+    metadataBase: new URL('https://www.5ivearts.com'),
     title: `${dict?.nav?.products || 'Shop'} — 5iveArts Action Figures`,
-    description: dict?.products?.subtitle || "Browse all hand-painted and 3D-printed action figures from 5iveArts."
+    description: dict?.products?.subtitle || "Browse all hand-painted and 3D-printed action figures from 5iveArts.",
+    alternates: {
+      canonical: `/${lang}/products`,
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `/${locale}/products`])
+      ),
+    },
   };
 }
 

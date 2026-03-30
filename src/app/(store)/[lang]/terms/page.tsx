@@ -1,9 +1,20 @@
-import { getDictionary, Locale } from "@/lib/get-dictionary";
+import { getDictionary, Locale, locales } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
 import AmbientBackground from "@/components/ui/AmbientBackground";
+import { Metadata } from 'next';
 
-import { locales } from "@/lib/get-dictionary";
-
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return {
+    metadataBase: new URL('https://www.5ivearts.com'),
+    alternates: {
+      canonical: `/${lang}/terms`,
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `/${locale}/terms`])
+      ),
+    },
+  };
+}
 export async function generateStaticParams() {
     return locales.map((lang) => ({ lang }));
 }

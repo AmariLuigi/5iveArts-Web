@@ -138,18 +138,23 @@ export async function POST(req: NextRequest) {
   }
 
   let baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.5ivearts.com";
-  if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
-
   // ── Create Stripe Checkout Session with embedded UI ───────────────────────
   try {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
+
+    // SECURITY: Using Idempotency Key to prevent duplicate requests from network jitter
+    const idempotencyKey = `session_${address.email}_${Date.now().toString().slice(0, -3)}`;
 
     const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       ui_mode: "custom",
       line_items: lineItems,
       customer_email: address.email,
+      automatic_tax: { enabled: true }, // REGULATORY: Automated jurisdictional tax calculation
+      shipping_address_collection: {
+        allowed_countries: ["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"],
+      },
       metadata: {
         shipping_service_id: isCustom ? "" : rawRate.service_id,
         shipping_service_name: isCustom ? "TBD (Paid on delivery)" : `${matchedRate.carrier_name} — ${matchedRate.service_name}`,
@@ -167,8 +172,12 @@ export async function POST(req: NextRequest) {
         payment_type: paymentType,
         scale: items[0]?.selectedScale || "",
         complexity_factor: String(items[0]?.product.complexityFactor || "1.0"),
+        tos_accepted: "true",
+        legal_version: "2026-03-30",
       },
       return_url: `${baseUrl}/${lang}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+    }, {
+      idempotencyKey,
     });
 
     return NextResponse.json({ clientSecret: session.client_secret });

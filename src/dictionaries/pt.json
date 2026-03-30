@@ -147,7 +147,14 @@
         "signupFailed": "Falha no registo. Tente novamente.",
         "genericError": "Algo correu mal",
         "verifyStatusError": "Não foi possível verificar o estado do seu pagamento. Se recebeu um e-mail de confirmação, o seu pedido está a ser processado.",
-        "maxFeatured": "Máximo de 3 permitidos."
+        "maxFeatured": "Máximo de 3 permitidos.",
+        "stripe": {
+            "card_declined": "O seu cartão foi recusado. Por favor, utilize um método de pagamento diferente.",
+            "expired_card": "O seu cartão expirou. Verifique a data de validade ou utilize outro cartão.",
+            "incorrect_cvc": "O código CVC está incorreto. Verifique o verso do seu cartão.",
+            "insufficient_funds": "O seu cartão tem fundos insuficientes para esta transação.",
+            "processing_error": "Ocorreu um erro ao processar o seu cartão. Tente novamente dentro de momentos."
+        }
     },
     "success": {
         "orderConfirmed": "Pedido Confirmado",

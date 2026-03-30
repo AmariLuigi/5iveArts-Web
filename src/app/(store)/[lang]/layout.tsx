@@ -18,52 +18,41 @@ const inter = Inter({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://5ivearts.com'),
-  title: {
-    default: "5iveArts — Hand-Painted & 3D-Printed Action Figures",
-    template: "%s | 5iveArts"
-  },
-  icons: {
-    icon: "/favicon.ico",
-  },
-  description:
-    "Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art. Shop online with fast shipping.",
-  openGraph: {
-    type: 'website',
-    siteName: '5iveArts',
-    title: '5iveArts — Hand-Painted & 3D-Printed Action Figures',
-    description: 'Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art.',
-    url: 'https://5ivearts.com',
-    images: [
-      {
-        url: '/logo.svg', // Use logo since we don't have a large OG image yet
-        width: 1200,
-        height: 630,
-        alt: '5iveArts',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: '5iveArts — Hand-Painted & 3D-Printed Action Figures',
-    description: 'Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art.',
-    images: ['/logo.svg'],
-  },
-  alternates: {
-    canonical: './',
-    languages: {
-      'en': '/en',
-      'it': '/it',
-      'es': '/es',
-      'fr': '/fr',
-      'de': '/de',
-      'pt': '/pt',
-      'nl': '/nl',
-      'pl': '/pl',
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+
+  return {
+    metadataBase: new URL('https://www.5ivearts.com'),
+    title: {
+      default: "5iveArts — Hand-Painted & 3D-Printed Action Figures",
+      template: "%s | 5iveArts"
     },
-  },
-};
+    icons: {
+      icon: "/favicon.ico",
+    },
+    description: "Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art. Shop online with fast shipping.",
+    openGraph: {
+      type: 'website',
+      siteName: '5iveArts',
+      title: '5iveArts — Hand-Painted & 3D-Printed Action Figures',
+      description: 'Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art.',
+      url: `https://www.5ivearts.com/${lang}`,
+      images: [{ url: '/logo.svg', width: 1200, height: 630, alt: '5iveArts' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: '5iveArts — Hand-Painted & 3D-Printed Action Figures',
+      description: 'Unique hand-painted and home 3D-printed action figures, crafted with passion. Every piece is a one-of-a-kind work of art.',
+      images: ['/logo.svg'],
+    },
+    alternates: {
+      canonical: `/${lang}`,
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `/${locale}`])
+      ),
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
