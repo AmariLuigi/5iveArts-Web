@@ -6,6 +6,7 @@
 import { ShippingAddress, CartItem } from "@/types";
 import { getProductById, calculatePrice } from "@/lib/products";
 import { ProductScale, ProductFinish } from "@/types";
+import { getSiteSettings } from "@/lib/settings";
 
 // ---------------------------------------------------------------------------
 // Primitives
@@ -122,6 +123,7 @@ export async function validateCartItems(raw: unknown): Promise<ValidationResult<
     return { data: null, error: "Too many items in cart" };
   }
 
+  const settings = await getSiteSettings();
   const items: CartItem[] = [];
   for (const entry of raw) {
     if (!entry || typeof entry !== "object") {
@@ -159,7 +161,7 @@ export async function validateCartItems(raw: unknown): Promise<ValidationResult<
       serverProduct.price, 
       scale, 
       finish, 
-      undefined, 
+      settings.pricing, 
       serverProduct.complexityFactor
     );
 
