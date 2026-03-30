@@ -207,6 +207,7 @@ export default function HeroSection({
                 poster={s.poster}
                 muted
                 playsInline
+                autoPlay={i === 0}
                 loop={false}
                 preload={i === 0 ? "auto" : "none"}
                 aria-hidden="true"

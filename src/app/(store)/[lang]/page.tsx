@@ -6,6 +6,7 @@ import { getSiteSettings } from "@/lib/settings";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
+import { preload } from "react-dom";
 
 // Dynamic imports for performance optimization with skeletons
 const FeaturesSection = dynamic(() => import("@/components/marketing/FeaturesSection"), { 
@@ -64,6 +65,11 @@ export default async function HomePage({
     fetchProductsFromDb(),
     getSiteSettings()
   ]);
+
+  // Force HTTP 103 Early Hints or Preload headers for the LCP element
+  if (settings.homepage?.hero_videos?.[0]) {
+      preload(settings.homepage.hero_videos[0], { as: "video", type: "video/mp4", fetchPriority: "high" });
+  }
 
   const featuredIds = settings.homepage?.featured_product_ids || [];
   const featuredProducts = featuredIds.length > 0
