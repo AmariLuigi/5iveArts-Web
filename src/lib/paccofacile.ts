@@ -192,6 +192,10 @@ export async function createShipment(
   const dest = order.shipping_address;
   const norm = normalizeAddressForCourier(dest);
 
+  const normalizePhone = (p: string) => (p || "").replace(/[^0-9]/g, "").slice(-10);
+  const cleanFromPhone = normalizePhone(fromPhone);
+  const cleanToPhone = normalizePhone(dest.phone || fromPhone);
+
   const payload = {
     shipment_service: {
       pickup_date: new Date(Date.now() + 86400000).toISOString().split('T')[0], // Tomorrow
@@ -211,26 +215,26 @@ export async function createShipment(
       iso_code: fromCountry,
       postal_code: fromZip,
       city: fromCity,
-      header_name: "5ive Arts Studio",
-      address: fromStreet,
+      header_name: "5ive Arts Studio".slice(0, 30),
+      address: fromStreet.slice(0, 35),
       StateOrProvinceCode: fromProvince,
-      phone: fromPhone,
+      phone: cleanFromPhone,
       email: fromEmail,
       note: "Fragile items"
     },
     destination: {
       iso_code: norm.iso_code,
       postal_code: norm.postal_code,
-      city: norm.city,
-      header_name: dest.full_name,
-      address: dest.street1 + (dest.street2 ? " " + dest.street2 : ""),
+      city: norm.city.slice(0, 30),
+      header_name: (dest.full_name || "Collector").slice(0, 30),
+      address: (dest.street1 + (dest.street2 ? " " + dest.street2 : "")).slice(0, 35),
       StateOrProvinceCode: norm.ProvinceCode,
-      phone: dest.phone || "0000000000",
+      phone: cleanToPhone,
       email: dest.email || order.customer_email,
       note: ""
     },
     additional_information: {
-      reference: order.id.slice(0, 8),
+      reference: order.id.replace(/-/g, "").slice(0, 8),
       content: "Scale Figure Archive"
     }
   };

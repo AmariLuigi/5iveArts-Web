@@ -79,7 +79,11 @@ export async function POST(req: NextRequest) {
         });
 
     } catch (err: any) {
-        console.error("[api/admin/logistics/ship] Fatal Error:", err.message);
-        return NextResponse.json({ error: err.message || "Failed to process shipment" }, { status: 500 });
+        const errorDetail = err.response?.data?.message || err.message || "Failed to process shipment";
+        console.error("[api/admin/logistics/ship] Fatal Error:", errorDetail);
+        if (err.response?.data) {
+            console.error("[api/admin/logistics/ship] API Response Data:", JSON.stringify(err.response.data, null, 2));
+        }
+        return NextResponse.json({ error: errorDetail }, { status: 500 });
     }
 }
