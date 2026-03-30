@@ -42,10 +42,10 @@ export default function FAQClient({ dict }: { dict: any }) {
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-                    <a href="mailto:hello@5ivearts.com" className="hasbro-card p-6 flex flex-col items-center gap-4 hover:border-brand-yellow/20 transition-all group">
+                    <a href="mailto:studio@5ivearts.com" className="hasbro-card p-6 flex flex-col items-center gap-4 hover:border-brand-yellow/20 transition-all group">
                         <Mail className="w-6 h-6 text-neutral-700 group-hover:text-brand-yellow transition-colors" />
                         <span className="text-[10px] font-black uppercase tracking-widest text-white">{dict.faq.emailUs}</span>
-                        <span className="text-[9px] font-bold text-neutral-500 lowercase">hello@5ivearts.com</span>
+                        <span className="text-[9px] font-bold text-neutral-500 lowercase">studio@5ivearts.com</span>
                     </a>
                     <div className="hasbro-card p-6 flex flex-col items-center gap-4 border-dashed border-neutral-900 opacity-50 cursor-not-allowed">
                         <MessageSquare className="w-6 h-6 text-neutral-700" />
