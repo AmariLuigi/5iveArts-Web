@@ -151,9 +151,6 @@ export async function POST(req: NextRequest) {
       ui_mode: "custom",
       line_items: lineItems,
       customer_email: address.email,
-      shipping_address_collection: {
-        allowed_countries: ["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"],
-      },
       metadata: {
         shipping_service_id: isCustom ? "" : rawRate.service_id,
         shipping_service_name: isCustom ? "TBD (Paid on delivery)" : `${matchedRate.carrier_name} — ${matchedRate.service_name}`,
