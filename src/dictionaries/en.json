@@ -27,7 +27,7 @@
     "homepage": {
         "featuredHeading": "Premium 3D-Printed Resin Figure Collections",
         "viewAll": "View All Pieces",
-        "testimonialsHeading": "Trusted by European Collectors",
+        "testimonialsHeading": "Trusted by Regional Collectors",
         "reviewsLabel": "Verified Reviews",
         "collectorChoice": "Collector's Choice",
         "premiumSeries": "Premium Series",
@@ -74,7 +74,7 @@
         "item": "item",
         "items": "items",
         "secureCheckout": "Secure Checkout",
-        "insuredShipping": "Insured European Shipping",
+        "insuredShipping": "Insured Regional Shipping (EU, UK, CH)",
         "thirtyDayReturns": "30-Day Returns",
         "orderSummary": "Order Summary",
         "calculatedAtCheckout": "Calculated at checkout",
@@ -121,8 +121,7 @@
                 "a": "Every figure starts as a high-resolution 3D print (0.025mm layer height) using industrial-grade resin. Once cured, our artists spend hours hand-painting each piece with professional acrylics and airbrush techniques, finishing with a museum-quality UV-resistant varnish."
             },
             {
-                "q": "Do you ship European?",
-                "a": "Yes! We ship from our studio in Italy to collectors European. We use insured European couriers to ensure your masterpiece arrives safely."
+                "a": "Yes! We ship from our studio in Italy to collectors across Europe, including the UK and Switzerland. We use insured regional couriers to ensure your masterpiece arrives safely."
             },
             {
                 "q": "How long does production take?",
@@ -229,7 +228,7 @@
         "validNumber": "(Valid Number)",
         "includeCode": "(Include + code)",
         "continueBtn": "Continue to Shipping Options",
-        "recalculating": "Recalculating European Logistics…",
+        "recalculating": "Recalculating Regional Logistics…",
         "backBtn": "Back to Delivery",
         "changeShipping": "Change Shipping Option",
         "connecting": "Connecting to secure payment gateway. Handshaking with PCI-DSS protocols...",
@@ -260,7 +259,7 @@
         "description": "Description",
         "specifications": "Features & Specifications",
         "encryptedCheckout": "Encrypted Checkout via Stripe",
-        "insuredShipping": "Insured European Shipping",
+        "insuredShipping": "Insured Shipping (EU, UK, CH)",
         "confirmed": "Confirmed",
         "addToCollection": "Add to Arsenal",
         "instantCheckout": "Instant Buy",
@@ -280,7 +279,7 @@
         },
         {
             "label": "Insured European Shipping",
-            "sub": "European delivery"
+            "sub": "Regional delivery"
         },
         {
             "label": "Handcrafted",
@@ -398,23 +397,23 @@
         "daysEst": "Days Est."
     },
     "footer": {
-        "logistics": "European Artisan Craftsmanship Logistics Enabled",
+        "logistics": "Regional Artisan Craftsmanship Logistics Enabled",
         "rights": "© 2026 5iveArts Collector Series. All rights reserved.",
         "privacy": "Privacy",
         "terms": "Terms",
-        "description": "Boutique studio for premium hand-painted and 3D-printed resin figures. We ship museum-grade collectibles to enthusiasts European from our Palermo workshop.",
+        "description": "Boutique studio for premium hand-painted and 3D-printed resin figures. We ship museum-grade collectibles to enthusiasts across Europe, UK, and Switzerland from our Palermo workshop.",
         "seoAbout": "5iveArts is a premier boutique studio specializing in the creation of premium 3D-printed resin figures and hand-painted collectibles. Our artisan series focuses on extreme detail, utilizing 0.025mm layer heights to ensure museum-grade quality for every figure we produce. With a European shipping network, we serve a dedicated community of collectors who value the intersection of industrial precision and handcrafted art. Every piece in our series is unique, finished with professional airbrushing and UV-resistant varnishes to protect your investment for years to come."
     },
     "shipping": {
         "protocol": "Logistics Protocol",
-        "title": "European Shipping",
+        "title": "Europe, UK & Swiss Shipping",
         "subtitle": "Secure, insured, and tracked delivery for every masterpiece in the collection.",
         "insuredTitle": "Insured Fulfillment",
         "insuredText": "Every figure is packed using custom-fit high-density foam and double-walled collector boxes. We insure every shipment against loss or damage during transit.",
         "dynamicTitle": "Dynamic Logistics",
         "dynamicText": "We use Paccofacile to provide real-time, insured shipping rates from premium carriers like UPS, DHL, and FedEx. All shipments are tracked via WhereParcel. Your specific rate is calculated during checkout based on your exact location and the parcel's dimensions.",
         "freeTierTitle": "Free Shipping Tier",
-        "freeTierText": "We reward serious collectors. All orders over {amount} automatically qualify for FREE STANDARD SHIPPING, regardless of your location.",
+        "freeTierText": "We reward serious collectors. All orders over {amount} automatically qualify for FREE STANDARD SHIPPING, regardless of your location in our supported regions.",
         "zonesTitle": "Estimated Transit Times",
         "region": "Region",
         "standard": "Standard",
@@ -422,7 +421,7 @@
         "estTime": "Est. Time",
         "trackingInfo": "Live European Tracking Provided on All Orders",
         "italy": "Italy",
-        "eu": "European Union",
+        "eu": "Europe (EU, UK, CH)",
         "days1_3": "1-3 Days",
         "days3_5": "3-5 Days",
         "carrierActive": "European Carrier Network Active"

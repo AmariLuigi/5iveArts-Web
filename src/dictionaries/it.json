@@ -27,7 +27,7 @@
     "homepage": {
         "featuredHeading": "Collezioni Premium di Figure in Resina Stampate in 3D",
         "viewAll": "Scopri Tutti i Pezzi",
-        "testimonialsHeading": "Apprezzato da Collezionisti Europeani",
+        "testimonialsHeading": "Apprezzato dai Collezionisti Regionali",
         "reviewsLabel": "Recensioni dei Collezionisti",
         "collectorChoice": "Scelta del Collezionista",
         "premiumSeries": "Serie Premium",
@@ -74,7 +74,7 @@
         "item": "articolo",
         "items": "articoli",
         "secureCheckout": "Pagamento Sicuro",
-        "insuredShipping": "Spedizione Europea Assicurata",
+        "insuredShipping": "Spedizione Regionale Assicurata (EU, UK, CH)",
         "thirtyDayReturns": "Resi entro 30 giorni",
         "orderSummary": "Riepilogo Ordine",
         "calculatedAtCheckout": "Calcolato al checkout",
@@ -121,8 +121,8 @@
                 "a": "Ogni figura nasce come una stampa 3D ad alta risoluzione (spessore dello strato di 0,025 mm) utilizzando resina di qualità industriale. Una volta polimerizzata, i nostri artisti passano ore a dipingere a mano ogni pezzo con acrilici professionali e tecniche di aerografo, rifinendo con una vernice resistente ai raggi UV di qualità museale."
             },
             {
-                "q": "Spedite a livello internazionale?",
-                "a": "Sì! Spediamo dal nostro studio in Italia ai collezionisti di tutto il mondo. Utilizziamo corrieri Europeani assicurati per garantire che il tuo capolavoro arrivi in sicurezza."
+                "q": "Spedite in Europa?",
+                "a": "Sì! Spediamo dal nostro studio in Italia ai collezionisti in tutta Europa, inclusi Regno Unito e Svizzera. Utilizziamo corrieri regionali assicurati per garantire che il tuo capolavoro arrivi in modo sicuro."
             },
             {
                 "q": "Quanto tempo richiede la produzione?",
@@ -229,7 +229,7 @@
         "validNumber": "(Numero valido)",
         "includeCode": "(Includere il prefisso +)",
         "continueBtn": "Continua con le opzioni di spedizione",
-        "recalculating": "Ricalcolo Logistica Europea…",
+        "recalculating": "Ricalcolo Logistica Regionale…",
         "backBtn": "Torna alla Consegna",
         "changeShipping": "Cambia opzione di spedizione",
         "connecting": "Connessione al gateway di pagamento sicuro in corso. Handshake con i protocolli PCI-DSS...",
@@ -260,7 +260,7 @@
         "description": "Descrizione",
         "specifications": "Caratteristiche & Specifiche",
         "encryptedCheckout": "Pagamento Criptato via Stripe",
-        "insuredShipping": "Spedizione Europea Assicurata",
+        "insuredShipping": "Spedizione Assicurata (EU, UK, CH)",
         "confirmed": "Confermato",
         "addToCollection": "Aggiungi all'Arsenale",
         "instantCheckout": "Acquisto Rapido",
@@ -398,23 +398,23 @@
         "daysEst": "gg Stimati"
     },
     "footer": {
-        "logistics": "Logistica Artigianale Europea Abilitata",
+        "logistics": "Logistica Artigianale Regionale Abilitata",
         "rights": "© 2026 5iveArts Collector Series. Tutti i diritti riservati.",
         "privacy": "Privacy",
         "terms": "Termini",
-        "description": "Studio boutique per figure in resina premium dipinte a mano e stampate in 3D. Spediamo oggetti da collezione di qualità museale in tutto il mondo dal nostro laboratorio di Palermo.",
+        "description": "Studio boutique per figure in resina premium dipinte a mano e stampate in 3D. Spediamo oggetti da collezione di qualità museale in tutta Europa, Regno Unito e Svizzera dal nostro laboratorio di Palermo.",
         "seoAbout": "5iveArts è uno studio boutique d'eccellenza specializzato nella creazione di figure in resina premium stampate in 3D e oggetti da collezione dipinti a mano. La nostra serie artigianale punta su un dettaglio estremo, utilizzando altezze di strato di 0,025 mm per garantire una qualità museale in ogni figura prodotta. Con una rete di spedizione Europea, serviamo una comunità dedicata di collezionisti che apprezzano l'incontro tra precisione industriale e arte fatta a mano. Ogni pezzo della nostra serie è unico, rifinito con tecniche di aerografia professionale e vernici resistenti ai raggi UV per proteggere il tuo investimento nel tempo."
     },
     "shipping": {
         "protocol": "Protocollo Logistica",
-        "title": "Spedizione Europea",
+        "title": "Spedizione Europa, UK e Svizzera",
         "subtitle": "Consegna sicura, assicurata e tracciata per ogni capolavoro della collezione.",
         "insuredTitle": "Adempimento Assicurato",
         "insuredText": "Ogni figura è imballata utilizzando schiuma ad alta densità su misura e scatole da collezione a doppia parete. Assicuriamo ogni spedizione contro smarrimento o danni durante il trasporto.",
         "dynamicTitle": "Logistica Dinamica",
         "dynamicText": "Utilizziamo Paccofacile per fornire tariffe di spedizione assicurate in tempo reale da corrieri premium come UPS, DHL e FedEx. Tutte le spedizioni vengono tracciate Europea tramite WhereParcel. La tua tariffa specifica viene calcolata durante il checkout in base alla tua posizione esatta e alle dimensioni del pacco.",
         "freeTierTitle": "Livello Spedizione Gratuita",
-        "freeTierText": "Premiamo i collezionisti seri. Tutti gli ordini superiori a {amount} si qualificano automaticamente per la SPEDIZIONE STANDARD GRATUITA, indipendentemente dalla posizione.",
+        "freeTierText": "Premiamo i collezionisti seri. Tutti gli ordini superiori a {amount} si qualificano automaticamente per la SPEDIZIONE STANDARD GRATUITA, indipendentemente dalla posizione nelle regioni supportate.",
         "zonesTitle": "Tempi di Transito Stimati",
         "region": "Regione",
         "standard": "Standard",
@@ -422,7 +422,7 @@
         "estTime": "Tempo Stimato",
         "trackingInfo": "Tracciamento Europea Live Fornito su Tutti gli Ordini",
         "italy": "Italia",
-        "eu": "Unione Europea",
+        "eu": "Europa (EU, UK, CH)",
         "days1_3": "1-3 Giorni",
         "days3_5": "3-5 Giorni",
         "carrierActive": "Rete Europea Corrieri Attiva"
