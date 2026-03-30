@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { formatPrice } from "@/lib/products";
-import { ChevronRight, Filter, Search, Inbox, ChevronDown, AlertCircle, Sparkles, Truck, Package, CheckCircle2 } from "lucide-react";
+import { ChevronRight, Filter, Search, Inbox, ChevronDown, AlertCircle, Sparkles, Truck, Package, CheckCircle2, Archive } from "lucide-react";
 import Link from "next/link";
 import CustomSelect from "@/components/ui/CustomSelect";
 
@@ -10,12 +10,12 @@ interface OrdersListClientProps {
     initialOrders: any[];
 }
 
-type TabType = 'all' | 'action' | 'active' | 'completed';
+type TabType = 'all' | 'action' | 'active' | 'completed' | 'archived';
 
 export default function OrdersListClient({ initialOrders }: OrdersListClientProps) {
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
-    const [activeTab, setActiveTab] = useState<TabType>('all');
+    const [activeTab, setActiveTab] = useState<TabType>('active');
 
     const needsAction = (order: any) => {
         const s = order.status;
@@ -44,6 +44,7 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
             if (activeTab === 'action') matchesTab = needsAction(o);
             else if (activeTab === 'active') matchesTab = !['delivered', 'cancelled', 'refunded'].includes(o.status);
             else if (activeTab === 'completed') matchesTab = o.status === 'delivered';
+            else if (activeTab === 'archived') matchesTab = ['cancelled', 'refunded'].includes(o.status);
 
             return matchesSearch && matchesStatus && matchesTab;
         });
@@ -53,6 +54,8 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
         return {
             action: initialOrders.filter(needsAction).length,
             active: initialOrders.filter(o => !['delivered', 'cancelled', 'refunded'].includes(o.status)).length,
+            completed: initialOrders.filter(o => o.status === 'delivered').length,
+            archived: initialOrders.filter(o => ['cancelled', 'refunded'].includes(o.status)).length,
             all: initialOrders.length
         };
     }, [initialOrders]);
@@ -94,7 +97,8 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
                     { id: 'all', label: 'Total Logs', value: stats.all, icon: Inbox },
                     { id: 'action', label: 'Action Required', value: stats.action, icon: AlertCircle, color: 'text-orange-500', alert: stats.action > 0 },
                     { id: 'active', label: 'Active Deployments', value: stats.active, icon: Sparkles },
-                    { id: 'completed', label: 'Secured', value: stats.all - stats.active - (initialOrders.filter(o => ['cancelled', 'refunded'].includes(o.status)).length), icon: CheckCircle2 }
+                    { id: 'completed', label: 'Secured', value: stats.completed, icon: CheckCircle2 },
+                    { id: 'archived', label: 'Voided Logic', value: stats.archived, icon: Archive }
                 ].map((tab) => (
                     <button
                         key={tab.id}
@@ -116,11 +120,11 @@ export default function OrdersListClient({ initialOrders }: OrdersListClientProp
             </div>
 
             {/* Search & Filter Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-y border-white/5">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-y border-white/5 relative z-50">
                 <div className="flex items-center gap-6">
                     <Filter className="w-4 h-4 text-brand-yellow" />
                     <div className="flex gap-2">
-                        {['all', 'action', 'active', 'completed'].map((t) => (
+                        {['active', 'action', 'completed', 'archived', 'all'].map((t) => (
                             <button
                                 key={t}
                                 onClick={() => setActiveTab(t as TabType)}

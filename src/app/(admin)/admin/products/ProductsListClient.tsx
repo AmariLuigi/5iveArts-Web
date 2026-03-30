@@ -84,7 +84,7 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
             {/* ... */}
 
             {/* Search & Filter Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-end gap-4 overflow-x-auto pb-4 md:pb-0">
+            <div className="flex flex-col md:flex-row md:items-center justify-end gap-4 pb-4 md:pb-0 relative z-50">
                 <div className="relative group min-w-[300px] flex-1">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600 group-focus-within:text-brand-yellow transition-colors" />
                     <input
