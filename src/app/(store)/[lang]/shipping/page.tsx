@@ -5,7 +5,8 @@ import { getSiteSettings } from "@/lib/settings";
 import { formatPrice } from "@/lib/products";
 import { Metadata } from "next";
 
-export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const s = dict.shipping;
     return {
@@ -15,10 +16,11 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: L
 }
 
 export default async function ShippingPage({
-    params: { lang },
+    params,
 }: {
-    params: { lang: Locale };
+    params: Promise<{ lang: Locale }>;
 }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const settings = await getSiteSettings();
     const thresholdCents = settings.logistics?.free_shipping_threshold_cents ?? 25000;

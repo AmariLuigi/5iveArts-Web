@@ -2,14 +2,10 @@ import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
 import AmbientBackground from "@/components/ui/AmbientBackground";
 
+import { locales } from "@/lib/get-dictionary";
+
 export async function generateStaticParams() {
-    return [
-        { lang: "en" },
-        { lang: "it" },
-        { lang: "es" },
-        { lang: "fr" },
-        { lang: "de" },
-    ];
+    return locales.map((lang) => ({ lang }));
 }
 
 export default async function PrivacyPage({
