@@ -138,6 +138,17 @@ export async function POST(req: NextRequest) {
   }
 
   let baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.5ivearts.com";
+
+  // ── TEST MODE SECURITY ────────────────────────────────────────────────────
+  const totalChargeCents = lineItems.reduce((acc, item: any) => acc + (item.price_data.unit_amount * item.quantity), 0);
+  if (totalChargeCents > 100) {
+    console.warn(`[checkout] Blocked Stripe transaction of €${(totalChargeCents/100).toFixed(2)} exceeding €1.00 safety limit.`);
+    return NextResponse.json(
+      { error: "TEST MODE SECURITY: Transactions over €1.00 are temporarily blocked to protect your funds during live testing." },
+      { status: 400 }
+    );
+  }
+
   // ── Create Stripe Checkout Session with embedded UI ───────────────────────
   try {
     const supabase = await createClient();
