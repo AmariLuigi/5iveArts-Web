@@ -88,18 +88,32 @@ export default function Navbar({ dict, lang }: NavbarProps) {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-white">
-            <Link href={`/${lang}/products`} className="hover:text-brand-yellow transition-all flex items-center gap-2">
-              <span className="w-1 h-1 rounded-full bg-white/10 group-hover:bg-brand-yellow transition-all" />
+          <nav className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-widest transition-all">
+            <Link 
+              href={`/${lang}/products`} 
+              className={`flex items-center gap-2 transition-all duration-300 ${pathname?.includes('/products') ? 'text-white' : 'text-white/40 hover:text-brand-yellow'}`}
+            >
+              <span className={`w-1 h-1 rounded-full transition-all duration-300 ${pathname?.includes('/products') ? 'bg-brand-yellow shadow-[0_0_8px_rgba(255,159,0,0.8)] scale-125' : 'bg-transparent'}`} />
               {dict.nav.products}
             </Link>
-            <Link href={`/${lang}/faq`} className="hover:text-brand-yellow transition-all">
+            <Link 
+              href={`/${lang}/faq`} 
+              className={`flex items-center gap-2 transition-all duration-300 ${pathname?.includes('/faq') ? 'text-white' : 'text-white/40 hover:text-brand-yellow'}`}
+            >
+              <span className={`w-1 h-1 rounded-full transition-all duration-300 ${pathname?.includes('/faq') ? 'bg-brand-yellow shadow-[0_0_8px_rgba(255,159,0,0.8)] scale-125' : 'bg-transparent'}`} />
               {dict.nav.faq}
             </Link>
-            <Link href={`/${lang}/shipping`} className="hover:text-brand-yellow transition-all">
+            <Link 
+              href={`/${lang}/shipping`} 
+              className={`flex items-center gap-2 transition-all duration-300 ${pathname?.includes('/shipping') ? 'text-white' : 'text-white/40 hover:text-brand-yellow'}`}
+            >
+              <span className={`w-1 h-1 rounded-full transition-all duration-300 ${pathname?.includes('/shipping') ? 'bg-brand-yellow shadow-[0_0_8px_rgba(255,159,0,0.8)] scale-125' : 'bg-transparent'}`} />
               {dict.nav.shipping}
             </Link>
-            <Link href={`/${lang}/custom-order`} className="px-3 py-1 bg-brand-yellow/10 border border-brand-yellow/20 rounded-full text-brand-yellow hover:bg-brand-yellow/20 transition-all">
+            <Link 
+              href={`/${lang}/custom-order`} 
+              className={`px-3 py-1 border transition-all duration-300 rounded-full ${pathname?.includes('/custom-order') ? 'bg-brand-yellow/20 border-brand-yellow text-brand-yellow shadow-[0_0_15px_rgba(255,159,0,0.15)]' : 'bg-brand-yellow/10 border-brand-yellow/20 text-brand-yellow hover:bg-brand-yellow/20'}`}
+            >
               {dict.nav.customOrder}
             </Link>
           </nav>
@@ -227,11 +241,36 @@ export default function Navbar({ dict, lang }: NavbarProps) {
               </Link>
             ))}
           </div>
-          <div className="flex flex-col gap-6 text-[11px] font-black uppercase tracking-[0.2em] text-white">
-            <Link href={`/${lang}/products`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.products}</Link>
-            <Link href={`/${lang}/faq`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.faq}</Link>
-            <Link href={`/${lang}/shipping`} onClick={() => setMenuOpen(false)} className="hover:text-brand-yellow">{dict.nav.shipping}</Link>
-            <Link href={`/${lang}/custom-order`} onClick={() => setMenuOpen(false)} className="text-brand-yellow font-black border-t border-brand-yellow/10 pt-4 mt-2">
+          <div className="flex flex-col gap-6 text-[11px] font-black uppercase tracking-[0.2em]">
+            <Link 
+              href={`/${lang}/products`} 
+              onClick={() => setMenuOpen(false)} 
+              className={`transition-colors flex items-center gap-3 ${pathname?.includes('/products') ? 'text-brand-yellow' : 'text-white'}`}
+            >
+              {pathname?.includes('/products') && <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow shadow-[0_0_10px_rgba(255,159,0,0.8)]" />}
+              {dict.nav.products}
+            </Link>
+            <Link 
+              href={`/${lang}/faq`} 
+              onClick={() => setMenuOpen(false)} 
+              className={`transition-colors flex items-center gap-3 ${pathname?.includes('/faq') ? 'text-brand-yellow' : 'text-white'}`}
+            >
+              {pathname?.includes('/faq') && <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow shadow-[0_0_10px_rgba(255,159,0,0.8)]" />}
+              {dict.nav.faq}
+            </Link>
+            <Link 
+              href={`/${lang}/shipping`} 
+              onClick={() => setMenuOpen(false)} 
+              className={`transition-colors flex items-center gap-3 ${pathname?.includes('/shipping') ? 'text-brand-yellow' : 'text-white'}`}
+            >
+              {pathname?.includes('/shipping') && <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow shadow-[0_0_10px_rgba(255,159,0,0.8)]" />}
+              {dict.nav.shipping}
+            </Link>
+            <Link 
+              href={`/${lang}/custom-order`} 
+              onClick={() => setMenuOpen(false)} 
+              className={`font-black border-t border-brand-yellow/10 pt-4 mt-2 transition-colors ${pathname?.includes('/custom-order') ? 'text-brand-yellow' : 'text-white/50'}`}
+            >
               {dict.nav.customOrder}
             </Link>
           </div>
