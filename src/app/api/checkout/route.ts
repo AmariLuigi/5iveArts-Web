@@ -151,7 +151,6 @@ export async function POST(req: NextRequest) {
       ui_mode: "custom",
       line_items: lineItems,
       customer_email: address.email,
-      automatic_tax: { enabled: true }, // REGULATORY: Automated jurisdictional tax calculation
       shipping_address_collection: {
         allowed_countries: ["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"],
       },
