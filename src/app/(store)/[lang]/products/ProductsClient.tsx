@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 /**
  * REUSABLE: Horizontal Scroll Container with Arrow Controls
@@ -241,9 +242,11 @@ function ProductsContent({
         {/* Row 1: Base Categories */}
         <HorizontalNexus label="Type /">
           {taxonomy.main.map(cat => (
-            <button
+            <Link
               key={cat}
+              href={cat === "all" ? `/${lang}/products` : `/${lang}/products?category=${encodeURIComponent(cat)}`}
               onClick={() => handleCategorySelect(cat)}
+              scroll={false}
               className={`px-4 py-2 shrink-0 text-[10px] uppercase font-black tracking-widest rounded-sm transition-all border ${
                 activeCategory === cat 
                   ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
@@ -251,7 +254,7 @@ function ProductsContent({
               }`}
             >
               {cat === "all" ? dict.products.all : cat}
-            </button>
+            </Link>
           ))}
         </HorizontalNexus>
 
@@ -259,9 +262,11 @@ function ProductsContent({
         {taxonomy.franchise.length > 0 && (
           <HorizontalNexus label="Franchise /">
             {taxonomy.franchise.map(fan => (
-              <button
+              <Link
                 key={fan}
+                href={`/${lang}/products?category=${encodeURIComponent(fan)}`}
                 onClick={() => handleCategorySelect(fan)}
+                scroll={false}
                 className={`px-4 py-2 shrink-0 text-[10px] uppercase font-black tracking-widest rounded-sm transition-all border ${
                   activeCategory === fan 
                     ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
@@ -269,7 +274,7 @@ function ProductsContent({
                 }`}
               >
                 {fan}
-              </button>
+              </Link>
             ))}
           </HorizontalNexus>
         )}
@@ -278,9 +283,11 @@ function ProductsContent({
         {taxonomy.subcategory.length > 0 && (
           <HorizontalNexus label="Subject /">
             {taxonomy.subcategory.map(sub => (
-              <button
+              <Link
                 key={sub}
+                href={`/${lang}/products?category=${encodeURIComponent(sub)}`}
                 onClick={() => handleCategorySelect(sub)}
+                scroll={false}
                 className={`px-4 py-2 shrink-0 text-[10px] uppercase font-black tracking-widest rounded-sm transition-all border ${
                   activeCategory === sub 
                     ? "bg-brand-yellow text-black border-brand-yellow shadow-[0_0_15px_rgba(255,215,0,0.3)]" 
@@ -288,7 +295,7 @@ function ProductsContent({
                 }`}
               >
                 {sub}
-              </button>
+              </Link>
             ))}
           </HorizontalNexus>
         )}

@@ -5,7 +5,11 @@ import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
+  const dict = await getDictionary(lang as Locale).catch(() => null) as any;
+
   return {
+    title: `${dict?.faq?.title || 'F.A.Q & Contact'} — 5iveArts`,
+    description: dict?.faq?.subtitle || "Everything you need to know about our artisan process.",
     metadataBase: new URL('https://www.5ivearts.com'),
     alternates: {
       canonical: `/${lang}/faq`,

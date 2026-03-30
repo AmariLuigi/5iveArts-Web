@@ -6,7 +6,11 @@ import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
+  const dict = await getDictionary(lang as Locale).catch(() => null) as any;
+  
   return {
+    title: `${dict?.custom_order?.hero_title || 'Custom Orders'} — 5iveArts`,
+    description: dict?.custom_order?.hero_subtitle || "Transform your digital dreams into physical masterpieces.",
     metadataBase: new URL('https://www.5ivearts.com'),
     alternates: {
       canonical: `/${lang}/custom-order`,

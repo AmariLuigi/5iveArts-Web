@@ -35,8 +35,11 @@ import { locales } from "@/lib/get-dictionary";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
+  const dict = await getDictionary(lang as Locale).catch(() => null) as any;
   
   return {
+    title: dict?.home?.title || "5iveArts - Artisan Precision",
+    description: dict?.home?.hero_subtitle || "Every figure is a unique piece, sculpted with passion and finished with meticulous care.",
     metadataBase: new URL('https://www.5ivearts.com'),
     alternates: {
       canonical: `/${lang}`,

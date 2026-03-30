@@ -16,6 +16,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: 'https://5ivearts.com/sitemap.xml',
+    sitemap: 'https://www.5ivearts.com/sitemap.xml',
   };
 }
