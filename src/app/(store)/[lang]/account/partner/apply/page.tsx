@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
-import { ArrowLeft, Send, Instagram, Twitter, Youtube, Globe, Info, Search } from "lucide-react";
+import { ArrowLeft, Send, Globe, Info, Search } from "lucide-react";
+import { InstagramIcon, TwitterIcon, YoutubeIcon } from "@/components/ui/BrandIcons";
 import Link from "next/link";
 import PartnerApplyForm from "./PartnerApplyForm";
 
@@ -29,7 +30,7 @@ export default async function PartnerApplyPage({
         .select("is_partner")
         .eq("id", user.id)
         .single();
-    
+
     if (profile?.is_partner) {
         redirect(`/${lang}/account/partner`);
     }
@@ -44,7 +45,7 @@ export default async function PartnerApplyPage({
     return (
         <div className="min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto">
-                <Link 
+                <Link
                     href={`/${lang}/account`}
                     className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-neutral-500 hover:text-brand-yellow mb-12 transition-all group"
                 >
@@ -85,14 +86,14 @@ export default async function PartnerApplyPage({
 
                 <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 pt-20 border-t border-white/5 opacity-50 grayscale hover:grayscale-0 transition-all">
                     <div className="space-y-3">
-                        <Instagram className="w-5 h-5 text-neutral-600" />
+                        <InstagramIcon className="w-5 h-5 text-neutral-600" />
                         <p className="text-[9px] font-black uppercase text-white tracking-widest">Global Reach</p>
                         <p className="text-[10px] font-bold text-neutral-600 leading-relaxed uppercase">
                             Connect your community to premium dioramas and figures.
                         </p>
                     </div>
                     <div className="space-y-3">
-                        <Youtube className="w-5 h-5 text-neutral-600" />
+                        <YoutubeIcon className="w-5 h-5 text-neutral-600" />
                         <p className="text-[9px] font-black uppercase text-white tracking-widest">Partner Commissions</p>
                         <p className="text-[10px] font-bold text-neutral-600 leading-relaxed uppercase">
                             Earn significant rewards for every referred acquisition.

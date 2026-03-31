@@ -5,17 +5,15 @@ import { approvePartnerApplication } from "@/app/actions/partner_application";
 import { 
     Check, 
     X, 
-    Instagram, 
-    Twitter, 
-    Youtube, 
-    Globe, 
-    ExternalLink, 
+    Globe,
+    ExternalLink,
     ShieldCheck, 
     Loader2,
     Calendar,
     Users,
     Mail
 } from 'lucide-react';
+import { InstagramIcon, TwitterIcon, YoutubeIcon } from '@/components/ui/BrandIcons';
 
 /**
  * Admin Table for Partner Candidacy Management.
@@ -81,13 +79,13 @@ export default function PartnerApplicationsTable({ initialData }: { initialData:
                                 <div className="flex flex-wrap gap-3">
                                     {app.social_media.instagram && (
                                         <div className="flex items-center gap-1.5 p-1 px-2 bg-white/[0.02] border border-white/5 rounded-sm">
-                                            <Instagram className="w-3 h-3 text-pink-500" />
+                                            <InstagramIcon className="w-3 h-3 text-pink-500" />
                                             <span className="text-[9px] font-black text-neutral-400 uppercase tracking-widest">{app.social_media.instagram}</span>
                                         </div>
                                     )}
                                     {app.social_media.youtube && (
                                         <div className="flex items-center gap-1.5 p-1 px-2 bg-white/[0.02] border border-white/5 rounded-sm">
-                                            <Youtube className="w-3 h-3 text-red-500" />
+                                            <YoutubeIcon className="w-3 h-3 text-red-500" />
                                             <span className="text-[9px] font-black text-neutral-400 uppercase tracking-widest">{app.social_media.youtube}</span>
                                         </div>
                                     )}

@@ -3,9 +3,6 @@
 import React, { useState } from 'react';
 import { submitPartnerApplication } from "@/app/actions/partner_application";
 import { 
-    Instagram, 
-    Twitter, 
-    Youtube, 
     Globe, 
     Send, 
     Loader2, 
@@ -13,6 +10,7 @@ import {
     AlertCircle,
     Users
 } from 'lucide-react';
+import { InstagramIcon, TwitterIcon, YoutubeIcon } from '@/components/ui/BrandIcons';
 
 /**
  * High-Fidelity Form for Partner Candidacy.
@@ -146,7 +144,7 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="relative group">
-                        <Instagram className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600 group-focus-within:text-brand-yellow transition-colors" />
+                        <InstagramIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600 group-focus-within:text-brand-yellow transition-colors" />
                         <input
                             value={formData.social.instagram}
                             onChange={(e) => setFormData({...formData, social: {...formData.social, instagram: e.target.value}})}
@@ -155,7 +153,7 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
                         />
                     </div>
                     <div className="relative group">
-                        <Twitter className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600 group-focus-within:text-brand-yellow transition-colors" />
+                        <TwitterIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600 group-focus-within:text-brand-yellow transition-colors" />
                         <input
                             value={formData.social.twitter}
                             onChange={(e) => setFormData({...formData, social: {...formData.social, twitter: e.target.value}})}
@@ -164,7 +162,7 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
                         />
                     </div>
                     <div className="relative group">
-                        <Youtube className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600 group-focus-within:text-brand-yellow transition-colors" />
+                        <YoutubeIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600 group-focus-within:text-brand-yellow transition-colors" />
                         <input
                             value={formData.social.youtube}
                             onChange={(e) => setFormData({...formData, social: {...formData.social, youtube: e.target.value}})}
