@@ -65,7 +65,7 @@ export default async function PartnerApplyPage({
                     </p>
                 </div>
 
-                {existingApp ? (
+                {existingApp && existingApp.status === 'pending' ? (
                     <div className="bg-[#050505] border border-white/5 p-12 text-center rounded-sm">
                         <div className="w-16 h-16 bg-brand-yellow/10 border border-brand-yellow/30 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_50px_-20px_var(--hasbro-yellow)]">
                             <Send className="w-6 h-6 text-brand-yellow animate-bounce" />
