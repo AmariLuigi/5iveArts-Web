@@ -23,9 +23,10 @@ export function getSupabaseAdmin() {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!url || !key) {
-    throw new Error(
-      "Missing Supabase env vars: NEXT_PUBLIC_SUPABASE_URL and/or SUPABASE_SERVICE_ROLE_KEY"
+    console.warn(
+      "[\u26A0\ufe0f SUPABASE ARCHITECTURE] Missing administrative keys. Database operations will be neutralized."
     );
+    return null as any;
   }
 
   _client = createClient<Database>(url, key, {
@@ -44,9 +45,10 @@ export function getSupabasePublic() {
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY;
 
   if (!url || !key) {
-    throw new Error(
-      "Missing Supabase env vars: NEXT_PUBLIC_SUPABASE_URL and/or NEXT_PUBLIC_SUPABASE_PUBLIC_KEY"
+    console.warn(
+      "[\u26A0\ufe0f SUPABASE ARCHITECTURE] Missing public keys. Client-side database features will be neutralized."
     );
+    return null as any;
   }
 
   return createClient<Database>(url, key);
