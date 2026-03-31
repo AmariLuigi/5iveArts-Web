@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { formatPrice } from "@/lib/products";
 import PartnerStatsChart from "@/components/account/PartnerStatsChart";
+import PartnerTagEditor from "@/components/account/PartnerTagEditor";
 
 /**
  * Premium Partner Dashboard
@@ -100,8 +101,8 @@ export default async function PartnerDashboardPage({
                                 <Megaphone className="w-4 h-4 text-brand-yellow" />
                             </div>
                             <div>
-                                <p className="text-[8px] font-black uppercase text-neutral-500 tracking-widest leading-none mb-1">Current Tag</p>
-                                <p className="text-xs font-black text-white uppercase tracking-widest">{profile.referral_code}</p>
+                                <p className="text-[8px] font-black uppercase text-neutral-500 tracking-widest leading-none mb-1.5">Current Tag</p>
+                                <PartnerTagEditor initialTag={profile.referral_code} lang={lang} />
                             </div>
                         </div>
                     </div>

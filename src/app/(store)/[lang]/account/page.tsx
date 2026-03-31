@@ -82,7 +82,7 @@ export default async function AccountPage({
                                 </p>
                             </div>
                         </div>
-                        <Link 
+                        <Link
                             href={`/${lang}/account/settings#verification`}
                             className="bg-orange-500/20 hover:bg-orange-500/30 text-orange-500 px-6 py-2 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all border border-orange-500/20 flex items-center gap-2"
                         >
@@ -101,12 +101,12 @@ export default async function AccountPage({
                             {dict.account.title}
                         </h1>
                         <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mt-2">
-                             {dict.account.databaseFor} <span className="text-white/80">{user.email}</span>
+                            {dict.account.databaseFor} <span className="text-white/80">{user.email}</span>
                         </p>
                     </div>
 
                     <div className="flex gap-3">
-                        <Link 
+                        <Link
                             href={`/${lang}/account/settings`}
                             className="bg-white/5 hover:bg-white/10 border border-white/10 px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest text-neutral-400 hover:text-white transition-all flex items-center gap-2"
                         >
@@ -114,7 +114,7 @@ export default async function AccountPage({
                             {dict.account.security}
                         </Link>
                         <form action="/api/auth/signout" method="POST">
-                            <button 
+                            <button
                                 type="submit"
                                 className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest text-red-400 transition-all"
                             >
@@ -144,7 +144,7 @@ export default async function AccountPage({
                                     <Lock className="w-3.5 h-3.5 text-neutral-800" />
                                 )}
                             </div>
-                            
+
                             <div className="space-y-4">
                                 {profile?.is_partner ? (
                                     <>
@@ -169,7 +169,7 @@ export default async function AccountPage({
                                             </div>
                                         </div>
 
-                                        <Link 
+                                        <Link
                                             href={`/${lang}/account/partner`}
                                             className="w-full mt-2 bg-brand-yellow/10 hover:bg-brand-yellow/20 border border-brand-yellow/20 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-[0.2em] text-brand-yellow text-center block transition-all"
                                         >
@@ -187,7 +187,7 @@ export default async function AccountPage({
                                                 The 5ive Arts Fellowship is evaluating your reach and artistic alignment.
                                             </p>
                                         </div>
-                                        <Link 
+                                        <Link
                                             href={`/${lang}/account/partner/apply`}
                                             className="w-full bg-white/5 border border-white/10 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-widest text-neutral-400 text-center block"
                                         >
@@ -197,11 +197,11 @@ export default async function AccountPage({
                                 ) : (
                                     <div className="py-4 space-y-4 text-center">
                                         <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-tight leading-relaxed italic">
-                                            {lang === 'pt' 
+                                            {lang === 'pt'
                                                 ? "O nosso programa de parceiros é exclusivo para criadores e curadores. Candidate-se para desbloquear comissões e ferramentas de influência."
                                                 : "Our partner program is exclusive to creators and curators. Apply to unlock commissions and influence tools."}
                                         </p>
-                                        <Link 
+                                        <Link
                                             href={`/${lang}/account/partner/apply`}
                                             className="w-full bg-brand-yellow hover:bg-brand-yellow/90 py-3 rounded-sm text-[10px] font-black uppercase tracking-[0.3em] text-black text-center block transition-all shadow-[0_0_30px_-10px_var(--hasbro-yellow)]"
                                         >
@@ -256,16 +256,15 @@ export default async function AccountPage({
                                                     <span className="text-[10px] font-black text-white uppercase tracking-widest tabular-nums">
                                                         {dict.orders.operation}{order.id.slice(0, 8).toUpperCase()}
                                                     </span>
-                                                    <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
-                                                        order.status === 'paid' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 
-                                                        'bg-brand-yellow/10 text-brand-yellow border border-brand-yellow/20'
-                                                    }`}>
+                                                    <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${order.status === 'paid' ? 'bg-green-500/10 text-green-500 border border-green-500/20' :
+                                                            'bg-brand-yellow/10 text-brand-yellow border border-brand-yellow/20'
+                                                        }`}>
                                                         {(dict.orders as any)[order.status] || order.status}
                                                     </span>
                                                 </div>
                                                 <p className="text-neutral-500 text-[9px] uppercase tracking-widest font-bold">
-                                                    {dict.account.recorded} {new Date(order.created_at).toLocaleDateString(lang, { 
-                                                        year: 'numeric', month: 'long', day: 'numeric' 
+                                                    {dict.account.recorded} {new Date(order.created_at).toLocaleDateString(lang, {
+                                                        year: 'numeric', month: 'long', day: 'numeric'
                                                     })}
                                                 </p>
                                             </div>
@@ -308,8 +307,8 @@ export default async function AccountPage({
                                                         </div>
                                                     )}
                                                 </div>
-                                                
-                                                <Link 
+
+                                                <Link
                                                     href={`/${lang}/account/orders/${order.id}`}
                                                     className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-neutral-400 hover:text-white transition-all group/btn"
                                                 >

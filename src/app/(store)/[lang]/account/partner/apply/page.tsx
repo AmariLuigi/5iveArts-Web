@@ -45,7 +45,7 @@ export default async function PartnerApplyPage({
     return (
         <div className="min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto">
-                <Link 
+                <Link
                     href={`/${lang}/account`}
                     className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-neutral-500 hover:text-white mb-12 transition-all group"
                 >
