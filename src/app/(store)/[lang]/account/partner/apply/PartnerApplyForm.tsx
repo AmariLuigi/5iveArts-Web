@@ -15,7 +15,7 @@ import { InstagramIcon, TwitterIcon, YoutubeIcon } from '@/components/ui/BrandIc
 /**
  * High-Fidelity Form for Partner Candidacy.
  */
-export default function PartnerApplyForm({ lang, userEmail }: { lang: string, userEmail: string }) {
+export default function PartnerApplyForm({ lang, userEmail, dict }: { lang: string, userEmail: string, dict: any }) {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -62,11 +62,11 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
                 <div className="w-16 h-16 bg-brand-yellow/10 border border-brand-yellow/30 rounded-full flex items-center justify-center mx-auto mb-8">
                     <CheckCircle2 className="w-6 h-6 text-brand-yellow" />
                 </div>
-                <h3 className="text-xl font-black uppercase tracking-widest text-white mb-2">Protocol Initiated</h3>
-                <p className="text-[10px] font-black uppercase tracking-widest text-neutral-600 mb-6">Your candidacy is in the vault.</p>
+                <h3 className="text-xl font-black uppercase tracking-widest text-white mb-2">{dict.community?.successTitle || "Protocol Initiated"}</h3>
+                <p className="text-[10px] font-black uppercase tracking-widest text-neutral-600 mb-6">{dict.account.candidacyReview}</p>
                 <div className="p-6 bg-white/5 border border-white/10 rounded-sm inline-block">
                     <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-tight leading-relaxed max-w-xs">
-                        We are reviewing your profile. You will receive an status update via email within 48-72 hours.
+                        {dict.account.evaluationDesc}
                     </p>
                 </div>
             </div>
@@ -87,17 +87,17 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
             {/* Basic Identity */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-neutral-600 ml-1">Identity Name</label>
+                    <label className="text-[9px] font-black uppercase tracking-widest text-neutral-600 ml-1">{dict.account.identityName}</label>
                     <input
                         required
                         value={formData.fullName}
                         onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                        placeholder="AUTHENTIC NAME"
+                        placeholder={dict.account.authenticName}
                         className="w-full bg-black border border-white/10 rounded-sm px-4 py-3 text-[11px] font-black uppercase tracking-widest text-white focus:outline-none focus:border-brand-yellow/50 transition-all"
                     />
                 </div>
                 <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-neutral-600 ml-1">Vault Email</label>
+                    <label className="text-[9px] font-black uppercase tracking-widest text-neutral-600 ml-1">{dict.account.vaultEmail}</label>
                     <input
                         disabled
                         value={formData.email}
@@ -111,7 +111,7 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
                 <div className="space-y-4">
                     <label className="text-[9px] font-black uppercase tracking-widest text-neutral-600 ml-1 flex items-center gap-2">
                         <Globe className="w-3 h-3" />
-                        Professional Portfolio / Website
+                        {dict.account.portfolioWebsite}
                     </label>
                     <input
                         value={formData.website}
@@ -122,12 +122,12 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-neutral-600 ml-1">Creator Bio / Mission</label>
+                    <label className="text-[9px] font-black uppercase tracking-widest text-neutral-600 ml-1">{dict.account.creatorBio}</label>
                     <textarea
                         required
                         value={formData.bio}
                         onChange={(e) => setFormData({...formData, bio: e.target.value})}
-                        placeholder="DESCRIBE YOUR AUDIENCE AND WHY YOU ARE A MATCH FOR 5IVE ARTS..."
+                        placeholder={dict.account.bioPlaceholder}
                         className="w-full bg-black border border-white/10 rounded-sm px-4 py-4 text-[10px] font-bold uppercase tracking-tight text-white focus:outline-none focus:border-brand-yellow/50 transition-all min-h-[120px] resize-none"
                     />
                 </div>
@@ -139,7 +139,7 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
                     <div className="p-1.5 bg-brand-yellow/10 rounded-full">
                         <Users className="w-3.5 h-3.5 text-brand-yellow" />
                     </div>
-                    <p className="text-[10px] font-black uppercase text-white tracking-[0.2em]">Social Protocol Mapping</p>
+                    <p className="text-[10px] font-black uppercase text-white tracking-[0.2em]">{dict.account.socialProtocol}</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -195,7 +195,7 @@ export default function PartnerApplyForm({ lang, userEmail }: { lang: string, us
                 ) : (
                     <>
                         <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                        INITIATE CANDIDACY
+                        {dict.account.initiateCandidacy}
                     </>
                 )}
             </button>

@@ -54,6 +54,7 @@ export async function getPartnerApplications() {
         const { data, error } = await supabase
             .from("partner_applications")
             .select("*, profiles!inner(email, referral_code)")
+            .eq("status", "pending")
             .order("created_at", { ascending: false });
 
         if (error) throw error;
