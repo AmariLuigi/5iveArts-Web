@@ -6,6 +6,7 @@ import { formatPrice } from "@/lib/products";
 
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
+import CopyButton from "@/components/ui/CopyButton";
 
 export const dynamic = "force-dynamic";
 
@@ -149,7 +150,10 @@ export default async function AccountPage({
                                 {profile?.is_partner ? (
                                     <>
                                         <div className="p-4 bg-white/[0.02] border border-white/5 rounded-sm">
-                                            <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-widest mb-1">{(dict.account as any).referralLink || "Referral Link"}</p>
+                                            <div className="flex items-center justify-between mb-1">
+                                                <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-widest">{(dict.account as any).referralLink || "Referral Link"}</p>
+                                                <CopyButton text={`https://5ivearts.com/?ref=${profile?.referral_code}`} />
+                                            </div>
                                             <div className="flex items-center gap-2 overflow-hidden">
                                                 <LinkIcon className="w-3 h-3 text-brand-yellow flex-shrink-0" />
                                                 <code className="text-[10px] text-white/70 font-mono truncate">

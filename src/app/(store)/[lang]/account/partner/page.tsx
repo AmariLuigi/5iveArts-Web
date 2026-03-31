@@ -11,12 +11,14 @@ import {
     ChevronRight,
     Megaphone,
     AlertCircle,
-    Info
+    Info,
+    Link as LinkIcon
 } from "lucide-react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/products";
 import PartnerStatsChart from "@/components/account/PartnerStatsChart";
 import PartnerTagEditor from "@/components/account/PartnerTagEditor";
+import CopyButton from "@/components/ui/CopyButton";
 
 /**
  * Premium Partner Dashboard
@@ -195,6 +197,25 @@ export default async function PartnerDashboardPage({
 
                     {/* Sidebar Toolkit */}
                     <div className="lg:col-span-1 space-y-10">
+                        {/* Referral Toolkit */}
+                        <div className="bg-[#0a0a0a] border border-white/5 p-8 rounded-sm">
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white">Influence Link</h3>
+                                <CopyButton text={`https://5ivearts.com/?ref=${profile.referral_code}`} />
+                            </div>
+                            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-sm mb-4">
+                                <div className="flex items-center gap-2 overflow-hidden">
+                                    <LinkIcon className="w-3 h-3 text-brand-yellow flex-shrink-0" />
+                                    <code className="text-[10px] text-white/70 font-mono truncate">
+                                        5ivearts.com/?ref={profile.referral_code}
+                                    </code>
+                                </div>
+                            </div>
+                            <p className="text-[9px] text-neutral-600 font-bold uppercase tracking-tight leading-relaxed italic">
+                                Share this signature link with your community to earn 10-20% commissions on every referred acquisition.
+                            </p>
+                        </div>
+
                         <div className="bg-[#0a0a0a] border border-white/5 p-8 rounded-sm">
                             <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white mb-6">Partner Wallet</h3>
                             <div className="space-y-6">
