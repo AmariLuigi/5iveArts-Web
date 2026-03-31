@@ -314,6 +314,12 @@
         "prepPhaseActive": "Prep Phase",
         "inTransit": "In Transit:",
         "fullLogistics": "Full Logistics Data",
+        "partnerProgram": "Partner Program",
+        "referralLink": "Referral Link",
+        "pending": "Pending",
+        "available": "Available",
+        "managePartner": "Manage Channel",
+        "backBtn": "Back to Vault",
         "settings": {
             "title": "Security Vault",
             "subtitle": "Manage your collector identity and access protocols.",

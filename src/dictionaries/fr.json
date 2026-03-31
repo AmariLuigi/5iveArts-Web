@@ -337,7 +337,13 @@
             "subtitle": "Artefacts Sous Observation",
             "emptyTitle": "Votre Liste de Souhaits est Vide",
             "emptyDescription": "Scannez nos artefacts et marquez ceux qui résonnent avec votre style pour une acquisition future."
-        }
+        },
+        "partnerProgram": "Programme de Partenaires",
+        "referralLink": "Lien de Parrainage",
+        "pending": "En Attente",
+        "available": "Disponible",
+        "managePartner": "Gérer le Canal",
+        "backBtn": "Retour au Caveau"
     },
     "orders": {
         "orderNum": "Commande #",

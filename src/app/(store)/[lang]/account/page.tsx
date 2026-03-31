@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Package, Truck, Clock, ShieldCheck, ChevronRight, LayoutDashboard, Settings, AlertTriangle, ExternalLink } from "lucide-react";
+import { Package, Truck, Clock, ShieldCheck, ChevronRight, LayoutDashboard, Settings, AlertTriangle, ExternalLink, Megaphone, Wallet, Link as LinkIcon, Edit3 } from "lucide-react";
 import { formatPrice } from "@/lib/products";
 
 import { getDictionary, Locale } from "@/lib/get-dictionary";
@@ -51,6 +51,13 @@ export default async function AccountPage({
 
     const orders = data as any[];
     const isConfirmed = !!user.email_confirmed_at;
+
+    // 3. Fetch Partner Profile
+    const { data: profile } = await (supabase as any)
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .maybeSingle();
 
     return (
         <div className="min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8">
@@ -117,6 +124,46 @@ export default async function AccountPage({
                             <p className="text-[9px] font-black uppercase text-neutral-600 tracking-widest mb-1">{dict.account.activeAssets}</p>
                             <p className="text-3xl font-black text-white">{orders?.length || 0}</p>
                             <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-tight mt-2 italic">{dict.account.totalAcquisitions}</p>
+                        </div>
+
+                        <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-brand-yellow" />
+                            <div className="flex items-center justify-between mb-6">
+                                <p className="text-[9px] font-black uppercase text-neutral-600 tracking-widest">{(dict.account as any).partnerProgram || "Partner Program"}</p>
+                                <Megaphone className="w-3.5 h-3.5 text-brand-yellow/50 group-hover:text-brand-yellow transition-colors" />
+                            </div>
+                            
+                            <div className="space-y-4">
+                                <div className="p-4 bg-white/[0.02] border border-white/5 rounded-sm">
+                                    <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-widest mb-1">{(dict.account as any).referralLink || "Referral Link"}</p>
+                                    <div className="flex items-center gap-2 overflow-hidden">
+                                        <LinkIcon className="w-3 h-3 text-brand-yellow flex-shrink-0" />
+                                        <code className="text-[10px] text-white/70 font-mono truncate">
+                                            5ivearts.com/?ref={profile?.referral_code || "..."}
+                                        </code>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="relative">
+                                        <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest mb-1">{(dict.account as any).pending || "Pending"}</p>
+                                        <p className="text-xl font-black text-white tabular-nums">{formatPrice(profile?.balance_pending_pence || 0)}</p>
+                                    </div>
+                                    <div className="relative">
+                                        <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest mb-1">{(dict.account as any).available || "Available"}</p>
+                                        <p className="text-xl font-black text-brand-yellow tabular-nums">{formatPrice(profile?.balance_withdrawable_pence || 0)}</p>
+                                    </div>
+                                </div>
+
+                                {profile?.is_partner && (
+                                    <Link 
+                                        href={`/${lang}/account/partner`}
+                                        className="w-full mt-2 bg-brand-yellow/10 hover:bg-brand-yellow/20 border border-brand-yellow/20 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-[0.2em] text-brand-yellow text-center block transition-all"
+                                    >
+                                        {(dict.account as any).managePartner || "Manage Channel"}
+                                    </Link>
+                                )}
+                            </div>
                         </div>
 
                         <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded">

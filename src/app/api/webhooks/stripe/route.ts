@@ -158,10 +158,22 @@ export async function POST(req: NextRequest) {
         console.log("[webhook] Charge refunded:", charge.id);
         
         const supabase = getSupabaseAdmin() as any;
-        await supabase
+        const { data: order } = await supabase
           .from("orders")
           .update({ status: "refunded" })
-          .eq("stripe_payment_intent", charge.payment_intent as string);
+          .eq("stripe_payment_intent", charge.payment_intent as string)
+          .select("id")
+          .maybeSingle();
+
+        if (order) {
+            // Automatically void any associated commissions
+            await supabase
+                .from("commissions")
+                .update({ status: "voided" })
+                .eq("order_id", order.id);
+
+            console.log(`[webhook] Voided commissions for order: ${order.id}`);
+        }
 
         await trackServerEvent("payment_refund", {
           charge_id: charge.id,

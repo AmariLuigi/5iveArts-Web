@@ -5,6 +5,8 @@ import { SettingsProvider } from "@/components/providers/SettingsProvider";
 import { getSiteSettings } from "@/lib/settings";
 import { locales, Locale, getDictionary } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { ReferralTracker } from "@/components/referral/ReferralTracker";
 
 import OrganizationSchema from "@/components/seo/OrganizationSchema";
 import { Analytics } from "@vercel/analytics/react";
@@ -88,6 +90,9 @@ export default async function StoreLayout({
         </SettingsProvider>
         <Analytics />
         <SpeedInsights />
+        <Suspense fallback={null}>
+          <ReferralTracker />
+        </Suspense>
         <CookieBanner dict={dict} lang={lang} />
         <CustomCursor />
       </body>

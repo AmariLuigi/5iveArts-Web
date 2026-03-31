@@ -30,6 +30,13 @@ const EMPTY_ADDRESS: ShippingAddress = {
   email: "",
 };
 
+const getCookie = (name: string) => {
+  if (typeof document === "undefined") return null;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return decodeURIComponent(parts.pop()?.split(";").shift() || "");
+  return null;
+};
 
 export default function CheckoutClient({ 
   dict, 
@@ -468,6 +475,7 @@ export default function CheckoutClient({
         items,
         shippingRate: selectedRate,
         shippingAddress: address,
+        referrerId: getCookie("5ivearts_affiliate_id"),
         lang,
       });
 

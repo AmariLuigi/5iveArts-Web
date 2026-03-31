@@ -136,6 +136,7 @@ export async function processCompletedCheckout(
                     complexity_factor: parseFloat(session.metadata?.complexity_factor || "1.0"),
                     deposit_pence: paymentType === "deposit" || paymentType === "full" ? totalPence : 0,
                     final_payment_pence: paymentType === "final" || paymentType === "full" ? totalPence : 0,
+                    referrer_id: session.metadata?.referrer_id || null,
                 })
                 .select("id")
                 .single();
@@ -190,6 +191,11 @@ export async function processCompletedCheckout(
     // 5. Send/Resend Confirmation Email
     if (orderId) {
         await triggerOrderEmail(session, orderId, customerName, totalPence, lineItems);
+        
+        // 6. Handle Professional Referral Commission
+        if (session.metadata?.referrer_id && !alreadyProcessedBySession) {
+            await applyCommission(orderId, session);
+        }
     }
 
     return { orderId, alreadyProcessed: alreadyProcessedBySession };
@@ -235,5 +241,82 @@ async function triggerOrderEmail(
         console.log("[orders] Email(s) triggered for order:", orderId, "to:", uniqueRecipients.join(", "));
     } catch (err) {
         console.error("[orders] Email failed:", err);
+    }
+}
+
+async function applyCommission(orderId: string, session: Stripe.Checkout.Session) {
+    const referrerId = session.metadata?.referrer_id;
+    const customerIp = session.metadata?.customer_ip;
+    const subtotalPence = (session.amount_total || 0) - (parseInt(session.metadata?.shipping_pence || "0", 10) || 0);
+
+    if (!referrerId || subtotalPence <= 0) return;
+
+    try {
+        const supabase = getSupabaseAdmin();
+
+        // 1. Fetch Referrer Profile for security checks
+        const { data: partner, error: pError } = await (supabase as any)
+            .from("profiles")
+            .select("id, email, commission_rate")
+            .eq("id", referrerId)
+            .single();
+
+        if (pError || !partner) {
+            console.error("[commission] Referrer not found:", referrerId);
+            return;
+        }
+
+        // 2. SECURITY Check: Self-Referral Prevention (Email & Identity)
+        const customerEmail = session.customer_details?.email?.toLowerCase();
+        const partnerEmail = partner.email?.toLowerCase();
+        const userId = session.metadata?.user_id;
+
+        if (customerEmail === partnerEmail || userId === partner.id) {
+            console.warn(`[commission-fraud] Self-referral detected for order ${orderId}. Skipping.`);
+            return;
+        }
+
+        // 3. SECURITY Check: IP Fraud detection
+        // Check if the current checkout IP matches the Referrer's profile or previous clicks
+        if (customerIp) {
+            const { data: suspectClicks } = await (supabase as any)
+                .from("referral_clicks")
+                .select("id")
+                .eq("referrer_id", partner.id)
+                .eq("ip_address", customerIp)
+                .limit(1);
+
+            if (suspectClicks && suspectClicks.length > 0) {
+                 // Wait: This logic is tricky. A referrer MIGHT show the site on their phone to a friend.
+                 // But the user asked for strictness. "YES for sure, same IP already used by referrer".
+                 console.warn(`[commission-fraud] IP Collision detected (${customerIp}). Blocked.`);
+                 return;
+            }
+        }
+
+        // 4. Calculate Commission (using partners stored rate)
+        const rate = partner.commission_rate || 10;
+        const commissionAmount = Math.floor(subtotalPence * (rate / 100));
+
+        // 5. Insert Commission Record
+        await (supabase as any).from("commissions").insert({
+            order_id: orderId,
+            referrer_id: partner.id,
+            amount_pence: commissionAmount,
+            rate_applied: rate,
+            customer_ip_at_purchase: customerIp,
+            status: 'pending'
+        });
+
+        // 6. UPDATE Profile Pending Balance
+        await (supabase as any).rpc('increment_pending_commission', {
+            profile_id: partner.id,
+            amount: commissionAmount
+        });
+
+        console.log(`[commission] Recorded ${commissionAmount}p for partner ${partner.id} on order ${orderId}`);
+
+    } catch (err) {
+        console.error("[commission] Failure:", err);
     }
 }

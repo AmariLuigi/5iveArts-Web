@@ -337,7 +337,13 @@
             "subtitle": "Artefakte Unter Beobachtung",
             "emptyTitle": "Deine Wunschliste ist Leer",
             "emptyDescription": "Scoute unsere Artefakte und markiere diejenigen, die zu deinem Kuratorenstil passen, für zukünftige Erwerbungen."
-        }
+        },
+        "partnerProgram": "Partner-Programm",
+        "referralLink": "Empfehlungs-Link",
+        "pending": "Ausstehend",
+        "available": "Verfügbar",
+        "managePartner": "Kanal Verwalten",
+        "backBtn": "Zurück zum Tresor"
     },
     "orders": {
         "orderNum": "Bestellung #",

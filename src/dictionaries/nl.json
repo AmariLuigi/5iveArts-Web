@@ -337,7 +337,13 @@
             "subtitle": "Artifacten onder Observatie",
             "emptyTitle": "Je Verlanglijst is Leeg",
             "emptyDescription": "Bekijk onze artefacten en markeer degene die resoneren met jouw curatorstijl voor toekomstige aankoop."
-        }
+        },
+        "partnerProgram": "Partnerprogramma",
+        "referralLink": "Referentielink",
+        "pending": "In Afwachting",
+        "available": "Beschikbaar",
+        "managePartner": "Kanaal Beheren",
+        "backBtn": "Terug naar de Kluis"
     },
     "orders": {
         "orderNum": "Bestelling #",

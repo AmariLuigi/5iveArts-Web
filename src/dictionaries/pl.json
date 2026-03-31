@@ -337,7 +337,13 @@
             "subtitle": "Artefakty pod Obserwacją",
             "emptyTitle": "Twoja Lista Życzeń jest Pusta",
             "emptyDescription": "Przeglądaj nasze artefakty i zapisuj te, które pasują do Twojego stylu kuratorskiego, aby nabyć je w przyszłości."
-        }
+        },
+        "partnerProgram": "Program Partnerski",
+        "referralLink": "Link Polecający",
+        "pending": "Oczekujące",
+        "available": "Dostępne",
+        "managePartner": "Zarządzaj Kanałem",
+        "backBtn": "Powrót do Skarbca"
     },
     "orders": {
         "orderNum": "Zamówienie #",

@@ -337,7 +337,13 @@
             "subtitle": "Artefactos Bajo Observación",
             "emptyTitle": "Tu Lista de Deseos está Vacía",
             "emptyDescription": "Escanea nuestros artefactos y marca aquellos que resuenen con tu estilo para una adquisición futura."
-        }
+        },
+        "partnerProgram": "Programa de Socios",
+        "referralLink": "Enlace de Referencia",
+        "pending": "Pendiente",
+        "available": "Disponible",
+        "managePartner": "Gestionar Canal",
+        "backBtn": "Volver a la Bóveda"
     },
     "orders": {
         "orderNum": "Pedido #",

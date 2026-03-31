@@ -315,6 +315,12 @@
         "prepPhaseActive": "Fase di Preparazione Attiva",
         "inTransit": "In Transito:",
         "fullLogistics": "Dati Logistici Completi",
+        "partnerProgram": "Programma Partner",
+        "referralLink": "Link di Riferimento",
+        "pending": "In Sospeso",
+        "available": "Disponibile",
+        "managePartner": "Gestisci Canale",
+        "backBtn": "Torna al Caveau",
         "settings": {
             "title": "Sicurezza Vault",
             "subtitle": "Gestisci la tua identità di collezionista e i protocolli di accesso.",

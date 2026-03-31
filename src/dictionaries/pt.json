@@ -337,7 +337,13 @@
             "subtitle": "Artefactos sob Observação",
             "emptyTitle": "Sua Lista de Desejos está Vazia",
             "emptyDescription": "Pesquise os nossos artefactos e marque aqueles que ressoam com o seu estilo de curador para futura aquisição."
-        }
+        },
+        "partnerProgram": "Programa de Parceria",
+        "referralLink": "Link de Referência",
+        "pending": "Pendente",
+        "available": "Disponível",
+        "managePartner": "Gerenciar Canal",
+        "backBtn": "Voltar ao Cofre"
     },
     "orders": {
         "orderNum": "Pedido #",

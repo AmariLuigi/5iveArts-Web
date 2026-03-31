@@ -171,6 +171,8 @@ export async function POST(req: NextRequest) {
         complexity_factor: String(items[0]?.product.complexityFactor || "1.0"),
         tos_accepted: "true",
         legal_version: "2026-03-30",
+        referrer_id: String(b.referrerId || ""),
+        customer_ip: ip || "",
       },
       return_url: `${baseUrl}/${lang}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     }, {
