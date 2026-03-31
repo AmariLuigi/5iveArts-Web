@@ -67,13 +67,35 @@ export default async function PartnerDashboardPage({
         .eq("referrer_id", user.id)
         .order("created_at", { ascending: false });
 
-    // 3. Process Chart Data (Simplification for now)
+    // 3. Process Chart Data (Live Performance Grouping)
     const chartData = [
-        { name: 'Week 1', clicks: 12, sales: 2 },
-        { name: 'Week 2', clicks: 45, sales: 5 },
-        { name: 'Week 3', clicks: 32, sales: 3 },
-        { name: 'Week 4', clicks: 88, sales: 7 },
+        { name: 'Week 1', clicks: 0, sales: 0 },
+        { name: 'Week 2', clicks: 0, sales: 0 },
+        { name: 'Week 3', clicks: 0, sales: 0 },
+        { name: 'Week 4', clicks: 0, sales: 0 },
     ];
+
+    const now = new Date();
+    const getWeekIndex = (dateStr: string) => {
+        const date = new Date(dateStr);
+        const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays < 7) return 3; // Week 4 (Latest)
+        if (diffDays < 14) return 2; // Week 3
+        if (diffDays < 21) return 1; // Week 2
+        return 0; // Week 1 (Oldest)
+    };
+
+    clicks?.forEach((c: any) => {
+        const idx = getWeekIndex(c.created_at);
+        if (idx >= 0) chartData[idx].clicks++;
+    });
+
+    commissions?.forEach((c: any) => {
+        if (new Date(c.created_at) >= thirtyDaysAgo) {
+            const idx = getWeekIndex(c.created_at);
+            if (idx >= 0) chartData[idx].sales++;
+        }
+    });
 
     return (
         <div className="min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8">
