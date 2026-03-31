@@ -7,6 +7,8 @@ import { formatPrice } from "@/lib/products";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 /**
  * User Account / Management Page
  * Shows order history and fulfillment status.
