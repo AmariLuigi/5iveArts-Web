@@ -29,6 +29,39 @@ interface LineChartProps {
     formatYAxis?: (value: number) => string;
 }
 
+const defaultFormatter = (value: number) => {
+    if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
+    if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
+    return value.toString();
+};
+
+const CustomTooltip = ({ active, payload, label, formatYAxis }: any) => {
+    if (!active || !payload) return null;
+
+    return (
+        <div className="bg-neutral-900 border border-white/10 rounded-sm p-3 shadow-xl">
+            <p className="text-[10px] uppercase font-bold text-neutral-400 mb-2">
+                {label}
+            </p>
+            {payload.map((entry: any, index: number) => (
+                <div key={index} className="flex items-center gap-2 text-sm">
+                    <div
+                        className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: entry.color }}
+                    />
+                    <span className="text-neutral-300">{entry.name || entry.dataKey}:</span>
+                    <span className="font-bold text-white">
+                        {typeof entry.value === "number"
+                            ? formatYAxis ? formatYAxis(entry.value) : defaultFormatter(entry.value)
+                            : entry.value
+                        }
+                    </span>
+                </div>
+            ))}
+        </div>
+    );
+};
+
 export default function LineChart({
     data,
     xKey,
@@ -39,39 +72,6 @@ export default function LineChart({
     showLegend = false,
     formatYAxis
 }: LineChartProps) {
-    const defaultFormatter = (value: number) => {
-        if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
-        if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
-        return value.toString();
-    };
-
-    const CustomTooltip = ({ active, payload, label }: any) => {
-        if (!active || !payload) return null;
-
-        return (
-            <div className="bg-neutral-900 border border-white/10 rounded-sm p-3 shadow-xl">
-                <p className="text-[10px] uppercase font-bold text-neutral-400 mb-2">
-                    {label}
-                </p>
-                {payload.map((entry: any, index: number) => (
-                    <div key={index} className="flex items-center gap-2 text-sm">
-                        <div
-                            className="w-2 h-2 rounded-full"
-                            style={{ backgroundColor: entry.color }}
-                        />
-                        <span className="text-neutral-300">{entry.name || entry.dataKey}:</span>
-                        <span className="font-bold text-white">
-                            {typeof entry.value === "number"
-                                ? formatYAxis ? formatYAxis(entry.value) : defaultFormatter(entry.value)
-                                : entry.value
-                            }
-                        </span>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
     return (
         <div className="w-full">
             {title && (
@@ -108,7 +108,7 @@ export default function LineChart({
                         tickFormatter={formatYAxis || defaultFormatter}
                         width={50}
                     />
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip content={<CustomTooltip formatYAxis={formatYAxis} />} />
                     {showLegend && (
                         <Legend
                             verticalAlign="top"

@@ -1,0 +1,28 @@
+# Dependency folders
+node_modules
+.next
+out
+build
+
+# Temporary Scripts & Diagnostics
+tmp/
+*.js
+*.cjs
+*.mjs
+
+# Configuration files
+.env*
+next.config.js
+postcss.config.js
+tailwind.config.js
+
+# Specific Root Helpers
+test_analytics.cjs
+analyze_csv.js
+audit_translations.js
+debug_order.js
+get_products.js
+log_settings.js
+test_checkout.js
+update_dictionaries.js
+update_stripe_errors.js

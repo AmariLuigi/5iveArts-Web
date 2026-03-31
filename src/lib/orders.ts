@@ -308,12 +308,9 @@ async function applyCommission(orderId: string, session: Stripe.Checkout.Session
             status: 'pending'
         });
 
-        // 6. UPDATE Profile Pending Balance
-        await (supabase as any).rpc('increment_pending_commission', {
-            profile_id: partner.id,
-            amount: commissionAmount
-        });
-
+        // 6. SQL Triggers automatically update the Profile Pending Balance
+        // No manual increment needed; prevents double-counting and maintaining ledger integrity.
+        
         console.log(`[commission] Recorded ${commissionAmount}p for partner ${partner.id} on order ${orderId}`);
 
     } catch (err) {

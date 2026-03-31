@@ -29,6 +29,55 @@ const DEFAULT_COLORS = [
     '#06B6D4', // cyan
 ];
 
+const defaultFormatter = (value: number) => {
+    if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
+    if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
+    return value.toString();
+};
+
+const CustomTooltip = ({ active, payload, formatValue, total }: any) => {
+    if (!active || !payload || !payload.length) return null;
+    const item = payload[0].payload;
+
+    return (
+        <div className="bg-neutral-900 border border-white/10 rounded-sm p-3 shadow-xl">
+            <p className="text-[10px] uppercase font-bold text-neutral-400 mb-1">
+                {item.name}
+            </p>
+            <p className="text-lg font-black text-white">
+                {formatValue ? formatValue(item.value) : defaultFormatter(item.value)}
+            </p>
+            <p className="text-[10px] text-neutral-400">
+                {((item.value / total) * 100).toFixed(1)}% of total
+            </p>
+        </div>
+    );
+};
+
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, showLabels }: any) => {
+    if (!showLabels) return null;
+
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    if (percent < 0.05) return null;
+
+    return (
+        <text
+            x={x}
+            y={y}
+            fill="#000"
+            textAnchor="middle"
+            dominantBaseline="central"
+            className="text-[10px] font-bold"
+        >
+            {`${(percent * 100).toFixed(0)}%`}
+        </text>
+    );
+};
+
 export default function PieChart({
     data,
     title,
@@ -39,55 +88,6 @@ export default function PieChart({
     formatValue
 }: PieChartProps) {
     const total = data.reduce((sum, item) => sum + item.value, 0);
-
-    const defaultFormatter = (value: number) => {
-        if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
-        if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
-        return value.toString();
-    };
-
-    const CustomTooltip = ({ active, payload }: any) => {
-        if (!active || !payload || !payload.length) return null;
-        const item = payload[0].payload;
-
-        return (
-            <div className="bg-neutral-900 border border-white/10 rounded-sm p-3 shadow-xl">
-                <p className="text-[10px] uppercase font-bold text-neutral-400 mb-1">
-                    {item.name}
-                </p>
-                <p className="text-lg font-black text-white">
-                    {formatValue ? formatValue(item.value) : defaultFormatter(item.value)}
-                </p>
-                <p className="text-[10px] text-neutral-400">
-                    {((item.value / total) * 100).toFixed(1)}% of total
-                </p>
-            </div>
-        );
-    };
-
-    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
-        if (!showLabels) return null;
-
-        const RADIAN = Math.PI / 180;
-        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-        const x = cx + radius * Math.cos(-midAngle * RADIAN);
-        const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-        if (percent < 0.05) return null;
-
-        return (
-            <text
-                x={x}
-                y={y}
-                fill="#000"
-                textAnchor="middle"
-                dominantBaseline="central"
-                className="text-[10px] font-bold"
-            >
-                {`${(percent * 100).toFixed(0)}%`}
-            </text>
-        );
-    };
 
     return (
         <div className="w-full">
@@ -105,7 +105,7 @@ export default function PieChart({
                                 cx="50%"
                                 cy="50%"
                                 labelLine={false}
-                                label={renderCustomizedLabel}
+                                label={(props) => renderCustomizedLabel({ ...props, showLabels })}
                                 outerRadius="70%"
                                 innerRadius="40%"
                                 dataKey="value"
@@ -119,7 +119,7 @@ export default function PieChart({
                                     />
                                 ))}
                             </Pie>
-                            <Tooltip content={<CustomTooltip />} />
+                            <Tooltip content={<CustomTooltip formatValue={formatValue} total={total} />} />
                         </RechartsPieChart>
                     </ResponsiveContainer>
                 </div>
