@@ -52,11 +52,17 @@ export default async function AccountPage({
     const orders = data as any[];
     const isConfirmed = !!user.email_confirmed_at;
 
-    // 3. Fetch Partner Profile
     const { data: profile } = await (supabase as any)
         .from("profiles")
         .select("*")
         .eq("id", user.id)
+        .maybeSingle();
+
+    // 4. Fetch Partner Application Status
+    const { data: application } = await (supabase as any)
+        .from("partner_applications")
+        .select("status, created_at")
+        .eq("user_id", user.id)
         .maybeSingle();
 
     return (
@@ -168,23 +174,37 @@ export default async function AccountPage({
                                             {(dict.account as any).managePartner || "Manage Channel"}
                                         </Link>
                                     </>
-                                ) : (
+                                ) : application?.status === 'pending' ? (
                                     <div className="py-4 space-y-4">
+                                        <div className="w-12 h-12 bg-brand-yellow/5 border border-brand-yellow/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                            <ShieldCheck className="w-6 h-6 text-brand-yellow animate-pulse" />
+                                        </div>
+                                        <div className="text-center">
+                                            <p className="text-[10px] text-white font-black uppercase tracking-[0.2em]">Candidacy Under Review</p>
+                                            <p className="text-[8px] text-neutral-500 font-bold uppercase tracking-tight mt-2 italic">
+                                                The 5ive Arts Fellowship is evaluating your reach and artistic alignment.
+                                            </p>
+                                        </div>
+                                        <Link 
+                                            href={`/${lang}/account/partner/apply`}
+                                            className="w-full bg-white/5 border border-white/10 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-widest text-neutral-400 text-center block"
+                                        >
+                                            View Progress
+                                        </Link>
+                                    </div>
+                                ) : (
+                                    <div className="py-4 space-y-4 text-center">
                                         <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-tight leading-relaxed italic">
                                             {lang === 'pt' 
                                                 ? "O nosso programa de parceiros é exclusivo para criadores e curadores. Candidate-se para desbloquear comissões e ferramentas de influência."
                                                 : "Our partner program is exclusive to creators and curators. Apply to unlock commissions and influence tools."}
                                         </p>
-                                        <div className="p-3 bg-white/[0.01] border border-white/5 border-dashed rounded-sm text-center">
-                                            <p className="text-[8px] font-black uppercase text-neutral-700 tracking-[0.2em]">Protocolo Bloqueado</p>
-                                            <p className="text-[7px] font-bold text-neutral-800 uppercase mt-1">Autorização da Administração Necessária</p>
-                                        </div>
-                                        <button 
-                                            disabled
-                                            className="w-full bg-white/5 border border-white/10 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-widest text-neutral-600 cursor-not-allowed"
+                                        <Link 
+                                            href={`/${lang}/account/partner/apply`}
+                                            className="w-full bg-brand-yellow hover:bg-brand-yellow/90 py-3 rounded-sm text-[10px] font-black uppercase tracking-[0.3em] text-black text-center block transition-all shadow-[0_0_30px_-10px_var(--hasbro-yellow)]"
                                         >
-                                            Candidatura Brevemente
-                                        </button>
+                                            Apply for Fellowship
+                                        </Link>
                                     </div>
                                 )}
                             </div>
