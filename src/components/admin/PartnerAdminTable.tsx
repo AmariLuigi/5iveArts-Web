@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { updatePartnerProtocol } from '@/app/actions/admin/partners';
 import { formatPrice } from '@/lib/products';
 import { 
@@ -17,9 +18,9 @@ import {
 
 /**
  * Interactive Admin Table for Partner Management.
- * Handles real-time status toggling and commission rate configuration.
+ * Re-engineered for production build stability in Next.js Server Components.
  */
-export default function PartnerAdminTable({ initialData }: { initialData: any[] }) {
+const PartnerAdminTableBase = ({ initialData }: { initialData: any[] }) => {
     const [updating, setUpdating] = useState<string | null>(null);
     const [editing, setEditing] = useState<string | null>(null);
     const [editValue, setEditValue] = useState<string>("");
@@ -169,4 +170,7 @@ export default function PartnerAdminTable({ initialData }: { initialData: any[] 
             </table>
         </div>
     );
-}
+};
+
+// Export as a dynamically loaded component with no SSR to support use in Server Components
+export default dynamic(() => Promise.resolve(PartnerAdminTableBase), { ssr: false });

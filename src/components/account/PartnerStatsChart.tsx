@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { 
     AreaChart, 
     Area, 
@@ -12,9 +13,10 @@ import {
 } from 'recharts';
 
 /**
- * Museum-Grade Chart for Partner Performance
+ * Museum-Grade Chart for Partner Performance.
+ * Re-engineered for production build stability.
  */
-export default function PartnerStatsChart({ data }: { data: any[] }) {
+const PartnerStatsChartBase = ({ data }: { data: any[] }) => {
     return (
         <div className="w-full h-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -84,4 +86,7 @@ export default function PartnerStatsChart({ data }: { data: any[] }) {
             </ResponsiveContainer>
         </div>
     );
-}
+};
+
+// Export as a dynamically loaded component with no SSR to support Server Component parent pages
+export default dynamic(() => Promise.resolve(PartnerStatsChartBase), { ssr: false });

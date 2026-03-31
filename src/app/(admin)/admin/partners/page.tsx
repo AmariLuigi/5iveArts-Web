@@ -1,11 +1,6 @@
 import { fetchPartnerRoster } from "@/app/actions/admin/partners";
 import { Users, ShieldCheck, Search } from "lucide-react";
-import dynamic from "next/dynamic";
-
-const PartnerAdminTable = dynamic(() => import("../../../../components/admin/PartnerAdminTable"), {
-    ssr: false,
-    loading: () => <div className="p-20 text-center text-neutral-800 uppercase font-black tracking-widest text-[10px]">Accessing Vault...</div>
-}) as any;
+import PartnerAdminTable from "@/components/admin/PartnerAdminTable";
 
 /**
  * Admin Partner Management Page.

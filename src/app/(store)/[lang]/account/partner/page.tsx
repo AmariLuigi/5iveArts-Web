@@ -15,9 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/products";
-import dynamic from "next/dynamic";
-
-const PartnerStatsChart = dynamic(() => import("@/components/account/PartnerStatsChart"), { ssr: false });
+import PartnerStatsChart from "@/components/account/PartnerStatsChart";
 
 /**
  * Premium Partner Dashboard
