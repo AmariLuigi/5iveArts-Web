@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Package, Truck, Clock, ShieldCheck, ChevronRight, LayoutDashboard, Settings, AlertTriangle, ExternalLink, Megaphone, Wallet, Link as LinkIcon, Edit3 } from "lucide-react";
+import { Package, Truck, Clock, ShieldCheck, ChevronRight, LayoutDashboard, Settings, AlertTriangle, ExternalLink, Megaphone, Wallet, Link as LinkIcon, Edit3, Lock } from "lucide-react";
 import { formatPrice } from "@/lib/products";
 
 import { getDictionary, Locale } from "@/lib/get-dictionary";
@@ -130,38 +130,62 @@ export default async function AccountPage({
                             <div className="absolute top-0 left-0 w-1 h-full bg-brand-yellow" />
                             <div className="flex items-center justify-between mb-6">
                                 <p className="text-[9px] font-black uppercase text-neutral-600 tracking-widest">{(dict.account as any).partnerProgram || "Partner Program"}</p>
-                                <Megaphone className="w-3.5 h-3.5 text-brand-yellow/50 group-hover:text-brand-yellow transition-colors" />
+                                {profile?.is_partner ? (
+                                    <Megaphone className="w-3.5 h-3.5 text-brand-yellow/50 group-hover:text-brand-yellow transition-colors" />
+                                ) : (
+                                    <Lock className="w-3.5 h-3.5 text-neutral-800" />
+                                )}
                             </div>
                             
                             <div className="space-y-4">
-                                <div className="p-4 bg-white/[0.02] border border-white/5 rounded-sm">
-                                    <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-widest mb-1">{(dict.account as any).referralLink || "Referral Link"}</p>
-                                    <div className="flex items-center gap-2 overflow-hidden">
-                                        <LinkIcon className="w-3 h-3 text-brand-yellow flex-shrink-0" />
-                                        <code className="text-[10px] text-white/70 font-mono truncate">
-                                            5ivearts.com/?ref={profile?.referral_code || "..."}
-                                        </code>
-                                    </div>
-                                </div>
+                                {profile?.is_partner ? (
+                                    <>
+                                        <div className="p-4 bg-white/[0.02] border border-white/5 rounded-sm">
+                                            <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-widest mb-1">{(dict.account as any).referralLink || "Referral Link"}</p>
+                                            <div className="flex items-center gap-2 overflow-hidden">
+                                                <LinkIcon className="w-3 h-3 text-brand-yellow flex-shrink-0" />
+                                                <code className="text-[10px] text-white/70 font-mono truncate">
+                                                    5ivearts.com/?ref={profile?.referral_code || "..."}
+                                                </code>
+                                            </div>
+                                        </div>
 
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="relative">
-                                        <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest mb-1">{(dict.account as any).pending || "Pending"}</p>
-                                        <p className="text-xl font-black text-white tabular-nums">{formatPrice(profile?.balance_pending_pence || 0)}</p>
-                                    </div>
-                                    <div className="relative">
-                                        <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest mb-1">{(dict.account as any).available || "Available"}</p>
-                                        <p className="text-xl font-black text-brand-yellow tabular-nums">{formatPrice(profile?.balance_withdrawable_pence || 0)}</p>
-                                    </div>
-                                </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="relative">
+                                                <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest mb-1">{(dict.account as any).pending || "Pending"}</p>
+                                                <p className="text-xl font-black text-white tabular-nums">{formatPrice(profile?.balance_pending_pence || 0)}</p>
+                                            </div>
+                                            <div className="relative">
+                                                <p className="text-[8px] font-bold text-neutral-600 uppercase tracking-widest mb-1">{(dict.account as any).available || "Available"}</p>
+                                                <p className="text-xl font-black text-brand-yellow tabular-nums">{formatPrice(profile?.balance_withdrawable_pence || 0)}</p>
+                                            </div>
+                                        </div>
 
-                                {profile?.is_partner && (
-                                    <Link 
-                                        href={`/${lang}/account/partner`}
-                                        className="w-full mt-2 bg-brand-yellow/10 hover:bg-brand-yellow/20 border border-brand-yellow/20 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-[0.2em] text-brand-yellow text-center block transition-all"
-                                    >
-                                        {(dict.account as any).managePartner || "Manage Channel"}
-                                    </Link>
+                                        <Link 
+                                            href={`/${lang}/account/partner`}
+                                            className="w-full mt-2 bg-brand-yellow/10 hover:bg-brand-yellow/20 border border-brand-yellow/20 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-[0.2em] text-brand-yellow text-center block transition-all"
+                                        >
+                                            {(dict.account as any).managePartner || "Manage Channel"}
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <div className="py-4 space-y-4">
+                                        <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-tight leading-relaxed italic">
+                                            {lang === 'pt' 
+                                                ? "O nosso programa de parceiros é exclusivo para criadores e curadores. Candidate-se para desbloquear comissões e ferramentas de influência."
+                                                : "Our partner program is exclusive to creators and curators. Apply to unlock commissions and influence tools."}
+                                        </p>
+                                        <div className="p-3 bg-white/[0.01] border border-white/5 border-dashed rounded-sm text-center">
+                                            <p className="text-[8px] font-black uppercase text-neutral-700 tracking-[0.2em]">Protocolo Bloqueado</p>
+                                            <p className="text-[7px] font-bold text-neutral-800 uppercase mt-1">Autorização da Administração Necessária</p>
+                                        </div>
+                                        <button 
+                                            disabled
+                                            className="w-full bg-white/5 border border-white/10 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-widest text-neutral-600 cursor-not-allowed"
+                                        >
+                                            Candidatura Brevemente
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         </div>
