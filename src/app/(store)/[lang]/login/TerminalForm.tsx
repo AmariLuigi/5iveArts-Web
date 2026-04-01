@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import { Lock, Mail, AlertCircle, Loader2, ShieldCheck, UserPlus, LogIn, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import axios from "axios";
+import Script from "next/script";
 import OneTapComponent from "@/components/auth/OneTapComponent";
 
 
@@ -19,6 +21,17 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
+    const [altchaPayload, setAltchaPayload] = useState<string | null>(null);
+    const [cooldown, setCooldown] = useState(0);
+
+    // Cooldown countdown protocol
+    useEffect(() => {
+        if (cooldown <= 0) return;
+        const timer = setInterval(() => {
+            setCooldown(c => c - 1);
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [cooldown]);
 
     const supabase = createClient();
 
@@ -51,6 +64,8 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
 
     async function handleAuth(e: React.FormEvent) {
         e.preventDefault();
+        if (loading || cooldown > 0) return;
+
         setLoading(true);
         setError(null);
 
@@ -62,11 +77,19 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
                 });
                 if (loginError) throw loginError;
             } else {
-                const { error: signupError } = await supabase.auth.signUp({
+                // High-Integrity Signup Flow
+                if (!altchaPayload) {
+                    setError("Human verification required.");
+                    setLoading(false);
+                    return;
+                }
+
+                await axios.post("/api/auth/signup", {
                     email,
                     password,
+                    altcha: altchaPayload
                 });
-                if (signupError) throw signupError;
+
                 setError(dict.errors?.confirmationSent || "Confirmation email sent. Please check your inbox to activate your terminal.");
                 setLoading(false);
                 return;
@@ -76,11 +99,16 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
             router.push(`/${lang}${returnTo.startsWith('/') ? returnTo : `/${returnTo}`}`);
             router.refresh();
         } catch (err: any) {
-            let msg = err.message;
+            let msg = err.response?.data?.error || err.message;
             if (msg.includes("Invalid login")) {
                 msg = dict.errors?.invalidLogin || "Access Denied. Ensure your security key is correct and your identity link is verified.";
             }
             setError(msg);
+            
+            // Trigger security cooldown on signup error
+            if (mode === "signup") {
+                setCooldown(60);
+            }
             setLoading(false);
         }
     }
@@ -182,16 +210,51 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
                             </div>
                         </div>
 
+                        {/* ALTCHA Verification Widget (Only for registration) */}
+                        {mode === "signup" && (
+                            <div className="pt-2">
+                                <Script 
+                                    src="https://cdn.jsdelivr.net/gh/altcha-org/altcha@main/dist/altcha.min.js" 
+                                    type="module" 
+                                    strategy="afterInteractive"
+                                />
+                                {/* @ts-ignore */}
+                                <altcha-widget 
+                                    challengeurl="/api/auth/captcha/challenge"
+                                    onstatechange={(e: any) => {
+                                        if (e.detail.state === 'verified') {
+                                            setAltchaPayload(e.detail.payload);
+                                        } else {
+                                            setAltchaPayload(null);
+                                        }
+                                    }}
+                                    class="altcha"
+                                    style={{
+                                        "--altcha-bg": "transparent",
+                                        "--altcha-border": "rgba(255, 255, 255, 0.05)",
+                                        "--altcha-color": "white",
+                                        "--altcha-label-color": "#404040",
+                                        "--altcha-button-bg": "rgba(255, 159, 0, 0.05)",
+                                        "--altcha-button-border": "rgba(255, 159, 0, 0.1)",
+                                        "--altcha-button-color": "#ff9f00",
+                                        width: "100%",
+                                    }}
+                                />
+                            </div>
+                        )}
+
                         <button
                             type="submit"
-                            disabled={loading}
-                            className="w-full hasbro-btn-primary py-5 font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 group disabled:opacity-50"
+                            disabled={loading || cooldown > 0 || (mode === "signup" && !altchaPayload)}
+                            className={`w-full hasbro-btn-primary py-5 font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 group relative overflow-hidden ${
+                                cooldown > 0 ? "opacity-50 cursor-not-allowed border-neutral-900" : ""
+                            }`}
                         >
                             {loading ? (
                                 <Loader2 className="w-4 h-4 animate-spin text-black" />
                             ) : (
                                 <>
-                                    {mode === "login" ? dict.auth.verifyBtn : dict.auth.registerBtn}
+                                    {mode === "login" ? dict.auth.verifyBtn : cooldown > 0 ? `LOCKED (${cooldown}S)` : dict.auth.registerBtn}
                                     {mode === "login" ? <LogIn className="w-4 h-4 text-black" /> : <UserPlus className="w-4 h-4 text-black" />}
                                 </>
                             )}

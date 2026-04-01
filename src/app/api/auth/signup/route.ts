@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     try {
         const { email, password, sessionId, altcha } = await req.json();
 
-        if (!email || !password || !sessionId) {
+        if (!email || !password) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
@@ -98,14 +98,16 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Vault entry failed: Authentication response invalid." }, { status: 500 });
         }
 
-        // 4. Link the order to the new user
-        const { error: updateError } = await (supabaseAdmin as any)
-            .from("orders")
-            .update({ user_id: user.id })
-            .eq("stripe_session_id", sessionId);
+        // 4. Link the order to the new user (if organic registration, sessionId is null)
+        if (sessionId) {
+            const { error: updateError } = await (supabaseAdmin as any)
+                .from("orders")
+                .update({ user_id: user.id })
+                .eq("stripe_session_id", sessionId);
 
-        if (updateError) {
-            console.error("[signup-api] Failed to link order to user:", updateError);
+            if (updateError) {
+                console.error("[signup-api] Failed to link order to user:", updateError);
+            }
         }
 
         console.log(`[signup-api] Identity ${user.email} verified and archived.`);
