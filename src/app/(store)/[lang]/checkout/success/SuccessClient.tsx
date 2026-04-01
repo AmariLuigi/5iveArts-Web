@@ -7,7 +7,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import { useCartStore, CartStore } from "@/store/cart";
 import axios from "axios";
-import Script from "next/script";
+import "altcha";
 
 export default function SuccessClient({ dict, lang }: { dict: any, lang: string }) {
   return (
@@ -300,12 +300,6 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
               <form onSubmit={handleSignup} className="space-y-4 max-w-md">
                 {/* ALTCHA Verification Widget */}
                 <div className="mb-4">
-                  <Script 
-                    src="https://cdn.jsdelivr.net/gh/altcha-org/altcha@main/dist/altcha.min.js" 
-                    type="module" 
-                    strategy="afterInteractive"
-                    crossOrigin="anonymous"
-                  />
                   {/* @ts-ignore */}
                   <altcha-widget 
                     challengeurl="/api/auth/captcha/challenge"
@@ -319,20 +313,6 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
                     hidefooter
                     hidelogo
                     class="altcha-terminal-widget"
-                    style={{
-                      "--altcha-bg": "transparent",
-                      "--altcha-border": "rgba(255, 255, 255, 0.05)",
-                      "--altcha-color": "#ffffff",
-                      "--altcha-label-color": "#525252",
-                      "--altcha-button-bg": "rgba(255, 159, 0, 0.05)",
-                      "--altcha-button-border": "rgba(255, 159, 0, 0.2)",
-                      "--altcha-button-color": "#ff9f00",
-                      "--altcha-button-hover-bg": "rgba(255, 159, 0, 0.1)",
-                      "--altcha-focus-color": "#ff9f00",
-                      width: "100%",
-                      maxWidth: "none",
-                      borderRadius: "2px",
-                    }}
                   />
                 </div>
 

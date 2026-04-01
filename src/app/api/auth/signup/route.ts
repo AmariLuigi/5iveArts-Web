@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase-server";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
-import crypto from "node:crypto";
+import { verifySolution, pbkdf2 } from "altcha/lib";
 
 /**
  * API route to create a new user account with ALTCHA PoW verification.
@@ -40,32 +40,37 @@ export async function POST(req: NextRequest) {
             if (!hmacKey) throw new Error("Security Infrastructure Offline");
 
             const payloadBytes = Buffer.from(altcha, "base64");
-            const payload = JSON.parse(payloadBytes.toString());
-            const { algorithm, challenge, number, salt, signature } = payload;
+            const payloadObj = JSON.parse(payloadBytes.toString());
 
-            // Integrity Checks
-            const expectedSignature = crypto.createHmac("sha256", hmacKey).update(`${salt}${number}`).digest("hex");
-            const expectedChallenge = crypto.createHash("sha256").update(`${salt}${number}`).digest("hex");
+            console.log("[signup-api] Decoding ALTCHA payload for verification.");
 
-            if (signature !== expectedSignature || challenge !== expectedChallenge) {
-                throw new Error("Security Signature Mismatch");
+            const result = await verifySolution({
+                challenge: payloadObj.challenge,
+                solution: payloadObj.solution,
+                hmacSignatureSecret: hmacKey,
+                deriveKey: pbkdf2.deriveKey,
+            });
+
+            if (!result.verified) {
+                if (result.expired) throw new Error("Verification Task Expired");
+                if (result.invalidSignature) throw new Error("Security Signature Mismatch");
+                if (result.invalidSolution) throw new Error("Cryptographic Challenge Mismatch");
+                throw new Error("Verification protocol failure");
             }
 
-            // Expiration Check
-            const expiryMatch = salt.match(/expires=(\d+)/);
-            if (!expiryMatch || parseInt(expiryMatch[1]) < Date.now()) {
-                throw new Error("Verification Task Expired");
-            }
+            console.log(`[signup-api] ALTCHA PoW verified in ${result.time}ms.`);
+
         } catch (err: any) {
-            console.warn("[signup-api] Captcha verification failed:", err.message);
-            return NextResponse.json({ error: "Human verification protocol failed. Please re-verify." }, { status: 400 });
+            console.error("[signup-api] Authentication Shield Rejected Payload:", err.message);
+            return NextResponse.json({ 
+                error: `Verification Sync Failure: ${err.message}. Please restart the link.` 
+            }, { status: 400 });
         }
 
         const supabaseServer = await createClient();
         const supabaseAdmin = getSupabaseAdmin();
 
         // 2. Administrative Pre-Check
-        // To prevent duplicate attempts and secure the vault, we verify email existence manually.
         const { data: existing } = await (supabaseAdmin as any)
             .from("profiles")
             .select("id")
@@ -74,7 +79,7 @@ export async function POST(req: NextRequest) {
 
         if (existing) {
             return NextResponse.json({ 
-                error: "Identity already registered. Please login to enter the vault." 
+                error: "Identity already archived in the vault. Please login to continue." 
             }, { status: 400 });
         }
 
@@ -90,12 +95,13 @@ export async function POST(req: NextRequest) {
         });
 
         if (signupError) {
+             console.error("[signup-api] Supabase Auth Refusal:", signupError.message);
             return NextResponse.json({ error: signupError.message }, { status: 400 });
         }
 
         const user = authData.user;
         if (!user) {
-            return NextResponse.json({ error: "Vault entry failed: Authentication response invalid." }, { status: 500 });
+            return NextResponse.json({ error: "Vault Entry Failed: Null Identity Return" }, { status: 500 });
         }
 
         // 4. Link the order to the new user (if organic registration, sessionId is null)

@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import crypto from "node:crypto";
+import { NextResponse } from "next/server";
+import { createChallenge, pbkdf2 } from "altcha/lib";
 
 /**
  * API route to generate an ALTCHA (Self-Hosted Captcha) challenge.
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
         const hmackey = process.env.ALTCHA_HMAC_KEY;
         if (!hmackey) {
@@ -12,36 +12,17 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: "Security Infrastructure Offline" }, { status: 500 });
         }
 
-        // 1. Generate Entropy and Expiration
-        const salt = crypto.randomBytes(12).toString("hex");
-        const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minute window
-        const saltWithExpiry = `${salt}?expires=${expiresAt}`;
-        
-        // 2. Generate Secret Number (The target for PoW)
-        // 100k-200k takes ~0.5-2s on a modern machine.
-        const maxnumber = 100000; 
-        const number = Math.floor(Math.random() * maxnumber);
-        
-        // 3. Create Signature (HMAC-SHA256 of salt + number)
-        const signatureSubject = `${saltWithExpiry}${number}`;
-        const signature = crypto
-            .createHmac("sha256", hmackey)
-            .update(signatureSubject)
-            .digest("hex");
-            
-        // 4. Create Challenge (SHA-256 of Salt + Number)
-        const challenge = crypto
-            .createHash("sha256")
-            .update(signatureSubject)
-            .digest("hex");
-
-        return NextResponse.json({
-            algorithm: "SHA-256",
-            challenge,
-            salt: saltWithExpiry,
-            signature,
-            maxnumber
+        // 1. Initialize Challenge Configuration
+        // We utilize PBKDF2 for its 40x performance boost via native browser implementation.
+        const challenge = await createChallenge({
+            hmacSignatureSecret: hmackey,
+            algorithm: 'PBKDF2/SHA-256',
+            cost: 10000, // Balanced for security/performance balance
+            deriveKey: pbkdf2.deriveKey,
+            expiresAt: new Date(Date.now() + 15 * 60 * 1000), // Extended 15m window for checkout stability
         });
+
+        return NextResponse.json(challenge);
 
     } catch (err: any) {
         console.error("[captcha-challenge] Critical failure:", err.message);

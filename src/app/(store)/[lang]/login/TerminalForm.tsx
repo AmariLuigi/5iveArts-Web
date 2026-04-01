@@ -6,8 +6,8 @@ import { createClient } from "@/lib/supabase-browser";
 import { Lock, Mail, AlertCircle, Loader2, ShieldCheck, UserPlus, LogIn, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import axios from "axios";
-import Script from "next/script";
 import OneTapComponent from "@/components/auth/OneTapComponent";
+import "altcha";
 
 
 export default function TerminalForm({ dict, lang }: { dict: any, lang: string }) {
@@ -213,12 +213,6 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
                         {/* ALTCHA Verification Widget (Only for registration) */}
                         {mode === "signup" && (
                             <div className="pt-2">
-                                <Script 
-                                    src="https://cdn.jsdelivr.net/gh/altcha-org/altcha@main/dist/altcha.min.js" 
-                                    type="module" 
-                                    strategy="afterInteractive"
-                                    crossOrigin="anonymous"
-                                />
                                 {/* @ts-ignore */}
                                 <altcha-widget 
                                     challengeurl="/api/auth/captcha/challenge"
@@ -232,20 +226,6 @@ export default function TerminalForm({ dict, lang }: { dict: any, lang: string }
                                     hidefooter
                                     hidelogo
                                     class="altcha-terminal-widget"
-                                    style={{
-                                        "--altcha-bg": "transparent",
-                                        "--altcha-border": "rgba(255, 255, 255, 0.05)",
-                                        "--altcha-color": "#ffffff",
-                                        "--altcha-label-color": "#525252",
-                                        "--altcha-button-bg": "rgba(255, 159, 0, 0.05)",
-                                        "--altcha-button-border": "rgba(255, 159, 0, 0.2)",
-                                        "--altcha-button-color": "#ff9f00",
-                                        "--altcha-button-hover-bg": "rgba(255, 159, 0, 0.1)",
-                                        "--altcha-focus-color": "#ff9f00",
-                                        width: "100%",
-                                        maxWidth: "none",
-                                        borderRadius: "2px",
-                                    }}
                                 />
                             </div>
                         )}

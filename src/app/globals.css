@@ -488,15 +488,19 @@ input:focus, textarea:focus {
 
 /* --- ALTCHA TERMINAL WIDGET SYSTEM --- */
 .altcha-terminal-widget {
-  --altcha-bg: transparent;
-  --altcha-border: rgba(255, 255, 255, 0.05);
-  --altcha-color: #ffffff;
-  --altcha-label-color: #525252;
-  --altcha-button-bg: rgba(255, 159, 0, 0.05);
-  --altcha-button-border: rgba(255, 159, 0, 0.2);
-  --altcha-button-color: #ff9f00;
-  --altcha-button-hover-bg: rgba(255, 159, 0, 0.1);
-  --altcha-focus-color: #ff9f00;
+  /* v3 CSS Variables */
+  --altcha-color-primary: var(--accent);
+  --altcha-color-primary-content: #000;
+  --altcha-color-base: #0a0a0a;
+  --altcha-color-base-content: #ffffff;
+  --altcha-color-neutral: #1a1a1a;
+  --altcha-color-neutral-content: #666666;
+  --altcha-border-color: rgba(255, 255, 255, 0.08);
+  --altcha-border-width: 1px;
+  --altcha-border-radius: 4px;
+  --altcha-input-background-color: #000;
+  --altcha-max-width: 100%;
+  
   width: 100%;
 }
 
@@ -514,8 +518,13 @@ input:focus, textarea:focus {
   font-weight: 800;
   letter-spacing: 0.1em;
   font-size: 9px;
+  color: #525252;
 }
 
 .altcha-terminal-widget::part(footer) {
+  display: none !important;
+}
+
+.altcha-terminal-widget::part(logo) {
   display: none !important;
 }

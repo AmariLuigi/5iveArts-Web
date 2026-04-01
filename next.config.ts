@@ -34,13 +34,13 @@ const nextConfig: NextConfig = {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
     const CSP = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' blob: https://js.stripe.com https://accounts.google.com/gsi/client https://cdn.jsdelivr.net https://vercel.live",
+      "script-src 'self' 'unsafe-inline' blob: https://js.stripe.com https://accounts.google.com/gsi/client https://cdn.jsdelivr.net https://vercel.live https://*.vercel.live",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com https://cdn.jsdelivr.net",
-      "font-src 'self' https://fonts.gstatic.com",
-      "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://accounts.google.com https://vercel.live",
-      `img-src 'self' data: blob: ${supabaseUrl} https://lh3.googleusercontent.com https://purecatamphetamine.github.io https://api.dicebear.com https://vercel.com https://vercel.live`,
+      "font-src 'self' https://fonts.gstatic.com https://vercel.live",
+      "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://accounts.google.com https://vercel.live https://*.vercel.live",
+      `img-src 'self' data: blob: ${supabaseUrl} https://lh3.googleusercontent.com https://purecatamphetamine.github.io https://api.dicebear.com https://vercel.com https://vercel.live https://*.vercel.live`,
       `media-src 'self' ${supabaseUrl}`,
-      `connect-src 'self' https://api.stripe.com https://api.packlink.com https://restcountries.com https://accounts.google.com https://vercel.live https://*.vercel.live https://cdn.jsdelivr.net ${supabaseUrl}`,
+      `connect-src 'self' wss://*.pusher.com https://api.stripe.com https://api.packlink.com https://restcountries.com https://accounts.google.com https://vercel.live https://*.vercel.live https://cdn.jsdelivr.net ${supabaseUrl}`,
       "worker-src 'self' blob:",
       "upgrade-insecure-requests",
     ].join("; ");
