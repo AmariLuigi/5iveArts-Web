@@ -2,18 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase-server";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import crypto from "node:crypto";
 
 /**
- * API route to create a new user account and link the current order to it.
+ * API route to create a new user account with ALTCHA PoW verification.
  * This is triggered from the checkout success page.
  */
 export async function POST(req: NextRequest) {
     const ip = getClientIp(req);
+    // Strict signup rate limit (3 attempts per minute per IP)
     const rl = checkRateLimit(`signup:${ip}`, { limit: 3, windowMs: 60_000 });
     
     if (!rl.success) {
         return NextResponse.json(
-            { error: "Too many sign-up attempts. Please wait a moment." },
+            { error: "Protocol Throttled: Too many attempts. Please wait." },
             { 
                 status: 429, 
                 headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) }
@@ -22,16 +24,61 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const { email, password, sessionId } = await req.json();
+        const { email, password, sessionId, altcha } = await req.json();
 
         if (!email || !password || !sessionId) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
+        // 1. CAPTCHA Verification (ALTCHA PoW)
+        if (!altcha) {
+            return NextResponse.json({ error: "Human verification required" }, { status: 400 });
+        }
+
+        try {
+            const hmacKey = process.env.ALTCHA_HMAC_KEY;
+            if (!hmacKey) throw new Error("Security Infrastructure Offline");
+
+            const payloadBytes = Buffer.from(altcha, "base64");
+            const payload = JSON.parse(payloadBytes.toString());
+            const { algorithm, challenge, number, salt, signature } = payload;
+
+            // Integrity Checks
+            const expectedSignature = crypto.createHmac("sha256", hmacKey).update(`${salt}${number}`).digest("hex");
+            const expectedChallenge = crypto.createHash("sha256").update(`${salt}${number}`).digest("hex");
+
+            if (signature !== expectedSignature || challenge !== expectedChallenge) {
+                throw new Error("Security Signature Mismatch");
+            }
+
+            // Expiration Check
+            const expiryMatch = salt.match(/expires=(\d+)/);
+            if (!expiryMatch || parseInt(expiryMatch[1]) < Date.now()) {
+                throw new Error("Verification Task Expired");
+            }
+        } catch (err: any) {
+            console.warn("[signup-api] Captcha verification failed:", err.message);
+            return NextResponse.json({ error: "Human verification protocol failed. Please re-verify." }, { status: 400 });
+        }
+
         const supabaseServer = await createClient();
         const supabaseAdmin = getSupabaseAdmin();
 
-        // 1. Create the user in Supabase Auth (Standard Flow)
+        // 2. Administrative Pre-Check
+        // To prevent duplicate attempts and secure the vault, we verify email existence manually.
+        const { data: existing } = await (supabaseAdmin as any)
+            .from("profiles")
+            .select("id")
+            .eq("email", email)
+            .maybeSingle();
+
+        if (existing) {
+            return NextResponse.json({ 
+                error: "Identity already registered. Please login to enter the vault." 
+            }, { status: 400 });
+        }
+
+        // 3. Create the user in Supabase Auth
         const { data: authData, error: signupError } = await supabaseServer.auth.signUp({
             email,
             password,
@@ -43,21 +90,15 @@ export async function POST(req: NextRequest) {
         });
 
         if (signupError) {
-            if (signupError.status === 400 || signupError.message.includes("already registered")) {
-                return NextResponse.json({ 
-                    error: "An account with this email already exists. Please login to manage your orders." 
-                }, { status: 400 });
-            }
             return NextResponse.json({ error: signupError.message }, { status: 400 });
         }
 
         const user = authData.user;
         if (!user) {
-            return NextResponse.json({ error: "Signup failed to return user data." }, { status: 500 });
+            return NextResponse.json({ error: "Vault entry failed: Authentication response invalid." }, { status: 500 });
         }
 
-        // 2. Link the order to the new user
-        // We use the admin client here to ensure we can update the row regardless of RLS
+        // 4. Link the order to the new user
         const { error: updateError } = await (supabaseAdmin as any)
             .from("orders")
             .update({ user_id: user.id })
@@ -65,10 +106,9 @@ export async function POST(req: NextRequest) {
 
         if (updateError) {
             console.error("[signup-api] Failed to link order to user:", updateError);
-            // We continue anyway as the account was created
         }
 
-        console.log(`[signup-api] User ${user.email} created and linked to session ${sessionId}`);
+        console.log(`[signup-api] Identity ${user.email} verified and archived.`);
 
         return NextResponse.json({ 
             success: true, 
@@ -76,7 +116,7 @@ export async function POST(req: NextRequest) {
         });
 
     } catch (err: any) {
-        console.error("[signup-api] Crash:", err.message);
+        console.error("[signup-api] Protocol Crash:", err.message);
         return NextResponse.json({ error: "Critical internal error" }, { status: 500 });
     }
 }

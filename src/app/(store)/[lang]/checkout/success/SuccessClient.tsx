@@ -7,6 +7,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import { useCartStore, CartStore } from "@/store/cart";
 import axios from "axios";
+import Script from "next/script";
 
 export default function SuccessClient({ dict, lang }: { dict: any, lang: string }) {
   return (
@@ -43,6 +44,17 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [signupError, setSignupError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [altchaPayload, setAltchaPayload] = useState<string | null>(null);
+  const [cooldown, setCooldown] = useState(0);
+
+  // Cooldown countdown protocol
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => {
+      setCooldown(c => c - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
 
   const handleResendEmail = async () => {
     if (!sessionId || resending) return;
@@ -60,7 +72,11 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!sessionId || !customerEmail || signingUp) return;
+    if (!sessionId || !customerEmail || signingUp || cooldown > 0) return;
+    if (!altchaPayload) {
+        setSignupError("Human verification required.");
+        return;
+    }
 
     setSigningUp(true);
     setSignupError(null);
@@ -69,7 +85,8 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
       await axios.post("/api/auth/signup", {
         email: customerEmail,
         password,
-        sessionId
+        sessionId,
+        altcha: altchaPayload
       });
       
       setSignupSuccess(true);
@@ -90,6 +107,8 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
       }
     } catch (err: any) {
       setSignupError(err.response?.data?.error || dict.errors?.signupFailed || "Signup failed. Please try again.");
+      // Trigger security cooldown on failure
+      setCooldown(60);
     } finally {
       setSigningUp(false);
     }
@@ -279,6 +298,38 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
                 {dict.success.secureCollection}
               </h2>
               <form onSubmit={handleSignup} className="space-y-4 max-w-md">
+                {/* ALTCHA Verification Widget */}
+                <div className="mb-4">
+                  <Script 
+                    src="https://cdn.jsdelivr.net/gh/altcha-org/altcha@main/dist/altcha.min.js" 
+                    type="module" 
+                    strategy="afterInteractive"
+                  />
+                  {/* @ts-ignore */}
+                  <altcha-widget 
+                    challengeurl="/api/auth/captcha/challenge"
+                    onstatechange={(e: any) => {
+                      if (e.detail.state === 'verified') {
+                        setAltchaPayload(e.detail.payload);
+                      } else {
+                        setAltchaPayload(null);
+                      }
+                    }}
+                    class="altcha"
+                    style={{
+                      "--altcha-bg": "transparent",
+                      "--altcha-border": "rgba(255, 255, 255, 0.1)",
+                      "--altcha-color": "white",
+                      "--altcha-label-color": "#a3a3a3",
+                      "--altcha-button-bg": "rgba(255, 159, 0, 0.1)",
+                      "--altcha-button-border": "rgba(255, 159, 0, 0.2)",
+                      "--altcha-button-color": "#ff9f00",
+                      width: "100%",
+                      maxWidth: "320px",
+                    }}
+                  />
+                </div>
+
                 <div className="flex flex-col md:flex-row gap-3">
                   <div className="flex-grow relative group">
                     <input
@@ -297,14 +348,22 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
+                    {signupError && (
+                      <p className="absolute -bottom-6 left-0 text-[9px] font-black uppercase text-red-500 tracking-widest flex items-center gap-1.5 animate-pulse">
+                        <AlertTriangle className="w-3 h-3" />
+                        {signupError}
+                      </p>
+                    )}
                   </div>
                   <button
                     type="submit"
-                    disabled={signingUp}
-                    className="hasbro-btn-primary px-8 py-4 text-[10px] whitespace-nowrap flex items-center justify-center gap-2"
+                    disabled={signingUp || cooldown > 0 || !altchaPayload}
+                    className={`hasbro-btn-primary px-8 py-4 text-[10px] whitespace-nowrap flex items-center justify-center gap-2 relative overflow-hidden ${
+                      cooldown > 0 ? "opacity-50 cursor-not-allowed border-neutral-800" : ""
+                    }`}
                   >
                     {signingUp ? <Loader2 className="w-3 h-3 animate-spin" /> : <Package className="w-3 h-3" />}
-                    {signingUp ? dict.success.securing : dict.success.createAccount}
+                    {signingUp ? dict.success.securing : cooldown > 0 ? `LOCKED (${cooldown}S)` : dict.success.createAccount}
                   </button>
                 </div>
               </form>
