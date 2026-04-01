@@ -486,10 +486,36 @@ input:focus, textarea:focus {
     63%, 100% { opacity: 0; bottom: 29px; height: 1px; width: 10px; border-radius: 50%; }
 }
 
-@keyframes viscousDrip3 {
-    0%, 52% { opacity: 0; bottom: 50px; height: 2px; width: 5px; border-radius: 50%; }
-    56% { opacity: 1; bottom: 44px; height: 12px; width: 4px; border-radius: 5px; }
-    62% { opacity: 1; bottom: 35px; height: 18px; width: 2px; border-radius: 2px; }
-    65% { opacity: 1; bottom: 30px; height: 5px; width: 4px; border-radius: 50%; }
-    67%, 100% { opacity: 0; bottom: 28px; height: 2px; width: 12px; border-radius: 50%; }
+/* --- ALTCHA TERMINAL WIDGET SYSTEM --- */
+.altcha-terminal-widget {
+  --altcha-bg: transparent;
+  --altcha-border: rgba(255, 255, 255, 0.05);
+  --altcha-color: #ffffff;
+  --altcha-label-color: #525252;
+  --altcha-button-bg: rgba(255, 159, 0, 0.05);
+  --altcha-button-border: rgba(255, 159, 0, 0.2);
+  --altcha-button-color: #ff9f00;
+  --altcha-button-hover-bg: rgba(255, 159, 0, 0.1);
+  --altcha-focus-color: #ff9f00;
+  width: 100%;
 }
+
+.altcha-terminal-widget::part(button) {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.altcha-terminal-widget::part(label) {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  font-size: 9px;
+}
+
+.altcha-terminal-widget::part(footer) {
+  display: none !important;
+}

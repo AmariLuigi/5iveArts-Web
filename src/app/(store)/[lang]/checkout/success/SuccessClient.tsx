@@ -304,6 +304,7 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
                     src="https://cdn.jsdelivr.net/gh/altcha-org/altcha@main/dist/altcha.min.js" 
                     type="module" 
                     strategy="afterInteractive"
+                    crossOrigin="anonymous"
                   />
                   {/* @ts-ignore */}
                   <altcha-widget 
@@ -315,17 +316,22 @@ function SuccessContent({ dict, lang }: { dict: any, lang: string }) {
                         setAltchaPayload(null);
                       }
                     }}
-                    class="altcha"
+                    hidefooter
+                    hidelogo
+                    class="altcha-terminal-widget"
                     style={{
                       "--altcha-bg": "transparent",
-                      "--altcha-border": "rgba(255, 255, 255, 0.1)",
-                      "--altcha-color": "white",
-                      "--altcha-label-color": "#a3a3a3",
-                      "--altcha-button-bg": "rgba(255, 159, 0, 0.1)",
+                      "--altcha-border": "rgba(255, 255, 255, 0.05)",
+                      "--altcha-color": "#ffffff",
+                      "--altcha-label-color": "#525252",
+                      "--altcha-button-bg": "rgba(255, 159, 0, 0.05)",
                       "--altcha-button-border": "rgba(255, 159, 0, 0.2)",
                       "--altcha-button-color": "#ff9f00",
+                      "--altcha-button-hover-bg": "rgba(255, 159, 0, 0.1)",
+                      "--altcha-focus-color": "#ff9f00",
                       width: "100%",
-                      maxWidth: "320px",
+                      maxWidth: "none",
+                      borderRadius: "2px",
                     }}
                   />
                 </div>
